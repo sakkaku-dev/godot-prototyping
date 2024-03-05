@@ -2,12 +2,12 @@ extends Node
 
 @export var speed := 200
 
-@onready var char: CharacterBody2D = get_parent()
+@onready var character: CharacterBody2D = get_parent()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	var motion = get_motion()
-	char.velocity = motion * speed
-	char.move_and_slide()
+	character.velocity = motion * speed
+	character.move_and_slide()
 	
 func get_motion():
 	return Vector2(
