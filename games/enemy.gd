@@ -1,6 +1,14 @@
 class_name Enemy
 extends CharacterBody2D
 
+enum Type {
+	BAT,
+	SLIME,
+	SKELETON,
+}
+
+@export var type := Type.BAT
+@export var corpse_scene: PackedScene
 @export var max_wander_distance := 200
 @export var min_wander_distance := 120
 
@@ -18,7 +26,13 @@ var was_chasing := false
 func _ready():
 	wander_idle_timer.timeout.connect(func(): _set_random_wander())
 	wander_agent_2d.reached.connect(func(): wander_idle_timer.random_start())
-	hurtbox.died.connect(func(): queue_free())
+	hurtbox.died.connect(func():
+		var node = corpse_scene.instantiate()
+		node.type = type
+		node.global_position = global_position
+		get_tree().current_scene.call_deferred("add_child", node)
+		queue_free()
+	)
 	
 	wander_idle_timer.random_start()
 	

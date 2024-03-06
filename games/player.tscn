@@ -1,15 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8e5jesyhdnlf"]
+[gd_scene load_steps=9 format=3 uid="uid://c8e5jesyhdnlf"]
 
 [ext_resource type="Script" path="res://move/TopDownMove.gd" id="1_djncb"]
 [ext_resource type="Script" path="res://games/HitBox.gd" id="2_hwb70"]
 [ext_resource type="Script" path="res://games/ToggleHitBox.gd" id="3_nyoug"]
 [ext_resource type="Script" path="res://games/AimMouse.gd" id="4_os8mc"]
+[ext_resource type="Script" path="res://util/Hand.gd" id="5_lba4i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lrydv"]
 size = Vector2(17, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_65tbp"]
 size = Vector2(14, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w55xq"]
+size = Vector2(16, 26)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
@@ -18,7 +22,6 @@ collision_layer = 2
 script = ExtResource("1_djncb")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.2, 0.2)
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8
@@ -37,19 +40,30 @@ color = Color(0, 0.6, 1, 1)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_lrydv")
 
-[node name="HitBox" type="Area2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="AimMouse" type="Node" parent="Node2D" node_paths=PackedStringArray("root")]
+script = ExtResource("4_os8mc")
+root = NodePath("..")
+
+[node name="HitBox" type="Area2D" parent="Node2D"]
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("2_hwb70")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/HitBox"]
 position = Vector2(17, 0)
 shape = SubResource("RectangleShape2D_65tbp")
 
-[node name="ToggleHitBox" type="Node" parent="HitBox" node_paths=PackedStringArray("hitbox")]
+[node name="ToggleHitBox" type="Node" parent="Node2D/HitBox" node_paths=PackedStringArray("hitbox")]
 script = ExtResource("3_nyoug")
 hitbox = NodePath("..")
 
-[node name="AimMouse" type="Node" parent="HitBox" node_paths=PackedStringArray("root")]
-script = ExtResource("4_os8mc")
-root = NodePath("..")
+[node name="Hand" type="Area2D" parent="Node2D"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("5_lba4i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Hand"]
+position = Vector2(9, 0)
+shape = SubResource("RectangleShape2D_w55xq")

@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://xcpi1d1063q5"]
+
+[ext_resource type="Script" path="res://games/corpse.gd" id="1_xv20d"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_mjl2s"]
+[ext_resource type="Script" path="res://games/OutlineInteractable.gd" id="3_kuvvq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vpuc2"]
+radius = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k342n"]
+shader = ExtResource("2_mjl2s")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/width = 0.099
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/enable = true
+
+[node name="Corpse" type="Area2D"]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_xv20d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_vpuc2")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_k342n")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -9.0
+offset_right = 9.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 1, 0.215686, 1)
+
+[node name="OutlineInteractable" type="Node" parent="." node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("3_kuvvq")
+interactable = NodePath("..")
+node = NodePath("../ColorRect")

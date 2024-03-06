@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://l1ymeecoj8b6"]
+[gd_scene load_steps=9 format=3 uid="uid://l1ymeecoj8b6"]
 
 [ext_resource type="Script" path="res://games/enemy.gd" id="1_02nv1"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="2_i24ml"]
+[ext_resource type="PackedScene" uid="uid://xcpi1d1063q5" path="res://games/corpse.tscn" id="2_pe3d6"]
 [ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="3_oepvj"]
 [ext_resource type="Script" path="res://games/Hurtbox.gd" id="4_e5n0n"]
 
@@ -16,6 +17,7 @@ radius = 98.0
 [node name="Enemy" type="CharacterBody2D"]
 collision_layer = 4
 script = ExtResource("1_02nv1")
+corpse_scene = ExtResource("2_pe3d6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_rqtfa")
