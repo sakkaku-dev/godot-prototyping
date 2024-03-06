@@ -21,8 +21,19 @@ extends TileMapTool
 
 var caves = []
 
-func _ready():
-	generate()
+func get_lowest_position():
+	var lowest = null
+	
+	for cave in caves:
+		for v in cave:
+			if lowest == null:
+				lowest = v
+				continue
+			
+			if v.x < lowest.x or v.y > lowest.y:
+				lowest = v
+	
+	return map_to_local(lowest)
 
 func do_run():
 	generate()
@@ -86,7 +97,7 @@ func _set_wall(v: Vector2i):
 	erase_cell(floor_layer, v)
 
 func _set_floor(v: Vector2i):
-	set_cell(floor_layer, v, floor_source, Vector2(0, 3))
+	set_cell(floor_layer, v, floor_source, floor_tile)
 	erase_cell(wall_layer, v)
 
 func _is_floor(v: Vector2i):
