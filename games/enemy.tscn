@@ -1,0 +1,73 @@
+[gd_scene load_steps=8 format=3 uid="uid://l1ymeecoj8b6"]
+
+[ext_resource type="Script" path="res://games/enemy.gd" id="1_02nv1"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="2_i24ml"]
+[ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="3_oepvj"]
+[ext_resource type="Script" path="res://games/Hurtbox.gd" id="4_e5n0n"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rqtfa"]
+radius = 9.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ukbne"]
+radius = 98.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_124r8"]
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_02nv1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rqtfa")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0, 0, 1)
+
+[node name="WanderAgent2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
+path_postprocessing = 1
+debug_enabled = true
+script = ExtResource("3_oepvj")
+enemy = NodePath("..")
+
+[node name="ChaseAgent2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
+path_postprocessing = 1
+debug_enabled = true
+script = ExtResource("3_oepvj")
+speed = 150
+enemy = NodePath("..")
+
+[node name="WanderIdleTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("2_i24ml")
+min_time = 1.0
+max_time = 5.0
+
+[node name="ChaseLookCast" type="RayCast2D" parent="."]
+target_position = Vector2(0, 0)
+collision_mask = 2
+
+[node name="DetectionRange" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionRange"]
+shape = SubResource("CircleShape2D_ukbne")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("4_e5n0n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_124r8")

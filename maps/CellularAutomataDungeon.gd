@@ -38,6 +38,9 @@ func get_lowest_position():
 func do_run():
 	generate()
 
+func get_rooms():
+	return caves.duplicate(true)
+
 func generate():
 	clear()
 	fill_roof()

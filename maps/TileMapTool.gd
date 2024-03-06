@@ -9,3 +9,6 @@ extends TileMap
 
 func do_run():
 	pass
+
+func get_rooms() -> Array[Array]:
+	return []
