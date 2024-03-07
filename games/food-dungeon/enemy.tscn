@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://l1ymeecoj8b6"]
 
-[ext_resource type="Script" path="res://games/enemy.gd" id="1_02nv1"]
+[ext_resource type="Script" path="res://games/food-dungeon/enemy.gd" id="1_02nv1"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="2_i24ml"]
-[ext_resource type="PackedScene" uid="uid://xcpi1d1063q5" path="res://games/corpse.tscn" id="2_pe3d6"]
+[ext_resource type="PackedScene" uid="uid://xcpi1d1063q5" path="res://games/food-dungeon/corpse.tscn" id="2_pe3d6"]
 [ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="3_oepvj"]
-[ext_resource type="Script" path="res://games/Hurtbox.gd" id="4_e5n0n"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="4_e5n0n"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rqtfa"]
 radius = 9.0

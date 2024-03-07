@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://bjk0ukpm1qqax"]
 
-[ext_resource type="Script" path="res://games/game.gd" id="1_4uvq8"]
+[ext_resource type="Script" path="res://games/food-dungeon/game.gd" id="1_4uvq8"]
 [ext_resource type="Texture2D" uid="uid://2y5b2fnnmt7c" path="res://assets/Prototype_Tiles_32_000.png" id="1_ghenc"]
 [ext_resource type="Script" path="res://maps/CellularAutomataDungeon.gd" id="2_imd78"]
-[ext_resource type="PackedScene" uid="uid://c8e5jesyhdnlf" path="res://games/player.tscn" id="4_seyhv"]
-[ext_resource type="Script" path="res://games/EnemyMapSpawner.gd" id="5_aq13o"]
-[ext_resource type="PackedScene" uid="uid://l1ymeecoj8b6" path="res://games/enemy.tscn" id="6_x1dte"]
+[ext_resource type="PackedScene" uid="uid://c8e5jesyhdnlf" path="res://games/food-dungeon/player.tscn" id="4_seyhv"]
+[ext_resource type="Script" path="res://games/food-dungeon/EnemyMapSpawner.gd" id="5_aq13o"]
+[ext_resource type="PackedScene" uid="uid://l1ymeecoj8b6" path="res://games/food-dungeon/enemy.tscn" id="6_x1dte"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_a44at"]
 texture = ExtResource("1_ghenc")

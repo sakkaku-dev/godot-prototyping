@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8e5jesyhdnlf"]
+[gd_scene load_steps=10 format=3 uid="uid://c8e5jesyhdnlf"]
 
-[ext_resource type="Script" path="res://move/TopDownMove.gd" id="1_djncb"]
-[ext_resource type="Script" path="res://games/HitBox.gd" id="2_hwb70"]
-[ext_resource type="Script" path="res://games/ToggleHitBox.gd" id="3_nyoug"]
-[ext_resource type="Script" path="res://games/AimMouse.gd" id="4_os8mc"]
+[ext_resource type="Script" path="res://move/TopDownMove2D.gd" id="1_djncb"]
+[ext_resource type="Script" path="res://games/food-dungeon/player.gd" id="1_uqpc6"]
+[ext_resource type="Script" path="res://combat/HitBox.gd" id="2_hwb70"]
+[ext_resource type="Script" path="res://combat/ToggleHitBox.gd" id="3_nyoug"]
+[ext_resource type="Script" path="res://util/AimMouse.gd" id="4_os8mc"]
 [ext_resource type="Script" path="res://util/Hand.gd" id="5_lba4i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lrydv"]
@@ -17,6 +18,7 @@ size = Vector2(16, 26)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 collision_layer = 2
+script = ExtResource("1_uqpc6")
 
 [node name="TopDownMove" type="Node" parent="."]
 script = ExtResource("1_djncb")
@@ -55,9 +57,22 @@ script = ExtResource("2_hwb70")
 position = Vector2(17, 0)
 shape = SubResource("RectangleShape2D_65tbp")
 
-[node name="ToggleHitBox" type="Node" parent="Node2D/HitBox" node_paths=PackedStringArray("hitbox")]
+[node name="ToggleHitBox" type="Node" parent="Node2D/HitBox" node_paths=PackedStringArray("hitbox", "node")]
 script = ExtResource("3_nyoug")
 hitbox = NodePath("..")
+node = NodePath("../ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="Node2D/HitBox"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = -9.0
+offset_right = 23.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.407843)
 
 [node name="Hand" type="Area2D" parent="Node2D"]
 collision_layer = 0

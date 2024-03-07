@@ -1,3 +1,4 @@
+class_name TopDownMove2D
 extends Node
 
 @export var speed := 200
