@@ -1,17 +1,25 @@
 class_name Hand extends Area2D
 
+signal interacted(obj)
+
 var closest: Interactable
 
 func _ready():
+	collision_mask = 0
+	collision_layer = 0
+	set_collision_mask_value(Interactable.INTERACTABLE_LAYER, true)
+	
 	area_exited.connect(func(a): a.unhighlight())
 
 func _unhandled_input(event):
-	if event.is_action_pressed("interact"):
+	if event.is_action_released("interact") and monitoring:
 		interact()
+		get_viewport().set_input_as_handled()
 
 func interact():
 	if closest:
-		closest.interact()
+		closest.interact(self)
+		interacted.emit(closest)
 
 
 func _process(_delta):
@@ -19,14 +27,20 @@ func _process(_delta):
 	_update_hightlight()
 
 
-func _update_hightlight():
+func _update_hightlight(disable = false):
 	if monitoring:
 		for area in get_overlapping_areas():
-			if area == closest:
+			if area == closest and not disable:
 				area.highlight()
 			else:
 				area.unhighlight()
 
+func disable():
+	_update_hightlight(true)
+	monitoring = false
+
+func enable():
+	monitoring = true
 
 func _get_closest_interactable():
 	var closest_item = null

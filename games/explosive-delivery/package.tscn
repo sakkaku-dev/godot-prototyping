@@ -1,0 +1,55 @@
+[gd_scene load_steps=8 format=3 uid="uid://cl32abj1wssrv"]
+
+[ext_resource type="Script" path="res://util/Interactable.gd" id="1_cv17n"]
+[ext_resource type="Script" path="res://games/explosive-delivery/package.gd" id="1_ugkl2"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_6opsb"]
+[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="3_reai5"]
+[ext_resource type="Script" path="res://games/explosive-delivery/Thrown.gd" id="4_gxp5d"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jeuy8"]
+shader = ExtResource("2_6opsb")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/width = 0.099
+shader_parameter/pattern = 2
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/enable = true
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wvyvy"]
+radius = 12.0
+
+[node name="Package" type="CharacterBody2D"]
+script = ExtResource("1_ugkl2")
+
+[node name="OutlineInteractable" type="Node" parent="." node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("3_reai5")
+interactable = NodePath("../Package")
+node = NodePath("../ColorRect")
+
+[node name="Thrown" type="Node" parent="." node_paths=PackedStringArray("node")]
+script = ExtResource("4_gxp5d")
+node = NodePath("..")
+deaccel = 2000
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_jeuy8")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 6.0
+offset_bottom = 6.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.196078, 0.760784, 0.317647, 1)
+
+[node name="Package" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_cv17n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Package"]
+shape = SubResource("CircleShape2D_wvyvy")
