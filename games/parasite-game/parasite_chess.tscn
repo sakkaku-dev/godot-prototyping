@@ -1,0 +1,28 @@
+[gd_scene load_steps=7 format=3 uid="uid://bjdfvak6yc1rj"]
+
+[ext_resource type="Script" path="res://games/parasite-game/parasite_chess.gd" id="1_0rf1j"]
+[ext_resource type="TileSet" uid="uid://wrhgubw6a0s1" path="res://games/tiles.tres" id="1_7m1jj"]
+[ext_resource type="PackedScene" uid="uid://dwt7msv5r1u0d" path="res://games/parasite-game/parasite_piece.tscn" id="2_jhgxh"]
+[ext_resource type="Script" path="res://games/parasite-game/FixedTileMap.gd" id="3_jbp57"]
+[ext_resource type="Script" path="res://games/parasite-game/TileMapCamera.gd" id="5_u4mde"]
+[ext_resource type="Script" path="res://games/parasite-game/TileMapHighlight.gd" id="6_b57mt"]
+
+[node name="ParasiteChess" type="Node2D"]
+script = ExtResource("1_0rf1j")
+pieces_scene = Array[PackedScene]([ExtResource("2_jhgxh")])
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_7m1jj")
+format = 2
+layer_0/tile_data = PackedInt32Array(-196612, 655360, 1, -131076, 655360, 1, -65540, 655360, 1, -4, 655360, 1, 65532, 655360, 1, 131068, 655360, 1, 196604, 655360, 1, 262140, 655360, 1, -196611, 655360, 1, -131075, 655360, 1, -65539, 655360, 1, -3, 655360, 1, 65533, 655360, 1, 131069, 655360, 1, 196605, 655360, 1, 262141, 655360, 1, -196610, 655360, 1, -131074, 655360, 1, -65538, 655360, 1, -2, 655360, 1, 65534, 655360, 1, 131070, 655360, 1, 196606, 655360, 1, 262142, 655360, 1, -196609, 655360, 1, -131073, 655360, 1, -65537, 655360, 1, -1, 655360, 1, 65535, 655360, 1, 131071, 655360, 1, 196607, 655360, 1, 262143, 655360, 1, -262144, 655360, 1, -196608, 655360, 1, -131072, 655360, 1, -65536, 655360, 1, 0, 655360, 1, 65536, 655360, 1, 131072, 655360, 1, 196608, 655360, 1, -262143, 655360, 1, -196607, 655360, 1, -131071, 655360, 1, -65535, 655360, 1, 1, 655360, 1, 65537, 655360, 1, 131073, 655360, 1, 196609, 655360, 1, -262142, 655360, 1, -196606, 655360, 1, -131070, 655360, 1, -65534, 655360, 1, 2, 655360, 1, 65538, 655360, 1, 131074, 655360, 1, 196610, 655360, 1, -262141, 655360, 1, -196605, 655360, 1, -131069, 655360, 1, -65533, 655360, 1, 3, 655360, 1, 65539, 655360, 1, 131075, 655360, 1, 196611, 655360, 1)
+script = ExtResource("3_jbp57")
+
+[node name="TileMapHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
+script = ExtResource("6_b57mt")
+highlight_color = Color(0.164706, 0.333333, 0.568627, 0.788235)
+tilemap = NodePath("../TileMap")
+
+[node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("tilemap")]
+script = ExtResource("5_u4mde")
+extra_zoom = -0.5
+tilemap = NodePath("../TileMap")
