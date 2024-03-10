@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcs28bfgj4i01"]
+
+[ext_resource type="Script" path="res://games/parasite-game/parasite_connection.gd" id="1_k7yi7"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6h6b2"]
+size = Vector2(10, 24)
+
+[node name="ParasiteConnection" type="Area2D"]
+collision_layer = 32
+collision_mask = 32
+script = ExtResource("1_k7yi7")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -11.0
+offset_right = 4.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6h6b2")
