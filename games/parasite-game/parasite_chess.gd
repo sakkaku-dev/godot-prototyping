@@ -59,7 +59,8 @@ func _execute_actions():
 			var data = actions[p.id]
 			
 			if data.action == ParasitePiece.Action.MOVE:
-				p.move_to(tile_map.map_to_local(data.coord))
+				await _move_active(p, data.coord)
+				_clear_action(p.id)
 			elif data.action == ParasitePiece.Action.ATTACK:
 				p.attack(tile_map.map_to_local(data.coord))
 			elif data.action == ParasitePiece.Action.JUMP:
@@ -71,9 +72,22 @@ func _clear_action(id):
 	actions.erase(id)
 	if actions.size() == 0:
 		is_executing = false
+		print("Finished actions")
+	
+	_update_actions()
 
 func _add_action(id, data):
 	actions[id] = data
+	if _get_remaining_infected().is_empty():
+		print("All infected moved. Executing actions")
+		_execute_actions()
+
+func _get_remaining_infected():
+	var infected = []
+	for p in pieces.values():
+		if p and p.infected and not p.id in actions:
+			infected.append(p)
+	return infected
 
 func _start_action_select(a, p):
 	current_action = a
@@ -139,10 +153,12 @@ func _unhandled_input(event):
 func _press_piece(coord: Vector2i):
 	var piece = pieces[coord]
 	if piece == null or not piece.infected:
+		print("Cannot move uninfected")
 		return
 	
 	pressed = piece
 	pressed.open_action_select()
+	print("Open action select")
 
 func _cancel_piece():
 	if pressed:
@@ -154,10 +170,9 @@ func _cancel_piece():
 	_update_actions()
 
 
-func _move_active(coord: Vector2i):
+func _move_active(piece: ParasitePiece, coord: Vector2i):
 	var pos = tile_map.map_to_local(coord)
-	pressed.move_to(pos)
-	pieces[coord] = pressed
-	pieces[pressed.coord] = null
-	pressed.coord = coord
-	_cancel_piece()
+	pieces[coord] = piece
+	pieces[piece.coord] = null
+	piece.coord = coord
+	await piece.move_to(pos)
