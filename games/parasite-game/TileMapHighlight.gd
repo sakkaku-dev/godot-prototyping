@@ -20,3 +20,5 @@ var highlight_coords := []:
 			rect.size = tile_size
 			rect.global_position = tilemap.map_to_local(c) - Vector2(tile_size / 2.0)
 			add_child(rect)
+
+		#print("Highlight coords: %s" % [highlight_coords])

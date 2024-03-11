@@ -36,4 +36,7 @@ func get_neighbors(coord: Vector2i, include_diagonals := true):
 	if include_diagonals:
 		dirs.append_array(DIAGONAL_NEIGHBORS)
 	
-	return dirs.map(func(d): return get_neighbor_cell(coord, d))
+	return dirs.map(func(d): return get_neighbor_cell(coord, d)).filter(func(c): return get_cell_source_id(layer, c) != -1)
+
+func has_value(coord: Vector2i):
+	return get_cell_source_id(layer, coord) != -1

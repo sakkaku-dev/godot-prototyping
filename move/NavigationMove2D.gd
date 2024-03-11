@@ -13,6 +13,7 @@ func _ready():
 	
 func set_target(movement_target: Vector2):
 	has_reached = false
+	print("From %s to %s" % [enemy.global_position, movement_target])
 	set_target_position(movement_target)
 	
 func _on_velocity_computed(safe_velocity):

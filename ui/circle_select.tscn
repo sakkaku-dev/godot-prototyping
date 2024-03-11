@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnsepyacfy5qg"]
+
+[ext_resource type="Shader" path="res://shaders/circle_select.gdshader" id="1_opfyo"]
+[ext_resource type="Script" path="res://ui/circle_select.gd" id="1_t444a"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wfg8t"]
+shader = ExtResource("1_opfyo")
+shader_parameter/width_max = 1.0
+shader_parameter/width_min = 0.5
+shader_parameter/cursor_deg = 0.0
+shader_parameter/inactive_amount = 0.5
+shader_parameter/color_1 = null
+shader_parameter/color_2 = null
+shader_parameter/color_3 = null
+shader_parameter/color_4 = null
+
+[node name="CircleSelect" type="ColorRect"]
+material = SubResource("ShaderMaterial_wfg8t")
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("1_t444a")

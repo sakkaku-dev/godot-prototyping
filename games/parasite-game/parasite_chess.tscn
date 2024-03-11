@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bjdfvak6yc1rj"]
+[gd_scene load_steps=9 format=3 uid="uid://bjdfvak6yc1rj"]
 
 [ext_resource type="Script" path="res://games/parasite-game/parasite_chess.gd" id="1_0rf1j"]
 [ext_resource type="TileSet" uid="uid://wrhgubw6a0s1" path="res://games/tiles.tres" id="1_7m1jj"]
@@ -6,6 +6,11 @@
 [ext_resource type="Script" path="res://games/parasite-game/FixedTileMap.gd" id="3_jbp57"]
 [ext_resource type="Script" path="res://games/parasite-game/TileMapCamera.gd" id="5_u4mde"]
 [ext_resource type="Script" path="res://games/parasite-game/TileMapHighlight.gd" id="6_b57mt"]
+[ext_resource type="Shader" path="res://shaders/square.gdshader" id="7_pkf0e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d1lfm"]
+shader = ExtResource("7_pkf0e")
+shader_parameter/inner_size = 0.45
 
 [node name="ParasiteChess" type="Node2D"]
 script = ExtResource("1_0rf1j")
@@ -18,11 +23,24 @@ layer_0/tile_data = PackedInt32Array(-196612, 655360, 1, -131076, 655360, 1, -65
 script = ExtResource("3_jbp57")
 
 [node name="TileMapHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
+modulate = Color(1, 1, 1, 0.615686)
 script = ExtResource("6_b57mt")
-highlight_color = Color(0.164706, 0.333333, 0.568627, 0.788235)
+highlight_color = Color(0.164706, 0.333333, 0.568627, 1)
 tilemap = NodePath("../TileMap")
 
 [node name="Camera2D" type="Camera2D" parent="." node_paths=PackedStringArray("tilemap")]
 script = ExtResource("5_u4mde")
 extra_zoom = -0.5
 tilemap = NodePath("../TileMap")
+
+[node name="Cursor" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_d1lfm")
+custom_minimum_size = Vector2(32, 32)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
