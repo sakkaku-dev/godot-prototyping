@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://dyqnbfop8y52k"]
+
+[ext_resource type="PackedScene" uid="uid://dwt7msv5r1u0d" path="res://games/parasite-game/parasite_piece.tscn" id="1_q7pgb"]
+[ext_resource type="Script" path="res://games/parasite-game/parasite_piece_rock.gd" id="2_3200o"]
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_icyo7"]
+[ext_resource type="Script" path="res://games/parasite-game/meele_attack.gd" id="5_ilsxh"]
+[ext_resource type="Script" path="res://combat/ToggleHitBox.gd" id="5_pmr5r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jwebn"]
+shader = ExtResource("2_icyo7")
+shader_parameter/radius = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l0drj"]
+
+[node name="ParasitePieceRock" instance=ExtResource("1_q7pgb")]
+script = ExtResource("2_3200o")
+
+[node name="ColorRect" parent="." index="0"]
+material = SubResource("ShaderMaterial_jwebn")
+
+[node name="Hurtbox" parent="." index="3"]
+type = 0
+
+[node name="RayCast2D" type="RayCast2D" parent="." index="4"]
+collision_mask = 2
+hit_from_inside = true
+
+[node name="ToggleHitBox" type="Node" parent="." index="5" node_paths=PackedStringArray("hitbox")]
+script = ExtResource("5_pmr5r")
+hitbox = NodePath("../HitBox")
+attack_time = 0.5
+
+[node name="HitBox" type="Area2D" parent="." index="6" node_paths=PackedStringArray("exclude")]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("5_ilsxh")
+exclude = NodePath("../Hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0"]
+shape = SubResource("CircleShape2D_l0drj")

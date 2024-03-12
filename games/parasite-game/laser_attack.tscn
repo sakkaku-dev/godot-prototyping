@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://datphbss8f1na"]
+
+[ext_resource type="Script" path="res://games/parasite-game/laser_attack.gd" id="1_l2kqs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3sivx"]
+size = Vector2(20, 5)
+
+[node name="LaserAttack" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_l2kqs")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 50, 0)
+width = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(10, 0)
+shape = SubResource("RectangleShape2D_3sivx")

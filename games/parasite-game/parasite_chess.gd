@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var pieces_scene: Array[PackedScene] = []
-@export var piece_count := 4
+@export var piece_count := 6
 
 @export var move_color := Color.BLUE
 @export var attack_color := Color.RED
@@ -30,7 +30,12 @@ func _ready():
 		pieces[c] = null
 	
 	for i in piece_count:
-		var piece = pieces_scene.pick_random().instantiate()
+		var scene = pieces_scene.pick_random()
+		if i < pieces_scene.size():
+			scene = pieces_scene[i]
+		
+		var piece = scene.instantiate()
+		
 		tile_map.add_child(piece)
 		
 		if i == 0:
@@ -40,6 +45,7 @@ func _ready():
 		piece.global_position = tile_map.map_to_local(tile)
 		piece.coord = tile
 		piece.id = i
+		piece.tilemap = tile_map
 		piece.do_action.connect(func(a): _start_action_select(a, piece))
 		piece.died.connect(func(): pieces[piece.coord] = null)
 		pieces[tile] = piece
@@ -62,19 +68,27 @@ func _execute_actions():
 			var data = actions[p.id]
 			
 			if data.action == ParasitePiece.Action.MOVE:
-				await _move_active(p, data.coord)
+				_move_active(p, data.coord)
+				await p.move_to(data.coord)
 			elif data.action == ParasitePiece.Action.ATTACK:
-				await p.attack(tile_map.map_to_local(data.coord))
+				var new_coord = await p.attack(tile_map.map_to_local(data.coord))
+				if new_coord != null:
+					_move_active(p, new_coord)
+					print("New attack position %s" % new_coord)
 			elif data.action == ParasitePiece.Action.JUMP:
 				await p.jump_to(tile_map.map_to_local(data.coord))
 			_clear_action(p.id)
+
+func _move_active(piece: ParasitePiece, coord: Vector2i):
+	pieces[piece.coord] = null
+	pieces[coord] = piece
+	piece.coord = coord
 
 func _clear_action(id):
 	actions.erase(id)
 	if actions.size() == 0:
 		is_executing = false
 		print("Finished actions")
-	
 	_update_actions()
 
 func _add_action(id, data):
@@ -169,11 +183,3 @@ func _cancel_piece():
 	current_action = null
 	tile_map_highlight.highlight_coords = []
 	_update_actions()
-
-
-func _move_active(piece: ParasitePiece, coord: Vector2i):
-	var pos = tile_map.map_to_local(coord)
-	pieces[coord] = piece
-	pieces[piece.coord] = null
-	piece.coord = coord
-	await piece.move_to(pos)

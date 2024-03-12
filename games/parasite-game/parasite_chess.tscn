@@ -1,9 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://bjdfvak6yc1rj"]
+[gd_scene load_steps=14 format=3 uid="uid://bjdfvak6yc1rj"]
 
 [ext_resource type="Script" path="res://games/parasite-game/parasite_chess.gd" id="1_0rf1j"]
 [ext_resource type="TileSet" uid="uid://wrhgubw6a0s1" path="res://games/tiles.tres" id="1_7m1jj"]
 [ext_resource type="PackedScene" uid="uid://dwt7msv5r1u0d" path="res://games/parasite-game/parasite_piece.tscn" id="2_jhgxh"]
+[ext_resource type="PackedScene" uid="uid://dyqnbfop8y52k" path="res://games/parasite-game/parasite_piece_rock.tscn" id="3_77cdd"]
 [ext_resource type="Script" path="res://games/parasite-game/FixedTileMap.gd" id="3_jbp57"]
+[ext_resource type="PackedScene" uid="uid://d21ruxlt0x2xd" path="res://games/parasite-game/parasite_piece_scissors.tscn" id="4_8j7lr"]
 [ext_resource type="Script" path="res://games/parasite-game/TileMapCamera.gd" id="5_u4mde"]
 [ext_resource type="Script" path="res://games/parasite-game/TileMapHighlight.gd" id="6_b57mt"]
 [ext_resource type="Shader" path="res://shaders/square.gdshader" id="7_pkf0e"]
@@ -20,7 +22,7 @@ default_font_size = 12
 
 [node name="ParasiteChess" type="Node2D"]
 script = ExtResource("1_0rf1j")
-pieces_scene = Array[PackedScene]([ExtResource("2_jhgxh")])
+pieces_scene = Array[PackedScene]([ExtResource("2_jhgxh"), ExtResource("3_77cdd"), ExtResource("4_8j7lr")])
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_7m1jj")

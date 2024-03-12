@@ -2,17 +2,17 @@ class_name FixedTileMap
 extends TileMap
 
 static var NEIGHBORS = [
-	TileSet.CELL_NEIGHBOR_LEFT_SIDE,
-	TileSet.CELL_NEIGHBOR_RIGHT_SIDE,
-	TileSet.CELL_NEIGHBOR_TOP_SIDE,
-	TileSet.CELL_NEIGHBOR_BOTTOM_SIDE,
+	Vector2i.UP,
+	Vector2i.LEFT,
+	Vector2i.RIGHT,
+	Vector2i.DOWN,
 ]
 
 static var DIAGONAL_NEIGHBORS = [
-	TileSet.CELL_NEIGHBOR_BOTTOM_LEFT_CORNER,
-	TileSet.CELL_NEIGHBOR_BOTTOM_RIGHT_CORNER,
-	TileSet.CELL_NEIGHBOR_TOP_LEFT_CORNER,
-	TileSet.CELL_NEIGHBOR_TOP_RIGHT_CORNER,
+	Vector2i(1, 1),
+	Vector2i(1, -1),
+	Vector2i(-1, 1),
+	Vector2i(-1, -1),
 ]
 
 @export var size := Vector2i(8, 8)
@@ -36,7 +36,10 @@ func get_neighbors(coord: Vector2i, include_diagonals := true):
 	if include_diagonals:
 		dirs.append_array(DIAGONAL_NEIGHBORS)
 	
-	return dirs.map(func(d): return get_neighbor_cell(coord, d)).filter(func(c): return get_cell_source_id(layer, c) != -1)
+	return get_coords_for(dirs, coord)
 
 func has_value(coord: Vector2i):
 	return get_cell_source_id(layer, coord) != -1
+
+func get_coords_for(dirs: Array, center: Vector2i):
+	return dirs.map(func(d): return center + d).filter(func(c): return get_cell_source_id(layer, c) != -1)

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://d21ruxlt0x2xd"]
+
+[ext_resource type="PackedScene" uid="uid://dwt7msv5r1u0d" path="res://games/parasite-game/parasite_piece.tscn" id="1_1v6q5"]
+[ext_resource type="Script" path="res://games/parasite-game/parasite_piece_scissors.gd" id="2_bkhwj"]
+[ext_resource type="Shader" path="res://shaders/polygon.gdshader" id="2_dhfhe"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ggfmx"]
+shader = ExtResource("2_dhfhe")
+shader_parameter/shape = 2
+shader_parameter/poly_count = 3.0
+
+[node name="ParasitePieceScissors" instance=ExtResource("1_1v6q5")]
+script = ExtResource("2_bkhwj")
+
+[node name="ColorRect" parent="." index="0"]
+material = SubResource("ShaderMaterial_ggfmx")
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="Hurtbox" parent="." index="3"]
+type = 2

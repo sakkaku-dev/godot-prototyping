@@ -76,3 +76,4 @@ cancel={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.0784314, 0.0235294, 0.113725, 1)

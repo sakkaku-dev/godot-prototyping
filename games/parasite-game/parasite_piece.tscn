@@ -3,20 +3,20 @@
 [ext_resource type="Script" path="res://games/parasite-game/parasite_piece.gd" id="1_0yie5"]
 [ext_resource type="PackedScene" uid="uid://bnsepyacfy5qg" path="res://ui/circle_select.tscn" id="2_flk2a"]
 [ext_resource type="PackedScene" uid="uid://cb1uqerhvubrq" path="res://games/parasite-game/parasite_jump.tscn" id="2_gm6mt"]
-[ext_resource type="PackedScene" uid="uid://beda1cm38u1hb" path="res://games/parasite-game/meele_attack.tscn" id="3_ojirt"]
-[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="4_vcf8q"]
+[ext_resource type="PackedScene" uid="uid://datphbss8f1na" path="res://games/parasite-game/laser_attack.tscn" id="3_qbr8p"]
+[ext_resource type="Script" path="res://games/parasite-game/ParasiteHurtbox.gd" id="5_74kgp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u74uu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wyrl5"]
 size = Vector2(18, 18)
 
-[node name="ParasitePiece" type="CharacterBody2D"]
+[node name="ParasitePiecePaper" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_0yie5")
 parasite_jump_scene = ExtResource("2_gm6mt")
-attack_scene = ExtResource("3_ojirt")
+attack_scene = ExtResource("3_qbr8p")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8
@@ -51,7 +51,8 @@ shape = SubResource("RectangleShape2D_u74uu")
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("4_vcf8q")
+script = ExtResource("5_74kgp")
+type = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_wyrl5")

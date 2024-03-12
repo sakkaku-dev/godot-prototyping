@@ -1,12 +1,21 @@
+class_name MeleeAttack
 extends HitBox
 
 signal finished()
 
-@onready var timer = $Timer
+@export var timer: Timer
+
+var type: Parasite.Type
 
 func _ready():
-	super._ready()
-	timer.timeout.connect(func():
-		finished.emit()
-		queue_free()
+	area_entered.connect(func(a):
+		if exclude == a:
+			return
+		a.damage(damage, type)
 	)
+	
+	if timer:
+		timer.timeout.connect(func():
+			finished.emit()
+			queue_free()
+		)

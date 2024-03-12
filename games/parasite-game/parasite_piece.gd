@@ -19,6 +19,7 @@ enum Action {
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var hurtbox = $Hurtbox
 
+var tilemap: FixedTileMap
 var coord := Vector2i.ZERO
 var id := 0
 var infected := false:
@@ -53,9 +54,10 @@ func infect():
 	self.infected = true
 
 
-func move_to(target: Vector2):
+func move_to(c: Vector2i):
+	var pos = tilemap.map_to_local(c)
 	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tw.tween_property(self, "global_position", target, 0.5)
+	tw.tween_property(self, "global_position", pos, 0.5)
 	await tw.finished
 
 func jump_to(target: Vector2):
@@ -73,6 +75,11 @@ func jump_to(target: Vector2):
 func attack(target: Vector2):
 	var dir = global_position.direction_to(target)
 	var node = _create_node(attack_scene, dir)
+	node.type = hurtbox.type
+	if node.has_method("set_exclude"):
+		node.set_exclude(hurtbox)
+	if node.has_method("set_target"): # LaserAttack
+		node.set_target(Vector2.RIGHT * global_position.distance_to(target))
 	get_tree().current_scene.add_child(node)
 	await node.finished
 
@@ -85,6 +92,6 @@ func _create_node(scene: PackedScene, dir: Vector2):
 func moveable_tiles(tilemap: FixedTileMap):
 	return tilemap.get_neighbors(coord)
 func attackable_tiles(tilemap: FixedTileMap):
-	return tilemap.get_neighbors(coord, false)
+	return tilemap.get_used_cells(tilemap.layer).filter(func(c): return (c.x == coord.x or c.y == coord.y) and coord != c)
 func jumpable_tiles(tilemap: FixedTileMap):
 	return tilemap.get_used_cells(tilemap.layer).filter(func(c): return (c.x == coord.x or c.y == coord.y) and coord != c)
