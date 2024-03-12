@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bjdfvak6yc1rj"]
+[gd_scene load_steps=12 format=3 uid="uid://bjdfvak6yc1rj"]
 
 [ext_resource type="Script" path="res://games/parasite-game/parasite_chess.gd" id="1_0rf1j"]
 [ext_resource type="TileSet" uid="uid://wrhgubw6a0s1" path="res://games/tiles.tres" id="1_7m1jj"]
@@ -7,10 +7,16 @@
 [ext_resource type="Script" path="res://games/parasite-game/TileMapCamera.gd" id="5_u4mde"]
 [ext_resource type="Script" path="res://games/parasite-game/TileMapHighlight.gd" id="6_b57mt"]
 [ext_resource type="Shader" path="res://shaders/square.gdshader" id="7_pkf0e"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="8_myveu"]
+[ext_resource type="FontFile" uid="uid://ceg6vakapyvly" path="res://jackeyfont.ttf" id="8_n63qn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d1lfm"]
 shader = ExtResource("7_pkf0e")
 shader_parameter/inner_size = 0.45
+
+[sub_resource type="Theme" id="Theme_o4mvj"]
+default_font = ExtResource("8_n63qn")
+default_font_size = 12
 
 [node name="ParasiteChess" type="Node2D"]
 script = ExtResource("1_0rf1j")
@@ -44,3 +50,50 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+custom_minimum_size = Vector2(100, 0)
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 28.0
+grow_vertical = 2
+theme = SubResource("Theme_o4mvj")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_myveu")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Player"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("8_myveu")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Player"

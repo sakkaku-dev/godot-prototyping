@@ -2,6 +2,7 @@ class_name ParasitePiece
 extends CharacterBody2D
 
 signal do_action(action)
+signal died()
 
 enum Action {
 	MOVE,
@@ -16,6 +17,7 @@ enum Action {
 @onready var circle_select = $CircleSelect
 @onready var color_rect = $ColorRect
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var hurtbox = $Hurtbox
 
 var coord := Vector2i.ZERO
 var id := 0
@@ -31,6 +33,10 @@ func _ready():
 		circle_select.hide()
 	)
 	circle_select.cancel.connect(func(): circle_select.hide())
+	hurtbox.died.connect(func():
+		died.emit()
+		queue_free()
+	)
 
 func set_colors(c1, c2, c3, c4):
 	var mat = circle_select.material as ShaderMaterial

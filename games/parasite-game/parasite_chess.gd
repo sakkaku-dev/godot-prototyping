@@ -21,6 +21,8 @@ var pieces := {}
 var actions := {}
 var current_action
 
+var players := []
+
 func _ready():
 	var exclude := []
 	
@@ -39,7 +41,8 @@ func _ready():
 		piece.coord = tile
 		piece.id = i
 		piece.do_action.connect(func(a): _start_action_select(a, piece))
-		pieces[tile] = piece 
+		piece.died.connect(func(): pieces[piece.coord] = null)
+		pieces[tile] = piece
 		
 		exclude.append(tile)
 		exclude.append_array(tile_map.get_neighbors(tile))
