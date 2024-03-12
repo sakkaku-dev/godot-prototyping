@@ -60,13 +60,11 @@ func _execute_actions():
 			
 			if data.action == ParasitePiece.Action.MOVE:
 				await _move_active(p, data.coord)
-				_clear_action(p.id)
 			elif data.action == ParasitePiece.Action.ATTACK:
-				p.attack(tile_map.map_to_local(data.coord))
+				await p.attack(tile_map.map_to_local(data.coord))
 			elif data.action == ParasitePiece.Action.JUMP:
-				p.jump_to(tile_map.map_to_local(data.coord))
-			elif data.action == ParasitePiece.Action.STANDBY:
-				_clear_action(p.id)
+				await p.jump_to(tile_map.map_to_local(data.coord))
+			_clear_action(p.id)
 
 func _clear_action(id):
 	actions.erase(id)

@@ -2,7 +2,6 @@ class_name ParasitePiece
 extends CharacterBody2D
 
 signal do_action(action)
-signal finished_move()
 
 enum Action {
 	MOVE,
@@ -11,8 +10,11 @@ enum Action {
 	STANDBY,
 }
 
+@export var parasite_jump_scene: PackedScene
+
 @onready var circle_select = $CircleSelect
 @onready var color_rect = $ColorRect
+@onready var collision_shape_2d = $CollisionShape2D
 
 var coord := Vector2i.ZERO
 var id := 0
@@ -40,18 +42,30 @@ func open_action_select():
 	circle_select.show()
 func cancel():
 	circle_select.hide()
+func infect():
+	self.infected = true
 
 
 func move_to(target: Vector2):
 	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "global_position", target, 0.5)
 	await tw.finished
-	finished_move.emit()
+
 func jump_to(target: Vector2):
-	pass
+	var dir = global_position.direction_to(target)
+	
+	var node = parasite_jump_scene.instantiate() as CharacterBody2D
+	node.global_position = global_position
+	node.global_rotation = Vector2.RIGHT.angle_to(dir)
+	node.from = self
+	get_tree().current_scene.add_child(node)
+	
+	self.infected = false
+	print("Jumped to %s" % dir)
+	
+	await node.reached
+
 func attack(target: Vector2):
-	pass
-func standby(target: Vector2):
 	pass
 
 

@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://cb1uqerhvubrq"]
+
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="1_0oknx"]
+[ext_resource type="Script" path="res://games/parasite-game/parasite_jump.gd" id="1_cqnca"]
+[ext_resource type="Script" path="res://move/MoveDirection.gd" id="2_ossi1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j1g4p"]
+shader = ExtResource("1_0oknx")
+shader_parameter/radius = 1.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pb7fr"]
+radius = 7.0
+
+[node name="ParasiteJump" type="CharacterBody2D"]
+script = ExtResource("1_cqnca")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 0, 0.968627, 1)
+material = SubResource("ShaderMaterial_j1g4p")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 3.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MoveDirection" type="Node" parent="." node_paths=PackedStringArray("node")]
+script = ExtResource("2_ossi1")
+node = NodePath("..")
+speed = 150
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-12, 0)
+scale = Vector2(0.3, 0.3)
+
+[node name="InfectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InfectArea"]
+shape = SubResource("CircleShape2D_pb7fr")

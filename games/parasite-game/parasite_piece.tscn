@@ -1,10 +1,20 @@
-[gd_scene load_steps=3 format=3 uid="uid://dwt7msv5r1u0d"]
+[gd_scene load_steps=7 format=3 uid="uid://dwt7msv5r1u0d"]
 
 [ext_resource type="Script" path="res://games/parasite-game/parasite_piece.gd" id="1_0yie5"]
 [ext_resource type="PackedScene" uid="uid://bnsepyacfy5qg" path="res://ui/circle_select.tscn" id="2_flk2a"]
+[ext_resource type="PackedScene" uid="uid://cb1uqerhvubrq" path="res://games/parasite-game/parasite_jump.tscn" id="2_gm6mt"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="4_vcf8q"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u74uu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wyrl5"]
+size = Vector2(18, 18)
 
 [node name="ParasitePiece" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource("1_0yie5")
+parasite_jump_scene = ExtResource("2_gm6mt")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8
@@ -32,3 +42,14 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_u74uu")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_vcf8q")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_wyrl5")
