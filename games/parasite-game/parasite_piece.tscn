@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwt7msv5r1u0d"]
+[gd_scene load_steps=8 format=3 uid="uid://dwt7msv5r1u0d"]
 
 [ext_resource type="Script" path="res://games/parasite-game/parasite_piece.gd" id="1_0yie5"]
 [ext_resource type="PackedScene" uid="uid://bnsepyacfy5qg" path="res://ui/circle_select.tscn" id="2_flk2a"]
 [ext_resource type="PackedScene" uid="uid://cb1uqerhvubrq" path="res://games/parasite-game/parasite_jump.tscn" id="2_gm6mt"]
+[ext_resource type="PackedScene" uid="uid://beda1cm38u1hb" path="res://games/parasite-game/meele_attack.tscn" id="3_ojirt"]
 [ext_resource type="Script" path="res://combat/Hurtbox.gd" id="4_vcf8q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u74uu"]
@@ -15,6 +16,7 @@ collision_layer = 2
 collision_mask = 0
 script = ExtResource("1_0yie5")
 parasite_jump_scene = ExtResource("2_gm6mt")
+attack_scene = ExtResource("3_ojirt")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8

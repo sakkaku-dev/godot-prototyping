@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://beda1cm38u1hb"]
+
+[ext_resource type="Script" path="res://games/parasite-game/meele_attack.gd" id="1_ax6wh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_evqca"]
+size = Vector2(24, 24)
+
+[node name="MeeleAttack" type="Area2D"]
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("1_ax6wh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32, 0)
+shape = SubResource("RectangleShape2D_evqca")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

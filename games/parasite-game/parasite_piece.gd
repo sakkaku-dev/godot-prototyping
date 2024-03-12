@@ -11,6 +11,7 @@ enum Action {
 }
 
 @export var parasite_jump_scene: PackedScene
+@export var attack_scene: PackedScene
 
 @onready var circle_select = $CircleSelect
 @onready var color_rect = $ColorRect
@@ -54,9 +55,7 @@ func move_to(target: Vector2):
 func jump_to(target: Vector2):
 	var dir = global_position.direction_to(target)
 	
-	var node = parasite_jump_scene.instantiate() as CharacterBody2D
-	node.global_position = global_position
-	node.global_rotation = Vector2.RIGHT.angle_to(dir)
+	var node = _create_node(parasite_jump_scene, dir)
 	node.from = self
 	get_tree().current_scene.add_child(node)
 	
@@ -66,8 +65,16 @@ func jump_to(target: Vector2):
 	await node.reached
 
 func attack(target: Vector2):
-	pass
+	var dir = global_position.direction_to(target)
+	var node = _create_node(attack_scene, dir)
+	get_tree().current_scene.add_child(node)
+	await node.finished
 
+func _create_node(scene: PackedScene, dir: Vector2):
+	var node = scene.instantiate()
+	node.global_position = global_position
+	node.global_rotation = Vector2.RIGHT.angle_to(dir)
+	return node
 
 func moveable_tiles(tilemap: FixedTileMap):
 	return tilemap.get_neighbors(coord)
