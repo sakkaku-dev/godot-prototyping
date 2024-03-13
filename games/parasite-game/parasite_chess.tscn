@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bjdfvak6yc1rj"]
+[gd_scene load_steps=19 format=3 uid="uid://bjdfvak6yc1rj"]
 
 [ext_resource type="Script" path="res://games/parasite-game/parasite_chess.gd" id="1_0rf1j"]
 [ext_resource type="TileSet" uid="uid://wrhgubw6a0s1" path="res://games/tiles.tres" id="1_7m1jj"]
@@ -9,8 +9,11 @@
 [ext_resource type="Script" path="res://games/parasite-game/TileMapCamera.gd" id="5_u4mde"]
 [ext_resource type="Script" path="res://games/parasite-game/TileMapHighlight.gd" id="6_b57mt"]
 [ext_resource type="Shader" path="res://shaders/square.gdshader" id="7_pkf0e"]
-[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="8_myveu"]
 [ext_resource type="FontFile" uid="uid://ceg6vakapyvly" path="res://jackeyfont.ttf" id="8_n63qn"]
+[ext_resource type="Script" path="res://games/parasite-game/PiecePanel.gd" id="11_cgkg5"]
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="12_crftl"]
+[ext_resource type="PackedScene" uid="uid://db1k8ik44igmk" path="res://games/parasite-game/piece_row.tscn" id="12_tee2l"]
+[ext_resource type="Shader" path="res://shaders/polygon.gdshader" id="13_x8i87"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d1lfm"]
 shader = ExtResource("7_pkf0e")
@@ -19,6 +22,15 @@ shader_parameter/inner_size = 0.45
 [sub_resource type="Theme" id="Theme_o4mvj"]
 default_font = ExtResource("8_n63qn")
 default_font_size = 12
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_53vhd"]
+shader = ExtResource("12_crftl")
+shader_parameter/radius = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cijm4"]
+shader = ExtResource("13_x8i87")
+shader_parameter/shape = 2
+shader_parameter/poly_count = 3.0
 
 [node name="ParasiteChess" type="Node2D"]
 script = ExtResource("1_0rf1j")
@@ -31,7 +43,13 @@ layer_0/tile_data = PackedInt32Array(-196612, 655360, 1, -131076, 655360, 1, -65
 script = ExtResource("3_jbp57")
 
 [node name="TileMapHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
-modulate = Color(1, 1, 1, 0.615686)
+modulate = Color(1, 1, 1, 0.333333)
+script = ExtResource("6_b57mt")
+highlight_color = Color(0.164706, 0.333333, 0.568627, 1)
+tilemap = NodePath("../TileMap")
+
+[node name="AttackHighlight" type="Node2D" parent="." node_paths=PackedStringArray("tilemap")]
+modulate = Color(1, 1, 1, 0.333333)
 script = ExtResource("6_b57mt")
 highlight_color = Color(0.164706, 0.333333, 0.568627, 1)
 tilemap = NodePath("../TileMap")
@@ -55,13 +73,16 @@ mouse_filter = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer" node_paths=PackedStringArray("container")]
 custom_minimum_size = Vector2(100, 0)
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 28.0
 grow_vertical = 2
 theme = SubResource("Theme_o4mvj")
+script = ExtResource("11_cgkg5")
+container = NodePath("MarginContainer/VBoxContainer")
+row = ExtResource("12_tee2l")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/PanelContainer"]
 layout_mode = 2
@@ -74,28 +95,92 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Control" type="Control" parent="CanvasLayer/MarginContainer"]
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-texture = ExtResource("8_myveu")
-expand_mode = 3
-stretch_mode = 5
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/MarginContainer/Control"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.0
+offset_top = 8.0
+offset_right = -12.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Player"
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer/MarginContainer/Control"]
+material = SubResource("ShaderMaterial_53vhd")
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -28.0
+offset_right = 8.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer/MarginContainer/Control"]
+material = SubResource("ShaderMaterial_cijm4")
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 14.0
+offset_top = 7.0
+offset_right = 32.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-texture = ExtResource("8_myveu")
-expand_mode = 3
-stretch_mode = 5
+[node name="Line2D" type="Line2D" parent="CanvasLayer/MarginContainer/Control"]
+position = Vector2(34, 30)
+rotation = 3.14159
+points = PackedVector2Array(12, -14, 5.6825, -6.62959, 0, 0)
+width = 1.0
 
-[node name="Label" type="Label" parent="CanvasLayer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer2"]
-layout_mode = 2
-text = "Player"
+[node name="Line2D2" type="Line2D" parent="CanvasLayer/MarginContainer/Control/Line2D"]
+points = PackedVector2Array(0, -6, 0, 0, 6, 0)
+width = 1.0
+
+[node name="Line2D2" type="Line2D" parent="CanvasLayer/MarginContainer/Control"]
+position = Vector2(59, 44)
+rotation = 4.95326
+points = PackedVector2Array(12, -14, 5.6825, -6.62959, 0, 0)
+width = 1.0
+
+[node name="Line2D2" type="Line2D" parent="CanvasLayer/MarginContainer/Control/Line2D2"]
+points = PackedVector2Array(0, -6, 0, 0, 6, 0)
+width = 1.0
+
+[node name="Line2D3" type="Line2D" parent="CanvasLayer/MarginContainer/Control"]
+position = Vector2(33, 57)
+rotation = 7.14702
+points = PackedVector2Array(12, -14, 5.6825, -6.62959, 0, 0)
+width = 1.0
+
+[node name="Line2D2" type="Line2D" parent="CanvasLayer/MarginContainer/Control/Line2D3"]
+points = PackedVector2Array(0, -6, 0, 0, 6, 0)
+width = 1.0

@@ -56,3 +56,6 @@ type = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("RectangleShape2D_wyrl5")
+
+[node name="MoveRayCast" type="RayCast2D" parent="."]
+collision_mask = 2

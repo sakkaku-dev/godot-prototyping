@@ -30,9 +30,11 @@ func random_tile(exclude := [], l := layer):
 	var cells = get_used_cells(l).filter(func(x): return not x in exclude)
 	return cells.pick_random() if cells.size() > 0 else null
 
-func get_neighbors(coord: Vector2i, include_diagonals := true):
-	var dirs = NEIGHBORS.duplicate()
+func get_neighbors(coord: Vector2i, include_diagonals := true, include_straights := true):
+	var dirs = []
 	
+	if include_straights:
+		dirs.append_array(NEIGHBORS)
 	if include_diagonals:
 		dirs.append_array(DIAGONAL_NEIGHBORS)
 	

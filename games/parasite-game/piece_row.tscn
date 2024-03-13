@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3 uid="uid://db1k8ik44igmk"]
+
+[ext_resource type="Script" path="res://games/parasite-game/piece_row.gd" id="1_dm1o0"]
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_27qbk"]
+[ext_resource type="Shader" path="res://shaders/polygon.gdshader" id="3_6fck7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8rdxp"]
+shader = ExtResource("2_27qbk")
+shader_parameter/radius = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ily8"]
+shader = ExtResource("3_6fck7")
+shader_parameter/shape = 2
+shader_parameter/poly_count = 3.0
+
+[node name="PieceRow" type="HBoxContainer"]
+script = ExtResource("1_dm1o0")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Square" type="ColorRect" parent="TextureRect"]
+visible = false
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Circle" type="ColorRect" parent="TextureRect"]
+visible = false
+material = SubResource("ShaderMaterial_8rdxp")
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Triangle" type="ColorRect" parent="TextureRect"]
+visible = false
+material = SubResource("ShaderMaterial_5ily8")
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -9.0
+offset_right = 9.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "Player"
