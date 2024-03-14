@@ -1,5 +1,7 @@
 extends Node2D
 
+signal lost()
+signal next_level()
 signal turn_changed(pieces, current)
 
 @export var pieces_scene: Array[PackedScene] = []
@@ -11,11 +13,14 @@ signal turn_changed(pieces, current)
 @export var standby_color := Color.GRAY
 @export var action_used_color := Color.DARK_GRAY
 
+@export var gameover: Control
+@export var mutations: Control
+@export var panel: Control
+
 @onready var tile_map = $TileMap
 @onready var tile_map_highlight = $TileMapHighlight
 @onready var attack_highlight = $AttackHighlight
 @onready var cursor = $Cursor
-@onready var panel_container = $CanvasLayer/PanelContainer
 
 var initial_infect := false
 var is_executing := false
@@ -29,6 +34,12 @@ var current_turn := 0
 var players := []
 
 func _ready():
+	gameover.hide()
+	lost.connect(func(): gameover.show())
+	
+	mutations.hide()
+	next_level.connect(func(): mutations.show())
+	
 	var exclude := []
 	
 	#for c in tile_map.get_used_cells(tile_map.layer):
@@ -63,7 +74,7 @@ func _ready():
 		exclude.append_array(tile_map.get_neighbors(tile))
 	
 	turn_changed.emit(players, current_turn)
-	turn_changed.connect(func(pieces, turn): panel_container.update(pieces, turn))
+	turn_changed.connect(func(pieces, turn): panel.update(pieces, turn))
 
 func _update_actions():
 	pass
@@ -105,7 +116,21 @@ func _clear_action(id):
 	
 	_update_actions()
 
+func _has_pieces(filter: Callable):
+	for p in players:
+		if filter.callv([p]):
+			return true
+	return false
+
 func _next_turn():
+	if not _has_pieces(func(p): return p.infected):
+		lost.emit()
+		return
+	
+	if not _has_pieces(func(p): return not p.infected):
+		next_level.emit()
+		return
+	
 	print("Turn %s finished." % current_turn)
 	current_turn += 1
 	if current_turn >= players.size():
