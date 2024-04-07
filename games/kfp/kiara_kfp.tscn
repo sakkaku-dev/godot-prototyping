@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://de1lpqtwceoex"]
+
+[ext_resource type="Script" path="res://move/TopDownMove2D.gd" id="1_m1dp1"]
+[ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="2_juiiw"]
+[ext_resource type="Script" path="res://util/Hand.gd" id="3_gkyel"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l6dh6"]
+size = Vector2(12, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8x5t7"]
+
+[node name="KiaraKfp" type="CharacterBody2D"]
+
+[node name="TopDownMove2D" type="Node" parent="."]
+script = ExtResource("1_m1dp1")
+speed = 150
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_juiiw")
+hframes = 4
+vframes = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_l6dh6")
+
+[node name="Hand" type="Area2D" parent="."]
+script = ExtResource("3_gkyel")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hand"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_8x5t7")
