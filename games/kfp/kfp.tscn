@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://db0b1s8vxaap8"]
+[gd_scene load_steps=30 format=3 uid="uid://db0b1s8vxaap8"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp.gd" id="1_81nka"]
 [ext_resource type="Texture2D" uid="uid://rf1d7xo48l0r" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Wooden House.png" id="1_nwtne"]
 [ext_resource type="Texture2D" uid="uid://dncnd08fyb5pq" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Grass.png" id="2_6mi7a"]
+[ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/hatching_egg.tscn" id="2_58haw"]
 [ext_resource type="Texture2D" uid="uid://b753egfjo4ur2" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Fences.png" id="3_hpn2k"]
 [ext_resource type="Texture2D" uid="uid://br2k3vlmn2pb2" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Tilled_Dirt.png" id="4_qvvph"]
 [ext_resource type="PackedScene" uid="uid://de1lpqtwceoex" path="res://games/kfp/kiara_kfp.tscn" id="5_eane1"]
@@ -14,6 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://cgwjkb3536q2y" path="res://games/kfp/egg_catch_world.tscn" id="10_m22qt"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="12_0h307"]
 [ext_resource type="Texture2D" uid="uid://cqasiwkferewg" path="res://assets/Sprout Lands - Sprites - Basic pack/Objects/Egg_item.png" id="12_y07fp"]
+[ext_resource type="Script" path="res://games/kfp/PlaceMarkerMouse.gd" id="13_j532s"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="15_lfbes"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rwpyq"]
 texture = ExtResource("1_nwtne")
@@ -885,9 +888,20 @@ size = Vector2(42, 50)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oko1a"]
 bg_color = Color(0, 0, 0, 0.670588)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ns4hp"]
+size = Vector2(212, 252)
+
+[sub_resource type="InputEventAction" id="InputEventAction_40kp6"]
+action = &"slot_1"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_02pi8"]
+events = [SubResource("InputEventAction_40kp6")]
+
 [node name="Kfp" type="Node2D" node_paths=PackedStringArray("total_eggs_label")]
 script = ExtResource("1_81nka")
-total_eggs_label = NodePath("CanvasLayer/Control/MarginContainer/HBoxContainer/Label")
+egg_scene = ExtResource("2_58haw")
+total_eggs_label = NodePath("CanvasLayer/Control/MarginContainer2/HBoxContainer/EggAction/Label2")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_7hndw")
@@ -976,6 +990,20 @@ render_target_update_mode = 4
 [node name="KiaraKfp" parent="TileMap/Ordering" instance=ExtResource("5_eane1")]
 position = Vector2(69, -33)
 
+[node name="Area2D" type="Area2D" parent="TileMap"]
+position = Vector2(133, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Area2D"]
+shape = SubResource("RectangleShape2D_ns4hp")
+
+[node name="PlaceMarker" type="ColorRect" parent="." node_paths=PackedStringArray("tilemap")]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.25098)
+script = ExtResource("13_j532s")
+tilemap = NodePath("../TileMap")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(12, 0)
 
@@ -988,36 +1016,66 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("12_0h307")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -5.0
-offset_bottom = 23.0
-grow_horizontal = 0
-theme_override_constants/margin_left = 3
-theme_override_constants/margin_top = 3
-theme_override_constants/margin_right = 3
-theme_override_constants/margin_bottom = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2"]
 layout_mode = 2
-theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
+[node name="EggAction" type="TextureButton" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+shortcut = SubResource("Shortcut_02pi8")
+texture_normal = ExtResource("15_lfbes")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/EggAction"]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -10.0
+offset_right = 20.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("12_y07fp")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/EggAction"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -29.0
+offset_top = -12.0
+offset_right = 33.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_colors/font_color = Color(0.564706, 0.384314, 0.364706, 1)
 theme_override_constants/outline_size = 4
 text = "0"
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/HBoxContainer"]
-custom_minimum_size = Vector2(15, 0)
-layout_mode = 2
-texture = ExtResource("12_y07fp")
-expand_mode = 5
-stretch_mode = 5
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="total_eggs_collected" from="TileMap/Ordering/EggCatchGame" to="." method="_on_egg_catch_game_total_eggs_collected"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer2/HBoxContainer/EggAction" to="." method="_on_egg_action_pressed"]

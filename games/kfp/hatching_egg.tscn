@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2oneau5o6uvo"]
+
+[ext_resource type="Texture2D" uid="uid://cqasiwkferewg" path="res://assets/Sprout Lands - Sprites - Basic pack/Objects/Egg_item.png" id="1_1jdff"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="1_aeyre"]
+[ext_resource type="Script" path="res://util/Interactable.gd" id="2_7iatk"]
+[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="4_jih0r"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8mbk1"]
+shader = ExtResource("1_aeyre")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = false
+shader_parameter/enable = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0l07"]
+size = Vector2(18, 18)
+
+[node name="HatchingEgg" type="Node2D"]
+
+[node name="OutlineInteractable" type="Node" parent="." node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("4_jih0r")
+interactable = NodePath("../Interactable")
+node = NodePath("../Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_8mbk1")
+texture = ExtResource("1_1jdff")
+
+[node name="Interactable" type="Area2D" parent="."]
+script = ExtResource("2_7iatk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
+shape = SubResource("RectangleShape2D_d0l07")
