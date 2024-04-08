@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dc0ei8l73md2p"]
+
+[ext_resource type="Texture2D" uid="uid://c8balt18cs72q" path="res://assets/Sprout Lands - Sprites - Basic pack/Objects/Basic_Furniture.png" id="1_w1gnn"]
+
+[node name="Chair" type="Node2D"]
+position = Vector2(-199, -95)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("1_w1gnn")
+hframes = 9
+vframes = 6
+frame = 22
