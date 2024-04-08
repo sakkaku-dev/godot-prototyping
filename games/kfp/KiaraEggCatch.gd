@@ -9,6 +9,8 @@ signal eggs_collected(eggs)
 @export var min_break := 1
 @export var max_break := 3
 
+@onready var nest = $Nest
+
 var motion := 0.0
 var collected := 0
 
@@ -24,6 +26,7 @@ func _on_area_entered(a: Egg):
 		collected = max(0, collected - broken)
 	
 	eggs_collected.emit(collected)
+	nest.frame = 2 if collected > 0 else 3
 	a.queue_free()
 
 func get_size():

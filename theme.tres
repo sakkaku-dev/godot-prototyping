@@ -5,3 +5,5 @@
 [resource]
 default_font = ExtResource("1_g6osb")
 default_font_size = 12
+Label/colors/font_color = Color(0.564706, 0.384314, 0.364706, 1)
+Label/constants/outline_size = 4

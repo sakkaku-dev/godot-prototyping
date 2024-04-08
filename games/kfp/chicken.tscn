@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://sout08yq6hm3"]
+
+[ext_resource type="Script" path="res://games/kfp/chicken.gd" id="1_b7dkh"]
+[ext_resource type="Texture2D" uid="uid://6jq8e8jw1ce1" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Free Chicken Sprites.png" id="1_gmbo1"]
+[ext_resource type="Script" path="res://move/RandomMoveCollide.gd" id="3_y3fg4"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="4_3k465"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gc8n8"]
+size = Vector2(10, 4)
+
+[node name="Chicken" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_b7dkh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -6)
+texture = ExtResource("1_gmbo1")
+hframes = 4
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_gc8n8")
+
+[node name="MoveCollide" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("3_y3fg4")
+sprite = NodePath("../Sprite2D")
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+script = ExtResource("4_3k465")
+min_time = 1.0
+max_time = 4.0
+
+[node name="WanderTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("4_3k465")
+min_time = 1.0
+max_time = 2.0

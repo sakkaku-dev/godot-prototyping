@@ -8,10 +8,10 @@ extends Timer
 @onready var is_autostart := autostart
 
 func _ready():
-	one_shot = false
+	one_shot = true
 	autostart = false
 	
-	if not one_shot:
+	if not is_oneshot:
 		timeout.connect(func(): random_start())
 		
 	if is_autostart:
