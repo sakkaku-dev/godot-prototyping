@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://oqsowgc2oyi"]
+
+[ext_resource type="Texture2D" uid="uid://c4uf8r3n8o8ck" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/WoodenHouse_000.png" id="1_r85n6"]
+[ext_resource type="Script" path="res://games/kfp/door.gd" id="1_wgf3o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4p0qh"]
+
+[sub_resource type="Animation" id="Animation_ed8uv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [Vector2i(7, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_aa3mf"]
+resource_name = "door_side"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame_coords")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2i(7, 2), Vector2i(8, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o1hyk"]
+_data = {
+"RESET": SubResource("Animation_ed8uv"),
+"door_side": SubResource("Animation_aa3mf")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7fulc"]
+size = Vector2(5, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dbe3d"]
+size = Vector2(4, 11)
+
+[node name="Door" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_wgf3o")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_r85n6")
+hframes = 9
+vframes = 5
+frame = 25
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_4p0qh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o1hyk")
+}
+
+[node name="DoorWall" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorWall"]
+position = Vector2(-5.5, 5)
+shape = SubResource("RectangleShape2D_7fulc")
+
+[node name="Wall" type="StaticBody2D" parent="."]
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Wall"]
+position = Vector2(-6, -2.5)
+shape = SubResource("RectangleShape2D_dbe3d")

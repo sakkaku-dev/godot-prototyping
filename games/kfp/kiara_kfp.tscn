@@ -10,6 +10,7 @@ size = Vector2(12, 4)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8x5t7"]
 
 [node name="KiaraKfp" type="CharacterBody2D"]
+collision_layer = 2
 
 [node name="TopDownMove2D" type="Node" parent="."]
 script = ExtResource("1_m1dp1")
