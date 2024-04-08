@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://db0b1s8vxaap8"]
+[gd_scene load_steps=35 format=3 uid="uid://db0b1s8vxaap8"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp.gd" id="1_81nka"]
 [ext_resource type="Texture2D" uid="uid://rf1d7xo48l0r" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Wooden House.png" id="1_nwtne"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://games/kfp/PlaceMarkerMouse.gd" id="13_j532s"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="15_lfbes"]
 [ext_resource type="PackedScene" uid="uid://oqsowgc2oyi" path="res://games/kfp/door.tscn" id="16_a2v03"]
+[ext_resource type="Script" path="res://games/kfp/MiniGame.gd" id="21_hdb3y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oko1a"]
 bg_color = Color(0, 0, 0, 0.670588)
@@ -1090,6 +1091,12 @@ chicken_scene = ExtResource("2_4ve5m")
 egg_scene = ExtResource("2_58haw")
 total_eggs_label = NodePath("CanvasLayer/Control/MarginContainer2/HBoxContainer/EggAction/Label2")
 
+[node name="MiniGame" type="Node" parent="." node_paths=PackedStringArray("game_ui", "game_container")]
+process_mode = 3
+script = ExtResource("21_hdb3y")
+game_ui = NodePath("../CanvasLayer2/Control")
+game_container = NodePath("../CanvasLayer2/Control/PanelContainer/SubViewportContainer/SubViewport")
+
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="CanvasLayer2"]
@@ -1147,14 +1154,13 @@ layer_4/tile_data = PackedInt32Array(-458756, 458752, 3, -393220, 131072, 2, -32
 [node name="Ordering" type="Node2D" parent="TileMap"]
 y_sort_enabled = true
 
-[node name="EggCatchGame" type="StaticBody2D" parent="TileMap/Ordering" node_paths=PackedStringArray("interactable", "game_ui", "game_container")]
+[node name="EggCatchGame" type="StaticBody2D" parent="TileMap/Ordering" node_paths=PackedStringArray("interactable", "mini_game")]
 process_mode = 3
 position = Vector2(61, -98)
 script = ExtResource("6_muywm")
 interactable = NodePath("Sprite2D/Interactable")
-game_ui = NodePath("../../../CanvasLayer2/Control")
 game_scene = ExtResource("10_m22qt")
-game_container = NodePath("../../../CanvasLayer2/Control/PanelContainer/SubViewportContainer/SubViewport")
+mini_game = NodePath("../../../MiniGame")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/EggCatchGame"]
 position = Vector2(0, -2)

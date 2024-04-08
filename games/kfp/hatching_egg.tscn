@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2oneau5o6uvo"]
+[gd_scene load_steps=11 format=3 uid="uid://b2oneau5o6uvo"]
 
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="1_aeyre"]
 [ext_resource type="Script" path="res://games/kfp/hatching_egg.gd" id="1_nqla5"]
 [ext_resource type="Script" path="res://util/Interactable.gd" id="2_7iatk"]
+[ext_resource type="PackedScene" uid="uid://crptynk08r8c" path="res://games/kfp/hatch_egg_game.tscn" id="2_cgyx4"]
 [ext_resource type="Texture2D" uid="uid://bwdmcu6eck5ew" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Egg_And_Nest.png" id="3_uiwc1"]
 [ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="4_jih0r"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="5_fwjoi"]
@@ -20,9 +21,11 @@ shader_parameter/enable = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d0l07"]
 size = Vector2(18, 18)
 
-[node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("timer")]
+[node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("timer", "interactable")]
 script = ExtResource("1_nqla5")
 timer = NodePath("HatchingTimer")
+interactable = NodePath("Interactable")
+game_scene = ExtResource("2_cgyx4")
 
 [node name="OutlineInteractable" type="Node" parent="." node_paths=PackedStringArray("interactable", "node")]
 script = ExtResource("4_jih0r")
@@ -41,7 +44,7 @@ script = ExtResource("2_7iatk")
 shape = SubResource("RectangleShape2D_d0l07")
 
 [node name="HatchingTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 120.0
 one_shot = true
 autostart = true
 

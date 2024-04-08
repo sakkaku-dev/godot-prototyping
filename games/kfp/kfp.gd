@@ -8,6 +8,7 @@ extends Node2D
 @onready var place_marker = $PlaceMarker
 @onready var ordering = $TileMap/Ordering
 @onready var tile_map = $TileMap
+@onready var mini_game = $MiniGame
 
 const GROUND_LAYER = 1
 
@@ -66,6 +67,7 @@ func _place_hatching_egg():
 	var egg = egg_scene.instantiate()
 	ordering.add_child(egg)
 	egg.global_position = tile_map.map_to_local(coord)
+	egg.mini_game = mini_game
 	egg.hatched.connect(func():
 		_spawn_chicken(egg.global_position)
 		egg.queue_free()
