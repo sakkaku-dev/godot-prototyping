@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://db0b1s8vxaap8"]
+[gd_scene load_steps=54 format=3 uid="uid://db0b1s8vxaap8"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp.gd" id="1_81nka"]
 [ext_resource type="Texture2D" uid="uid://rf1d7xo48l0r" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Wooden House.png" id="1_nwtne"]
@@ -29,6 +29,7 @@
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="23_5vniq"]
 [ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/okyaku.tscn" id="23_kk0tv"]
 [ext_resource type="Script" path="res://games/kfp/CustomerSpawn.gd" id="24_kvsde"]
+[ext_resource type="Script" path="res://games/kfp/OrderDesk.gd" id="26_oa8ma"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oko1a"]
 bg_color = Color(0, 0, 0, 0.670588)
@@ -1162,6 +1163,20 @@ shader_parameter/enable = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k21n1"]
 size = Vector2(42, 50)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w15g2"]
+shader = ExtResource("7_hveeg")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 0
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/enable = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
+size = Vector2(16, 16)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ns4hp"]
 size = Vector2(180, 162)
 
@@ -1302,43 +1317,49 @@ position = Vector2(136, 40)
 
 [node name="Door3" parent="TileMap/Ordering" instance=ExtResource("16_a2v03")]
 position = Vector2(40, 184)
+collision_mask = 6
 front_door = true
 
 [node name="Table" parent="TileMap/Ordering" instance=ExtResource("18_5u7uy")]
+visible = false
 position = Vector2(102, 77)
 
 [node name="Chair" parent="TileMap/Ordering/Table" instance=ExtResource("19_v0g1f")]
 position = Vector2(-15, -1)
 
 [node name="Table2" parent="TileMap/Ordering" instance=ExtResource("18_5u7uy")]
+visible = false
 position = Vector2(102, 105)
 
 [node name="Chair" parent="TileMap/Ordering/Table2" instance=ExtResource("19_v0g1f")]
 position = Vector2(-15, -1)
 
 [node name="Table3" parent="TileMap/Ordering" instance=ExtResource("18_5u7uy")]
+visible = false
 position = Vector2(102, 133)
 
 [node name="Chair" parent="TileMap/Ordering/Table3" instance=ExtResource("19_v0g1f")]
 position = Vector2(-15, -1)
 
 [node name="Table4" parent="TileMap/Ordering" instance=ExtResource("18_5u7uy")]
+visible = false
 position = Vector2(102, 160)
 
 [node name="Chair" parent="TileMap/Ordering/Table4" instance=ExtResource("19_v0g1f")]
 position = Vector2(-15, -1)
 
-[node name="CustomerSpawn" type="Node" parent="TileMap" node_paths=PackedStringArray("timer", "spawner", "order_marker", "order_marker_2")]
+[node name="CustomerSpawn" type="Node" parent="TileMap" node_paths=PackedStringArray("timer", "spawner", "order_marker", "order_marker_2", "exit_marker")]
 script = ExtResource("24_kvsde")
 timer = NodePath("RandomTimer")
 spawner = NodePath("../Spawner2D")
-order_marker = NodePath("../OrderPlace")
-order_marker_2 = NodePath("../OrderPlace2")
+order_marker = NodePath("../OrderMove2")
+order_marker_2 = NodePath("../OrderMove1")
+exit_marker = NodePath("../ExitMove")
 
 [node name="RandomTimer" type="Timer" parent="TileMap/CustomerSpawn"]
 script = ExtResource("23_5vniq")
-min_time = 1.0
-max_time = 5.0
+min_time = 2.0
+max_time = 6.0
 
 [node name="Spawner2D" type="Node2D" parent="TileMap" node_paths=PackedStringArray("root")]
 position = Vector2(40, 244)
@@ -1346,11 +1367,42 @@ script = ExtResource("22_ey5fr")
 root = NodePath("..")
 scene = ExtResource("23_kk0tv")
 
-[node name="OrderPlace" type="Marker2D" parent="TileMap"]
-position = Vector2(115, 35)
-
-[node name="OrderPlace2" type="Marker2D" parent="TileMap"]
+[node name="OrderMove1" type="Marker2D" parent="TileMap"]
 position = Vector2(40, 35)
+
+[node name="ExitMove" type="Marker2D" parent="TileMap"]
+position = Vector2(40, 170)
+
+[node name="OrderMove2" type="Marker2D" parent="TileMap"]
+position = Vector2(117, 35)
+
+[node name="OrderDesk" type="Area2D" parent="TileMap" node_paths=PackedStringArray("interact")]
+position = Vector2(134, 30)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("26_oa8ma")
+interact = NodePath("Interactable")
+
+[node name="Sprite2D" type="Sprite2D" parent="TileMap/OrderDesk"]
+material = SubResource("ShaderMaterial_w15g2")
+scale = Vector2(0.078125, 0.140625)
+texture = ExtResource("15_lfbes")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/OrderDesk"]
+position = Vector2(-7, 0)
+shape = SubResource("RectangleShape2D_ibnlu")
+
+[node name="Interactable" type="Area2D" parent="TileMap/OrderDesk"]
+position = Vector2(2, 0)
+script = ExtResource("6_5onm5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/OrderDesk/Interactable"]
+shape = SubResource("RectangleShape2D_iake3")
+
+[node name="OutlineInteractable" type="Node" parent="TileMap/OrderDesk" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("6_d7ngc")
+interactable = NodePath("../Interactable")
+node = NodePath("../Sprite2D")
 
 [node name="FarmEnter" type="Area2D" parent="."]
 position = Vector2(295, 96)

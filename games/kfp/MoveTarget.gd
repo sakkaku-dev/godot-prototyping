@@ -7,20 +7,14 @@ signal reached()
 @export var target_distance := 5
 @export var stop := false
 
-var targets := []
 var current_target
-var current_dir
-
-func add_target(pos):
-	targets.push_back(pos)
+var current_dir := Vector2.ZERO
 
 func _physics_process(delta):
 	if stop:
 		return
 	
 	if current_target == null:
-		if targets.size() > 0:
-			current_target = targets.pop_front()
 		return
 	
 	current_dir = body.global_position.direction_to(current_target)

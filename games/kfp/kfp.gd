@@ -9,6 +9,7 @@ extends Node2D
 @onready var ordering = $TileMap/Ordering
 @onready var tile_map = $TileMap
 @onready var mini_game = $MiniGame
+@onready var order_desk = $TileMap/OrderDesk
 
 @export var room_layer := 3
 @export var farm_layer := 2
@@ -22,12 +23,14 @@ var total_eggs := 0:
 	set(x):
 		total_eggs = x
 		total_eggs_label.text = "%s" % total_eggs
-		
+var orders := []
 var place_egg := false
 
 func _ready():
 	farm_enter.body_entered.connect(func(_x): fit_camera.update(farm_layer))
 	room_enter.body_entered.connect(func(_x): fit_camera.update(room_layer))
+	
+	order_desk.ordered.connect(func(): orders.append(null))
 
 func _on_egg_catch_game_total_eggs_collected(eggs):
 	self.total_eggs += eggs

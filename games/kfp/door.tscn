@@ -4,6 +4,7 @@
 [ext_resource type="Script" path="res://games/kfp/door.gd" id="1_wgf3o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4p0qh"]
+size = Vector2(15, 21)
 
 [sub_resource type="Animation" id="Animation_ed8uv"]
 length = 0.001
@@ -59,7 +60,7 @@ vframes = 5
 frame = 25
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 5)
+position = Vector2(-2.5, 5.5)
 shape = SubResource("RectangleShape2D_4p0qh")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
