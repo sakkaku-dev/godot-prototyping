@@ -57,10 +57,7 @@ func _place_hatching_egg():
 	
 	var coord = tile_map.local_to_map(get_global_mouse_position())
 	var rect = Util.tilemap_layer_rect(tile_map, GROUND_LAYER) as Rect2i
-	print(rect.size)
-	print(rect.position, " - ", rect.end)
 	rect = rect.grow_side(SIDE_LEFT, -1).grow_side(SIDE_TOP, -1)
-	
 	
 	if not rect.has_point(coord):
 		print("Outside of placeable tiles")

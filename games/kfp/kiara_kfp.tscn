@@ -14,7 +14,7 @@ collision_layer = 2
 
 [node name="TopDownMove2D" type="Node" parent="."]
 script = ExtResource("1_m1dp1")
-speed = 150
+speed = 100
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -8)

@@ -1,12 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2ro12l6f7xuu"]
+[gd_scene load_steps=6 format=3 uid="uid://c2ro12l6f7xuu"]
 
+[ext_resource type="Script" path="res://games/kfp/okyaku.gd" id="1_8xdq1"]
 [ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="1_ev7tt"]
-[ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="2_mb0lx"]
+[ext_resource type="Script" path="res://games/kfp/MoveTarget.gd" id="3_0fjrs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yw621"]
 size = Vector2(12, 4)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_bfdpf"]
+radius = 8.06226
+
 [node name="Okyaku" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("1_8xdq1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -8)
@@ -18,5 +25,16 @@ vframes = 4
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_yw621")
 
-[node name="NavigationMove2D" type="NavigationAgent2D" parent="."]
-script = ExtResource("2_mb0lx")
+[node name="MoveTarget" type="Node" parent="." node_paths=PackedStringArray("body")]
+script = ExtResource("3_0fjrs")
+body = NodePath("..")
+speed = 30
+target_distance = 2
+
+[node name="PeopleDetection" type="Area2D" parent="."]
+position = Vector2(0, -5)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PeopleDetection"]
+shape = SubResource("CircleShape2D_bfdpf")
