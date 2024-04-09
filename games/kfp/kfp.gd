@@ -5,10 +5,16 @@ extends Node2D
 @export var egg_scene: PackedScene
 @export var total_eggs_label: Label
 
-@onready var place_marker = $PlaceMarker
+@onready var place_marker = $TileMap/PlaceMarker
 @onready var ordering = $TileMap/Ordering
 @onready var tile_map = $TileMap
 @onready var mini_game = $MiniGame
+
+@export var room_layer := 3
+@export var farm_layer := 2
+@onready var fit_camera = $FitCamera
+@onready var farm_enter = $FarmEnter
+@onready var room_enter = $RoomEnter
 
 const GROUND_LAYER = 1
 
@@ -18,6 +24,10 @@ var total_eggs := 0:
 		total_eggs_label.text = "%s" % total_eggs
 		
 var place_egg := false
+
+func _ready():
+	farm_enter.body_entered.connect(func(_x): fit_camera.update(farm_layer))
+	room_enter.body_entered.connect(func(_x): fit_camera.update(room_layer))
 
 func _on_egg_catch_game_total_eggs_collected(eggs):
 	self.total_eggs += eggs
@@ -46,21 +56,13 @@ func _place_hatching_egg():
 		return
 	
 	var coord = tile_map.local_to_map(get_global_mouse_position())
+	var rect = Util.tilemap_layer_rect(tile_map, GROUND_LAYER) as Rect2i
+	print(rect.size)
+	print(rect.position, " - ", rect.end)
+	rect = rect.grow_side(SIDE_LEFT, -1).grow_side(SIDE_TOP, -1)
 	
-	#if tile_map.get_cell_source_id(GROUND_LAYER, coord) == -1:
-		#print("Eggs can only be placed on the ground")
-		#return
-		
-	var cells = tile_map.get_used_cells(GROUND_LAYER)
-	var min_coord = Vector2i(1000, 1000)
-	var max_coord = Vector2i(0, 0)
-	for c in cells:
-		min_coord.x = min(min_coord.x, c.x)
-		min_coord.y = min(min_coord.y, c.y)
-		max_coord.x = max(max_coord.x, c.x)
-		max_coord.y = max(max_coord.y, c.y)
-		
-	if coord.x <= min_coord.x or coord.x >= max_coord.x or coord.y <= min_coord.y or coord.y >= max_coord.y:
+	
+	if not rect.has_point(coord):
 		print("Outside of placeable tiles")
 		return
 	
@@ -73,6 +75,9 @@ func _place_hatching_egg():
 		egg.queue_free()
 	)
 	self.total_eggs -= 1
+	
+	if total_eggs <= 0:
+		_stop_place_eggs()
 
 func _spawn_chicken(pos: Vector2):
 	var chicken = chicken_scene.instantiate()

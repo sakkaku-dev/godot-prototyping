@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://c2ro12l6f7xuu"]
+[gd_scene load_steps=4 format=3 uid="uid://c2ro12l6f7xuu"]
 
 [ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="1_ev7tt"]
+[ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="2_mb0lx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yw621"]
 size = Vector2(12, 4)
@@ -16,3 +17,6 @@ vframes = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_yw621")
+
+[node name="NavigationMove2D" type="NavigationAgent2D" parent="."]
+script = ExtResource("2_mb0lx")

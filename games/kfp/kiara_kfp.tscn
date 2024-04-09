@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://util/Hand.gd" id="3_gkyel"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l6dh6"]
-size = Vector2(12, 4)
+size = Vector2(10, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8x5t7"]
 
@@ -23,7 +23,7 @@ hframes = 4
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_l6dh6")
 
 [node name="Hand" type="Area2D" parent="."]
