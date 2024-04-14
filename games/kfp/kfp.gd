@@ -1,9 +1,14 @@
 class_name KFP
 extends Node2D
 
+signal order_added(id)
+signal order_completed(id)
+signal order_failed(id)
+
 @export var chicken_scene: PackedScene
 @export var egg_scene: PackedScene
 @export var total_eggs_label: Label
+@export var order_list: Control
 
 @onready var place_marker = $TileMap/PlaceMarker
 @onready var ordering = $TileMap/Ordering
@@ -23,14 +28,21 @@ var total_eggs := 0:
 	set(x):
 		total_eggs = x
 		total_eggs_label.text = "%s" % total_eggs
-var orders := []
+var order_id := 1
+var orders := {}
 var place_egg := false
 
 func _ready():
 	farm_enter.body_entered.connect(func(_x): fit_camera.update(farm_layer))
 	room_enter.body_entered.connect(func(_x): fit_camera.update(room_layer))
 	
-	order_desk.ordered.connect(func(): orders.append(null))
+	order_desk.ordered.connect(func(c): _add_order(c))
+
+func _add_order(customer):
+	orders[order_id] = customer
+	customer.taken_order(order_id)
+	order_added.emit(customer)
+	order_id += 1
 
 func _on_egg_catch_game_total_eggs_collected(eggs):
 	self.total_eggs += eggs

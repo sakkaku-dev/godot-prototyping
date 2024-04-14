@@ -1,6 +1,6 @@
 extends Area2D
 
-signal ordered()
+signal ordered(c)
 
 @export var interact: Interactable
 
@@ -16,6 +16,5 @@ func _ready():
 			print("Customer is not ordering anymore")
 			return
 		
-		ordered.emit()
-		customer.taken_order()
+		ordered.emit(customer)
 	)

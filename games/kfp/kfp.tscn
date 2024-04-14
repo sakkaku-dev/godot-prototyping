@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://db0b1s8vxaap8"]
+[gd_scene load_steps=56 format=3 uid="uid://db0b1s8vxaap8"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp.gd" id="1_81nka"]
 [ext_resource type="Texture2D" uid="uid://rf1d7xo48l0r" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Wooden House.png" id="1_nwtne"]
@@ -30,6 +30,8 @@
 [ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/okyaku.tscn" id="23_kk0tv"]
 [ext_resource type="Script" path="res://games/kfp/CustomerSpawn.gd" id="24_kvsde"]
 [ext_resource type="Script" path="res://games/kfp/OrderDesk.gd" id="26_oa8ma"]
+[ext_resource type="Script" path="res://games/kfp/OrderList.gd" id="31_wd14s"]
+[ext_resource type="PackedScene" uid="uid://ci4iyqc760nsx" path="res://games/kfp/order_item.tscn" id="32_ubujr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oko1a"]
 bg_color = Color(0, 0, 0, 0.670588)
@@ -1367,6 +1369,9 @@ script = ExtResource("22_ey5fr")
 root = NodePath("..")
 scene = ExtResource("23_kk0tv")
 
+[node name="Line2D" type="Line2D" parent="TileMap"]
+position = Vector2(40, 170)
+
 [node name="OrderMove1" type="Marker2D" parent="TileMap"]
 position = Vector2(40, 35)
 
@@ -1405,6 +1410,7 @@ interactable = NodePath("../Interactable")
 node = NodePath("../Sprite2D")
 
 [node name="FarmEnter" type="Area2D" parent="."]
+visible = false
 position = Vector2(295, 96)
 collision_layer = 0
 collision_mask = 2
@@ -1414,6 +1420,7 @@ position = Vector2(2, 0)
 shape = SubResource("RectangleShape2D_ns4hp")
 
 [node name="RoomEnter" type="Area2D" parent="."]
+visible = false
 position = Vector2(103, 96)
 collision_layer = 0
 collision_mask = 2
@@ -1496,8 +1503,21 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="OrderList" type="Control" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+script = ExtResource("31_wd14s")
+order_item = ExtResource("32_ubujr")
+child_size = Vector2(40, 40)
+
 [node name="OpenSign" type="Area2D" parent="."]
-position = Vector2(78, 184)
+visible = false
+position = Vector2(62, 184)
 script = ExtResource("6_5onm5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OpenSign"]
@@ -1509,7 +1529,7 @@ node = NodePath("../Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="OpenSign"]
 material = SubResource("ShaderMaterial_vu6i8")
-position = Vector2(-17, 1)
+position = Vector2(0, 1)
 
 [node name="Label" type="Label" parent="OpenSign/Sprite2D"]
 anchors_preset = 8
@@ -1528,5 +1548,6 @@ theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 6
 text = "Open"
 
+[connection signal="order_added" from="." to="CanvasLayer/Control/MarginContainer/OrderList" method="_on_kfp_order_added"]
 [connection signal="total_eggs_collected" from="TileMap/Ordering/EggCatchGame" to="." method="_on_egg_catch_game_total_eggs_collected"]
 [connection signal="pressed" from="CanvasLayer/Control/MarginContainer2/HBoxContainer/EggAction" to="." method="_on_egg_action_pressed"]

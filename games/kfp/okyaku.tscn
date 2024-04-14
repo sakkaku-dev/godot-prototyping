@@ -28,7 +28,7 @@ shape = SubResource("RectangleShape2D_yw621")
 [node name="MoveTarget" type="Node" parent="." node_paths=PackedStringArray("body")]
 script = ExtResource("3_0fjrs")
 body = NodePath("..")
-speed = 30
+speed = 100
 target_distance = 2
 
 [node name="PeopleDetection" type="Area2D" parent="."]

@@ -1,6 +1,8 @@
 class_name Customer
 extends CharacterBody2D
 
+signal order_failed()
+
 enum {
 	MOVING_ORDER,
 	ORDER,
@@ -15,6 +17,8 @@ enum {
 @onready var food_wait_time = $FoodWaitTime
 
 @onready var exit_order := [global_position]
+
+var order_id := 0
 var move_order := []
 var state = MOVING_ORDER:
 	set(v):
@@ -31,8 +35,11 @@ var state = MOVING_ORDER:
 			
 
 func _ready():
-	order_wait_time.timeout.connect(func(): self.state = LEAVING)
-	food_wait_time.timeout.connect(func(): self.state = LEAVING)
+	order_wait_time.timeout.connect(func():self.state = LEAVING)
+	food_wait_time.timeout.connect(func():
+		self.state = LEAVING
+		order_failed.emit()
+	)
 	
 	await get_tree().create_timer(1.0).timeout
 	await _move_in_order(move_order)
@@ -60,5 +67,6 @@ func _detect_nearby_people():
 func is_ordering():
 	return state == ORDER
 
-func taken_order():
+func taken_order(id):
 	self.state = WAITING
+	order_id = id
