@@ -1,5 +1,5 @@
-class_name Transition
-extends Node
+class_name PositionEffect
+extends Effect
 
 @export var node: Control
 @export var dir := Vector2.RIGHT
@@ -7,19 +7,11 @@ extends Node
 
 @onready var original_position := node.position
 
-var tw: Tween
-
 func _ready():
 	node.position = _hide_position()
 
 func _hide_position():
 	return original_position + dir * node.size + extra_offset
-
-func _new_tween():
-	if tw and tw.is_running():
-		tw.kill()
-	
-	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	
 func open():
 	_new_tween()

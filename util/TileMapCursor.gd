@@ -14,8 +14,6 @@ var coord := Vector2i.ZERO:
 		
 		var pos = tile_map.map_to_local(coord)
 		global_position = pos
-		
-		print("%s - %s" % [coord, pos])
 
 func _ready():
 	self.coord = Vector2.ZERO

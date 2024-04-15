@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://db0b1s8vxaap8"]
+[gd_scene load_steps=64 format=3 uid="uid://db0b1s8vxaap8"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp.gd" id="1_81nka"]
 [ext_resource type="Texture2D" uid="uid://rf1d7xo48l0r" path="res://assets/Sprout Lands - Sprites - Basic pack/Tilesets/Wooden House.png" id="1_nwtne"]
@@ -38,8 +38,10 @@
 [ext_resource type="Script" path="res://games/kfp/ChickenContainer.gd" id="34_nmjkx"]
 [ext_resource type="Script" path="res://games/kfp/TotalChickenLabel.gd" id="35_l5ssy"]
 [ext_resource type="PackedScene" uid="uid://mhln2eiqfj00" path="res://games/kfp/chicken_button.tscn" id="37_d831f"]
+[ext_resource type="Script" path="res://effects/OverlayEffect.gd" id="38_5gr3d"]
 [ext_resource type="Script" path="res://effects/PositionEffect.gd" id="38_yq75v"]
 [ext_resource type="Texture2D" uid="uid://con1wbq2fmcvr" path="res://assets/UI Base Pack/PNG/grey_crossWhite.png" id="40_8mbbj"]
+[ext_resource type="Script" path="res://ui/Overlay.gd" id="41_inooq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oko1a"]
 bg_color = Color(0, 0, 0, 0.670588)
@@ -1577,6 +1579,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("35_l5ssy")
 
+[node name="Overlay" type="ColorRect" parent="CanvasLayer/Control/FarmUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.611765)
+script = ExtResource("41_inooq")
+
 [node name="ChickenContainer" type="PanelContainer" parent="CanvasLayer/Control/FarmUI" node_paths=PackedStringArray("button", "close_button", "chicken_manager", "container")]
 custom_minimum_size = Vector2(100, 200)
 layout_mode = 1
@@ -1593,6 +1605,10 @@ close_button = NodePath("MarginContainer/BlueIconButton")
 chicken_manager = NodePath("../../../../ChickenManager")
 chicken_scene = ExtResource("37_d831f")
 container = NodePath("ScrollContainer/MarginContainer/GridContainer")
+
+[node name="OverlayEffect" type="Node" parent="CanvasLayer/Control/FarmUI/ChickenContainer" node_paths=PackedStringArray("overlay")]
+script = ExtResource("38_5gr3d")
+overlay = NodePath("../../Overlay")
 
 [node name="PositionEffect" type="Node" parent="CanvasLayer/Control/FarmUI/ChickenContainer" node_paths=PackedStringArray("node")]
 script = ExtResource("38_yq75v")
