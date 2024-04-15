@@ -16,13 +16,23 @@ signal order_failed(id)
 @onready var fit_camera = $FitCamera
 @onready var farm_enter = $FarmEnter
 @onready var room_enter = $RoomEnter
+@onready var farm_effect_runner = $FarmEffectRunner
+@onready var game_effect_runner = $GameEffectRunner
 
 var order_id := 1
 var orders := {}
 
 func _ready():
-	farm_enter.body_entered.connect(func(_x): fit_camera.update(farm_layer))
-	room_enter.body_entered.connect(func(_x): fit_camera.update(room_layer))
+	farm_enter.body_entered.connect(func(_x):
+		fit_camera.update(farm_layer)
+		farm_effect_runner.open()
+		game_effect_runner.close()
+	)
+	room_enter.body_entered.connect(func(_x):
+		fit_camera.update(room_layer)
+		farm_effect_runner.close()
+		game_effect_runner.open()
+	)
 	order_desk.ordered.connect(func(c): _add_order(c))
 
 func _add_order(customer):

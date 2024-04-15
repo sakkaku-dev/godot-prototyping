@@ -7,23 +7,12 @@ extends PanelContainer
 @export var chicken_scene: PackedScene
 @export var container: Control
 
-@onready var position_effect = $PositionEffect
-@onready var overlay_effect = $OverlayEffect
-
-@onready var effects = [position_effect, overlay_effect]
+@onready var effect_runner = $EffectRunner
 
 func _ready():
 	chicken_manager.chicken_changed.connect(func(_x): _update_chickens())
-	button.pressed.connect(func(): _open())
-	close_button.pressed.connect(func(): _close())
-
-func _open():
-	for e in effects:
-		e.open()
-
-func _close():
-	for e in effects:
-		e.close()
+	button.pressed.connect(func(): effect_runner.open())
+	close_button.pressed.connect(func(): effect_runner.close())
 
 func _update_chickens():
 	for c in container.get_children():
