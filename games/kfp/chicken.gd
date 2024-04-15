@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal died()
+
 @onready var move_collide = $MoveCollide
 @onready var idle_timer = $IdleTimer
 @onready var wander_timer = $WanderTimer

@@ -44,7 +44,7 @@ script = ExtResource("2_7iatk")
 shape = SubResource("RectangleShape2D_d0l07")
 
 [node name="HatchingTimer" type="Timer" parent="."]
-wait_time = 120.0
+wait_time = 4.0
 one_shot = true
 autostart = true
 

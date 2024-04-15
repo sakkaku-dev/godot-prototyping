@@ -7,7 +7,6 @@ extends Node
 @export var exit_marker: Node2D
 
 func _ready():
-	timer.start()
 	timer.timeout.connect(func(): _spawn_customer())
 
 func _spawn_customer():
@@ -15,3 +14,9 @@ func _spawn_customer():
 	customer.move_order.append(order_marker_2.global_position)
 	customer.move_order.append(order_marker.global_position)
 	customer.exit_order.push_front(exit_marker.global_position)
+
+func open_restaurant():
+	timer.start()
+
+func close_restaurant():
+	timer.stop()

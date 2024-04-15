@@ -8,14 +8,15 @@ signal order_failed(id)
 @export var chicken_scene: PackedScene
 @export var egg_scene: PackedScene
 @export var total_eggs_label: Label
-@export var order_list: Control
 
 @onready var place_marker = $TileMap/PlaceMarker
 @onready var ordering = $TileMap/Ordering
 @onready var tile_map = $TileMap
 @onready var mini_game = $MiniGame
 @onready var order_desk = $TileMap/OrderDesk
+@onready var chicken_manager = $ChickenManager
 
+@export_category("Camera")
 @export var room_layer := 3
 @export var farm_layer := 2
 @onready var fit_camera = $FitCamera
@@ -24,10 +25,11 @@ signal order_failed(id)
 
 const GROUND_LAYER = 1
 
-var total_eggs := 0:
+var total_eggs := 10:
 	set(x):
 		total_eggs = x
 		total_eggs_label.text = "%s" % total_eggs
+
 var order_id := 1
 var orders := {}
 var place_egg := false
@@ -83,7 +85,10 @@ func _place_hatching_egg():
 	egg.global_position = tile_map.map_to_local(coord)
 	egg.mini_game = mini_game
 	egg.hatched.connect(func():
-		_spawn_chicken(egg.global_position)
+		if chicken_manager.is_max_chickens():
+			return
+		
+		var chicken = _spawn_chicken(egg.global_position)
 		egg.queue_free()
 	)
 	self.total_eggs -= 1
@@ -95,3 +100,4 @@ func _spawn_chicken(pos: Vector2):
 	var chicken = chicken_scene.instantiate()
 	ordering.add_child(chicken)
 	chicken.global_position = pos
+	chicken_manager.add_chicken(chicken)

@@ -6,4 +6,4 @@ extends Node2D
 func _ready():
 	timer.timeout.connect(func(): )
 	
-func _spawn
+
