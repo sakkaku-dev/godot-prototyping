@@ -1,3 +1,4 @@
+class_name EggCatchGame
 extends Node2D
 
 signal total_eggs_collected(eggs)

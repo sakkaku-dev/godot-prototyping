@@ -1,6 +1,8 @@
 class_name MiniGame
 extends Node
 
+const GROUP = "MiniGame"
+
 @export var game_ui: Control
 @export var game_container: SubViewport
 
