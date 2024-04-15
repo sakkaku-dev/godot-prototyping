@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://mhln2eiqfj00"]
+[gd_scene load_steps=5 format=3 uid="uid://mhln2eiqfj00"]
 
+[ext_resource type="Script" path="res://games/kfp/chicken_button.gd" id="1_0jb66"]
 [ext_resource type="Texture2D" uid="uid://6jq8e8jw1ce1" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Free Chicken Sprites.png" id="1_6pc04"]
 [ext_resource type="Script" path="res://ui/FocusControl.gd" id="2_0cagm"]
+[ext_resource type="Texture2D" uid="uid://cnjvqo60rulu3" path="res://assets/UI Base Pack/PNG/blue_circle.png" id="4_ypsrd"]
 
 [node name="ChickenButton" type="TextureButton"]
 custom_minimum_size = Vector2(16, 16)
+script = ExtResource("1_0jb66")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 1
@@ -26,3 +29,14 @@ vframes = 2
 [node name="FocusControl" type="Node" parent="." node_paths=PackedStringArray("show_on_focus")]
 script = ExtResource("2_0cagm")
 show_on_focus = NodePath("../ColorRect")
+
+[node name="WorkingSign" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+texture = ExtResource("4_ypsrd")
+expand_mode = 3
+stretch_mode = 5

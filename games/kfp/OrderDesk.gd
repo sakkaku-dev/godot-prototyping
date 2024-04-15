@@ -1,4 +1,5 @@
-extends Area2D
+class_name OrderDesk
+extends WorkArea
 
 signal ordered(c)
 
@@ -7,6 +8,7 @@ signal ordered(c)
 var customer: Customer
 
 func _ready():
+	super._ready()
 	body_entered.connect(func(c):
 		customer = c
 	)

@@ -17,7 +17,7 @@ func random_direction():
 func stop():
 	dir = Vector2.ZERO
 
-func _physics_process(delta: float):
+func process(delta: float):
 	if do_move(dir):
 		var collision = body.get_last_slide_collision()
 		if collision:

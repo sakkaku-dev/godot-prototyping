@@ -23,7 +23,6 @@ var orders := {}
 func _ready():
 	farm_enter.body_entered.connect(func(_x): fit_camera.update(farm_layer))
 	room_enter.body_entered.connect(func(_x): fit_camera.update(room_layer))
-	
 	order_desk.ordered.connect(func(c): _add_order(c))
 
 func _add_order(customer):

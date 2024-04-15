@@ -20,7 +20,7 @@ func _ready():
 func _open():
 	for e in effects:
 		e.open()
-		
+
 func _close():
 	for e in effects:
 		e.close()
@@ -31,4 +31,5 @@ func _update_chickens():
 		
 	for chicken in chicken_manager.chickens:
 		var node = chicken_scene.instantiate()
+		node.chicken = chicken
 		container.add_child(node)

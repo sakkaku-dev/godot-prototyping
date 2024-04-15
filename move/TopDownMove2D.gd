@@ -2,7 +2,6 @@ class_name TopDownMove2D
 extends Node
 
 @export var speed := 200
-
 @onready var character: CharacterBody2D = get_parent()
 
 func _physics_process(_delta):

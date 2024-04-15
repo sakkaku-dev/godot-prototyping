@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dqi0tr2t1jv0r" path="res://assets/UI Base Pack/PNG/blue_button09.png" id="1_jdc25"]
 [ext_resource type="Texture2D" uid="uid://dfnwy6bmyk4a2" path="res://assets/UI Base Pack/PNG/blue_button08.png" id="2_awhkl"]
-[ext_resource type="Texture2D" uid="uid://b4bmpuahnpg7k" path="res://assets/UI Base Pack/PNG/blue_button07.png" id="3_0yhhk"]
+[ext_resource type="Texture2D" uid="uid://chep1hsv5psip" path="res://assets/UI Base Pack/PNG/yellow_button08.png" id="3_ko1sn"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_40kp6"]
 action = &"slot_2"
@@ -16,6 +16,6 @@ custom_minimum_size = Vector2(16, 16)
 shortcut = SubResource("Shortcut_02pi8")
 texture_normal = ExtResource("1_jdc25")
 texture_pressed = ExtResource("2_awhkl")
-texture_hover = ExtResource("3_0yhhk")
+texture_hover = ExtResource("3_ko1sn")
 ignore_texture_size = true
 stretch_mode = 5
