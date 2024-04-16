@@ -1,6 +1,7 @@
 extends Cursor
 
-const GROUND_LAYER = 1
+const GROUND_LAYER = 0
+const GROUND_SOURCE = 3
 
 @export var chicken_manager: ChickenManager
 @export var chicken_scene: PackedScene
@@ -30,7 +31,7 @@ func _place_hatching_egg():
 		return
 	
 	var coord = get_map_position()
-	var rect = Util.tilemap_layer_rect(tile_map, GROUND_LAYER) as Rect2i
+	var rect = Util.tilemap_layer_rect(tile_map, GROUND_LAYER, GROUND_SOURCE) as Rect2i
 	rect = rect.grow_side(SIDE_LEFT, -1).grow_side(SIDE_TOP, -1)
 	
 	if not rect.has_point(coord):

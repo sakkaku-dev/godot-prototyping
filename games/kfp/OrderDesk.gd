@@ -14,6 +14,10 @@ func _ready():
 	)
 
 	interact.interacted.connect(func(_a):
+		if not customer:
+			print("No customer")
+			return
+		
 		if not customer.is_ordering():
 			print("Customer is not ordering anymore")
 			return

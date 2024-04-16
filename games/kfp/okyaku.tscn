@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/kfp/okyaku.gd" id="1_8xdq1"]
 [ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="1_ev7tt"]
-[ext_resource type="Script" path="res://games/kfp/MoveTarget.gd" id="3_0fjrs"]
+[ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="2_w1kk5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yw621"]
 size = Vector2(12, 4)
@@ -14,6 +14,14 @@ radius = 8.06226
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_8xdq1")
+debug = true
+
+[node name="NavigationMove2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
+path_desired_distance = 10.0
+target_desired_distance = 5.0
+debug_enabled = true
+script = ExtResource("2_w1kk5")
+enemy = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -8)
@@ -24,12 +32,6 @@ vframes = 4
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_yw621")
-
-[node name="MoveTarget" type="Node" parent="." node_paths=PackedStringArray("body")]
-script = ExtResource("3_0fjrs")
-body = NodePath("..")
-speed = 100
-target_distance = 2
 
 [node name="PeopleDetection" type="Area2D" parent="."]
 position = Vector2(0, -5)

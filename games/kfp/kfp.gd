@@ -11,8 +11,8 @@ signal order_failed(id)
 @onready var order_desk = $TileMap/OrderDesk
 
 @export_category("Camera")
-@export var room_layer := 3
-@export var farm_layer := 2
+@export var room_source := 0
+@export var farm_source := 3
 @onready var fit_camera = $FitCamera
 @onready var farm_enter = $FarmEnter
 @onready var room_enter = $RoomEnter
@@ -24,12 +24,12 @@ var orders := {}
 
 func _ready():
 	farm_enter.body_entered.connect(func(_x):
-		fit_camera.update(farm_layer)
+		fit_camera.update(farm_source)
 		farm_effect_runner.open()
 		game_effect_runner.close()
 	)
 	room_enter.body_entered.connect(func(_x):
-		fit_camera.update(room_layer)
+		fit_camera.update(room_source)
 		farm_effect_runner.close()
 		game_effect_runner.open()
 	)

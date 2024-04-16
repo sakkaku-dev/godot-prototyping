@@ -1,18 +1,18 @@
 class_name FitCamera
 extends Camera2D
 
-@export var layer := 3
+@export var source := 0
 @export var tilemap: TileMap
 @export var margin := 0
 @onready var tile_size = tilemap.tile_set.tile_size
 
 func _ready():
-	update()
+	update(source)
 	await get_tree().create_timer(0.5).timeout
 	position_smoothing_enabled = true
 
-func update(l = layer):
-	var rect = Util.tilemap_layer_rect(tilemap, l)
+func update(s = source):
+	var rect = Util.tilemap_layer_rect(tilemap, 0, s)
 	rect = rect.grow(margin)
 	
 	_center_camera(rect)

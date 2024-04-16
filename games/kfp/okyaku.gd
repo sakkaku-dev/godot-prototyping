@@ -11,15 +11,18 @@ enum {
 	LEAVING,
 }
 
-@onready var move_target = $MoveTarget
+@export var debug := false
+
+#@onready var move_target = $MoveTarget
 @onready var people_detection = $PeopleDetection
 @onready var order_wait_time = $OrderWaitTime
 @onready var food_wait_time = $FoodWaitTime
-
-@onready var exit_order := [global_position]
+@onready var navigation_move_2d = $NavigationMove2D
 
 var order_id := 0
-var move_order := []
+var move_order: Node2D
+var exit_order: Node2D
+
 var state = MOVING_ORDER:
 	set(v):
 		state = v
@@ -35,7 +38,7 @@ var state = MOVING_ORDER:
 			
 
 func _ready():
-	order_wait_time.timeout.connect(func():self.state = LEAVING)
+	order_wait_time.timeout.connect(func(): self.state = LEAVING)
 	food_wait_time.timeout.connect(func():
 		self.state = LEAVING
 		order_failed.emit()
@@ -45,24 +48,31 @@ func _ready():
 	await _move_in_order(move_order)
 	self.state = ORDER
 
-func _move_in_order(pos):
-	while pos.size() > 0:
-		move_target.current_target = pos.pop_front()
-		await move_target.reached
+func _move_in_order(root: Node2D):
+	for c in root.get_children():
+		navigation_move_2d.set_target(c.global_position)
+		await navigation_move_2d.reached
 
-func _process(delta):
+func _unhandled_input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+		var pos = get_global_mouse_position()
+		navigation_move_2d.set_target(pos)
+		print("Adding target: %s" % pos)
+
+func _physics_process(delta):
 	match state:
 		MOVING_ORDER:
+			navigation_move_2d.process(delta)
 			_detect_nearby_people()
 
 func _detect_nearby_people():
 	for area in people_detection.get_overlapping_areas():
 		var dir = global_position.direction_to(area.global_position)
-		if dir.dot(move_target.current_dir) > 0.75:
-			move_target.stop = true
+		if dir.dot(velocity) > 0.75:
+			navigation_move_2d.stop = true
 			return
 	
-	move_target.stop = false
+	navigation_move_2d.stop = false
 
 func is_ordering():
 	return state == ORDER
