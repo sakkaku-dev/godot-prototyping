@@ -4,15 +4,20 @@ extends WorkArea
 signal ordered(c)
 
 @export var interact: Interactable
+@export var customer_detect: Area2D
+
+@onready var icon = $Icon
 
 var customer: Customer
 
 func _ready():
 	super._ready()
-	body_entered.connect(func(c):
+	icon.hide()
+	
+	customer_detect.body_entered.connect(func(c):
 		customer = c
+		icon.show()
 	)
-
 	interact.interacted.connect(func(_a):
 		if not customer:
 			print("No customer")
@@ -23,4 +28,5 @@ func _ready():
 			return
 		
 		ordered.emit(customer)
+		icon.hide()
 	)

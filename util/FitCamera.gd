@@ -7,7 +7,7 @@ extends Camera2D
 @onready var tile_size = tilemap.tile_set.tile_size
 
 func _ready():
-	update(source)
+	#update(source)
 	await get_tree().create_timer(0.5).timeout
 	position_smoothing_enabled = true
 

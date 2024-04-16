@@ -5,6 +5,7 @@ const INTERACTABLE_LAYER = 6
 
 signal enable_highlight(enable)
 signal interacted(actor)
+signal interact_started(actor)
 
 func _ready():
 	collision_layer = 0
@@ -20,3 +21,6 @@ func unhighlight():
 
 func interact(actor):
 	interacted.emit(actor)
+
+func interact_start(actor):
+	interact_started.emit(actor)

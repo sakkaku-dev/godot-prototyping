@@ -9,6 +9,7 @@
 shader = ExtResource("3_601ao")
 shader_parameter/radius = 1.0
 shader_parameter/fill = 1.0
+shader_parameter/bg_color = Color(0, 0, 0, 1)
 
 [node name="OrderItem" type="TextureRect" node_paths=PackedStringArray("label", "timer_rect")]
 custom_minimum_size = Vector2(30, 0)

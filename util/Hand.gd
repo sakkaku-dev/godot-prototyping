@@ -1,8 +1,12 @@
 class_name Hand extends Area2D
 
+signal interact_started()
 signal interacted(obj)
+signal hold(item)
 
 var closest: Interactable
+var interacting := false
+var item
 
 func _ready():
 	collision_mask = 0
@@ -11,16 +15,20 @@ func _ready():
 	
 	area_exited.connect(func(a): a.unhighlight())
 
-func _unhandled_input(event):
-	if event.is_action_released("interact") and monitoring:
-		interact()
-		get_viewport().set_input_as_handled()
+func interact_start():
+	if can_interact():
+		closest.interact_start(self)
+		interacting = true
+		interact_started.emit(closest)
 
 func interact():
-	if closest:
+	if can_interact():
 		closest.interact(self)
+		interacting = false
 		interacted.emit(closest)
 
+func can_interact():
+	return closest and monitoring
 
 func _process(_delta):
 	closest = _get_closest_interactable()
@@ -59,3 +67,11 @@ func _get_closest_interactable():
 					closest_item_dot_scale = dot_scale
 
 	return closest_item
+
+func hold_item(i):
+	item = i
+	hold.emit(i)
+	interacting = false
+
+func is_holding():
+	return item != null

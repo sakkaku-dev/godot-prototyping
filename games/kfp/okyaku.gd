@@ -2,6 +2,8 @@ class_name Customer
 extends CharacterBody2D
 
 signal order_failed()
+signal order_completed()
+signal leaving()
 
 enum {
 	MOVING_ORDER,
@@ -12,12 +14,16 @@ enum {
 }
 
 @export var debug := false
+@export var happy_face: Texture2D
+@export var angry_face: Texture2D
+@export var wait_emote: Texture2D
 
 #@onready var move_target = $MoveTarget
 @onready var people_detection = $PeopleDetection
 @onready var order_wait_time = $OrderWaitTime
 @onready var food_wait_time = $FoodWaitTime
 @onready var navigation_move_2d = $NavigationMove2D
+@onready var emote = $Emote
 
 var order_id := 0
 var move_order: Node2D
@@ -30,6 +36,8 @@ var state = MOVING_ORDER:
 		if state == ORDER:
 			order_wait_time.start()
 		elif state == LEAVING:
+			leaving.emit()
+			food_wait_time.stop()
 			people_detection.monitorable = false
 			await _move_in_order(exit_order)
 		elif state == WAITING:
@@ -38,8 +46,10 @@ var state = MOVING_ORDER:
 			
 
 func _ready():
+	emote.texture = null
 	order_wait_time.timeout.connect(func(): self.state = LEAVING)
 	food_wait_time.timeout.connect(func():
+		emote.texture = angry_face
 		self.state = LEAVING
 		order_failed.emit()
 	)
@@ -60,10 +70,11 @@ func _unhandled_input(event):
 		print("Adding target: %s" % pos)
 
 func _physics_process(delta):
-	match state:
-		MOVING_ORDER:
-			navigation_move_2d.process(delta)
-			_detect_nearby_people()
+	if state == MOVING_ORDER:
+		navigation_move_2d.process(delta)
+		_detect_nearby_people()
+	if state == LEAVING:
+		navigation_move_2d.process(delta)
 
 func _detect_nearby_people():
 	for area in people_detection.get_overlapping_areas():
@@ -78,5 +89,11 @@ func is_ordering():
 	return state == ORDER
 
 func taken_order(id):
+	emote.texture = wait_emote
 	self.state = WAITING
 	order_id = id
+
+func finish_order():
+	emote.texture = happy_face
+	self.state = LEAVING
+	order_completed.emit()

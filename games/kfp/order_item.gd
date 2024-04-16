@@ -12,8 +12,14 @@ func _ready():
 	timer_rect.timer = customer.food_wait_time
 	
 	customer.order_failed.connect(func():
-		set_new_position(position + Vector2.UP * 50)
-		await tw.finished
-		removed.emit()
-		queue_free()
+		_move_out()
 	)
+	customer.order_completed.connect(func():
+		_move_out()
+	)
+
+func _move_out():
+	set_new_position(position + Vector2.UP * 50)
+	await tw.finished
+	removed.emit()
+	queue_free()

@@ -8,6 +8,8 @@ func _ready():
 	material = material.duplicate()
 
 func _process(delta):
+	visible = not timer.is_stopped()
+	
 	if timer.is_stopped():
 		return
 	
