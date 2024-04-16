@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2ro12l6f7xuu"]
+[gd_scene load_steps=12 format=3 uid="uid://c2ro12l6f7xuu"]
 
 [ext_resource type="Script" path="res://games/kfp/okyaku.gd" id="1_8xdq1"]
 [ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="1_ev7tt"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="2_w1kk5"]
 [ext_resource type="Texture2D" uid="uid://plfk4nyc85vu" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceAngry.png" id="3_0xuox"]
 [ext_resource type="Texture2D" uid="uid://bgojr8jilldeh" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_dots3.png" id="4_466gg"]
+[ext_resource type="Shader" path="res://shaders/timer.gdshader" id="7_cluj1"]
+[ext_resource type="Script" path="res://ui/CircleTimer.gd" id="8_v44ta"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yw621"]
 size = Vector2(12, 4)
@@ -13,11 +15,16 @@ size = Vector2(12, 4)
 [sub_resource type="CircleShape2D" id="CircleShape2D_bfdpf"]
 radius = 8.06226
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tk6bt"]
+shader = ExtResource("7_cluj1")
+shader_parameter/mix_color = Color(0, 0, 0, 1)
+shader_parameter/mix_amount = 0.6
+shader_parameter/fill = 0.2
+
 [node name="Okyaku" type="CharacterBody2D"]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_8xdq1")
-debug = true
 happy_face = ExtResource("2_drute")
 angry_face = ExtResource("3_0xuox")
 wait_emote = ExtResource("4_466gg")
@@ -56,7 +63,11 @@ one_shot = true
 wait_time = 10.0
 one_shot = true
 
-[node name="Emote" type="Sprite2D" parent="."]
+[node name="Emote" type="Sprite2D" parent="." node_paths=PackedStringArray("timer")]
+material = SubResource("ShaderMaterial_tk6bt")
 position = Vector2(0, -23)
 scale = Vector2(0.625, 0.625)
 texture = ExtResource("4_466gg")
+script = ExtResource("8_v44ta")
+timer = NodePath("../FoodWaitTime")
+hide_on_stop = false
