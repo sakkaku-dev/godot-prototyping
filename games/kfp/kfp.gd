@@ -11,6 +11,7 @@ signal order_failed(id)
 @onready var ordering = $TileMap/Ordering
 @onready var tile_map = $TileMap
 @onready var order_desk = $TileMap/Ordering/OrderDesk
+@onready var customer_manager = $CustomerManager
 
 @export_category("Camera")
 @export var room_source := 0
@@ -42,6 +43,9 @@ func _ready():
 	)
 	order_desk.ordered.connect(func(c): _add_order(c))
 
+func is_open():
+	return customer_manager.is_open()
+
 func _add_order(customer):
 	orders[order_id] = customer
 	order_numbers.append(order_id)
@@ -56,14 +60,13 @@ func _remove_customer(c: Customer):
 	orders.erase(id)
 	order_numbers.erase(id)
 
+func has_orders():
+	return not order_numbers.is_empty()
+
 func finished_order(item):
-	if item == null or order_numbers.is_empty():
-		return false
-	
 	var id = order_numbers.pop_front()
 	orders[id].finish_order()
 	orders.erase(id)
-	return true
 
 func _on_egg_action_pressed():
-	cursor.is_focused = not cursor.is_focused
+	cursor.toggle_place_eggs()

@@ -1,23 +1,33 @@
-extends Cursor
+extends Node2D
 
 const GROUND_LAYER = 0
 const GROUND_SOURCE = 3
 
+@export var cursor: SnappedCursor
 @export var chicken_manager: ChickenManager
 @export var chicken_scene: PackedScene
 @export var spawn_root: Node2D
 
 @onready var egg_spawner = $EggSpawner
-@onready var place_marker = $PlaceMarker
+
+var is_placing := false:
+	set(v):
+		is_placing = v
+		cursor.is_focused = v
+
+func toggle_place_eggs():
+	self.is_placing = not is_placing
 
 func _unhandled_input(event):
-	if not is_focused: return
-	super._unhandled_input(event)
+	if not is_placing: return
 	
 	if event.is_action_pressed("action"):
+		egg_spawner.global_position = cursor.global_position
 		_place_hatching_egg()
+		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("cancel"):
-		self.is_focused = false
+		cursor.is_focused = false
+		get_viewport().set_input_as_handled()
 
 func _spawn_chicken(pos: Vector2):
 	var chicken = chicken_scene.instantiate()
@@ -30,8 +40,8 @@ func _place_hatching_egg():
 		print("NO EGGS")
 		return
 	
-	var coord = get_map_position()
-	var rect = Util.tilemap_layer_rect(tile_map, GROUND_LAYER, GROUND_SOURCE) as Rect2i
+	var coord = cursor.get_map_position()
+	var rect = Util.tilemap_layer_rect(cursor.tile_map, GROUND_LAYER, GROUND_SOURCE) as Rect2i
 	rect = rect.grow_side(SIDE_LEFT, -1).grow_side(SIDE_TOP, -1)
 	
 	if not rect.has_point(coord):
@@ -42,7 +52,7 @@ func _place_hatching_egg():
 	
 	chicken_manager.total_eggs -= 1
 	if chicken_manager.total_eggs <= 0:
-		self.is_focused = false
+		cursor.is_focused = false
 
 func _spawn_egg():
 	var egg = egg_spawner.spawn()

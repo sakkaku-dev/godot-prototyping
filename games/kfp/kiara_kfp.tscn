@@ -11,9 +11,10 @@ size = Vector2(10, 2)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8x5t7"]
 
-[node name="KiaraKfp" type="CharacterBody2D"]
+[node name="KiaraKfp" type="CharacterBody2D" node_paths=PackedStringArray("cursor_transform")]
 collision_layer = 2
 script = ExtResource("1_1v3ap")
+cursor_transform = NodePath("Root/Marker2D/RemoteTransform2D")
 
 [node name="TopDownMove2D" type="Node" parent="."]
 script = ExtResource("1_m1dp1")
@@ -24,6 +25,11 @@ position = Vector2(0, -8)
 texture = ExtResource("2_juiiw")
 hframes = 4
 vframes = 4
+
+[node name="Item" type="Sprite2D" parent="."]
+position = Vector2(0, -22)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_x21na")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
@@ -36,7 +42,13 @@ script = ExtResource("3_gkyel")
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_8x5t7")
 
-[node name="Item" type="Sprite2D" parent="."]
-position = Vector2(0, -22)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_x21na")
+[node name="Root" type="Node2D" parent="."]
+position = Vector2(0, -8)
+
+[node name="Marker2D" type="Marker2D" parent="Root"]
+position = Vector2(8, 0)
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Root/Marker2D"]
+remote_path = NodePath("..")
+update_rotation = false
+update_scale = false

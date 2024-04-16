@@ -14,7 +14,7 @@ func _process(delta):
 	else:
 		_set_value(0.0)
 	
-	if timer.is_stopped():
+	if timer == null or timer.is_stopped():
 		return
 	
 	var p = timer.time_left / timer.wait_time

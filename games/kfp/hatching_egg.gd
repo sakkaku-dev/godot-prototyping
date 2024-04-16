@@ -18,7 +18,7 @@ func _ready():
 	add_to_group(GROUP)
 	timer.timeout.connect(func(): hatched.emit())
 	
-	interactable.interacted.connect(func(_x):
+	interactable.interact_started.connect(func(_x):
 		var game = game_scene.instantiate()
 		game.current_time_left = timer.time_left
 		game.hatched.connect(_on_hatched)

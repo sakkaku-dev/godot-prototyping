@@ -3,10 +3,8 @@ extends WorkArea
 
 signal ordered(c)
 
-@export var interact: Interactable
 @export var customer_detect: Area2D
-
-@onready var icon = $Icon
+@export var icon: Node2D
 
 var customer: Customer
 
@@ -18,15 +16,15 @@ func _ready():
 		customer = c
 		icon.show()
 	)
-	interact.interacted.connect(func(_a):
-		if not customer:
-			print("No customer")
-			return
-		
-		if not customer.is_ordering():
-			print("Customer is not ordering anymore")
-			return
-		
-		ordered.emit(customer)
-		icon.hide()
-	)
+
+func do_action(_h):
+	if not customer:
+		print("No customer")
+		return
+	
+	if not customer.is_ordering():
+		print("Customer is not ordering anymore")
+		return
+	
+	ordered.emit(customer)
+	icon.hide()

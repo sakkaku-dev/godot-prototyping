@@ -21,3 +21,6 @@ func open_restaurant():
 
 func close_restaurant():
 	timer.stop()
+
+func is_open():
+	return not timer.is_stopped()

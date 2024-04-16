@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://db0b1s8vxaap8"]
+[gd_scene load_steps=62 format=3 uid="uid://db0b1s8vxaap8"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp.gd" id="1_81nka"]
 [ext_resource type="PackedScene" uid="uid://sout08yq6hm3" path="res://games/kfp/chicken.tscn" id="2_4ve5m"]
@@ -14,28 +14,30 @@
 [ext_resource type="PackedScene" uid="uid://cgwjkb3536q2y" path="res://games/kfp/egg_catch_world.tscn" id="10_m22qt"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="12_0h307"]
 [ext_resource type="Texture2D" uid="uid://cqasiwkferewg" path="res://assets/Sprout Lands - Sprites - Basic pack/Objects/Egg_item.png" id="12_y07fp"]
-[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="15_lfbes"]
 [ext_resource type="PackedScene" uid="uid://oqsowgc2oyi" path="res://games/kfp/door.tscn" id="16_a2v03"]
 [ext_resource type="PackedScene" uid="uid://batvt4qlisy83" path="res://games/kfp/table.tscn" id="18_5u7uy"]
 [ext_resource type="Script" path="res://games/kfp/TakeOut.gd" id="18_ucyrk"]
 [ext_resource type="PackedScene" uid="uid://dc0ei8l73md2p" path="res://games/kfp/chair.tscn" id="19_v0g1f"]
 [ext_resource type="Script" path="res://games/kfp/MiniGame.gd" id="21_hdb3y"]
 [ext_resource type="Texture2D" uid="uid://dmfwmh85atlyp" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_exclamation.png" id="21_jwh32"]
+[ext_resource type="Texture2D" uid="uid://c3v1e38xf5n6y" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_cash.png" id="21_k8x3d"]
+[ext_resource type="Texture2D" uid="uid://b8ifyx4rr35yo" path="res://assets/RPG Urban Pack/Tilemap/tilemap_packed.png" id="22_8tfwx"]
 [ext_resource type="Script" path="res://util/FitCamera.gd" id="22_12hxb"]
+[ext_resource type="Script" path="res://games/kfp/CustomerQueue.gd" id="22_32bd5"]
 [ext_resource type="Script" path="res://util/Spawner2D.gd" id="22_ey5fr"]
 [ext_resource type="Script" path="res://games/kfp/CuttingBoard.gd" id="22_vuda4"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="23_5vniq"]
-[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="23_jfacu"]
 [ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/okyaku.tscn" id="23_kk0tv"]
+[ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="23_twhax"]
 [ext_resource type="Script" path="res://games/kfp/CustomerSpawn.gd" id="24_kvsde"]
-[ext_resource type="Script" path="res://ui/CircleTimer.gd" id="24_taqu5"]
 [ext_resource type="Script" path="res://games/kfp/WorkTimer.gd" id="25_1xb8t"]
-[ext_resource type="Texture2D" uid="uid://hthlbxodt6t0" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_alert.png" id="26_05hn8"]
 [ext_resource type="Script" path="res://games/kfp/OrderDesk.gd" id="26_oa8ma"]
+[ext_resource type="Texture2D" uid="uid://ixch53xv6hvy" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_drops.png" id="27_2v3a8"]
 [ext_resource type="Script" path="res://games/kfp/EggCursor.gd" id="28_qfhgi"]
 [ext_resource type="Texture2D" uid="uid://6jq8e8jw1ce1" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Free Chicken Sprites.png" id="30_de2ey"]
 [ext_resource type="Script" path="res://games/kfp/OrderList.gd" id="31_wd14s"]
 [ext_resource type="PackedScene" uid="uid://ci4iyqc760nsx" path="res://games/kfp/order_item.tscn" id="32_ubujr"]
+[ext_resource type="Script" path="res://util/SnappedCursor.gd" id="33_ad36h"]
 [ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/blue_icon_button.tscn" id="33_bd0wr"]
 [ext_resource type="Script" path="res://games/kfp/ChickenContainer.gd" id="34_nmjkx"]
 [ext_resource type="Script" path="res://games/kfp/TotalChickenLabel.gd" id="35_l5ssy"]
@@ -81,28 +83,28 @@ shader = ExtResource("7_hveeg")
 shader_parameter/outline_color = Color(1, 1, 1, 1)
 shader_parameter/width = 1.0
 shader_parameter/pattern = 0
-shader_parameter/inside = false
-shader_parameter/add_margins = true
+shader_parameter/inside = true
+shader_parameter/add_margins = false
 shader_parameter/enable = true
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_20pt4"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
+size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
-size = Vector2(16, 16)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wjio6"]
-shader = ExtResource("23_jfacu")
-shader_parameter/radius = 1.0
-shader_parameter/fill = 1.0
-shader_parameter/bg_color = Color(0.172549, 0.172549, 0.172549, 1)
+size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ns4hp"]
 size = Vector2(180, 162)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d2xrs"]
 size = Vector2(169, 156)
+
+[sub_resource type="InputEventAction" id="InputEventAction_10tbd"]
+action = &"slot_1"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_towf3"]
+events = [SubResource("InputEventAction_10tbd")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1g3n"]
 bg_color = Color(0.690196, 0.690196, 0.690196, 1)
@@ -255,14 +257,15 @@ theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 6
 text = "Open"
 
-[node name="KiaraKfp" parent="TileMap/Ordering" instance=ExtResource("5_eane1")]
+[node name="KiaraKfp" parent="TileMap/Ordering" node_paths=PackedStringArray("cursor") instance=ExtResource("5_eane1")]
 position = Vector2(166, 55)
+cursor = NodePath("../../PlayerCursor")
 
 [node name="Door" parent="TileMap/Ordering" instance=ExtResource("16_a2v03")]
 position = Vector2(200, 40)
 
 [node name="Door2" parent="TileMap/Ordering" instance=ExtResource("16_a2v03")]
-position = Vector2(136, 40)
+position = Vector2(136, -38)
 
 [node name="Door3" parent="TileMap/Ordering" instance=ExtResource("16_a2v03")]
 position = Vector2(40, 184)
@@ -297,115 +300,116 @@ position = Vector2(102, 160)
 [node name="Chair" parent="TileMap/Ordering/Table4" instance=ExtResource("19_v0g1f")]
 position = Vector2(-15, -1)
 
-[node name="TakeOut" type="Node2D" parent="TileMap/Ordering"]
-position = Vector2(138, 164)
+[node name="TakeOut" type="Node2D" parent="TileMap/Ordering" node_paths=PackedStringArray("work_timer", "interact")]
+position = Vector2(123, 115)
 script = ExtResource("18_ucyrk")
+work_timer = NodePath("Sprite2D3/WorkTimer2")
+interact = NodePath("Sprite2D3/Interactable")
 
-[node name="Sprite2D2" type="Sprite2D" parent="TileMap/Ordering/TakeOut"]
+[node name="Sprite2D3" type="Sprite2D" parent="TileMap/Ordering/TakeOut"]
 material = SubResource("ShaderMaterial_w15g2")
-position = Vector2(-8, 0)
-scale = Vector2(0.078125, 0.140625)
-texture = ExtResource("15_lfbes")
+position = Vector2(-4, 0)
+texture = ExtResource("22_8tfwx")
+hframes = 27
+vframes = 18
+frame = 273
 
-[node name="OutlineInteractable" type="Node" parent="TileMap/Ordering/TakeOut/Sprite2D2" node_paths=PackedStringArray("interactable", "node")]
-script = ExtResource("6_d7ngc")
-interactable = NodePath("../../Interactable")
-node = NodePath("..")
-
-[node name="Interactable" type="Area2D" parent="TileMap/Ordering/TakeOut"]
-script = ExtResource("6_5onm5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/TakeOut/Interactable"]
-shape = SubResource("RectangleShape2D_20pt4")
-
-[node name="OrderDesk" type="Area2D" parent="TileMap/Ordering" node_paths=PackedStringArray("interact", "customer_detect")]
-position = Vector2(137, 30)
-collision_layer = 0
-collision_mask = 4
-script = ExtResource("26_oa8ma")
-interact = NodePath("Interactable")
-customer_detect = NodePath("CustomerDetector")
-
-[node name="Icon" type="Sprite2D" parent="TileMap/Ordering/OrderDesk"]
-position = Vector2(-6, -17)
-scale = Vector2(0.625, 0.625)
-texture = ExtResource("21_jwh32")
-
-[node name="Sprite2D" type="Sprite2D" parent="TileMap/Ordering/OrderDesk"]
-material = SubResource("ShaderMaterial_w15g2")
-position = Vector2(-6, 0)
-scale = Vector2(0.078125, 0.140625)
-texture = ExtResource("15_lfbes")
-
-[node name="CustomerDetector" type="Area2D" parent="TileMap/Ordering/OrderDesk"]
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/OrderDesk/CustomerDetector"]
-position = Vector2(-12, 0)
-shape = SubResource("RectangleShape2D_ibnlu")
-
-[node name="Interactable" type="Area2D" parent="TileMap/Ordering/OrderDesk"]
-script = ExtResource("6_5onm5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/OrderDesk/Interactable"]
-shape = SubResource("RectangleShape2D_iake3")
-
-[node name="OutlineInteractable" type="Node" parent="TileMap/Ordering/OrderDesk" node_paths=PackedStringArray("interactable", "node")]
-script = ExtResource("6_d7ngc")
-interactable = NodePath("../Interactable")
-node = NodePath("../Sprite2D")
-
-[node name="CuttingBoard" type="Area2D" parent="TileMap/Ordering"]
-position = Vector2(181, 60)
-collision_layer = 0
-collision_mask = 4
-script = ExtResource("22_vuda4")
-
-[node name="Sprite2D" type="Sprite2D" parent="TileMap/Ordering/CuttingBoard"]
-material = SubResource("ShaderMaterial_w15g2")
-position = Vector2(9, 0)
-scale = Vector2(0.078125, 0.140625)
-texture = ExtResource("15_lfbes")
-
-[node name="OutlineInteractable" type="Node" parent="TileMap/Ordering/CuttingBoard/Sprite2D" node_paths=PackedStringArray("interactable", "node")]
-script = ExtResource("6_d7ngc")
-interactable = NodePath("../../../OrderDesk/Interactable")
-node = NodePath("../../../OrderDesk/Sprite2D")
-
-[node name="Interactable" type="Area2D" parent="TileMap/Ordering/CuttingBoard"]
-script = ExtResource("6_5onm5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/CuttingBoard/Interactable"]
-shape = SubResource("RectangleShape2D_iake3")
-
-[node name="WorkTimer" type="Timer" parent="TileMap/Ordering/CuttingBoard"]
+[node name="WorkTimer2" type="Timer" parent="TileMap/Ordering/TakeOut/Sprite2D3"]
 one_shot = true
 script = ExtResource("25_1xb8t")
 
-[node name="FinishSign" type="Sprite2D" parent="TileMap/Ordering/CuttingBoard"]
-visible = false
-position = Vector2(9, -16)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("26_05hn8")
+[node name="Emote" parent="TileMap/Ordering/TakeOut/Sprite2D3" node_paths=PackedStringArray("timer") instance=ExtResource("23_twhax")]
+texture = ExtResource("21_k8x3d")
+timer = NodePath("../WorkTimer2")
+hide_on_stop = true
 
-[node name="CircleTimer" type="ColorRect" parent="TileMap/Ordering/CuttingBoard" node_paths=PackedStringArray("timer")]
-material = SubResource("ShaderMaterial_wjio6")
-custom_minimum_size = Vector2(8, 8)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 5.0
-offset_top = -19.0
-offset_right = 13.0
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.188235, 0.466667, 0.745098, 1)
-script = ExtResource("24_taqu5")
+[node name="Interactable" type="Area2D" parent="TileMap/Ordering/TakeOut/Sprite2D3"]
+position = Vector2(0, 1)
+script = ExtResource("6_5onm5")
+
+[node name="OutlineInteractable" type="Node" parent="TileMap/Ordering/TakeOut/Sprite2D3/Interactable" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("6_d7ngc")
+interactable = NodePath("..")
+node = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/TakeOut/Sprite2D3/Interactable"]
+shape = SubResource("RectangleShape2D_iake3")
+
+[node name="OrderDesk" type="Node2D" parent="TileMap/Ordering" node_paths=PackedStringArray("customer_detect", "icon", "interact")]
+position = Vector2(75, 115)
+script = ExtResource("26_oa8ma")
+customer_detect = NodePath("CustomerQueue")
+icon = NodePath("Sprite2D/Emote")
+interact = NodePath("Sprite2D/Interactable")
+
+[node name="CustomerQueue" type="Area2D" parent="TileMap/Ordering/OrderDesk"]
+visible = false
+position = Vector2(-15, 5)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("22_32bd5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/OrderDesk/CustomerQueue"]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_ibnlu")
+
+[node name="Sprite2D" type="Sprite2D" parent="TileMap/Ordering/OrderDesk"]
+material = SubResource("ShaderMaterial_w15g2")
+position = Vector2(-4, 0)
+texture = ExtResource("22_8tfwx")
+hframes = 27
+vframes = 18
+frame = 273
+
+[node name="Emote" parent="TileMap/Ordering/OrderDesk/Sprite2D" instance=ExtResource("23_twhax")]
+texture = ExtResource("21_jwh32")
+
+[node name="Interactable" type="Area2D" parent="TileMap/Ordering/OrderDesk/Sprite2D"]
+position = Vector2(0, 1)
+script = ExtResource("6_5onm5")
+
+[node name="OutlineInteractable" type="Node" parent="TileMap/Ordering/OrderDesk/Sprite2D/Interactable" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("6_d7ngc")
+interactable = NodePath("..")
+node = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/OrderDesk/Sprite2D/Interactable"]
+shape = SubResource("RectangleShape2D_iake3")
+
+[node name="CuttingBoard" type="Node2D" parent="TileMap/Ordering" node_paths=PackedStringArray("work_timer", "interact")]
+position = Vector2(101, 115)
+script = ExtResource("22_vuda4")
+work_timer = NodePath("Sprite2D2/WorkTimer")
+interact = NodePath("Sprite2D2/Interactable")
+
+[node name="Sprite2D2" type="Sprite2D" parent="TileMap/Ordering/CuttingBoard"]
+material = SubResource("ShaderMaterial_w15g2")
+position = Vector2(-4, 0)
+texture = ExtResource("22_8tfwx")
+hframes = 27
+vframes = 18
+frame = 273
+
+[node name="OutlineInteractable" type="Node" parent="TileMap/Ordering/CuttingBoard/Sprite2D2" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("6_d7ngc")
+interactable = NodePath("../Interactable")
+node = NodePath("..")
+
+[node name="Emote2" parent="TileMap/Ordering/CuttingBoard/Sprite2D2" node_paths=PackedStringArray("timer") instance=ExtResource("23_twhax")]
+texture = ExtResource("27_2v3a8")
 timer = NodePath("../WorkTimer")
+hide_on_stop = true
+
+[node name="Interactable" type="Area2D" parent="TileMap/Ordering/CuttingBoard/Sprite2D2"]
+position = Vector2(0, 1)
+script = ExtResource("6_5onm5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/CuttingBoard/Sprite2D2/Interactable"]
+shape = SubResource("RectangleShape2D_iake3")
+
+[node name="WorkTimer" type="Timer" parent="TileMap/Ordering/CuttingBoard/Sprite2D2"]
+one_shot = true
+script = ExtResource("25_1xb8t")
 
 [node name="MoveOrder" type="Node2D" parent="TileMap"]
 
@@ -426,20 +430,23 @@ script = ExtResource("22_ey5fr")
 root = NodePath("../../Ordering")
 scene = ExtResource("23_kk0tv")
 
-[node name="EggCursor" type="Node2D" parent="TileMap" node_paths=PackedStringArray("chicken_manager", "spawn_root", "tile_map")]
+[node name="EggCursor" type="Node2D" parent="TileMap" node_paths=PackedStringArray("cursor", "chicken_manager", "spawn_root")]
 script = ExtResource("28_qfhgi")
+cursor = NodePath("../PlayerCursor")
 chicken_manager = NodePath("../../ChickenManager")
 chicken_scene = ExtResource("2_4ve5m")
 spawn_root = NodePath("../Ordering")
-tile_map = NodePath("..")
-is_focused = null
 
 [node name="EggSpawner" type="Node2D" parent="TileMap/EggCursor" node_paths=PackedStringArray("root")]
 script = ExtResource("22_ey5fr")
 root = NodePath("../../Ordering")
 scene = ExtResource("2_58haw")
 
-[node name="PlaceMarker" type="ColorRect" parent="TileMap/EggCursor"]
+[node name="PlayerCursor" type="Node2D" parent="TileMap" node_paths=PackedStringArray("tile_map")]
+script = ExtResource("33_ad36h")
+tile_map = NodePath("..")
+
+[node name="PlaceMarker2" type="ColorRect" parent="TileMap/PlayerCursor"]
 custom_minimum_size = Vector2(16, 16)
 anchors_preset = 8
 anchor_left = 0.5
@@ -559,6 +566,7 @@ layout_mode = 2
 
 [node name="EggAction" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer" instance=ExtResource("33_bd0wr")]
 layout_mode = 2
+shortcut = SubResource("Shortcut_towf3")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer/EggAction"]
 custom_minimum_size = Vector2(14, 14)

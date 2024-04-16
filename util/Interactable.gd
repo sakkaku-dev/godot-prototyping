@@ -7,6 +7,8 @@ signal enable_highlight(enable)
 signal interacted(actor)
 signal interact_started(actor)
 
+var is_highlighted := false
+
 func _ready():
 	collision_layer = 0
 	collision_mask = 0
@@ -14,9 +16,11 @@ func _ready():
 	set_collision_layer_value(INTERACTABLE_LAYER, true)
 
 func highlight():
+	is_highlighted = true
 	enable_highlight.emit(true)
 
 func unhighlight():
+	is_highlighted = false
 	enable_highlight.emit(false)
 
 func interact(actor):
