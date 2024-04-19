@@ -3,6 +3,8 @@ extends Node2D
 
 const GROUP = "WorkArea"
 
+signal work_finished()
+
 @export var interact: Interactable
 
 @onready var cursor := KiaraKFP.get_object(self).cursor

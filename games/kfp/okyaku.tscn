@@ -57,3 +57,9 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Emote" parent="." instance=ExtResource("7_tyjf7")]
+
+[node name="Emote" parent="Emote" index="0" node_paths=PackedStringArray("timer")]
+timer = NodePath("../../FoodWaitTime")
+hide_on_stop = false
+
+[editable path="Emote"]

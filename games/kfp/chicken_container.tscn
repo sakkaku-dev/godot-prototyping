@@ -1,0 +1,83 @@
+[gd_scene load_steps=9 format=3 uid="uid://ddfpc4tyn7ofn"]
+
+[ext_resource type="Script" path="res://games/kfp/ChickenContainer.gd" id="1_vhycu"]
+[ext_resource type="PackedScene" uid="uid://mhln2eiqfj00" path="res://games/kfp/chicken_button.tscn" id="2_ee1pd"]
+[ext_resource type="Script" path="res://effects/EffectRunner.gd" id="3_6l718"]
+[ext_resource type="Script" path="res://effects/OverlayEffect.gd" id="4_fe4qw"]
+[ext_resource type="Script" path="res://effects/PositionEffect.gd" id="5_l7wfk"]
+[ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/blue_icon_button.tscn" id="6_vukbc"]
+[ext_resource type="Texture2D" uid="uid://con1wbq2fmcvr" path="res://assets/UI Base Pack/PNG/grey_crossWhite.png" id="7_tof8m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1g3n"]
+bg_color = Color(0.690196, 0.690196, 0.690196, 1)
+
+[node name="ChickenContainer" type="PanelContainer" node_paths=PackedStringArray("close_button", "container")]
+custom_minimum_size = Vector2(100, 200)
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_r1g3n")
+script = ExtResource("1_vhycu")
+close_button = NodePath("MarginContainer/BlueIconButton")
+chicken_scene = ExtResource("2_ee1pd")
+container = NodePath("ScrollContainer/MarginContainer/GridContainer")
+
+[node name="EffectRunner" type="Node" parent="." node_paths=PackedStringArray("effects")]
+script = ExtResource("3_6l718")
+effects = [NodePath("OverlayEffect"), NodePath("PositionEffect")]
+
+[node name="OverlayEffect" type="Node" parent="EffectRunner"]
+script = ExtResource("4_fe4qw")
+
+[node name="PositionEffect" type="Node" parent="EffectRunner" node_paths=PackedStringArray("node")]
+script = ExtResource("5_l7wfk")
+node = NodePath("../..")
+extra_offset = Vector2(20, 0)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 2
+follow_focus = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_left = -10
+theme_override_constants/margin_top = 10
+
+[node name="BlueIconButton" parent="MarginContainer" instance=ExtResource("6_vukbc")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/BlueIconButton"]
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_tof8m")
+expand_mode = 2
+stretch_mode = 5

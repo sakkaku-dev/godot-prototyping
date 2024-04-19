@@ -4,6 +4,7 @@ extends Timer
 var started_work := false
 
 func _ready():
+	one_shot = true
 	timeout.connect(func():
 		started_work = false
 		paused = false

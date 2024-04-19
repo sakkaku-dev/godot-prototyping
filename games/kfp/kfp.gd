@@ -63,6 +63,9 @@ func _remove_customer(c: Customer):
 func has_orders():
 	return not order_numbers.is_empty()
 
+func get_order_count():
+	return order_numbers.size()
+
 func finished_order(item):
 	var id = order_numbers.pop_front()
 	orders[id].finish_order()

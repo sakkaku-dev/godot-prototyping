@@ -1,9 +1,10 @@
 class_name CustomerQueue
-extends Area2D
+extends Queue
 
-@export var dir := Vector2.LEFT
-@export var distance := 20
+signal awaiting_order()
 
-func add_customer(customer: Customer):
-	pass
+const GROUP = "CustomerQueue"
 
+func _ready():
+	add_to_group(GROUP)
+	body_entered.connect(func(_c): awaiting_order.emit())

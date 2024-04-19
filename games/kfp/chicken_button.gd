@@ -11,13 +11,12 @@ func _ready():
 	focus_exited.connect(func(): chicken.modulate = Color.WHITE)
 	
 	pressed.connect(func():
-		if chicken.is_working():
-			chicken.stop_work()
-		else:
-			chicken.start_work()
-		
+		chicken.worker = not chicken.worker
 		_update()
 	)
 
 func _update():
-	working_sign.visible = chicken.is_working()
+	working_sign.visible = chicken.worker
+
+func _chicken_manager() -> ChickenManager:
+	return get_tree().get_first_node_in_group(ChickenManager.GROUP)

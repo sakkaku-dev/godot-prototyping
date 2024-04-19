@@ -1,30 +1,39 @@
 class_name OrderDesk
-extends WorkArea
+extends TimedWorkArea
+
+const ORDER_GROUP = "OrderDesk"
 
 signal ordered(c)
 
-@export var customer_detect: Area2D
+@export var customer_queue: CustomerQueue
 @export var icon: Node2D
 
 var customer: Customer
 
 func _ready():
+	add_to_group(ORDER_GROUP)
 	super._ready()
 	icon.hide()
 	
-	customer_detect.body_entered.connect(func(c):
-		customer = c
-		icon.show()
+	customer_queue.awaiting_order.connect(func(): icon.show())
+	work_timer.timeout.connect(func():
+		var customer = customer_queue.get_first_customer()
+		
+		if not customer:
+			print("No customer")
+			return
+		
+		if not customer.is_ordering():
+			print("Customer is not ordering anymore")
+			return
+		
+		ordered.emit(customer)
+		icon.hide()
+		customer_queue.processed_customer()
 	)
 
-func do_action(_h):
-	if not customer:
-		print("No customer")
-		return
-	
-	if not customer.is_ordering():
-		print("Customer is not ordering anymore")
-		return
-	
-	ordered.emit(customer)
-	icon.hide()
+func can_work(_hand):
+	return customer_queue.has_customers()
+
+func has_customers():
+	return customer.has_customers()

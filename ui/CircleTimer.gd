@@ -9,7 +9,8 @@ func _ready():
 	material = material.duplicate()
 
 func _process(delta):
-	if hide_on_stop:
+	
+	if hide_on_stop and timer != null:
 		visible = not timer.is_stopped()
 	else:
 		_set_value(0.0)

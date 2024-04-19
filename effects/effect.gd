@@ -1,6 +1,8 @@
 class_name Effect
 extends Node
 
+signal finished()
+
 var tw: Tween
 
 func _new_tween():
@@ -8,3 +10,4 @@ func _new_tween():
 		tw.kill()
 	
 	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.finished.connect(func(): finished.emit())

@@ -40,23 +40,36 @@ var state = MOVING_ORDER:
 			food_wait_time.stop()
 			people_detection.monitorable = false
 			await _move_in_order(exit_order)
-		elif state == WAITING:
-			order_wait_time.stop()
-			food_wait_time.start()
 			
 
 func _ready():
-	emote.texture = null
+	emote.set_texture(null)
 	order_wait_time.timeout.connect(func(): self.state = LEAVING)
 	food_wait_time.timeout.connect(func():
-		emote.texture = angry_face
+		emote.set_texture(angry_face)
 		self.state = LEAVING
 		order_failed.emit()
 	)
 	
-	await get_tree().create_timer(1.0).timeout
-	await _move_in_order(move_order)
+	_move_to_order_desk()
+
+func _move_to_order_desk():
+	var queue := get_tree().get_first_node_in_group(CustomerQueue.GROUP)
+	var pos = queue.queue_customer(self)
+	await _move_to(pos)
 	self.state = ORDER
+
+func _move_to_takeout_order():
+	order_wait_time.stop()
+	food_wait_time.start()
+	var queue := get_tree().get_first_node_in_group(TakeOutQueue.GROUP)
+	var pos = queue.queue_customer(self)
+	await _move_to(pos)
+	self.state = WAITING
+
+func _move_to(pos: Vector2):
+	navigation_move_2d.set_target(pos)
+	await navigation_move_2d.reached
 
 func _move_in_order(root: Node2D):
 	for c in root.get_children():
@@ -70,16 +83,15 @@ func _unhandled_input(event):
 		print("Adding target: %s" % pos)
 
 func _physics_process(delta):
+	navigation_move_2d.process(delta)
+	
 	if state == MOVING_ORDER:
-		navigation_move_2d.process(delta)
 		_detect_nearby_people()
-	if state == LEAVING:
-		navigation_move_2d.process(delta)
 
 func _detect_nearby_people():
 	for area in people_detection.get_overlapping_areas():
 		var dir = global_position.direction_to(area.global_position)
-		if dir.dot(velocity) > 0.75:
+		if velocity.length() < 0.01 or dir.dot(velocity) > 0.9:
 			navigation_move_2d.stop = true
 			return
 	
@@ -89,11 +101,11 @@ func is_ordering():
 	return state == ORDER
 
 func taken_order(id):
-	emote.texture = wait_emote
-	self.state = WAITING
+	emote.set_texture(wait_emote)
 	order_id = id
+	_move_to_takeout_order()
 
 func finish_order():
-	emote.texture = happy_face
+	emote.set_texture(happy_face)
 	self.state = LEAVING
 	order_completed.emit()

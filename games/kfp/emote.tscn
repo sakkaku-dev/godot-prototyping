@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://drho3wwa07qog"]
+[gd_scene load_steps=7 format=3 uid="uid://drho3wwa07qog"]
 
+[ext_resource type="Script" path="res://games/kfp/emote_root.gd" id="1_11hyw"]
 [ext_resource type="Shader" path="res://shaders/timer.gdshader" id="1_atnsa"]
 [ext_resource type="Texture2D" uid="uid://bgojr8jilldeh" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_dots3.png" id="2_ocjm1"]
 [ext_resource type="Script" path="res://ui/CircleTimer.gd" id="3_swy21"]
+[ext_resource type="Script" path="res://games/kfp/KeepRotation.gd" id="4_chf5k"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tk6bt"]
 shader = ExtResource("1_atnsa")
@@ -10,10 +12,16 @@ shader_parameter/mix_color = Color(0, 0, 0, 1)
 shader_parameter/mix_amount = 0.6
 shader_parameter/fill = 0.2
 
-[node name="Emote" type="Sprite2D"]
+[node name="EmoteRoot" type="Node2D"]
+script = ExtResource("1_11hyw")
+
+[node name="Emote" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_tk6bt")
 position = Vector2(0, -16)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_ocjm1")
 script = ExtResource("3_swy21")
-hide_on_stop = false
+
+[node name="KeepRotation" type="Node" parent="." node_paths=PackedStringArray("node")]
+script = ExtResource("4_chf5k")
+node = NodePath("..")
