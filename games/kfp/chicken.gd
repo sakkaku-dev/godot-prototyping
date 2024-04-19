@@ -22,12 +22,18 @@ const DOOR_LAYER = 7
 @onready var item_icon = $ItemIcon
 @onready var worker_icon = $WorkerIcon
 
+@onready var customer_manager := _customer_manager()
+
 var state := MOVE
 var work: WorkArea
 var worker := false:
 	set(v):
 		worker = v
-		worker_icon.visible = v
+		
+		if customer_manager.is_open():
+			global_position = _get_new_spawn()
+		else:
+			worker_icon.visible = v
 
 func _ready():
 	self.worker = false
@@ -39,9 +45,29 @@ func _ready():
 		move_collide.random_direction()
 		idle_timer.random_start()
 	)
+	
+	customer_manager.changed.connect(func(open):
+		if not worker: return
+	
+		global_position = _get_new_spawn()
+		if not open:
+			self.worker = worker
+		else:
+			worker_icon.hide()
+	)
+
+func _get_new_spawn():
+	if customer_manager.is_open():
+		return customer_manager.chicken_worker_spawn.global_position
+	return customer_manager.chicken_farm_spawn.global_position
+
+func _customer_manager() -> CustomerManager:
+	return get_tree().get_first_node_in_group(CustomerManager.GROUP)
 
 func start_work_day():
 	state = WORKING
+	if customer_manager.is_open():
+		global_position = _get_new_spawn()
 	_do_work()
 
 func _physics_process(delta):

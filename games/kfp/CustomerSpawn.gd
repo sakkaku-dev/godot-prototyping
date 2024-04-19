@@ -1,4 +1,9 @@
+class_name CustomerManager
 extends Node
+
+const GROUP = "CustomerManager"
+
+signal changed(open)
 
 @export var open_sign: Interactable
 
@@ -7,7 +12,11 @@ extends Node
 @export var move_order: Node2D
 @export var exit_order: Node2D
 
+@export var chicken_worker_spawn: Node2D
+@export var chicken_farm_spawn: Node2D
+
 func _ready():
+	add_to_group(GROUP)
 	open_sign.interacted.connect(func(_a): open_restaurant())
 	timer.timeout.connect(func(): _spawn_customer())
 
@@ -18,9 +27,11 @@ func _spawn_customer():
 
 func open_restaurant():
 	timer.start()
+	changed.emit(true)
 
 func close_restaurant():
 	timer.stop()
+	changed.emit(false)
 
 func is_open():
 	return not timer.is_stopped()

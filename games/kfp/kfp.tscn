@@ -118,13 +118,15 @@ script = ExtResource("5_4jv6d")
 egg_catch_game = NodePath("../TileMap/Ordering/EggCatchGame")
 total_eggs_label = NodePath("../CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer/EggAction/Label2")
 
-[node name="CustomerManager" type="Node" parent="." node_paths=PackedStringArray("open_sign", "timer", "spawner", "move_order", "exit_order")]
+[node name="CustomerManager" type="Node" parent="." node_paths=PackedStringArray("open_sign", "timer", "spawner", "move_order", "exit_order", "chicken_worker_spawn", "chicken_farm_spawn")]
 script = ExtResource("24_kvsde")
 open_sign = NodePath("../TileMap/Ordering/OpenSign")
 timer = NodePath("RandomTimer")
 spawner = NodePath("../TileMap/ExitOrder/CustomerSpawner")
 move_order = NodePath("../TileMap/MoveOrder")
 exit_order = NodePath("../TileMap/ExitOrder")
+chicken_worker_spawn = NodePath("../TileMap/ChickenWorkerSpawn")
+chicken_farm_spawn = NodePath("../TileMap/ChickenFarmSpawn")
 
 [node name="RandomTimer" type="Timer" parent="CustomerManager"]
 script = ExtResource("23_5vniq")
@@ -477,6 +479,12 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.25098)
+
+[node name="ChickenWorkerSpawn" type="Marker2D" parent="TileMap"]
+position = Vector2(182, 41)
+
+[node name="ChickenFarmSpawn" type="Marker2D" parent="TileMap"]
+position = Vector2(217, 41)
 
 [node name="FarmEnter" type="Area2D" parent="."]
 visible = false
