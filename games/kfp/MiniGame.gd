@@ -7,6 +7,7 @@ const GROUP = "MiniGame"
 @export var game_container: SubViewport
 
 func _ready():
+	add_to_group(GROUP)
 	hide_game(true)
 
 func hide_game(init = false):

@@ -8,6 +8,7 @@ signal leaving()
 enum {
 	MOVING_ORDER,
 	ORDER,
+	MOVING_TAKEOUT,
 	WAITING,
 	EATING,
 	LEAVING,
@@ -40,11 +41,26 @@ var state = MOVING_ORDER:
 			food_wait_time.stop()
 			people_detection.monitorable = false
 			await _move_in_order(exit_order)
+		elif state == MOVING_TAKEOUT:
+			order_wait_time.stop()
+			food_wait_time.start()
+			
+			var queue := get_tree().get_first_node_in_group(TakeOutQueue.GROUP)
+			var pos = queue.queue_customer(self)
+			_move_to(pos, WAITING)
+		elif state == MOVING_ORDER:
+			var queue := get_tree().get_first_node_in_group(CustomerQueue.GROUP)
+			var pos = queue.queue_customer(self)
+			_move_to(pos, ORDER)
+			
 			
 
 func _ready():
 	emote.set_texture(null)
-	order_wait_time.timeout.connect(func(): self.state = LEAVING)
+	order_wait_time.timeout.connect(func():
+		emote.set_texture(angry_face)
+		self.state = LEAVING
+	)
 	food_wait_time.timeout.connect(func():
 		emote.set_texture(angry_face)
 		self.state = LEAVING
@@ -54,22 +70,15 @@ func _ready():
 	_move_to_order_desk()
 
 func _move_to_order_desk():
-	var queue := get_tree().get_first_node_in_group(CustomerQueue.GROUP)
-	var pos = queue.queue_customer(self)
-	await _move_to(pos)
-	self.state = ORDER
+	self.state = MOVING_ORDER
 
 func _move_to_takeout_order():
-	order_wait_time.stop()
-	food_wait_time.start()
-	var queue := get_tree().get_first_node_in_group(TakeOutQueue.GROUP)
-	var pos = queue.queue_customer(self)
-	await _move_to(pos)
-	self.state = WAITING
+	self.state = MOVING_TAKEOUT
 
-func _move_to(pos: Vector2):
+func _move_to(pos: Vector2, next_state):
 	navigation_move_2d.set_target(pos)
 	await navigation_move_2d.reached
+	self.state = next_state
 
 func _move_in_order(root: Node2D):
 	for c in root.get_children():
@@ -77,7 +86,7 @@ func _move_in_order(root: Node2D):
 		await navigation_move_2d.reached
 
 func _unhandled_input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
+	if debug and event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
 		var pos = get_global_mouse_position()
 		navigation_move_2d.set_target(pos)
 		print("Adding target: %s" % pos)
@@ -85,7 +94,7 @@ func _unhandled_input(event):
 func _physics_process(delta):
 	navigation_move_2d.process(delta)
 	
-	if state == MOVING_ORDER:
+	if state == MOVING_ORDER or state == MOVING_TAKEOUT:
 		_detect_nearby_people()
 
 func _detect_nearby_people():

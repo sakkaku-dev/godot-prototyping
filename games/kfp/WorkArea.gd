@@ -37,6 +37,11 @@ func has_available_work():
 
 func lock_work():
 	is_occupied = true
+	print("Lock")
+
+func finished_work():
+	is_occupied = false
+	print("Unlock")
 
 func _unhandled_input(event):
 	if is_moving and event.is_action_pressed("action"):

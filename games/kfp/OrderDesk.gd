@@ -37,3 +37,6 @@ func can_work(_hand):
 
 func has_customers():
 	return customer.has_customers()
+
+func has_available_work():
+	return not is_occupied and icon.visible

@@ -26,7 +26,7 @@ func _unhandled_input(event):
 		_place_hatching_egg()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("cancel"):
-		cursor.is_focused = false
+		self.is_placing = false
 		get_viewport().set_input_as_handled()
 
 func _spawn_chicken(pos: Vector2):

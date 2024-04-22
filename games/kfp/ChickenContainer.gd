@@ -15,6 +15,12 @@ func _ready():
 	chicken_manager.chicken_changed.connect(func(_x): _update_chickens())
 	button.pressed.connect(func(): effect_runner.open())
 	close_button.pressed.connect(func(): effect_runner.close())
+	visibility_changed.connect(func(): 
+		if focused_index >= container.get_child_count():
+			return
+		
+		container.get_child(focused_index).grab_focus()
+	)
 
 func _update_chickens():
 	for c in container.get_children():
@@ -26,7 +32,7 @@ func _update_chickens():
 		node.focus_entered.connect(func(): self.focused_index = i)
 		container.add_child(node)
 		
-		if focused_index == i:
+		if focused_index == i and visible:
 			node.grab_focus()
 
 func _unhandled_input(event):

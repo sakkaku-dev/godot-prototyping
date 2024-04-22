@@ -3,8 +3,9 @@ extends CharacterBody2D
 
 enum {
 	MOVE,
+	SEARCH_WORK,
+	GO_WORK,
 	WORKING,
-	RETURN,
 }
 
 signal died()
@@ -24,19 +25,43 @@ const DOOR_LAYER = 7
 
 @onready var customer_manager := _customer_manager()
 
-var state := MOVE
-var work: WorkArea
+var state := MOVE:
+	set(v):
+		state = v
+		
+		if not work: return
+		
+		if state == GO_WORK:
+			navigation_move_2d.set_target(work.global_position)
+			print("Go work")
+		elif state == WORKING:
+			_start_work()
+		elif state == SEARCH_WORK:
+			self.work = null
+
+var work: WorkArea:
+	set(v):
+		if work:
+			work.finished_work()
+		work = v
+		if work:
+			work.lock_work()
+		
 var worker := false:
 	set(v):
 		worker = v
+		global_position = _get_new_spawn()
 		
-		if customer_manager.is_open():
-			global_position = _get_new_spawn()
-		else:
-			worker_icon.visible = v
+		if not worker:
+			self.work = null
+			navigation_move_2d.set_target(global_position)
+		elif customer_manager.is_open():
+			_start_work_day()
 
 func _ready():
-	self.worker = false
+	worker_icon.hide()
+	
+	self.worker = worker
 	idle_timer.timeout.connect(func():
 		move_collide.stop()
 		wander_timer.random_start()
@@ -47,67 +72,69 @@ func _ready():
 	)
 	
 	customer_manager.changed.connect(func(open):
-		if not worker: return
-	
-		global_position = _get_new_spawn()
-		if not open:
-			self.worker = worker
+		if not worker or not open: return
+		_start_work_day()
+	)
+	navigation_move_2d.reached.connect(func():
+		if worker:
+			self.state = WORKING
 		else:
-			worker_icon.hide()
+			self.state = MOVE
 	)
 
+func _start_work_day():
+	self.state = SEARCH_WORK
+
 func _get_new_spawn():
-	if customer_manager.is_open():
+	if worker:
 		return customer_manager.chicken_worker_spawn.global_position
 	return customer_manager.chicken_farm_spawn.global_position
 
 func _customer_manager() -> CustomerManager:
 	return get_tree().get_first_node_in_group(CustomerManager.GROUP)
 
-func start_work_day():
-	state = WORKING
-	if customer_manager.is_open():
-		global_position = _get_new_spawn()
-	_do_work()
-
 func _physics_process(delta):
-	if has_food():
-		var takeout = get_takeout()
+	if state in [SEARCH_WORK, MOVE]:
+		move_collide.process(delta)
+	else:
+		navigation_move_2d.process(delta)
 	
-	match state:
-		MOVE: move_collide.process(delta)
-		WORKING: _do_work()
-		
-	navigation_move_2d.process(delta)
+	if state == SEARCH_WORK:
+		_search_for_work()
 	
 func _process(delta):
 	item_icon.visible = hand.item != null
 
-func _do_work():
-	if get_order_count() < max_active_orders:
-		var desk = get_order_desk()
-		if desk:
-			_go_to_work(desk)
-			return
-	
+func _search_for_work():
 	if has_food():
 		var takeout = get_takeout()
 		if takeout:
 			_go_to_work(takeout)
+			print("Go to takeout")
+			return
+	
+	var orders = get_order_count()
+	if orders < max_active_orders:
+		var desk = get_order_desk()
+		if desk:
+			_go_to_work(desk)
+			print("Go to order desk")
 			return
 	
 	var board = get_cutting_board()
-	if board:
+	if board and orders > 0 and not has_food():
 		_go_to_work(board)
+		print("Go to cutting board")
 		return
 
 func _go_to_work(work_area: WorkArea):
-	work_area.lock_work()
-	navigation_move_2d.set_target(work_area.global_position)
-	await navigation_move_2d.reached
+	self.work = work_area
+	self.state = GO_WORK
+
+func _start_work():
 	hand.interact_start()
-	await work_area.work_finished
-	_do_work()
+	await work.work_finished
+	self.state = SEARCH_WORK
 
 func get_order_count():
 	return KFP.get_object(self).get_order_count()

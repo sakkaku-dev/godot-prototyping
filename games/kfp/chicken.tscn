@@ -14,7 +14,7 @@
 size = Vector2(10, 4)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qucij"]
-size = Vector2(10, 10)
+size = Vector2(14, 14)
 
 [node name="Chicken" type="CharacterBody2D"]
 collision_layer = 0
@@ -32,10 +32,11 @@ position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_gc8n8")
 
 [node name="NavigationMove2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
-path_desired_distance = 10.0
+path_desired_distance = 5.0
 target_desired_distance = 5.0
 path_postprocessing = 1
 avoidance_enabled = true
+avoidance_layers = 0
 debug_enabled = true
 script = ExtResource("5_1h3x4")
 speed = 50

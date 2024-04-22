@@ -297,9 +297,11 @@ position = Vector2(102, 160)
 [node name="Chair" parent="TileMap/Ordering/Table4" instance=ExtResource("19_v0g1f")]
 position = Vector2(-15, -1)
 
-[node name="TakeOut" type="Node2D" parent="TileMap/Ordering" node_paths=PackedStringArray("work_timer", "interact")]
+[node name="TakeOut" type="Node2D" parent="TileMap/Ordering" node_paths=PackedStringArray("queue", "icon", "work_timer", "interact")]
 position = Vector2(146, 62)
 script = ExtResource("18_ucyrk")
+queue = NodePath("TakeOutQueue")
+icon = NodePath("Sprite2D3/Emote")
 work_timer = NodePath("Sprite2D3/WorkTimer2")
 interact = NodePath("Sprite2D3/Interactable")
 
@@ -325,6 +327,7 @@ frame = 273
 [node name="Emote" parent="TileMap/Ordering/TakeOut/Sprite2D3/Emote" index="0" node_paths=PackedStringArray("timer")]
 texture = ExtResource("21_k8x3d")
 timer = NodePath("../../WorkTimer2")
+hide_on_stop = false
 
 [node name="WorkTimer2" type="Timer" parent="TileMap/Ordering/TakeOut/Sprite2D3"]
 wait_time = 0.5
@@ -387,6 +390,7 @@ node = NodePath("../..")
 shape = SubResource("RectangleShape2D_iake3")
 
 [node name="Emote" parent="TileMap/Ordering/OrderDesk/Sprite2D" instance=ExtResource("23_twhax")]
+rotation = -1.5708
 
 [node name="Emote" parent="TileMap/Ordering/OrderDesk/Sprite2D/Emote" index="0" node_paths=PackedStringArray("timer")]
 texture = ExtResource("21_jwh32")

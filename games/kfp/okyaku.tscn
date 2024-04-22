@@ -57,6 +57,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Emote" parent="." instance=ExtResource("7_tyjf7")]
+position = Vector2(0, -6)
 
 [node name="Emote" parent="Emote" index="0" node_paths=PackedStringArray("timer")]
 timer = NodePath("../../FoodWaitTime")
