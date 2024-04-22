@@ -51,7 +51,7 @@ func update_children_offsets(use_delay := false):
 
 	for i in get_child_count():
 		var c = get_child(i) as Control
-		if !c or c.top_level or not c.is_visible_in_tree(): continue
+		if !c or c.top_level or not c.is_visible_in_tree() or c.is_queued_for_deletion(): continue
 		
 		var diff = i - focused_index
 		c.set_new_position(pos)

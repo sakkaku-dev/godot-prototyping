@@ -14,9 +14,12 @@ func set_focus(f: bool):
 	is_focused = f
 	focused.emit(f)
 
-func set_new_position(pos: Vector2, delay := 0.0):
+func set_new_position(pos: Vector2, delay := 0.0, kill_previous := true):
 	if tw and tw.is_running():
-		tw.kill()
+		if kill_previous:
+			tw.kill()
+		else:
+			return
 		
 	var new_pos = pos
 	if center_position:

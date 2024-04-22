@@ -40,7 +40,7 @@ var state = MOVING_ORDER:
 			leaving.emit()
 			food_wait_time.stop()
 			people_detection.monitorable = false
-			await _move_in_order(exit_order)
+			_move_in_order(exit_order)
 		elif state == MOVING_TAKEOUT:
 			order_wait_time.stop()
 			food_wait_time.start()

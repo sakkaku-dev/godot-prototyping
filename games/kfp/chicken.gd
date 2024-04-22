@@ -133,7 +133,9 @@ func _go_to_work(work_area: WorkArea):
 
 func _start_work():
 	hand.interact_start()
+	print("Start work")
 	await work.work_finished
+	print("Finish work")
 	self.state = SEARCH_WORK
 
 func get_order_count():

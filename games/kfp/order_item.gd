@@ -19,7 +19,8 @@ func _ready():
 	)
 
 func _move_out():
-	set_new_position(position + Vector2.UP * 50)
+	set_new_position(position + Vector2.UP * 50, 0.0, false)
 	await tw.finished
+	hide()
 	removed.emit()
 	queue_free()

@@ -22,6 +22,7 @@ signal order_failed(id)
 @onready var farm_effect_runner = $FarmEffectRunner
 @onready var game_effect_runner = $GameEffectRunner
 
+var money := 0
 var order_id := 1
 var orders := {}
 var order_numbers := []
@@ -70,6 +71,7 @@ func finished_order(item):
 	var id = order_numbers.pop_front()
 	orders[id].finish_order()
 	orders.erase(id)
+	money += 1
 
 func _on_egg_action_pressed():
 	cursor.toggle_place_eggs()

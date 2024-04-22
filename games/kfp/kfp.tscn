@@ -555,13 +555,14 @@ theme_override_constants/margin_right = 5
 script = ExtResource("38_yq75v")
 node = NodePath("..")
 dir = Vector2(0, -1)
+extra_offset = Vector2(0, -50)
 
 [node name="OrderList" type="Control" parent="CanvasLayer/Control/GameUI/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 0
 script = ExtResource("31_wd14s")
 order_item = ExtResource("32_ubujr")
-child_size = Vector2(40, 40)
+child_size = Vector2(30, 30)
 
 [node name="FarmUI" type="Control" parent="CanvasLayer/Control"]
 layout_mode = 1
