@@ -15,7 +15,7 @@ func _ready():
 	super._ready()
 	icon.hide()
 	
-	customer_queue.awaiting_order.connect(func(): icon.show())
+	customer_queue.awaiting.connect(func(show): icon.visible = show)
 	work_timer.timeout.connect(func():
 		var customer = customer_queue.get_first_customer()
 		

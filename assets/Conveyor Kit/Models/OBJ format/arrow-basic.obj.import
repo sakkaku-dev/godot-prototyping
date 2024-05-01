@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://o7bnxkddcl8l"
+path="res://.godot/imported/arrow-basic.obj-bf3a8349c65c7f23be251ce210177f98.mesh"
+
+[deps]
+
+files=["res://.godot/imported/arrow-basic.obj-bf3a8349c65c7f23be251ce210177f98.mesh"]
+
+source_file="res://assets/Conveyor Kit/Models/OBJ format/arrow-basic.obj"
+dest_files=["res://.godot/imported/arrow-basic.obj-bf3a8349c65c7f23be251ce210177f98.mesh", "res://.godot/imported/arrow-basic.obj-bf3a8349c65c7f23be251ce210177f98.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

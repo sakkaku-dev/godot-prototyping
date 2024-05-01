@@ -29,6 +29,7 @@ enum {
 var order_id := 0
 var move_order: Node2D
 var exit_order: Node2D
+var current_queue: Queue
 
 var state = MOVING_ORDER:
 	set(v):
@@ -41,16 +42,17 @@ var state = MOVING_ORDER:
 			food_wait_time.stop()
 			people_detection.monitorable = false
 			_move_in_order(exit_order)
+			current_queue = null
 		elif state == MOVING_TAKEOUT:
 			order_wait_time.stop()
 			food_wait_time.start()
 			
-			var queue := get_tree().get_first_node_in_group(TakeOutQueue.GROUP)
-			var pos = queue.queue_customer(self)
+			current_queue = get_tree().get_first_node_in_group(TakeOutQueue.GROUP)
+			var pos = current_queue.queue_customer(self)
 			_move_to(pos, WAITING)
 		elif state == MOVING_ORDER:
-			var queue := get_tree().get_first_node_in_group(CustomerQueue.GROUP)
-			var pos = queue.queue_customer(self)
+			current_queue = get_tree().get_first_node_in_group(CustomerQueue.GROUP)
+			var pos = current_queue.queue_customer(self)
 			_move_to(pos, ORDER)
 			
 			
@@ -99,8 +101,7 @@ func _physics_process(delta):
 
 func _detect_nearby_people():
 	for area in people_detection.get_overlapping_areas():
-		var dir = global_position.direction_to(area.global_position)
-		if velocity.length() < 0.01 or dir.dot(velocity) > 0.9:
+		if current_queue and current_queue.is_in_queue(area.customer):
 			navigation_move_2d.stop = true
 			return
 	

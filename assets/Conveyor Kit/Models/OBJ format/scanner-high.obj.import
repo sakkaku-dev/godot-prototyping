@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dkp87rcckbg3d"
+path="res://.godot/imported/scanner-high.obj-6d8315c5b85cc4334f8fe95b7c1edafc.mesh"
+
+[deps]
+
+files=["res://.godot/imported/scanner-high.obj-6d8315c5b85cc4334f8fe95b7c1edafc.mesh"]
+
+source_file="res://assets/Conveyor Kit/Models/OBJ format/scanner-high.obj"
+dest_files=["res://.godot/imported/scanner-high.obj-6d8315c5b85cc4334f8fe95b7c1edafc.mesh", "res://.godot/imported/scanner-high.obj-6d8315c5b85cc4334f8fe95b7c1edafc.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

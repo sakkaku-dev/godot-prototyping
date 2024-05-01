@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dys331far2eb6"
+path="res://.godot/imported/structure-doorway-wide.obj-9cebe2cd8f7fbb559beda261afe2865d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/structure-doorway-wide.obj-9cebe2cd8f7fbb559beda261afe2865d.mesh"]
+
+source_file="res://assets/Conveyor Kit/Models/OBJ format/structure-doorway-wide.obj"
+dest_files=["res://.godot/imported/structure-doorway-wide.obj-9cebe2cd8f7fbb559beda261afe2865d.mesh", "res://.godot/imported/structure-doorway-wide.obj-9cebe2cd8f7fbb559beda261afe2865d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

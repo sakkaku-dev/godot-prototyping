@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b3eopnydddlg8"
+path="res://.godot/imported/structure-yellow-medium.obj-d3bef7ff06e2aa758ccac192e8c154bd.mesh"
+
+[deps]
+
+files=["res://.godot/imported/structure-yellow-medium.obj-d3bef7ff06e2aa758ccac192e8c154bd.mesh"]
+
+source_file="res://assets/Conveyor Kit/Models/OBJ format/structure-yellow-medium.obj"
+dest_files=["res://.godot/imported/structure-yellow-medium.obj-d3bef7ff06e2aa758ccac192e8c154bd.mesh", "res://.godot/imported/structure-yellow-medium.obj-d3bef7ff06e2aa758ccac192e8c154bd.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

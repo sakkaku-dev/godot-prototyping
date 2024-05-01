@@ -14,15 +14,19 @@ signal order_failed(id)
 @onready var customer_manager = $CustomerManager
 
 @export_category("Camera")
-@export var room_source := 0
-@export var farm_source := 3
+@export var room_source := 1
+@export var farm_source := 2
 @onready var fit_camera = $FitCamera
 @onready var farm_enter = $FarmEnter
 @onready var room_enter = $RoomEnter
 @onready var farm_effect_runner = $FarmEffectRunner
 @onready var game_effect_runner = $GameEffectRunner
 
-var money := 0
+var money := 0:
+	set(v):
+		money = v
+		print(v)
+
 var order_id := 1
 var orders := {}
 var order_numbers := []
@@ -71,7 +75,7 @@ func finished_order(item):
 	var id = order_numbers.pop_front()
 	orders[id].finish_order()
 	orders.erase(id)
-	money += 1
+	self.money += 1
 
 func _on_egg_action_pressed():
 	cursor.toggle_place_eggs()

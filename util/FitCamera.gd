@@ -12,7 +12,7 @@ func _ready():
 	position_smoothing_enabled = true
 
 func update(s = source):
-	var rect = Util.tilemap_layer_rect(tilemap, 0, s)
+	var rect = Util.tilemap_layer_rect(tilemap, s)
 	rect = rect.grow(margin)
 	
 	_center_camera(rect)

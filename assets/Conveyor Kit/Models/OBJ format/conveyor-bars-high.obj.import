@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://buaiqlsqp8mgf"
+path="res://.godot/imported/conveyor-bars-high.obj-d9fd64a80c90a873c64984cc3ac37e0d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/conveyor-bars-high.obj-d9fd64a80c90a873c64984cc3ac37e0d.mesh"]
+
+source_file="res://assets/Conveyor Kit/Models/OBJ format/conveyor-bars-high.obj"
+dest_files=["res://.godot/imported/conveyor-bars-high.obj-d9fd64a80c90a873c64984cc3ac37e0d.mesh", "res://.godot/imported/conveyor-bars-high.obj-d9fd64a80c90a873c64984cc3ac37e0d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

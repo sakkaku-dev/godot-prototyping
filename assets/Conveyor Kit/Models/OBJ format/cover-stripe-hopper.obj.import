@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bmbs4vfaulm5q"
+path="res://.godot/imported/cover-stripe-hopper.obj-07d3e2bb8cedb6a8510eee2efee2f124.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cover-stripe-hopper.obj-07d3e2bb8cedb6a8510eee2efee2f124.mesh"]
+
+source_file="res://assets/Conveyor Kit/Models/OBJ format/cover-stripe-hopper.obj"
+dest_files=["res://.godot/imported/cover-stripe-hopper.obj-07d3e2bb8cedb6a8510eee2efee2f124.mesh", "res://.godot/imported/cover-stripe-hopper.obj-07d3e2bb8cedb6a8510eee2efee2f124.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://cdouhs6f2ym6q"]
+
+[ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
+[ext_resource type="Script" path="res://games/storage-game/Player3D.gd" id="2_5l40k"]
+[ext_resource type="MeshLibrary" uid="uid://bmfseahtg678v" path="res://games/storage-game/storage.tres" id="2_1352v"]
+[ext_resource type="PackedScene" uid="uid://co8w5dnjcctyl" path="res://games/storage-game/package.tscn" id="3_asni3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
+size = Vector3(0.895508, 1, 0.456055)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_f6evi"]
+size = Vector3(0.395508, 0.744141, 0.366211)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0weio"]
+
+[sub_resource type="Sky" id="Sky_6c3bs"]
+sky_material = SubResource("ProceduralSkyMaterial_0weio")
+
+[sub_resource type="Environment" id="Environment_4sfte"]
+background_mode = 2
+sky = SubResource("Sky_6c3bs")
+
+[node name="StorageGame" type="Node3D"]
+
+[node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("hand")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56904, 0)
+script = ExtResource("2_5l40k")
+speed = 5.0
+acceleration = 80.0
+camera_sens = 4.0
+hand = NodePath("Camera3D/Hand3D")
+
+[node name="Camera3D" type="Camera3D" parent="Player3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372432, 0)
+
+[node name="Hand3D" type="Area3D" parent="Player3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.599934, -0.487935)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_1h8it")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Camera3D/Hand3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171694, 0)
+shape = SubResource("BoxShape3D_cvd3t")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D"]
+shape = SubResource("BoxShape3D_f6evi")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.92959, -0.158516, -0.332769, 0.368595, 0.399774, 0.839237, -7.19772e-09, -0.902803, 0.430054, -2.92119, 3.3861, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_4sfte")
+
+[node name="GridMap" type="GridMap" parent="."]
+mesh_library = ExtResource("2_1352v")
+cell_size = Vector3(1, 1, 1)
+cell_center_y = false
+data = {
+"cells": PackedInt32Array(65532, 65532, 1441795, 65532, 65533, 1441795, 65532, 65534, 1441795, 65532, 65535, 1441795, 65532, 0, 1441795, 65532, 1, 1441795, 65532, 2, 1441795, 65532, 3, 1441795, 65533, 65532, 1441795, 65533, 65533, 1441795, 65533, 65534, 1441795, 65533, 65535, 1441795, 65533, 0, 1441795, 65533, 1, 1441795, 65533, 2, 1441795, 65533, 3, 1441795, 65534, 65532, 1441795, 65534, 65533, 1441795, 65534, 65534, 1441795, 65534, 65535, 1441795, 65534, 0, 1441795, 65534, 1, 1441795, 65534, 2, 1441795, 65534, 3, 1441795, 65535, 65532, 1441795, 65535, 65533, 1441795, 65535, 65534, 1441795, 65535, 65535, 1441795, 65535, 0, 1441795, 65535, 1, 1441795, 65535, 2, 1441795, 65535, 3, 1441795, 0, 65532, 1441795, 0, 65533, 1441795, 0, 65534, 1441795, 0, 65535, 1441795, 0, 0, 1441795, 0, 1, 1441795, 0, 2, 1441795, 0, 3, 1441795, 1, 65532, 1441795, 1, 65533, 1441795, 1, 65534, 1441795, 1, 65535, 1441795, 1, 0, 1441795, 1, 1, 1441795, 1, 2, 1441795, 1, 3, 1441795, 2, 65532, 1441795, 2, 65533, 1441795, 2, 65534, 1441795, 2, 65535, 1441795, 2, 0, 1441795, 2, 1, 1441795, 2, 2, 1441795, 2, 3, 1441795, 3, 65532, 1441795, 3, 65533, 1441795, 3, 65534, 1441795, 3, 65535, 1441795, 3, 0, 1048579, 3, 1, 1048579, 3, 2, 1048579, 3, 3, 1048579, 65531, 4, 1441792, 65531, 65531, 655360, 4, 65531, 1048576, 4, 4, 0, 3, 4, 2, 2, 4, 2, 1, 4, 2, 0, 4, 2, 65535, 4, 2, 65534, 4, 2, 65533, 4, 2, 65532, 4, 2, 65531, 3, 1441794, 65531, 2, 1441794, 65531, 1, 1441794, 65531, 0, 1441794, 65531, 65535, 1441794, 65531, 65534, 1441794, 65531, 65533, 1441794, 65531, 65532, 1441794, 65532, 65531, 655362, 65533, 65531, 655362, 65534, 65531, 655362, 2, 65531, 655362, 3, 65531, 655362, 1, 65531, 655362, 0, 65531, 655362, 65535, 65531, 655362, 4, 65532, 1048578, 4, 65533, 1048578, 4, 65534, 1048578, 4, 65535, 1048578, 4, 0, 1048578, 4, 3, 1048578, 4, 2, 1048578, 4, 1, 1048578)
+}
+metadata/_editor_floor_ = Vector3(0, 3, 0)
+
+[node name="Package" parent="." instance=ExtResource("3_asni3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.98365)

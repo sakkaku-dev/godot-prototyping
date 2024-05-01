@@ -11,7 +11,7 @@ func _ready():
 	super._ready()
 	icon.hide()
 	
-	queue.awaiting_takeout.connect(func(): icon.show())
+	queue.awaiting.connect(func(show): icon.visible = show)
 	work_timer.timeout.connect(func(): 
 		KFP.get_object(self).finished_order(working_chicken.item)
 		working_chicken.hold_item(null)
