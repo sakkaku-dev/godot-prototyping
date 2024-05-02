@@ -1,9 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=12 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
 [ext_resource type="Script" path="res://games/storage-game/Player3D.gd" id="2_5l40k"]
 [ext_resource type="MeshLibrary" uid="uid://bmfseahtg678v" path="res://games/storage-game/storage.tres" id="2_1352v"]
+[ext_resource type="PackedScene" uid="uid://ctgqify6i2hce" path="res://assets/Conveyor Kit/Models/GLB format/arrow.glb" id="2_m5847"]
 [ext_resource type="PackedScene" uid="uid://co8w5dnjcctyl" path="res://games/storage-game/package.tscn" id="3_asni3"]
+[ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="4_244k5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
 size = Vector3(0.895508, 1, 0.456055)
@@ -22,29 +24,37 @@ sky = SubResource("Sky_6c3bs")
 
 [node name="StorageGame" type="Node3D"]
 
-[node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("hand")]
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.852439, 0.522826, 0, -0.522826, 0.852439, 0, 5.19807, 6.01972)
+
+[node name="Player3D" type="CharacterBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56904, 0)
 script = ExtResource("2_5l40k")
-speed = 5.0
-acceleration = 80.0
-camera_sens = 4.0
-hand = NodePath("Camera3D/Hand3D")
 
-[node name="Camera3D" type="Camera3D" parent="Player3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.372432, 0)
+[node name="Pivot" type="Node3D" parent="Player3D"]
 
-[node name="Hand3D" type="Area3D" parent="Player3D/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.599934, -0.487935)
+[node name="arrow2" parent="Player3D/Pivot" instance=ExtResource("2_m5847")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Hand3D" type="Area3D" parent="Player3D/Pivot" node_paths=PackedStringArray("hold_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.227502, -0.487935)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("2_1h8it")
+hold_point = NodePath("../HandPosition")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Camera3D/Hand3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Pivot/Hand3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171694, 0)
 shape = SubResource("BoxShape3D_cvd3t")
 
+[node name="HandPosition" type="Node3D" parent="Player3D/Pivot"]
+transform = Transform3D(0.998017, 0, 0.0629473, 0, 1, 0, -0.0629473, 0, 0.998017, 0, -0.0675157, -0.580453)
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D"]
 shape = SubResource("BoxShape3D_f6evi")
+
+[node name="Gravity3D" type="Node" parent="Player3D"]
+script = ExtResource("4_244k5")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.92959, -0.158516, -0.332769, 0.368595, 0.399774, 0.839237, -7.19772e-09, -0.902803, 0.430054, -2.92119, 3.3861, 0)
