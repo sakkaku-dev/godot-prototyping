@@ -1,4 +1,3 @@
-# https://github.com/rbarongr/GodotFirstPersonController
 class_name Player3D
 extends CharacterBody3D
 
@@ -7,12 +6,13 @@ extends CharacterBody3D
 @export var forward := Vector3.FORWARD
 
 @export var place_arrow: PlacementArrow
+@export var grid: PackageGridMap
 
 @onready var gravity_3d = $Gravity3D
 @onready var pivot = $Pivot
 @onready var hand_3d = $Pivot/Hand3D
 
-var walk_vel: Vector3 
+var walk_vel: Vector3
 
 func _ready():
 	place_arrow.hide()
@@ -20,9 +20,9 @@ func _ready():
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
 		if hand_3d.is_holding():
-			var pos = place_arrow.get_placement_position()
-			if pos != null:
-				hand_3d.place(pos)
+			var place_pos = grid.get_placement_position(place_arrow.global_position)
+			if place_pos != null and grid.is_valid_position(place_arrow.global_position):
+				hand_3d.place(place_pos)
 		else:
 			hand_3d.interact()
 			

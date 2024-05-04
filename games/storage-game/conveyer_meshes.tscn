@@ -1,0 +1,103 @@
+[gd_scene load_steps=26 format=3 uid="uid://d0gdu6mc3peur"]
+
+[ext_resource type="PackedScene" uid="uid://dindq8e411fcx" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-fence.glb" id="1_jkpaj"]
+[ext_resource type="PackedScene" uid="uid://dfjg3ctv3gh6e" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-high.glb" id="2_j3saj"]
+[ext_resource type="PackedScene" uid="uid://c8q6xi7ykri8k" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-sides.glb" id="3_joukv"]
+[ext_resource type="PackedScene" uid="uid://bw4w0kvcwafff" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-stripe-fence.glb" id="4_73wqb"]
+[ext_resource type="PackedScene" uid="uid://7ignyd3hu2as" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-stripe-high.glb" id="5_qdf47"]
+[ext_resource type="PackedScene" uid="uid://2fi8dlycpkoe" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-stripe-side.glb" id="6_14qq4"]
+[ext_resource type="PackedScene" uid="uid://berocgeluues5" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-stripe.glb" id="7_hvjmc"]
+[ext_resource type="PackedScene" uid="uid://b2qg7rjcmqbd8" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars.glb" id="8_ebwl6"]
+[ext_resource type="PackedScene" uid="uid://dxhxwtai44mmw" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-stripe-sides.glb" id="9_bcwy2"]
+[ext_resource type="PackedScene" uid="uid://1n4ykh3juta5" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-sides.glb" id="10_k6srx"]
+[ext_resource type="PackedScene" uid="uid://w77qk40xon0l" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-stripe.glb" id="11_eqpdk"]
+[ext_resource type="PackedScene" uid="uid://dd44s10ppyrl5" path="res://assets/Conveyor Kit/Models/GLB format/conveyor.glb" id="12_pm846"]
+[ext_resource type="PackedScene" uid="uid://di1luvgjru4s0" path="res://assets/Conveyor Kit/Models/GLB format/cover-corner.glb" id="13_nund3"]
+[ext_resource type="PackedScene" uid="uid://urdjfh6tlyx3" path="res://assets/Conveyor Kit/Models/GLB format/cover-hopper.glb" id="14_2b2sb"]
+[ext_resource type="PackedScene" uid="uid://bes3dcxrtb6y4" path="res://assets/Conveyor Kit/Models/GLB format/cover-stripe-bar.glb" id="15_ke1uj"]
+[ext_resource type="PackedScene" uid="uid://deko1la4gfjoj" path="res://assets/Conveyor Kit/Models/GLB format/cover-stripe-corner.glb" id="16_cm2j3"]
+[ext_resource type="PackedScene" uid="uid://dkxfrtat466rw" path="res://assets/Conveyor Kit/Models/GLB format/cover-stripe-hopper.glb" id="17_hpjgd"]
+[ext_resource type="PackedScene" uid="uid://cjbt30tmrxe5e" path="res://assets/Conveyor Kit/Models/GLB format/cover-stripe-top.glb" id="18_8dl63"]
+[ext_resource type="PackedScene" uid="uid://cejrfpvgjllh2" path="res://assets/Conveyor Kit/Models/GLB format/cover-stripe-window.glb" id="19_wpq6b"]
+[ext_resource type="PackedScene" uid="uid://duynut13ih4as" path="res://assets/Conveyor Kit/Models/GLB format/cover-stripe.glb" id="20_4sjqi"]
+[ext_resource type="PackedScene" uid="uid://uiwt747bqfhq" path="res://assets/Conveyor Kit/Models/GLB format/cover-top.glb" id="21_djdrc"]
+[ext_resource type="PackedScene" uid="uid://ds8vo52cn7mou" path="res://assets/Conveyor Kit/Models/GLB format/cover-window.glb" id="22_appvd"]
+[ext_resource type="PackedScene" uid="uid://w5f6rj5k5jip" path="res://assets/Conveyor Kit/Models/GLB format/scanner-low.glb" id="23_ed3hu"]
+[ext_resource type="PackedScene" uid="uid://bgdr3a00kkqr6" path="res://assets/Conveyor Kit/Models/GLB format/scanner-high.glb" id="23_hqeit"]
+[ext_resource type="PackedScene" uid="uid://ce61be7xspi5y" path="res://assets/Conveyor Kit/Models/GLB format/cover.glb" id="24_iyvyi"]
+
+[node name="ConveyerMeshes" type="Node3D"]
+
+[node name="conveyor-bars-fence" parent="." instance=ExtResource("1_jkpaj")]
+
+[node name="conveyor-bars-high" parent="." instance=ExtResource("2_j3saj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0)
+
+[node name="conveyor-bars-sides" parent="." instance=ExtResource("3_joukv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+
+[node name="conveyor-bars-stripe-fence" parent="." instance=ExtResource("4_73wqb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="conveyor-bars-stripe-high" parent="." instance=ExtResource("5_qdf47")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 0)
+
+[node name="conveyor-bars-stripe-side" parent="." instance=ExtResource("6_14qq4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="conveyor-bars-stripe2" parent="." instance=ExtResource("7_hvjmc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="conveyor-bars2" parent="." instance=ExtResource("8_ebwl6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="conveyor-stripe-sides" parent="." instance=ExtResource("9_bcwy2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0, 0)
+
+[node name="conveyor-sides" parent="." instance=ExtResource("10_k6srx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="conveyor-stripe2" parent="." instance=ExtResource("11_eqpdk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9, 0, 0)
+
+[node name="conveyor2" parent="." instance=ExtResource("12_pm846")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+
+[node name="cover-corner2" parent="." instance=ExtResource("13_nund3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="cover-hopper2" parent="." instance=ExtResource("14_2b2sb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="cover-stripe-bar2" parent="." instance=ExtResource("15_ke1uj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0, 0)
+
+[node name="cover-stripe-corner2" parent="." instance=ExtResource("16_cm2j3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="cover-stripe-hopper2" parent="." instance=ExtResource("17_hpjgd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="cover-stripe-top2" parent="." instance=ExtResource("18_8dl63")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="cover-stripe-window2" parent="." instance=ExtResource("19_wpq6b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="cover-stripe2" parent="." instance=ExtResource("20_4sjqi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
+
+[node name="cover-top2" parent="." instance=ExtResource("21_djdrc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 0)
+
+[node name="cover-window2" parent="." instance=ExtResource("22_appvd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14, 0, 0)
+
+[node name="scanner-low2" parent="." instance=ExtResource("23_ed3hu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, 0)
+
+[node name="scanner-high2" parent="." instance=ExtResource("23_hqeit")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="cover2" parent="." instance=ExtResource("24_iyvyi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 0, 0)
