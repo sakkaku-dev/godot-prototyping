@@ -9,12 +9,3 @@ signal placing(pos)
 
 func get_object():
 	return get_parent()
-
-func hold():
-	holding.emit()
-	
-func hold_release():
-	holding_release.emit()
-
-func place(pos: Vector3):
-	placing.emit(pos)

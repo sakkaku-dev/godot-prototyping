@@ -14,19 +14,21 @@ extends CharacterBody3D
 
 var walk_vel: Vector3
 
-func _ready():
-	place_arrow.hide()
+#func _ready():
+	#place_arrow.hide()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
-		if hand_3d.is_holding():
-			var place_pos = grid.get_placement_position(place_arrow.global_position)
-			if place_pos != null and grid.is_valid_position(place_arrow.global_position):
-				hand_3d.place(place_pos)
-		else:
-			hand_3d.interact()
+		hand_3d.place(place_arrow.global_position)
+		
+		#if hand_3d.is_holding():
+			#var place_pos = grid.get_placement_position(place_arrow.global_position)
+			#if place_pos != null and grid.is_valid_position(place_arrow.global_position):
+				#hand_3d.place(place_pos)
+		#else:
+			#hand_3d.interact()
 			
-		place_arrow.visible = hand_3d.is_holding()
+		#place_arrow.visible = hand_3d.is_holding()
 
 
 func _physics_process(delta: float) -> void:

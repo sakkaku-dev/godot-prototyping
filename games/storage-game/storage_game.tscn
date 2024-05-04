@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=17 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="4_244k5"]
 [ext_resource type="Script" path="res://games/storage-game/PackageGridMap.gd" id="7_qt64i"]
 [ext_resource type="Script" path="res://games/storage-game/PackageSpawner.gd" id="8_wmh0m"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3vjnq"]
+radius = 0.259848
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
 size = Vector3(0.895508, 1, 0.456055)
@@ -41,16 +44,24 @@ grid = NodePath("../GridMap")
 [node name="Pivot" type="Node3D" parent="Player3D"]
 
 [node name="Marker3D" type="Marker3D" parent="Player3D/Pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.271821, -0.222561, -0.715104)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0185907, -0.222561, -0.715104)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Player3D/Pivot/Marker3D"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Pivot/Marker3D/StaticBody3D"]
+shape = SubResource("SphereShape3D_3vjnq")
 
 [node name="arrow2" parent="Player3D/Pivot" instance=ExtResource("2_m5847")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -0.35312, 0)
 
-[node name="Hand3D" type="Area3D" parent="Player3D/Pivot" node_paths=PackedStringArray("hold_point")]
+[node name="Hand3D" type="Area3D" parent="Player3D/Pivot" node_paths=PackedStringArray("grid", "hold_point")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.227502, -0.487935)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("2_1h8it")
+grid = NodePath("../../../GridMap")
 hold_point = NodePath("../HandPosition")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Pivot/Hand3D"]
@@ -73,7 +84,7 @@ grid = NodePath("../GridMap")
 root = NodePath("../Player3D/Pivot/Marker3D")
 
 [node name="arrow3" parent="PlacementArrow" instance=ExtResource("2_m5847")]
-transform = Transform3D(-3.27835e-08, 3.27835e-08, -0.75, 0.75, -3.27835e-08, -3.27835e-08, -3.27835e-08, -0.75, -3.27835e-08, 0, 0.696421, 0)
+transform = Transform3D(-3.27835e-08, 3.27835e-08, -0.75, 0.75, -3.27835e-08, -3.27835e-08, -3.27835e-08, -0.75, -3.27835e-08, 0, 0.528182, 0.085861)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.92959, -0.158516, -0.332769, 0.368595, 0.399774, 0.839237, -7.19772e-09, -0.902803, 0.430054, -2.92119, 3.3861, 0)
@@ -83,7 +94,7 @@ environment = SubResource("Environment_4sfte")
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("2_1352v")
-cell_size = Vector3(1, 1, 1)
+cell_size = Vector3(1, 0.5, 1)
 cell_center_x = false
 cell_center_y = false
 cell_center_z = false

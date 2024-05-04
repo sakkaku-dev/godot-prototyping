@@ -1,28 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://co8w5dnjcctyl"]
+[gd_scene load_steps=5 format=3 uid="uid://co8w5dnjcctyl"]
 
 [ext_resource type="PackedScene" uid="uid://de5n2wvsrb7cr" path="res://assets/Conveyor Kit/Models/GLB format/box-small.glb" id="1_f1kd2"]
 [ext_resource type="Script" path="res://games/storage-game/package.gd" id="1_rbq3k"]
-[ext_resource type="Script" path="res://games/storage-game/Interactable3D.gd" id="2_57gyb"]
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="4_kl446"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5c3ss"]
-size = Vector3(0.729492, 0.638306, 0.84082)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6qm2n"]
 size = Vector3(0.5, 0.5, 0.5)
 
 [node name="Package" type="CharacterBody3D"]
 script = ExtResource("1_rbq3k")
-
-[node name="Interactable3D" type="Area3D" parent="." node_paths=PackedStringArray("hold_point")]
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("2_57gyb")
-hold_point = NodePath("../HoldPoint")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.304988, 0)
-shape = SubResource("BoxShape3D_5c3ss")
 
 [node name="box-small2" parent="." instance=ExtResource("1_f1kd2")]
 

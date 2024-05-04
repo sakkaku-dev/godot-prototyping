@@ -26,14 +26,14 @@ func get_packages(pos: Vector3) -> Array[Node3D]:
 		if pkg.holding: continue
 		
 		var c = local_to_map(pkg.global_position)
-		if c == coord:
+		if c.x == coord.x and c.z == coord.z:
 			result.append(pkg)
 	
-	result.sort_custom(func(a, b): return a.global_position.y < b.global_position.y)
+	result.sort_custom(func(a, b): return a.global_position.y > b.global_position.y)
 	return result
 
 func is_valid_position(pos: Vector3):
-	var coord = local_to_map(pos)
+	var coord = local_to_map(Vector3(pos.x, 0, pos.z))
 	return get_cell_item(coord) != GridMap.INVALID_CELL_ITEM
 
 func get_placement_position(pos: Vector3, layer_offset := 0):
