@@ -18,12 +18,17 @@ var holding: Interactable3D:
 		
 		hold.emit(holding)
 
+func is_holding():
+	return holding != null
+
 func interact():
-	if holding:
-		self.holding = null
-		return
-	
+	if is_holding(): return
 	self.holding = _get_closest_interactable()
+
+func place(pos: Vector3):
+	if not is_holding(): return
+	holding.place(pos)
+	self.holding = null
 
 func _process(_delta):
 	#closest = _get_closest_interactable()

@@ -3,6 +3,7 @@ extends Area3D
 
 signal holding()
 signal holding_release()
+signal placing(pos)
 
 @export var hold_point: Node3D
 
@@ -14,3 +15,6 @@ func hold():
 	
 func hold_release():
 	holding_release.emit()
+
+func place(pos: Vector3):
+	placing.emit(pos)

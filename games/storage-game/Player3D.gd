@@ -6,16 +6,27 @@ extends CharacterBody3D
 @export var acceleration := 100
 @export var forward := Vector3.FORWARD
 
+@export var place_arrow: PlacementArrow
+
 @onready var gravity_3d = $Gravity3D
 @onready var pivot = $Pivot
 @onready var hand_3d = $Pivot/Hand3D
 
-
 var walk_vel: Vector3 
+
+func _ready():
+	place_arrow.hide()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
-		hand_3d.interact()
+		if hand_3d.is_holding():
+			var pos = place_arrow.get_placement_position()
+			if pos != null:
+				hand_3d.place(pos)
+		else:
+			hand_3d.interact()
+			
+		place_arrow.visible = hand_3d.is_holding()
 
 
 func _physics_process(delta: float) -> void:

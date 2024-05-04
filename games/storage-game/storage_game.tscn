@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=13 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
 [ext_resource type="Script" path="res://games/storage-game/Player3D.gd" id="2_5l40k"]
 [ext_resource type="MeshLibrary" uid="uid://bmfseahtg678v" path="res://games/storage-game/storage.tres" id="2_1352v"]
 [ext_resource type="PackedScene" uid="uid://ctgqify6i2hce" path="res://assets/Conveyor Kit/Models/GLB format/arrow.glb" id="2_m5847"]
+[ext_resource type="Script" path="res://games/storage-game/PlacementArrow.gd" id="2_vf6n8"]
 [ext_resource type="PackedScene" uid="uid://co8w5dnjcctyl" path="res://games/storage-game/package.tscn" id="3_asni3"]
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="4_244k5"]
 
@@ -27,14 +28,18 @@ sky = SubResource("Sky_6c3bs")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.852439, 0.522826, 0, -0.522826, 0.852439, 0, 5.19807, 6.01972)
 
-[node name="Player3D" type="CharacterBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56904, 0)
+[node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("place_arrow")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417175, 0)
 script = ExtResource("2_5l40k")
+place_arrow = NodePath("../PlacementArrow")
 
 [node name="Pivot" type="Node3D" parent="Player3D"]
 
+[node name="Marker3D" type="Marker3D" parent="Player3D/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.222561, -0.715104)
+
 [node name="arrow2" parent="Player3D/Pivot" instance=ExtResource("2_m5847")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -0.35312, 0)
 
 [node name="Hand3D" type="Area3D" parent="Player3D/Pivot" node_paths=PackedStringArray("hold_point")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.227502, -0.487935)
@@ -55,6 +60,15 @@ shape = SubResource("BoxShape3D_f6evi")
 
 [node name="Gravity3D" type="Node" parent="Player3D"]
 script = ExtResource("4_244k5")
+
+[node name="PlacementArrow" type="Node3D" parent="." node_paths=PackedStringArray("grid", "root")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.56904, -1)
+script = ExtResource("2_vf6n8")
+grid = NodePath("../GridMap")
+root = NodePath("../Player3D/Pivot/Marker3D")
+
+[node name="arrow3" parent="PlacementArrow" instance=ExtResource("2_m5847")]
+transform = Transform3D(-3.27835e-08, 3.27835e-08, -0.75, 0.75, -3.27835e-08, -3.27835e-08, -3.27835e-08, -0.75, -3.27835e-08, 0, 0.696421, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.92959, -0.158516, -0.332769, 0.368595, 0.399774, 0.839237, -7.19772e-09, -0.902803, 0.430054, -2.92119, 3.3861, 0)

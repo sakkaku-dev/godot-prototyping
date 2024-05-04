@@ -8,6 +8,10 @@ var holding := false
 func _ready():
 	interactable_3d.holding.connect(func(): holding = true)
 	interactable_3d.holding_release.connect(func(): holding = false)
+	interactable_3d.placing.connect(func(pos):
+		global_position = pos
+		holding = false
+	)
 
 func _physics_process(delta):
 	if holding:
