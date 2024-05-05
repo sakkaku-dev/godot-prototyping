@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://brqnnuqhecl0e"]
+
+[ext_resource type="PackedScene" uid="uid://dfjg3ctv3gh6e" path="res://assets/Conveyor Kit/Models/GLB format/conveyor-bars-high.glb" id="1_wk77i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vgi76"]
+size = Vector3(1, 0.396423, 1)
+
+[node name="conveyer" type="Node3D"]
+
+[node name="conveyor-bars-high" parent="." instance=ExtResource("1_wk77i")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.198395, 0)
+shape = SubResource("BoxShape3D_vgi76")

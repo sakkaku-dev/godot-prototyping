@@ -3,40 +3,70 @@ extends GridMap
 
 @export var max_stack_size := 3
 
-#var _cache := {}
+var _data := {}
 
-#func add_package(coord: Vector3i, pkg: Node3D):
-	#if not coord in _cache:
-		#_cache[coord] = []
-	#
-	#if _cache[coord].size() >= max_stack_size:
-		#print("Coord %s stack is already full" % coord)
-		#return false
-	#
-	#_cache[coord].append(pkg)
-	#return true
+func _unhandled_input(event):
+	if event.is_action_pressed("debug"):
+		for c in _data:
+			print("%s - %s" % [c, _data[c]])
 
-func get_packages(pos: Vector3) -> Array[Node3D]:
-	#if not coord in _cache: return []
-	#return _cache[coord]
+func get_coord(pos: Vector3):
+	var c = local_to_map(pos)
+	return Vector3i(c.x, 0, c.z)
+
+func remove_package(pos: Vector3) -> Node3D:
+	var coord = get_coord(pos)
 	
-	var coord = local_to_map(pos)
-	var result: Array[Node3D] = []
-	for pkg in get_tree().get_nodes_in_group(Package.GROUP):
-		if pkg.holding: continue
+	if not coord in _data:
+		print("Nothing at coord %s" % coord)
+		return null
 		
-		var c = local_to_map(pkg.global_position)
-		if c.x == coord.x and c.z == coord.z:
-			result.append(pkg)
+	var nodes = get_nodes_at(coord)
 	
-	result.sort_custom(func(a, b): return a.global_position.y > b.global_position.y)
-	return result
+	if nodes.is_empty():
+		print("No packages at %s" % coord)
+		return null
+		
+	var last = nodes[nodes.size() - 1]
+	if not last.is_in_group(Package.GROUP):
+		print("Cannot pick up non package item: %s" % last)
+		return null
+	
+	print("Removing package at %s" % coord)
+	return nodes.pop_back()
 
-func is_valid_position(pos: Vector3):
-	var coord = local_to_map(Vector3(pos.x, 0, pos.z))
+func add_package(pos: Vector3, pkg: Node3D) -> bool:
+	var coord = get_coord(pos)
+	
+	if not is_valid_position(coord):
+		print("Invalid position for package at %s" % coord)
+		return false
+		
+	var nodes = get_nodes_at(coord)
+	var nonPackages = nodes.filter(func(x): return not x.is_in_group(Package.GROUP))
+	
+	if nonPackages.size() > 0:
+		print("Cannot place on non-package objects: %s" % nonPackages)
+		return false
+	
+	if not coord in _data:
+		_data[coord] = [] as Array[Node3D]
+	
+	pkg.global_position = get_placement_position(coord)
+	_data[coord].append(pkg)
+	print("Adding package at %s" % coord)
+	return true
+
+func get_nodes_at(coord: Vector3i) -> Array[Node3D]:
+	if coord in _data:
+		return _data[coord]
+	return []
+
+func is_valid_position(c: Vector3i):
+	var coord = Vector3(c.x, 0, c.z)
 	return get_cell_item(coord) != GridMap.INVALID_CELL_ITEM
 
-func get_placement_position(pos: Vector3, layer_offset := 0):
-	var packages = get_packages(pos)
-	var coord = local_to_map(pos)
-	return map_to_local(Vector3i(coord.x, packages.size() + layer_offset, coord.z))
+func get_placement_position(coord: Vector3i):
+	var nodes = get_nodes_at(coord)
+	var pos = map_to_local(Vector3i(coord.x, nodes.size(), coord.z))
+	return pos

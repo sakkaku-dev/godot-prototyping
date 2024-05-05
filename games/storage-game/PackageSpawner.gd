@@ -5,6 +5,6 @@ extends Node3D
 
 func spawn():
 	var node = package.instantiate()
-	var pos = grid.get_placement_position(global_position)
 	add_child(node)
-	node.global_position = pos
+	grid.add_package(global_position, node)
+	print("Spawning package at %s" % global_position)
