@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=18 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
@@ -10,8 +10,7 @@
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="4_244k5"]
 [ext_resource type="Script" path="res://games/storage-game/PackageGridMap.gd" id="7_qt64i"]
 [ext_resource type="Script" path="res://games/storage-game/PackageSpawner.gd" id="8_wmh0m"]
-[ext_resource type="ArrayMesh" uid="uid://buaiqlsqp8mgf" path="res://assets/Conveyor Kit/Models/OBJ format/conveyor-bars-high.obj" id="9_0gcym"]
-[ext_resource type="Texture2D" uid="uid://cbk3lg6rpe0sh" path="res://assets/Conveyor Kit/Previews/conveyor-bars-high.png" id="10_kn053"]
+[ext_resource type="PackedScene" uid="uid://brqnnuqhecl0e" path="res://games/storage-game/conveyer.tscn" id="11_pribm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
 size = Vector3(0.895508, 1, 0.456055)
@@ -31,20 +30,11 @@ sky_material = SubResource("ProceduralSkyMaterial_0weio")
 background_mode = 2
 sky = SubResource("Sky_6c3bs")
 
-[sub_resource type="MeshLibrary" id="MeshLibrary_ntpqb"]
-item/0/name = "Converyer"
-item/0/mesh = ExtResource("9_0gcym")
-item/0/mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-item/0/shapes = []
-item/0/navigation_mesh_transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
-item/0/navigation_layers = 1
-item/0/preview = ExtResource("10_kn053")
-
 [node name="StorageGame" type="Node3D"]
 script = ExtResource("1_rpnej")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.54892, 0.835875, 0, -0.835875, 0.54892, 0, 5.63214, 4.83102)
+transform = Transform3D(1, 0, 0, 0, 0.54892, 0.835875, 0, -0.835875, 0.54892, 0, 6.452, 5.656)
 
 [node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("place_arrow", "grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417175, 0)
@@ -111,14 +101,50 @@ data = {
 script = ExtResource("7_qt64i")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="GridMap2" type="GridMap" parent="."]
-mesh_library = SubResource("MeshLibrary_ntpqb")
-cell_size = Vector3(1, 1, 1)
-cell_center_y = false
-metadata/_editor_floor_ = Vector3(0, 0, 0)
-
 [node name="PackageSpawner" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42749, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("3_asni3")
 grid = NodePath("../GridMap")
+
+[node name="ConveyerStart" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38192, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("../GridMap")
+init = true
+
+[node name="ConveyerEnd" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27369, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("../GridMap")
+init = true
+
+[node name="ConveyerEnd2" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.54811, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("../GridMap")
+init = true
+
+[node name="ConveyerEnd3" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.51786, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("../GridMap")
+init = true
+
+[node name="ConveyerEnd4" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31241, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("../GridMap")
+init = true
+
+[node name="ConveyerEnd5" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.37134, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("../GridMap")
+init = true
