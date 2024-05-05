@@ -121,29 +121,22 @@ package = ExtResource("11_pribm")
 grid = NodePath("../GridMap")
 init = true
 
-[node name="ConveyerEnd2" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.54811, 0, -0.490461)
-script = ExtResource("8_wmh0m")
-package = ExtResource("11_pribm")
-grid = NodePath("../GridMap")
-init = true
-
 [node name="ConveyerEnd3" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.51786, 0, -0.490461)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36452, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("11_pribm")
 grid = NodePath("../GridMap")
 init = true
 
 [node name="ConveyerEnd4" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.31241, 0, -0.490461)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.41612, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("11_pribm")
 grid = NodePath("../GridMap")
 init = true
 
-[node name="ConveyerEnd5" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.37134, 0, -0.490461)
+[node name="ConveyerEnd2" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.44977, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("11_pribm")
 grid = NodePath("../GridMap")

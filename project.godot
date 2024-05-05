@@ -105,6 +105,7 @@ debug={
 2d_physics/layer_3="enemy"
 3d_physics/layer_3="interactable"
 2d_physics/layer_4="player_hurtbox"
+3d_physics/layer_4="package"
 2d_physics/layer_5="enemy_hurtbox"
 2d_physics/layer_6="interactable"
 2d_physics/layer_7="door"
