@@ -9,23 +9,12 @@ const GROUP = "package"
 @onready var gravity_3d = $Gravity3D
 @onready var grid: PackageGridMap = get_tree().get_first_node_in_group(PackageGridMap.GROUP)
 
+var is_moving := false
 var holding := false
 var coord: Vector3i
 
 func _ready():
 	add_to_group(GROUP)
-
-#func _physics_process(delta):
-	#if holding:
-		#collision_layer = 0
-		#return
-#
-	#global_rotation.x = 0
-	#global_rotation.z = 0
-	#collision_layer = 3
-	#velocity = gravity_3d.apply_gravity(self, delta)
-	#velocity = Vector3.ZERO
-	#move_and_slide()
 
 func _process(delta):
 	if holding: return
@@ -35,12 +24,15 @@ func _process(delta):
 	
 	if self in nodes:
 		var conveyers = nodes.filter(func(x): return x.is_in_group(Conveyer.GROUP))
-		if not conveyers.is_empty():
+		is_moving = not conveyers.is_empty()
+		
+		if is_moving:
 			var conveyer = conveyers[0] as Conveyer
 			var vel = conveyer.get_velocity(delta)
 			ray_cast_3d.target_position = vel.normalized() * collision_detection_distance
 			
-			if not ray_cast_3d.is_colliding():
+			var collider = ray_cast_3d.get_collider()
+			if collider == null or not collider.is_moving:
 				translate(vel)
 			
 		coord = new_coord
@@ -52,8 +44,3 @@ func hold():
 	
 func hold_release():
 	holding = false
-
-#func place(pos: Vector3):
-	#global_position = pos
-	#holding = false
-

@@ -1,11 +1,7 @@
 class_name Interactable3D
 extends Area3D
 
-signal holding()
-signal holding_release()
-signal placing(pos)
+signal interacted()
 
-@export var hold_point: Node3D
-
-func get_object():
-	return get_parent()
+func interact():
+	interacted.emit()

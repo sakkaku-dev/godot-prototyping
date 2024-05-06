@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=21 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
@@ -8,12 +8,14 @@
 [ext_resource type="Script" path="res://games/storage-game/PlacementArrow.gd" id="2_vf6n8"]
 [ext_resource type="PackedScene" uid="uid://co8w5dnjcctyl" path="res://games/storage-game/package.tscn" id="3_asni3"]
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="4_244k5"]
+[ext_resource type="Script" path="res://games/storage-game/HoldPoint.gd" id="5_xbwij"]
 [ext_resource type="Script" path="res://games/storage-game/PackageGridMap.gd" id="7_qt64i"]
 [ext_resource type="Script" path="res://games/storage-game/PackageSpawner.gd" id="8_wmh0m"]
 [ext_resource type="PackedScene" uid="uid://brqnnuqhecl0e" path="res://games/storage-game/conveyer.tscn" id="11_pribm"]
+[ext_resource type="Script" path="res://games/storage-game/Interactable3D.gd" id="13_u2wfn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
-size = Vector3(0.895508, 1, 0.456055)
+size = Vector3(0.511963, 0.669922, 0.343994)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f6evi"]
 size = Vector3(0.395508, 0.229004, 0.366211)
@@ -29,6 +31,9 @@ sky_material = SubResource("ProceduralSkyMaterial_0weio")
 [sub_resource type="Environment" id="Environment_4sfte"]
 background_mode = 2
 sky = SubResource("Sky_6c3bs")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_e3jwv"]
+size = Vector3(0.437744, 0.625977, 0.756104)
 
 [node name="StorageGame" type="Node3D"]
 script = ExtResource("1_rpnej")
@@ -50,20 +55,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0185907, -0.222561, -0.7151
 [node name="arrow2" parent="Player3D/Pivot" instance=ExtResource("2_m5847")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -0.35312, 0)
 
-[node name="Hand3D" type="Area3D" parent="Player3D/Pivot" node_paths=PackedStringArray("grid", "hold_point")]
+[node name="HoldPoint" type="Node3D" parent="Player3D/Pivot" node_paths=PackedStringArray("grid")]
+transform = Transform3D(0.998017, 0, 0.0629473, 0, 1, 0, -0.0629473, 0, 0.998017, 0, -0.0675157, -0.580453)
+script = ExtResource("5_xbwij")
+grid = NodePath("../../../GridMap")
+
+[node name="Hand3D" type="Area3D" parent="Player3D/Pivot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.227502, -0.487935)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("2_1h8it")
-grid = NodePath("../../../GridMap")
-hold_point = NodePath("../HandPosition")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Pivot/Hand3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171694, 0)
 shape = SubResource("BoxShape3D_cvd3t")
-
-[node name="HandPosition" type="Node3D" parent="Player3D/Pivot"]
-transform = Transform3D(0.998017, 0, 0.0629473, 0, 1, 0, -0.0629473, 0, 0.998017, 0, -0.0675157, -0.580453)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.257568, 0)
@@ -101,43 +106,47 @@ data = {
 script = ExtResource("7_qt64i")
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
-[node name="PackageSpawner" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.42749, 0, -0.490461)
+[node name="PackageSpawner" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.46337, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("3_asni3")
-grid = NodePath("../GridMap")
+grid = NodePath("..")
 
-[node name="ConveyerStart" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+[node name="ConveyerStart" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38192, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("11_pribm")
-grid = NodePath("../GridMap")
+grid = NodePath("..")
 init = true
 
-[node name="ConveyerEnd" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+[node name="ConveyerStart2" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.35697, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("..")
+init = true
+
+[node name="ConveyerEnd" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27369, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("11_pribm")
-grid = NodePath("../GridMap")
+grid = NodePath("..")
 init = true
 
-[node name="ConveyerEnd3" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
+[node name="ConveyerEnd3" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36452, 0, -0.490461)
 script = ExtResource("8_wmh0m")
 package = ExtResource("11_pribm")
-grid = NodePath("../GridMap")
+grid = NodePath("..")
 init = true
 
-[node name="ConveyerEnd4" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.41612, 0, -0.490461)
-script = ExtResource("8_wmh0m")
-package = ExtResource("11_pribm")
-grid = NodePath("../GridMap")
-init = true
+[node name="RequestPackageInteract" type="Area3D" parent="GridMap"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.79924, 0.578528, 0.532863)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("13_u2wfn")
 
-[node name="ConveyerEnd2" type="Node3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.44977, 0, -0.490461)
-script = ExtResource("8_wmh0m")
-package = ExtResource("11_pribm")
-grid = NodePath("../GridMap")
-init = true
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/RequestPackageInteract"]
+shape = SubResource("BoxShape3D_e3jwv")
+
+[connection signal="interacted" from="GridMap/RequestPackageInteract" to="GridMap/PackageSpawner" method="spawn"]

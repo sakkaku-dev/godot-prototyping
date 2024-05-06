@@ -10,25 +10,17 @@ extends CharacterBody3D
 
 @onready var gravity_3d = $Gravity3D
 @onready var pivot = $Pivot
+@onready var hold_point = $Pivot/HoldPoint
 @onready var hand_3d = $Pivot/Hand3D
 
 var walk_vel: Vector3
 
-#func _ready():
-	#place_arrow.hide()
-
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
-		hand_3d.place(place_arrow.global_position)
+		if hand_3d.interact():
+			return
 		
-		#if hand_3d.is_holding():
-			#var place_pos = grid.get_placement_position(place_arrow.global_position)
-			#if place_pos != null and grid.is_valid_position(place_arrow.global_position):
-				#hand_3d.place(place_pos)
-		#else:
-			#hand_3d.interact()
-			
-		#place_arrow.visible = hand_3d.is_holding()
+		hold_point.place(place_arrow.global_position)
 
 
 func _physics_process(delta: float) -> void:

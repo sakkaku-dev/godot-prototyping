@@ -25,7 +25,8 @@ func move_object(prev_coord: Vector3i, new_coord: Vector3i, obj: Node3D) -> bool
 		#print("Object %s is not at %s" % [obj, prev_coord])
 		return false
 	
-	var added = add_object(new_coord, obj, true, false)
+	var new_nodes = get_nodes_at(new_coord)
+	var added = add_object(new_coord, obj, true, not has_conveyer(new_nodes))
 	if added:
 		nodes.erase(obj)
 	return added
@@ -59,9 +60,7 @@ func add_object(coord: Vector3i, node: Node3D, allow_out_of_bound := false, upda
 		
 	var nodes = get_nodes_at(coord)
 	if node.is_in_group(Package.GROUP) and not nodes.is_empty():
-		var first = nodes[0]
-		
-		if first.is_in_group(Conveyer.GROUP):
+		if has_conveyer(nodes):
 			if nodes.size() > 1:
 				#print("There are already items on the conveyer at %s" % coord)
 				return false
@@ -82,8 +81,11 @@ func add_object(coord: Vector3i, node: Node3D, allow_out_of_bound := false, upda
 		node.global_position = get_placement_position(coord)
 	_data[coord].append(node) 
 	
-	print("Adding package at %s" % coord)
+	print("Adding %s at %s" % [node.get_groups(), coord])
 	return true
+
+func has_conveyer(nodes: Array) -> bool:
+	return nodes.filter(func(x): return x.is_in_group(Conveyer.GROUP)).size() > 0
 
 func get_nodes_at(coord: Vector3i) -> Array[Node3D]:
 	if coord in _data:

@@ -11,5 +11,5 @@ func _ready():
 func spawn():
 	var node = package.instantiate()
 	add_child(node)
-	grid.add_object(grid.get_coord(global_position), node, true)
-	print("Spawning object at %s" % global_position)
+	if not grid.add_object(grid.get_coord(global_position), node, true):
+		node.queue_free()
