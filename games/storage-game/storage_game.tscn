@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=22 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
@@ -12,10 +12,11 @@
 [ext_resource type="Script" path="res://games/storage-game/PackageGridMap.gd" id="7_qt64i"]
 [ext_resource type="Script" path="res://games/storage-game/PackageSpawner.gd" id="8_wmh0m"]
 [ext_resource type="PackedScene" uid="uid://brqnnuqhecl0e" path="res://games/storage-game/conveyer.tscn" id="11_pribm"]
+[ext_resource type="PackedScene" uid="uid://bocve3lop7cqv" path="res://games/storage-game/package_drop_off.tscn" id="13_emwfx"]
 [ext_resource type="Script" path="res://games/storage-game/Interactable3D.gd" id="13_u2wfn"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
-size = Vector3(0.511963, 0.669922, 0.343994)
+size = Vector3(0.511963, 0.669922, 0.583984)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f6evi"]
 size = Vector3(0.395508, 0.229004, 0.366211)
@@ -39,7 +40,7 @@ size = Vector3(0.437744, 0.625977, 0.756104)
 script = ExtResource("1_rpnej")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.54892, 0.835875, 0, -0.835875, 0.54892, 0, 6.452, 5.656)
+transform = Transform3D(1, 0, 0, 0, 0.549023, 0.835807, 0, -0.835807, 0.549023, 0, 6.452, 5.656)
 
 [node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("place_arrow", "grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417175, 0)
@@ -67,7 +68,7 @@ collision_mask = 4
 script = ExtResource("2_1h8it")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Pivot/Hand3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171694, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171694, 0.179565)
 shape = SubResource("BoxShape3D_cvd3t")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D"]
@@ -126,6 +127,13 @@ package = ExtResource("11_pribm")
 grid = NodePath("..")
 init = true
 
+[node name="ConveyerEnd3" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36452, 0, -0.490461)
+script = ExtResource("8_wmh0m")
+package = ExtResource("11_pribm")
+grid = NodePath("..")
+init = true
+
 [node name="ConveyerEnd" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27369, 0, -0.490461)
 script = ExtResource("8_wmh0m")
@@ -133,10 +141,10 @@ package = ExtResource("11_pribm")
 grid = NodePath("..")
 init = true
 
-[node name="ConveyerEnd3" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36452, 0, -0.490461)
+[node name="DropOffPoint" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.18368, 0, -0.490461)
 script = ExtResource("8_wmh0m")
-package = ExtResource("11_pribm")
+package = ExtResource("13_emwfx")
 grid = NodePath("..")
 init = true
 

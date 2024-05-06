@@ -3,6 +3,8 @@ extends GridMap
 
 const GROUP = "PackageGridMap"
 
+signal dropped_off_package()
+
 @export var max_stack_size := 3
 
 var _data := {}
@@ -18,15 +20,20 @@ func _unhandled_input(event):
 func get_coord(pos: Vector3):
 	var c = local_to_map(pos)
 	return Vector3i(c.x, 0, c.z)
-	
+
+func drop_off_package(coord: Vector3i, pkg: Node3D):
+	pkg.queue_free()
+	dropped_off_package.emit()
+	print("Dropped off package at %s" % [coord])
+
 func move_object(prev_coord: Vector3i, new_coord: Vector3i, obj: Node3D) -> bool:
 	var nodes = get_nodes_at(prev_coord)
 	if not obj in nodes:
-		#print("Object %s is not at %s" % [obj, prev_coord])
+		print("Object %s is not at %s" % [obj, prev_coord])
 		return false
 	
 	var new_nodes = get_nodes_at(new_coord)
-	var added = add_object(new_coord, obj, true, not has_conveyer(new_nodes))
+	var added = add_object(new_coord, obj, true, not has_node_with_group(new_nodes, Conveyer.GROUP))
 	if added:
 		nodes.erase(obj)
 	return added
@@ -60,10 +67,13 @@ func add_object(coord: Vector3i, node: Node3D, allow_out_of_bound := false, upda
 		
 	var nodes = get_nodes_at(coord)
 	if node.is_in_group(Package.GROUP) and not nodes.is_empty():
-		if has_conveyer(nodes):
+		if has_node_with_group(nodes, Conveyer.GROUP):
 			if nodes.size() > 1:
 				#print("There are already items on the conveyer at %s" % coord)
 				return false
+		elif has_node_with_group(nodes, PackageDropOff.GROUP):
+			drop_off_package(coord, node)
+			return true
 		else:
 			var nonPackages = nodes.filter(func(x): return not x.is_in_group(Package.GROUP))
 			if nonPackages.size() > 0:
@@ -84,8 +94,8 @@ func add_object(coord: Vector3i, node: Node3D, allow_out_of_bound := false, upda
 	print("Adding %s at %s" % [node.get_groups(), coord])
 	return true
 
-func has_conveyer(nodes: Array) -> bool:
-	return nodes.filter(func(x): return x.is_in_group(Conveyer.GROUP)).size() > 0
+func has_node_with_group(nodes: Array, group: String) -> bool:
+	return nodes.filter(func(x): return x.is_in_group(group)).size() > 0
 
 func get_nodes_at(coord: Vector3i) -> Array[Node3D]:
 	if coord in _data:

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bocve3lop7cqv"]
+
+[ext_resource type="Script" path="res://games/storage-game/package_drop_off.gd" id="1_sgbu1"]
+
+[node name="PackageDropOff" type="Node3D"]
+script = ExtResource("1_sgbu1")
