@@ -21,11 +21,6 @@ func get_coord(pos: Vector3):
 	var c = local_to_map(pos)
 	return Vector3i(c.x, 0, c.z)
 
-func drop_off_package(coord: Vector3i, pkg: Node3D):
-	pkg.queue_free()
-	dropped_off_package.emit()
-	print("Dropped off package at %s" % [coord])
-
 func move_object(prev_coord: Vector3i, new_coord: Vector3i, obj: Node3D) -> bool:
 	var nodes = get_nodes_at(prev_coord)
 	if not obj in nodes:
@@ -64,7 +59,8 @@ func add_object(coord: Vector3i, node: Node3D, allow_out_of_bound := false, upda
 	if not is_valid_position(coord) and not allow_out_of_bound:
 		#print("Invalid position for object at %s" % coord)
 		return false
-		
+
+	var check_weights := false
 	var nodes = get_nodes_at(coord)
 	if node.is_in_group(Package.GROUP) and not nodes.is_empty():
 		if has_node_with_group(nodes, Conveyer.GROUP):
@@ -72,13 +68,15 @@ func add_object(coord: Vector3i, node: Node3D, allow_out_of_bound := false, upda
 				#print("There are already items on the conveyer at %s" % coord)
 				return false
 		elif has_node_with_group(nodes, PackageDropOff.GROUP):
-			drop_off_package(coord, node)
+			_drop_off_package(coord, node)
 			return true
 		else:
-			var nonPackages = nodes.filter(func(x): return not x.is_in_group(Package.GROUP))
-			if nonPackages.size() > 0:
+			var packages = nodes.filter(func(x): return x.is_in_group(Package.GROUP))
+			if packages.size() != nodes.size():
 				#print("Cannot place on non-package objects: %s" % nonPackages)
 				return false
+			
+			check_weights = true
 	else:
 		if not nodes.is_empty():
 			#print("Cannot place at %s. There is already an item: %s" % [coord, nodes])
@@ -91,8 +89,44 @@ func add_object(coord: Vector3i, node: Node3D, allow_out_of_bound := false, upda
 		node.global_position = get_placement_position(coord)
 	_data[coord].append(node) 
 	
+	if check_weights:
+		_check_breaking_packages(coord)
+	
 	print("Adding %s at %s" % [node.get_groups(), coord])
 	return true
+
+func _drop_off_package(coord: Vector3i, pkg: Node3D):
+	pkg.queue_free()
+	dropped_off_package.emit()
+	print("Dropped off package at %s" % [coord])
+
+func _check_breaking_packages(coord: Vector3i):
+	var packages = _data[coord].filter(func(x): return x.is_in_group(Package.GROUP))
+	print("Checking weights for %s packages" % [packages.size()])
+	
+	var breaking = _get_breaking_packages(packages)
+	for pkg in breaking:
+		pkg.break_package()
+		_data[coord].erase(pkg)
+		print("Breaking package %s" % pkg)
+
+func _get_breaking_packages(packages: Array) -> Array:
+	var breaking_packages := []
+	for i in range(packages.size()):
+		var weight_above = _get_weights_from(packages, i)
+		var pkg = packages[i] as Package
+		var max_weight = pkg.get_max_weight()
+		print("Package %s with max weight of %s has above him %s" % [i, max_weight, weight_above])
+		
+		if weight_above > max_weight:
+			breaking_packages.append(pkg)
+	return breaking_packages
+
+func _get_weights_from(packages: Array, idx: int) -> int:
+	var weight := 0
+	for i in range(idx+1, packages.size()):
+		weight += packages[i].weight
+	return weight
 
 func has_node_with_group(nodes: Array, group: String) -> bool:
 	return nodes.filter(func(x): return x.is_in_group(group)).size() > 0
@@ -106,7 +140,16 @@ func is_valid_position(c: Vector3i):
 	var coord = Vector3(c.x, 0, c.z)
 	return get_cell_item(coord) != GridMap.INVALID_CELL_ITEM
 
-func get_placement_position(coord: Vector3i):
-	var nodes = get_nodes_at(coord)
-	var pos = map_to_local(Vector3i(coord.x, nodes.size(), coord.z))
+func get_placement_position(coord: Vector3i, layer = -1):
+	var y = layer if layer >= 0 else get_nodes_at(coord).size()
+	var pos = map_to_local(Vector3i(coord.x, y, coord.z))
 	return pos
+
+func get_position_for(node: Node3D, coord: Vector3i):
+	var nodes = get_nodes_at(coord)
+	var idx = nodes.find(node)
+	if idx == -1:
+		print("Node is not at coord %s" % coord)
+		return null
+	
+	return get_placement_position(coord, idx)

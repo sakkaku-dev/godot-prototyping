@@ -3,6 +3,7 @@ extends CharacterBody3D
 
 const GROUP = "package"
 
+@export var weight := 1
 @export var collision_detection_distance := 0.5
 
 @onready var ray_cast_3d = $RayCast3D
@@ -16,7 +17,13 @@ var coord: Vector3i
 func _ready():
 	add_to_group(GROUP)
 
-func _process(delta):
+func get_max_weight():
+	return weight * 2
+
+func break_package():
+	queue_free()
+
+func _process(delta: float):
 	if holding: return
 
 	var new_coord = grid.get_coord(global_position)
@@ -27,17 +34,24 @@ func _process(delta):
 		is_moving = not conveyers.is_empty()
 		
 		if is_moving:
-			var conveyer = conveyers[0] as Conveyer
-			var vel = conveyer.get_velocity(delta)
-			ray_cast_3d.target_position = vel.normalized() * collision_detection_distance
-			
-			var collider = ray_cast_3d.get_collider()
-			if collider == null or not collider.is_moving:
-				translate(vel)
+			_move_by_conveyer(conveyers[0], delta)
+		else:
+			_adjust_position(new_coord)
 			
 		coord = new_coord
 	else:
 		grid.move_object(coord, new_coord, self)
+
+func _adjust_position(coord: Vector3i):
+	global_position = grid.get_position_for(self, coord)
+
+func _move_by_conveyer(conveyer: Conveyer, delta: float):
+	var vel = conveyer.get_velocity(delta)
+	ray_cast_3d.target_position = vel.normalized() * collision_detection_distance
+	
+	var collider = ray_cast_3d.get_collider()
+	if collider == null or not collider.is_moving:
+		translate(vel)
 
 func hold():
 	holding = true
