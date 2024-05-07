@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PackageResource" load_steps=2 format=3 uid="uid://4gql5ed6xcsy"]
+
+[ext_resource type="Script" path="res://games/storage-game/package/PackageResource.gd" id="1_vqvk1"]
+
+[resource]
+script = ExtResource("1_vqvk1")
+type = 3
+weight = 3

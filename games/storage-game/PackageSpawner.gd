@@ -1,15 +1,23 @@
-extends Node3D
+extends NodeSpawner
 
-@export var package: PackedScene
-@export var grid: PackageGridMap
-@export var init := false
+@export var all_package_types: Array[PackageResource] = []
+
+var package_types: Array[PackageResource] = []
 
 func _ready():
-	if init:
-		spawn()
+	_add_random_package_type()
+	
+func _add_random_package_type():
+	all_package_types.shuffle()
+	
+	for p in all_package_types:
+		if p in package_types: continue
+		
+		package_types.append(p)
+		break
+	
+	print("PackageSpawner with types %s" % [package_types.map(func(x): return PackageResource.Type.keys()[x.type])])
 
-func spawn():
-	var node = package.instantiate()
-	add_child(node)
-	if not grid.add_object(grid.get_coord(global_position), node, true):
-		node.queue_free()
+func _init_node(node):
+	var pkg = node as Package
+	pkg.res = package_types.pick_random()

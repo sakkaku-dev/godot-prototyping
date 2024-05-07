@@ -3,7 +3,7 @@ extends CharacterBody3D
 
 const GROUP = "package"
 
-@export var weight := 1
+@export var res: PackageResource
 @export var collision_detection_distance := 0.5
 
 @onready var ray_cast_3d = $RayCast3D
@@ -18,7 +18,10 @@ func _ready():
 	add_to_group(GROUP)
 
 func get_max_weight():
-	return weight * 2
+	return res.weight * 2
+
+func get_weight():
+	return res.weight
 
 func break_package():
 	queue_free()

@@ -125,7 +125,7 @@ func _get_breaking_packages(packages: Array) -> Array:
 func _get_weights_from(packages: Array, idx: int) -> int:
 	var weight := 0
 	for i in range(idx+1, packages.size()):
-		weight += packages[i].weight
+		weight += packages[i].get_weight()
 	return weight
 
 func has_node_with_group(nodes: Array, group: String) -> bool:

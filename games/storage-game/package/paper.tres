@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="PackageResource" load_steps=2 format=3 uid="uid://bucu365k632dk"]
+
+[ext_resource type="Script" path="res://games/storage-game/package/PackageResource.gd" id="1_7a60j"]
+
+[resource]
+script = ExtResource("1_7a60j")
+name = "Paper"
+type = 0
+weight = 1

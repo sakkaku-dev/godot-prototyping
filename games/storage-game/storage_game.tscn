@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=27 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
@@ -11,9 +11,14 @@
 [ext_resource type="Script" path="res://games/storage-game/HoldPoint.gd" id="5_xbwij"]
 [ext_resource type="Script" path="res://games/storage-game/PackageGridMap.gd" id="7_qt64i"]
 [ext_resource type="Script" path="res://games/storage-game/PackageSpawner.gd" id="8_wmh0m"]
+[ext_resource type="Resource" uid="uid://bucu365k632dk" path="res://games/storage-game/package/paper.tres" id="11_jg71a"]
 [ext_resource type="PackedScene" uid="uid://brqnnuqhecl0e" path="res://games/storage-game/conveyer.tscn" id="11_pribm"]
+[ext_resource type="Script" path="res://games/storage-game/NodeSpawner.gd" id="11_w6o6s"]
+[ext_resource type="Resource" uid="uid://4gql5ed6xcsy" path="res://games/storage-game/package/furniture.tres" id="12_f73ec"]
 [ext_resource type="PackedScene" uid="uid://bocve3lop7cqv" path="res://games/storage-game/package_drop_off.tscn" id="13_emwfx"]
+[ext_resource type="Resource" uid="uid://kw01hti8l7tr" path="res://games/storage-game/package/electronics.tres" id="13_klbe2"]
 [ext_resource type="Script" path="res://games/storage-game/Interactable3D.gd" id="13_u2wfn"]
+[ext_resource type="Resource" uid="uid://dguklcq10n8ty" path="res://games/storage-game/package/clothing.tres" id="14_aeay1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
 size = Vector3(0.511963, 0.669922, 0.583984)
@@ -110,40 +115,41 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 [node name="PackageSpawner" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.46337, 0, -0.490461)
 script = ExtResource("8_wmh0m")
+all_package_types = Array[Resource("res://games/storage-game/package/PackageResource.gd")]([ExtResource("11_jg71a"), ExtResource("12_f73ec"), ExtResource("13_klbe2"), ExtResource("14_aeay1")])
 package = ExtResource("3_asni3")
 grid = NodePath("..")
 
 [node name="ConveyerStart" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38192, 0, -0.490461)
-script = ExtResource("8_wmh0m")
+script = ExtResource("11_w6o6s")
 package = ExtResource("11_pribm")
 grid = NodePath("..")
 init = true
 
 [node name="ConveyerStart2" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.35697, 0, -0.490461)
-script = ExtResource("8_wmh0m")
+script = ExtResource("11_w6o6s")
 package = ExtResource("11_pribm")
 grid = NodePath("..")
 init = true
 
 [node name="ConveyerEnd3" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.36452, 0, -0.490461)
-script = ExtResource("8_wmh0m")
+script = ExtResource("11_w6o6s")
 package = ExtResource("11_pribm")
 grid = NodePath("..")
 init = true
 
 [node name="ConveyerEnd" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.27369, 0, -0.490461)
-script = ExtResource("8_wmh0m")
+script = ExtResource("11_w6o6s")
 package = ExtResource("11_pribm")
 grid = NodePath("..")
 init = true
 
 [node name="DropOffPoint" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.18368, 0, -0.490461)
-script = ExtResource("8_wmh0m")
+script = ExtResource("11_w6o6s")
 package = ExtResource("13_emwfx")
 grid = NodePath("..")
 init = true
