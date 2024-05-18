@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bvpxalx3dhajd"
+path="res://.godot/imported/road_square.obj-4a53ba78b93dad9bd3c8e1ba5cfecef3.mesh"
+
+[deps]
+
+files=["res://.godot/imported/road_square.obj-4a53ba78b93dad9bd3c8e1ba5cfecef3.mesh"]
+
+source_file="res://assets/City Kit - Roads/Models/OBJ format/road_square.obj"
+dest_files=["res://.godot/imported/road_square.obj-4a53ba78b93dad9bd3c8e1ba5cfecef3.mesh", "res://.godot/imported/road_square.obj-4a53ba78b93dad9bd3c8e1ba5cfecef3.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

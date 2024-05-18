@@ -1,5 +1,6 @@
 class_name HoldPoint extends Node3D
 
+@export var dir := Vector3.RIGHT
 @export var grid: PackageGridMap
 
 var holding: Node3D:

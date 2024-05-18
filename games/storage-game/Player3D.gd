@@ -5,6 +5,8 @@ extends CharacterBody3D
 @export var acceleration := 100
 @export var forward := Vector3.FORWARD
 
+@export var conveyer_scene: PackedScene
+
 @export var place_arrow: PlacementArrow
 @export var grid: PackageGridMap
 
@@ -21,6 +23,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			return
 		
 		hold_point.place(place_arrow.global_position)
+	elif not hold_point.is_holding():
+		if event.is_action_pressed("slot_1"):
+			var node = conveyer_scene.instantiate()
+			node.pickup_able = true
+			grid.add_child(node)
+			hold_point.holding = node
 
 
 func _physics_process(delta: float) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://cdouhs6f2ym6q"]
+[gd_scene load_steps=32 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
@@ -23,6 +23,31 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
 size = Vector3(0.511963, 0.669922, 0.583984)
 
+[sub_resource type="Curve" id="Curve_p55jf"]
+_data = [Vector2(0, 0.12967), 0.0, 0.0476427, 0, 0, Vector2(0.680952, 0.903297), -0.477454, -0.477454, 0, 0, Vector2(1, 0.120879), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_k6q7m"]
+curve = SubResource("Curve_p55jf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pt5vo"]
+direction = Vector3(0, 0.5, 1)
+spread = 15.0
+initial_velocity_min = 0.5
+initial_velocity_max = 0.7
+gravity = Vector3(0, 0, 0)
+damping_min = 0.5
+damping_max = 1.0
+scale_curve = SubResource("CurveTexture_k6q7m")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ji7jd"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_y3gh8"]
+radius = 0.1
+height = 0.2
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_f6evi"]
 size = Vector3(0.395508, 0.229004, 0.366211)
 
@@ -31,12 +56,12 @@ size = Vector2(0.5, 0.5)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0weio"]
 
-[sub_resource type="Sky" id="Sky_6c3bs"]
+[sub_resource type="Sky" id="Sky_wwhfq"]
 sky_material = SubResource("ProceduralSkyMaterial_0weio")
 
 [sub_resource type="Environment" id="Environment_4sfte"]
 background_mode = 2
-sky = SubResource("Sky_6c3bs")
+sky = SubResource("Sky_wwhfq")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_e3jwv"]
 size = Vector3(0.437744, 0.625977, 0.756104)
@@ -50,6 +75,7 @@ transform = Transform3D(1, 0, 0, 0, 0.549023, 0.835807, 0, -0.835807, 0.549023, 
 [node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("place_arrow", "grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.417175, 0)
 script = ExtResource("2_5l40k")
+conveyer_scene = ExtResource("11_pribm")
 place_arrow = NodePath("../PlacementArrow")
 grid = NodePath("../GridMap")
 
@@ -75,6 +101,19 @@ script = ExtResource("2_1h8it")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Pivot/Hand3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.171694, 0.179565)
 shape = SubResource("BoxShape3D_cvd3t")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Player3D/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.36898, 0.41783)
+emitting = false
+amount = 4
+lifetime = 0.5
+one_shot = true
+explosiveness = 0.8
+visibility_aabb = AABB(-0.308999, -0.394761, -0.45416, 0.617999, 0.789521, 0.908319)
+process_material = SubResource("ParticleProcessMaterial_pt5vo")
+draw_passes = 2
+draw_pass_1 = SubResource("SphereMesh_ji7jd")
+draw_pass_2 = SubResource("SphereMesh_y3gh8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.257568, 0)
@@ -119,6 +158,15 @@ all_package_types = Array[Resource("res://games/storage-game/package/PackageReso
 package = ExtResource("3_asni3")
 grid = NodePath("..")
 
+[node name="RequestPackageInteract" type="Area3D" parent="GridMap/PackageSpawner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.66413, 0.578528, 1.02332)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("13_u2wfn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/PackageSpawner/RequestPackageInteract"]
+shape = SubResource("BoxShape3D_e3jwv")
+
 [node name="ConveyerStart" type="Node3D" parent="GridMap" node_paths=PackedStringArray("grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.38192, 0, -0.490461)
 script = ExtResource("11_w6o6s")
@@ -154,13 +202,4 @@ package = ExtResource("13_emwfx")
 grid = NodePath("..")
 init = true
 
-[node name="RequestPackageInteract" type="Area3D" parent="GridMap"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.79924, 0.578528, 0.532863)
-collision_layer = 4
-collision_mask = 0
-script = ExtResource("13_u2wfn")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GridMap/RequestPackageInteract"]
-shape = SubResource("BoxShape3D_e3jwv")
-
-[connection signal="interacted" from="GridMap/RequestPackageInteract" to="GridMap/PackageSpawner" method="spawn"]
+[connection signal="interacted" from="GridMap/PackageSpawner/RequestPackageInteract" to="GridMap/PackageSpawner" method="spawn"]

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://diae2erm11d00"
+path="res://.godot/imported/tile_slant.obj-fb8f94f9eb0a51bce1c1e1c89cb47c5b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/tile_slant.obj-fb8f94f9eb0a51bce1c1e1c89cb47c5b.mesh"]
+
+source_file="res://assets/City Kit - Roads/Models/OBJ format/tile_slant.obj"
+dest_files=["res://.godot/imported/tile_slant.obj-fb8f94f9eb0a51bce1c1e1c89cb47c5b.mesh", "res://.godot/imported/tile_slant.obj-fb8f94f9eb0a51bce1c1e1c89cb47c5b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

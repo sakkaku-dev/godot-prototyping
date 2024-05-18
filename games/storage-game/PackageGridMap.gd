@@ -48,9 +48,11 @@ func remove_object(coord: Vector3i, allow_out_of_bound := false) -> Node3D:
 		return null
 		
 	var last = nodes[nodes.size() - 1]
-	if not last.is_in_group(Package.GROUP):
-		#print("Cannot pick up non package item: %s" % last)
-		return null
+	if last.is_in_group(Conveyer.GROUP):
+		if not last.pickup_able:
+			print("Cannot pickup conveyer at %s" % coord)
+			#print("Cannot pick up non package item: %s" % last)
+			return null
 	
 	print("Removing object at %s" % coord)
 	return nodes.pop_back()

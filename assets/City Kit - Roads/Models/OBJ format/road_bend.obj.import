@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b6ana0fn5bff0"
+path="res://.godot/imported/road_bend.obj-259781f840af5d9108e184f87179fb8d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/road_bend.obj-259781f840af5d9108e184f87179fb8d.mesh"]
+
+source_file="res://assets/City Kit - Roads/Models/OBJ format/road_bend.obj"
+dest_files=["res://.godot/imported/road_bend.obj-259781f840af5d9108e184f87179fb8d.mesh", "res://.godot/imported/road_bend.obj-259781f840af5d9108e184f87179fb8d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

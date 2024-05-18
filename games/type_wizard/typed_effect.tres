@@ -1,0 +1,7 @@
+[gd_resource type="RichTextEffect" script_class="TypedEffect" load_steps=2 format=3 uid="uid://cry2uk8is7g4p"]
+
+[ext_resource type="Script" path="res://games/type_wizard/TypedEffect.gd" id="1_p6jj5"]
+
+[resource]
+script = ExtResource("1_p6jj5")
+color = Color(0, 0, 0, 1)

@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://c2jpoto67a6da"
+path="res://.godot/imported/construction_light.obj-653a067beae43b95693cfde984b63d01.mesh"
+
+[deps]
+
+files=["res://.godot/imported/construction_light.obj-653a067beae43b95693cfde984b63d01.mesh"]
+
+source_file="res://assets/City Kit - Roads/Models/OBJ format/construction_light.obj"
+dest_files=["res://.godot/imported/construction_light.obj-653a067beae43b95693cfde984b63d01.mesh", "res://.godot/imported/construction_light.obj-653a067beae43b95693cfde984b63d01.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

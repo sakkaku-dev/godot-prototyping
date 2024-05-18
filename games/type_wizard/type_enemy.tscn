@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvdul7olno8c2"]
+
+[ext_resource type="Texture2D" uid="uid://cyx7atbwwtiyk" path="res://assets/Tiny Dungeon/Tiles/tile_0121.png" id="1_hp0bv"]
+[ext_resource type="Script" path="res://games/type_wizard/type_enemy.gd" id="1_nk8re"]
+[ext_resource type="RichTextEffect" uid="uid://cry2uk8is7g4p" path="res://games/type_wizard/typed_effect.tres" id="3_d3lyp"]
+[ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="3_f8d0n"]
+
+[node name="TypeEnemy" type="CharacterBody2D"]
+script = ExtResource("1_nk8re")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_hp0bv")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -41.0
+offset_top = 5.0
+offset_right = 41.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme = ExtResource("3_f8d0n")
+bbcode_enabled = true
+text = "__TEST__"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+custom_effects = [ExtResource("3_d3lyp")]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

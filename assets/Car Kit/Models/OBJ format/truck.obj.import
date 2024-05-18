@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://blo6hetbnjmxl"
+path="res://.godot/imported/truck.obj-1b4c9326100c786d4e93a1e7fe7f42ff.mesh"
+
+[deps]
+
+files=["res://.godot/imported/truck.obj-1b4c9326100c786d4e93a1e7fe7f42ff.mesh"]
+
+source_file="res://assets/Car Kit/Models/OBJ format/truck.obj"
+dest_files=["res://.godot/imported/truck.obj-1b4c9326100c786d4e93a1e7fe7f42ff.mesh", "res://.godot/imported/truck.obj-1b4c9326100c786d4e93a1e7fe7f42ff.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
