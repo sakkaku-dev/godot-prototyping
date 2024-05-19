@@ -11,16 +11,17 @@ signal type_cancel()
 
 var word = "":
 	set(v):
-		word = v.to_lower()
+		word = v.to_lower().strip_edges()
 		typed = ""
 		update_word()
 var typed = "":
 	set(v):
 		typed = v
 		update_word()
+		typing.emit(typed)
+		
 		if typed == word:
 			type_finish.emit()
-		typing.emit(typed)
 var focused := false:
 	set(v):
 		focused = v
@@ -42,7 +43,7 @@ func update_word():
 		text = "[center][typed until=%s]%s[/typed][/center]" % [typed.length(), word]
 
 func handle_key(key: String):
-	if typed.length() == word.length():
+	if typed.length() >= word.length():
 		return
 	
 	var next_word_char = word[typed.length()]
@@ -52,6 +53,16 @@ func handle_key(key: String):
 			_highlight()
 		
 		typed += key.to_lower()
+		_fill_spaces()
+
+func _fill_spaces():
+	if typed.length() == word.length():
+		return
+	
+	var next_word_char = word[typed.length()]
+	while next_word_char == " ":
+		typed += next_word_char
+		next_word_char = word[typed.length()]
 
 func _highlight():
 	self.focused = true

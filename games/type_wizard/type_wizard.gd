@@ -5,7 +5,7 @@ extends Node2D
 
 @export var wave_timer: WaveTimer
 @export var enemies: Array[PackedScene] = []
-@export var enemy_spawn_distance_from_player := 300
+@export var enemy_spawn_distance_from_player := 250
 
 @export_category("UI Nodes")
 @export var upgrades: Upgrades

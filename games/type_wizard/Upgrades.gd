@@ -17,6 +17,7 @@ func show_upgrades(upgrades: Array[UpgradeResource]):
 	for c in container.get_children():
 		container.remove_child(c)
 	upgrade_nodes.clear()
+	current_node = null
 	
 	for up in upgrades:
 		var node = upgrade_scene.instantiate()
@@ -32,11 +33,12 @@ func show_upgrades(upgrades: Array[UpgradeResource]):
 
 func handle_key(key: String, shift: bool):
 	if not current_node:
+		print("Searching Upgrade Node starting with %s: %s" % [key, upgrade_nodes.keys()])
 		for title in upgrade_nodes:
 			if title.begins_with(key):
 				current_node = upgrade_nodes[title]
 				break
-			
+		
 	if current_node:
 		current_node.handle_key(key)
 
