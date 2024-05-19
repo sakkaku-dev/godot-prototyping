@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://dt4n0gwatqnih"]
+
+[ext_resource type="Script" path="res://games/type_wizard/UpgradeResource.gd" id="1_b2yu0"]
+
+[resource]
+script = ExtResource("1_b2yu0")
+title = "Frost Attack"
+text = "Attack the enemy using frost to slow him down"

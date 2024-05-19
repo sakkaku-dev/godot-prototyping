@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=25 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/WaveTimer.gd" id="2_04g0y"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://bh0dwoj5krcnl" path="res://assets/Tiny Dungeon/Tiles/tile_0084.png" id="2_xy5s2"]
 [ext_resource type="TileSet" uid="uid://qb3qobjripr6" path="res://games/type_wizard/type_wizard.tres" id="3_6d2mj"]
 [ext_resource type="Script" path="res://combat/Hurtbox.gd" id="4_2v12g"]
+[ext_resource type="Script" path="res://games/type_wizard/KeyReader.gd" id="4_4bt4h"]
 [ext_resource type="Script" path="res://games/type_wizard/DataManager.gd" id="4_csuax"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="5_1c43k"]
 [ext_resource type="Script" path="res://games/type_wizard/HealthBar.gd" id="7_f1yk8"]
@@ -14,36 +15,41 @@
 [ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/type_game.tres" id="8_1tsrj"]
 [ext_resource type="Script" path="res://games/type_wizard/PickupArea.gd" id="8_y2q8n"]
 [ext_resource type="Script" path="res://games/type_wizard/Countdown.gd" id="10_f2lwa"]
-[ext_resource type="Script" path="res://games/type_wizard/upgrades/Upgrades.gd" id="12_f4n8r"]
-[ext_resource type="PackedScene" uid="uid://ccbmop0unfx8t" path="res://games/type_wizard/upgrades/upgrade_item.tscn" id="12_oh1yd"]
+[ext_resource type="Script" path="res://games/type_wizard/Upgrades.gd" id="12_f4n8r"]
+[ext_resource type="PackedScene" uid="uid://ccbmop0unfx8t" path="res://games/type_wizard/upgrade_item.tscn" id="12_oh1yd"]
 [ext_resource type="Script" path="res://games/type_wizard/PauseBlur.gd" id="13_h3nru"]
 [ext_resource type="Shader" path="res://shaders/blur.gdshader" id="17_fmius"]
 [ext_resource type="Script" path="res://games/type_wizard/ItemPickUp.gd" id="19_3lo2h"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed_word.tscn" id="21_y8f0q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fen5t"]
 size = Vector2(40, 20)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ns0mk"]
-radius = 22.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwjhe"]
+size = Vector2(52, 30)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1q2w0"]
 shader = ExtResource("17_fmius")
 shader_parameter/lod = 2.0
 
-[node name="TypeWizard" type="Node2D" node_paths=PackedStringArray("wave_timer", "blur", "pickup_dialog")]
+[node name="TypeWizard" type="Node2D" node_paths=PackedStringArray("wave_timer", "upgrades", "blur", "pickup_dialog")]
 script = ExtResource("1_pe1fc")
 drop_chance = 0.3
 drop_scene = ExtResource("2_kup4k")
 wave_timer = NodePath("WaveTimer")
 enemies = Array[PackedScene]([ExtResource("2_w600i")])
+upgrades = NodePath("CanvasLayer/UI/Upgrades")
 blur = NodePath("CanvasLayer/UI/PauseBlur")
 pickup_dialog = NodePath("CanvasLayer/UI/ItemPickUp")
+
+[node name="KeyReader" type="Node" parent="."]
+script = ExtResource("4_4bt4h")
 
 [node name="DataManager" type="Node" parent="."]
 script = ExtResource("4_csuax")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
-wait_time = 1000.0
+wait_time = 10.0
 one_shot = true
 script = ExtResource("2_04g0y")
 enemy_spawn_timer = NodePath("RandomTimer")
@@ -85,7 +91,7 @@ script = ExtResource("8_y2q8n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Root/TileMap/PickupArea"]
 position = Vector2(8, -11)
-shape = SubResource("CircleShape2D_ns0mk")
+shape = SubResource("RectangleShape2D_mwjhe")
 
 [node name="Player" type="Sprite2D" parent="."]
 position = Vector2(0, -52)
@@ -106,6 +112,7 @@ grow_vertical = 2
 theme = ExtResource("8_1tsrj")
 
 [node name="PauseBlur" type="ColorRect" parent="CanvasLayer/UI"]
+visible = false
 material = SubResource("ShaderMaterial_1q2w0")
 layout_mode = 1
 anchors_preset = 15
@@ -162,9 +169,7 @@ horizontal_alignment = 1
 script = ExtResource("10_f2lwa")
 timer = NodePath("../../../../../WaveTimer")
 
-[node name="Upgrades" type="MarginContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("container")]
-process_mode = 3
-visible = false
+[node name="Upgrades" type="MarginContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("container", "pause", "key_reader")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -178,6 +183,11 @@ theme_override_constants/margin_bottom = 20
 script = ExtResource("12_f4n8r")
 container = NodePath("HBoxContainer")
 upgrade_scene = ExtResource("12_oh1yd")
+pause = NodePath("../PauseBlur")
+key_reader = NodePath("KeyReader")
+
+[node name="KeyReader" type="Node" parent="CanvasLayer/UI/Upgrades"]
+script = ExtResource("4_4bt4h")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/Upgrades"]
 layout_mode = 2
@@ -192,8 +202,7 @@ layout_mode = 2
 [node name="UpgradeItem3" parent="CanvasLayer/UI/Upgrades/HBoxContainer" instance=ExtResource("12_oh1yd")]
 layout_mode = 2
 
-[node name="ItemPickUp" type="CenterContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("pause", "title_lbl", "icon", "desc_lbl", "name_lbl")]
-process_mode = 3
+[node name="ItemPickUp" type="CenterContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("title_lbl", "icon", "desc_lbl", "name_lbl", "pause", "key_reader")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -201,11 +210,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("19_3lo2h")
-pause = NodePath("../PauseBlur")
 title_lbl = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
 icon = NodePath("PanelContainer/MarginContainer/VBoxContainer/Icon")
 desc_lbl = NodePath("PanelContainer/MarginContainer/VBoxContainer/Desc")
 name_lbl = NodePath("PanelContainer/MarginContainer/VBoxContainer/Name")
+pause = NodePath("../PauseBlur")
+key_reader = NodePath("KeyReader")
+
+[node name="KeyReader" type="Node" parent="CanvasLayer/UI/ItemPickUp"]
+script = ExtResource("4_4bt4h")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/UI/ItemPickUp"]
 custom_minimum_size = Vector2(150, 200)
@@ -222,10 +235,9 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Title" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("21_y8f0q")]
 layout_mode = 2
-text = "__SPELL__"
-horizontal_alignment = 1
+highlight_first = true
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)

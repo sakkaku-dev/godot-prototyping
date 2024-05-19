@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://ccbmop0unfx8t"]
 
-[ext_resource type="Script" path="res://games/type_wizard/TypedWord.gd" id="1_5m2hr"]
-[ext_resource type="Script" path="res://games/type_wizard/upgrades/upgrade_item.gd" id="1_nb2gl"]
+[ext_resource type="Script" path="res://games/type_wizard/upgrade_item.gd" id="1_nb2gl"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="2_3dkbh"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed_word.tscn" id="2_g5s62"]
 
 [node name="UpgradeItem" type="PanelContainer" node_paths=PackedStringArray("title", "icon", "desc")]
 offset_right = 217.0
@@ -24,12 +24,9 @@ theme_override_constants/margin_bottom = 10
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TypedWord" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+[node name="TypedWord" parent="MarginContainer/VBoxContainer" instance=ExtResource("2_g5s62")]
 layout_mode = 2
-bbcode_enabled = true
-text = "TITLE"
-fit_content = true
-script = ExtResource("1_5m2hr")
+highlight_first = true
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)

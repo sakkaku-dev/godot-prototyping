@@ -1,40 +1,24 @@
 class_name ItemPickUp
-extends Control
+extends Dialog
 
-@export var pause: PauseBlur
-
-@export_category("Internal Nodes")
-@export var title_lbl: Label
+@export var title_lbl: TypedWord
 @export var icon: TextureRect
 @export var desc_lbl: Label
 @export var name_lbl: Label
 
-var tw: Tween
-
 func _ready():
-	pivot_offset = size / 2
-	hide()
+	super._ready()
+	title_lbl.type_finish.connect(func(): close())
+	closed.connect(func(): title_lbl.reset())
 
-func open(title: String, item: SpellResource):
-	show()
-	pause.pause()
-	
-	title_lbl.text = title
+func open_for_spells(title: String, item: SpellResource):
+	title_lbl.word = title
 	name_lbl.text = item.title
 	desc_lbl.text = item.description
-	icon.texture = item.icon
-	
-	tw = TweenCreator.create(self, tw)
-	tw.tween_property(self, "scale", Vector2.ONE, 0.5).from(Vector2.ZERO)
+	if item.icon:
+		icon.texture = item.icon
+		
+	open()
 
-func close():
-	tw = TweenCreator.create(self, tw)
-	tw.tween_property(self, "scale", Vector2.ZERO, 0.5)
-	await tw.finished
-	pause.resume()
-
-func _unhandled_input(event):
-	if not visible: return
-	
-	if event.is_action_pressed("ui_accept"):
-		close()
+func handle_key(key: String, shift: bool):
+	title_lbl.handle_key(key)

@@ -72,10 +72,12 @@ const SCROLLS = [
 ]
 
 const SPELL_FOLDER = "res://games/type_wizard/spells/"
+const UPGRADE_FOLDER = "res://games/type_wizard/upgrades/"
 
 var do_other_enemies := true
 var enemies := []
 
+var upgrades = []
 var spells = {}
 
 func _ready():
@@ -88,6 +90,10 @@ func _ready():
 		available_spell_names.erase(scroll)
 		spells[scroll] = spell
 
+	for file in DirAccess.get_files_at(UPGRADE_FOLDER):
+		var upgrade = load(UPGRADE_FOLDER + file)
+		upgrades.append(upgrade)
+
 func get_random_enemy():
 	if enemies.is_empty():
 		enemies = OTHER_ENEMIES.duplicate() if do_other_enemies else ENEMIES.duplicate()
@@ -99,6 +105,12 @@ func get_random_enemy():
 
 func get_random_spell():
 	return spells.keys().pick_random()
+
+func get_random_upgrades(count = 3) -> Array[UpgradeResource]:
+	var result: Array[UpgradeResource] = []
+	for i in range(count):
+		result.append(upgrades.pick_random())
+	return result
 
 func get_spell(scroll_name: String):
 	if scroll_name in spells:

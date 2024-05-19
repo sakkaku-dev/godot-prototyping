@@ -4,17 +4,17 @@ extends HBoxContainer
 @export var hurtbox: Hurtbox
 
 func _ready():
+	for c in get_children():
+		remove_child(c)
+	for i in range(hurtbox.health):
+		_add_health()
+	
 	hurtbox.health_changed.connect(func(hp): _update_health(hp))
-	_update_health(hurtbox.health)
-
+	
 func _update_health(new_hp: int):
-	var delta = new_hp - get_child_count()
-	if delta < 0:
-		for i in range(abs(delta)):
-			_remove_health()
-	elif delta > 0:
-		for i in range(delta):
-			_add_health()
+	for i in get_child_count():
+		var child = get_child(i)
+		child.scale = Vector2.ONE if i < new_hp else Vector2(0.75, 0.75)
 
 func _remove_health():
 	if get_child_count() > 0:
@@ -27,3 +27,4 @@ func _add_health():
 	rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	rect.custom_minimum_size = Vector2(10, 0)
 	add_child(rect)
+	rect.pivot_offset = rect.size / 2

@@ -1,10 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://c32bmynbeb42f"]
+[gd_scene load_steps=5 format=3 uid="uid://c32bmynbeb42f"]
 
 [ext_resource type="Texture2D" uid="uid://dkp0t4g8pbvba" path="res://assets/Tiny Dungeon/Tiles/tile_0063.png" id="1_3oyex"]
 [ext_resource type="Script" path="res://games/type_wizard/type_drop.gd" id="1_0268p"]
-[ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/type_game.tres" id="1_ssnpv"]
-[ext_resource type="RichTextEffect" uid="uid://cry2uk8is7g4p" path="res://games/type_wizard/typed_effect.tres" id="2_3xe6u"]
-[ext_resource type="Script" path="res://games/type_wizard/TypedWord.gd" id="3_qluqe"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed_word.tscn" id="3_h553c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ggqls"]
 
@@ -18,30 +16,17 @@ typed_word = NodePath("TypedWord")
 position = Vector2(0, -4)
 texture = ExtResource("1_3oyex")
 
-[node name="TypedWord" type="RichTextLabel" parent="."]
-z_index = 5
-clip_contents = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -41.0
-offset_right = 41.0
-offset_bottom = 24.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-theme = ExtResource("1_ssnpv")
-bbcode_enabled = true
-text = "__TEST__"
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-custom_effects = [ExtResource("2_3xe6u")]
-script = ExtResource("3_qluqe")
-highlight_color = Color(0.870647, 1.07813e-05, 0.582341, 1)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_ggqls")
+
+[node name="TypedWord" parent="." instance=ExtResource("3_h553c")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_right = 28.0
+offset_bottom = 8.0
+grow_horizontal = 2
+text = "__test__"
+highlight_color = Color(0.870588, 0, 0.580392, 1)

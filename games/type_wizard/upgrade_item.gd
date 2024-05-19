@@ -1,6 +1,8 @@
 extends PanelContainer
 
-@export var upgrade_res: UpgradeResource
+signal finished()
+
+@export var upgrade: UpgradeResource
 
 @export_category("Nodes")
 @export var title: TypedWord
@@ -8,10 +10,12 @@ extends PanelContainer
 @export var desc: Label
 
 func _ready():
-	if upgrade_res:
-		title.word = upgrade_res.title
-		icon.texture = upgrade_res.icon
-		desc.text = upgrade_res.text
+	if upgrade:
+		title.word = upgrade.title
+		desc.text = upgrade.text
+		if upgrade.icon:
+			icon.texture = upgrade.icon
+	title.type_finish.connect(func(): finished.emit())
 
 func handle_key(w: String):
 	title.handle_key(w)

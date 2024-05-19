@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://dnvhu266biquq"]
+
+[ext_resource type="Script" path="res://games/type_wizard/UpgradeResource.gd" id="2_ttagw"]
+
+[resource]
+script = ExtResource("2_ttagw")
+title = "Health"
+text = "Increase the health of the castle"
