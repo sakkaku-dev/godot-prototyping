@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="UpgradeResource" load_steps=3 format=3 uid="uid://bx6cxqh1twa72"]
+
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_6kf8n"]
+[ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResource.gd" id="1_b7puv"]
+
+[resource]
+script = ExtResource("1_b7puv")
+title = "Range"
+icon = ExtResource("1_6kf8n")
+text = "Increase the range when you can type"

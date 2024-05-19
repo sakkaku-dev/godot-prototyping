@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SpellResource" load_steps=2 format=3 uid="uid://dct1s5b18qmtk"]
+
+[ext_resource type="Script" path="res://games/type_wizard/SpellResource.gd" id="1_t744w"]
+
+[resource]
+script = ExtResource("1_t744w")
+title = "Ice Zone"
+description = "Create an ice zone around the castle that slows down nearby enemies"

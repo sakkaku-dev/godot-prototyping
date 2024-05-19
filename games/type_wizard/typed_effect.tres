@@ -5,3 +5,5 @@
 [resource]
 script = ExtResource("1_p6jj5")
 color = Color(0, 0, 0, 1)
+jump_height = 2
+frequency = 4

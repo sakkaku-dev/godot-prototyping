@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccbmop0unfx8t"]
+
+[ext_resource type="Script" path="res://games/type_wizard/TypedWord.gd" id="1_5m2hr"]
+[ext_resource type="Script" path="res://games/type_wizard/upgrades/upgrade_item.gd" id="1_nb2gl"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="2_3dkbh"]
+
+[node name="UpgradeItem" type="PanelContainer" node_paths=PackedStringArray("title", "icon", "desc")]
+offset_right = 217.0
+offset_bottom = 246.0
+size_flags_horizontal = 3
+script = ExtResource("1_nb2gl")
+title = NodePath("MarginContainer/VBoxContainer/TypedWord")
+icon = NodePath("MarginContainer/VBoxContainer/TextureRect")
+desc = NodePath("MarginContainer/VBoxContainer/Label2")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TypedWord" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "TITLE"
+fit_content = true
+script = ExtResource("1_5m2hr")
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+texture = ExtResource("2_3dkbh")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "DESCRIPTION ABOUT THE USAGE OF THIS THING THAT YOU WILL GET WHEN YOU SELECT THIS BY TYPING THE TITLE ABOVE"
+horizontal_alignment = 1
+autowrap_mode = 3

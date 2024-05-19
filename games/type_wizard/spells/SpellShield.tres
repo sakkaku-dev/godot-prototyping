@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SpellResource" load_steps=2 format=3 uid="uid://dbl17t31xqedi"]
+
+[ext_resource type="Script" path="res://games/type_wizard/SpellResource.gd" id="1_wosh4"]
+
+[resource]
+script = ExtResource("1_wosh4")
+title = "Shield"
+description = "Create a temporary shield around the castle to negate all incoming damange"

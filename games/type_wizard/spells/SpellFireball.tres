@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SpellResource" load_steps=2 format=3 uid="uid://dd7ubuxo84iu"]
+
+[ext_resource type="Script" path="res://games/type_wizard/SpellResource.gd" id="1_s104o"]
+
+[resource]
+script = ExtResource("1_s104o")
+title = "Fireball"
+description = "Fire a fireball to an enemy target, causing AOE damage"
