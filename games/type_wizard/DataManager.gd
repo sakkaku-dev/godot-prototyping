@@ -1,4 +1,7 @@
+class_name DataManager
 extends Node
+
+const GROUP = "DataManager"
 
 const ENEMIES = [
 	"aboleth",
@@ -58,6 +61,18 @@ const OTHER_ENEMIES = [
 	"zeus"
 ]
 
+const SPAWN_ENEMIES = [
+	"necromancer",
+	"broodmother",
+	"swarmhost",
+	"hivequeen",
+	"summoner",
+	"plaguebearer",
+	"warlock",
+	"shaman",
+	"enchanter"
+]
+
 const SCROLLS = [
 	"Vilmor",
 	"Tandril",
@@ -74,15 +89,15 @@ const SCROLLS = [
 const SPELL_FOLDER = "res://games/type_wizard/spells/"
 const UPGRADE_FOLDER = "res://games/type_wizard/upgrades/"
 
-var do_other_enemies := true
+var do_other_enemies := false
 var enemies := []
+var projectiles := []
 
 var upgrades = []
 var spells = {}
 
 func _ready():
-	enemies = ENEMIES.duplicate()
-	
+	add_to_group(GROUP)
 	var available_spell_names = SCROLLS.duplicate()
 	for file in DirAccess.get_files_at(SPELL_FOLDER):
 		var spell = load(SPELL_FOLDER + file)
@@ -94,6 +109,17 @@ func _ready():
 		var upgrade = load(UPGRADE_FOLDER + file)
 		upgrades.append(upgrade)
 
+func get_random_projectile():
+	if projectiles.is_empty():
+		projectiles = "abcdefghijklmnopqrstuvwz".split("")
+
+	var letter = projectiles.pick_random()
+	projectiles.append(letter)
+	return letter
+
+func is_spawner(enemy):
+	return enemy in SPAWN_ENEMIES
+
 func get_random_enemy():
 	if enemies.is_empty():
 		enemies = OTHER_ENEMIES.duplicate() if do_other_enemies else ENEMIES.duplicate()
@@ -102,6 +128,9 @@ func get_random_enemy():
 	var word = enemies.pick_random()
 	enemies.erase(word)
 	return word
+
+func get_random_spawner_enemy():
+	return SPAWN_ENEMIES.pick_random()
 
 func get_random_spell():
 	return spells.keys().pick_random()

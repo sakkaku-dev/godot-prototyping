@@ -1,12 +1,14 @@
-[gd_scene load_steps=26 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=28 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
-[ext_resource type="PackedScene" uid="uid://bvdul7olno8c2" path="res://games/type_wizard/type_enemy.tscn" id="2_w600i"]
+[ext_resource type="PackedScene" uid="uid://bvdul7olno8c2" path="res://games/type_wizard/typed/type_enemy.tscn" id="2_w600i"]
 [ext_resource type="Texture2D" uid="uid://bh0dwoj5krcnl" path="res://assets/Tiny Dungeon/Tiles/tile_0084.png" id="2_xy5s2"]
+[ext_resource type="Script" path="res://games/type_wizard/EnemySpawner.gd" id="3_0egq1"]
 [ext_resource type="TileSet" uid="uid://qb3qobjripr6" path="res://games/type_wizard/type_wizard.tres" id="3_6d2mj"]
 [ext_resource type="Script" path="res://combat/Hurtbox.gd" id="4_2v12g"]
 [ext_resource type="Script" path="res://games/type_wizard/KeyReader.gd" id="4_4bt4h"]
+[ext_resource type="PackedScene" uid="uid://djxy0fp1fil6b" path="res://games/type_wizard/typed/type_enemy_spawner.tscn" id="4_br2l4"]
 [ext_resource type="Script" path="res://games/type_wizard/DataManager.gd" id="4_csuax"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="5_1c43k"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/HealthBar.gd" id="7_f1yk8"]
@@ -21,7 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://cw1dvt2pf04" path="res://games/type_wizard/bullet.tscn" id="13_j7b4n"]
 [ext_resource type="Shader" path="res://shaders/blur.gdshader" id="17_fmius"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/ItemPickUp.gd" id="19_3lo2h"]
-[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed_word.tscn" id="21_y8f0q"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="21_y8f0q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fen5t"]
 size = Vector2(40, 20)
@@ -41,6 +43,14 @@ upgrades = NodePath("CanvasLayer/UI/Upgrades")
 blur = NodePath("CanvasLayer/UI/PauseBlur")
 pickup_dialog = NodePath("CanvasLayer/UI/ItemPickUp")
 
+[node name="EnemySpawner" type="Node2D" parent="." node_paths=PackedStringArray("data", "root")]
+script = ExtResource("3_0egq1")
+enemy_scene = ExtResource("2_w600i")
+enemy_spawner_scene = ExtResource("4_br2l4")
+spawner_enemy_chance = 0.8
+data = NodePath("../DataManager")
+root = NodePath("../Root")
+
 [node name="KeyReader" type="Node" parent="."]
 script = ExtResource("4_4bt4h")
 
@@ -48,7 +58,7 @@ script = ExtResource("4_4bt4h")
 script = ExtResource("4_csuax")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
-wait_time = 10.0
+wait_time = 2.0
 one_shot = true
 script = ExtResource("2_04g0y")
 enemy_spawn_timer = NodePath("RandomTimer")

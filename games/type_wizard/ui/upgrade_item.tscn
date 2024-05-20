@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/type_wizard/ui/upgrade_item.gd" id="1_nb2gl"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="2_3dkbh"]
-[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed_word.tscn" id="2_g5s62"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="2_g5s62"]
 
 [node name="UpgradeItem" type="PanelContainer" node_paths=PackedStringArray("title", "icon", "desc")]
 offset_right = 217.0

@@ -9,10 +9,8 @@ const ENEMY_GROUP = "TypedEnemy"
 @export var speed := 10
 @export var drop_chance := 0.1
 @export var drop_scene: PackedScene
-@export var enemy_spawn_distance_from_player := 250
 
 @onready var hit_box = $HitBox
-@onready var center_move = $CenterMove
 
 func _ready():
 	super._ready()
@@ -25,7 +23,6 @@ func _ready():
 	removed.connect(func(): queue_free())
 	
 	typed_word.typing.connect(func(): wizard.attack(self))
-	global_position = (Vector2.RIGHT * enemy_spawn_distance_from_player).rotated(randf_range(0, TAU))
 
 func _physics_process(delta):
 	var dir = global_position.direction_to(Vector2.ZERO)

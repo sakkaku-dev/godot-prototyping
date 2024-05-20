@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr8ki2xhv8i73"]
+
+[ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/ui/type_game.tres" id="1_2ocwi"]
+[ext_resource type="Script" path="res://games/type_wizard/typed/TypedWord.gd" id="1_mdvmi"]
+[ext_resource type="RichTextEffect" uid="uid://cry2uk8is7g4p" path="res://games/type_wizard/typed/typed_effect.tres" id="1_rjw53"]
+
+[node name="TypedWord" type="RichTextLabel"]
+z_index = 10
+clip_contents = false
+theme = ExtResource("1_2ocwi")
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+shortcut_keys_enabled = false
+custom_effects = [ExtResource("1_rjw53")]
+script = ExtResource("1_mdvmi")
