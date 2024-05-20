@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=31 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -26,6 +26,7 @@
 [ext_resource type="Script" path="res://games/type_wizard/ui/ItemPickUp.gd" id="19_3lo2h"]
 [ext_resource type="Texture2D" uid="uid://bmti1r4wqqqm" path="res://assets/Tiny Dungeon/Tiles/tile_0102.png" id="20_jxr86"]
 [ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="21_y8f0q"]
+[ext_resource type="PackedScene" uid="uid://cx5of15itwen0" path="res://games/type_wizard/ui/shortcut.tscn" id="22_4n67u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fen5t"]
 size = Vector2(40, 20)
@@ -184,6 +185,24 @@ layout_mode = 2
 horizontal_alignment = 1
 script = ExtResource("10_f2lwa")
 timer = NodePath("../../../../../WaveTimer")
+
+[node name="Shortcuts" type="MarginContainer" parent="CanvasLayer/UI/GameUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/GameUI/Shortcuts"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="Shortcut" parent="CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer" instance=ExtResource("22_4n67u")]
+layout_mode = 2
 
 [node name="Upgrades" type="MarginContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("container", "pause", "key_reader")]
 layout_mode = 1
