@@ -43,6 +43,7 @@ func _spawn_projectile(pos: Vector2, res: EnemyResource):
 	var node = enemy_scene.instantiate() as TypedEnemy
 	node.enemy_res = res
 	node.set_word(data.get_random_projectile())
+	node.z_index = 5
 	_add_enemy_to_scene(node, pos)
 
 func _add_enemy_to_scene(enemy: TypedEnemy, pos = _random_position()):

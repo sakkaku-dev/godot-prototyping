@@ -17,7 +17,7 @@ const GROUP = "Wizard"
 
 @onready var hurtbox = $Hurtbox
 
-var resistance: Array[Resistance] = []
+var resistances: Array[Resistance] = []
 var attacks: Array[Attack] = []
 var capacity := 0
 
@@ -43,14 +43,14 @@ func upgrade(res: UpgradeResource):
 		callv(fn, [res.delta])
 	
 	elif res is UpgradeResourceAttack:
-		if res.attack in attack: return
+		if res.attack in attacks: return
 		attacks.append(res.attack)
 
 	elif res is UpgradeResourceResistance:
-		if res.resistance in resistance: return
-		resistance.append(res.resistance)
+		if res.resistance in resistances: return
+		resistances.append(res.resistance)
 	else:
-		print("Unknown upgrade: %s" % res)
+		print("Unknown upgrade: %s" % res.title)
 	
 func set_health(v: int):
 	hurtbox.max_health += v

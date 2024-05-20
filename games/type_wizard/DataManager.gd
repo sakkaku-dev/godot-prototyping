@@ -108,6 +108,7 @@ var projectiles := []
 
 var upgrades = {}
 var spells = {}
+var upgrades_used = {}
 
 func _ready():
 	add_to_group(GROUP)
@@ -126,6 +127,7 @@ func _ready():
 		if not letter in upgrades:
 			upgrades[letter] = []
 		upgrades[letter].append(upgrade)
+		upgrades_used[upgrade] = upgrade.limit
 
 func get_random_projectile():
 	if projectiles.is_empty():
@@ -164,10 +166,15 @@ func get_random_upgrades(count = 3) -> Array[UpgradeResource]:
 	return result
 
 func used_upgrade(res: UpgradeResource):
-	var letter = res.title.substr(0, 1)
-	upgrades[letter].erase(res)
-	if upgrades[letter].is_empty():
-		upgrades.erase(letter)
+	upgrades_used[res] -= 1
+	
+	if upgrades_used[res] <= 0:
+		var letter = res.title.substr(0, 1)
+		upgrades[letter].erase(res)
+		if upgrades[letter].is_empty():
+			upgrades.erase(letter)
+		
+		print("Removing upgrade %s" % res.title)
 
 func get_spell(scroll_name: String):
 	if scroll_name in spells:
