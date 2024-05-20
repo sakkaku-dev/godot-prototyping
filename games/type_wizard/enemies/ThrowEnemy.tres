@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyResource" load_steps=3 format=3 uid="uid://cloe6p4uhe1l6"]
+
+[ext_resource type="Script" path="res://games/type_wizard/EnemyResource.gd" id="1_31yhm"]
+[ext_resource type="Texture2D" uid="uid://dnywdqliu5c8w" path="res://assets/Tiny Dungeon/Tiles/tile_0109.png" id="2_v54qf"]
+
+[resource]
+script = ExtResource("1_31yhm")
+move_until_distance = 120.0
+speed = 5.0
+drop_chance = 0.3
+sprite = ExtResource("2_v54qf")

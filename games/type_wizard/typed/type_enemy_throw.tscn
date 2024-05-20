@@ -1,0 +1,26 @@
+[gd_scene load_steps=7 format=3 uid="uid://ny16v8jmkvch"]
+
+[ext_resource type="PackedScene" uid="uid://bvdul7olno8c2" path="res://games/type_wizard/typed/type_enemy.tscn" id="1_bn7ue"]
+[ext_resource type="Script" path="res://games/type_wizard/typed/type_enemy_throw.gd" id="2_h0tp1"]
+[ext_resource type="Resource" uid="uid://2w4tmcnrfl3r" path="res://games/type_wizard/enemies/ThrowRockEnemy.tres" id="3_bpgpb"]
+[ext_resource type="Resource" uid="uid://cloe6p4uhe1l6" path="res://games/type_wizard/enemies/ThrowEnemy.tres" id="3_jn4rq"]
+[ext_resource type="Texture2D" uid="uid://dnywdqliu5c8w" path="res://assets/Tiny Dungeon/Tiles/tile_0109.png" id="3_mkms0"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="4_ggpwi"]
+
+[node name="TypeEnemyThrow" instance=ExtResource("1_bn7ue")]
+script = ExtResource("2_h0tp1")
+throw_enemy = ExtResource("3_bpgpb")
+throw_stop_time = 0.5
+enemy_res = ExtResource("3_jn4rq")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_mkms0")
+
+[node name="ThrowTimer" type="Timer" parent="." index="5"]
+one_shot = true
+autostart = true
+script = ExtResource("4_ggpwi")
+min_time = 3.0
+max_time = 5.0
+
+[connection signal="timeout" from="ThrowTimer" to="." method="_on_throw_timer_timeout"]

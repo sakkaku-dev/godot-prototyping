@@ -1,15 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://djxy0fp1fil6b"]
+[gd_scene load_steps=7 format=3 uid="uid://djxy0fp1fil6b"]
 
 [ext_resource type="PackedScene" uid="uid://bvdul7olno8c2" path="res://games/type_wizard/typed/type_enemy.tscn" id="1_h037k"]
 [ext_resource type="Script" path="res://games/type_wizard/typed/type_enemy_spawner.gd" id="2_0ciua"]
+[ext_resource type="Resource" uid="uid://dwq2oltw04cdl" path="res://games/type_wizard/enemies/SpawnerEnemy.tres" id="3_3mcpv"]
+[ext_resource type="Resource" uid="uid://1f221w0eab4i" path="res://games/type_wizard/enemies/WalkEnemies.tres" id="3_fric7"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="3_oqsdc"]
+[ext_resource type="Texture2D" uid="uid://rkmkhayp5sds" path="res://assets/Tiny Dungeon/Tiles/tile_0111.png" id="3_uqcfi"]
 
 [node name="TypeEnemySpawner" instance=ExtResource("1_h037k")]
 script = ExtResource("2_0ciua")
+spawn_enemy_res = ExtResource("3_fric7")
 offset = 5
 spawn_count = 1
-speed = 5
-drop_chance = 0.3
+enemy_res = ExtResource("3_3mcpv")
+
+[node name="Sprite2D" parent="." index="1"]
+texture = ExtResource("3_uqcfi")
 
 [node name="SpawnTimer" type="Timer" parent="." index="5"]
 autostart = true

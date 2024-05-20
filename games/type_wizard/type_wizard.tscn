@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=29 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://djxy0fp1fil6b" path="res://games/type_wizard/typed/type_enemy_spawner.tscn" id="4_br2l4"]
 [ext_resource type="Script" path="res://games/type_wizard/DataManager.gd" id="4_csuax"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="5_1c43k"]
+[ext_resource type="PackedScene" uid="uid://ny16v8jmkvch" path="res://games/type_wizard/typed/type_enemy_throw.tscn" id="5_83kfe"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/HealthBar.gd" id="7_f1yk8"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="7_psodk"]
 [ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/ui/type_game.tres" id="8_1tsrj"]
@@ -47,7 +48,9 @@ pickup_dialog = NodePath("CanvasLayer/UI/ItemPickUp")
 script = ExtResource("3_0egq1")
 enemy_scene = ExtResource("2_w600i")
 enemy_spawner_scene = ExtResource("4_br2l4")
-spawner_enemy_chance = 0.8
+enemy_thrower_scene = ExtResource("5_83kfe")
+spawner_enemy_chance = 0.05
+throw_enemy_chance = 0.9
 data = NodePath("../DataManager")
 root = NodePath("../Root")
 

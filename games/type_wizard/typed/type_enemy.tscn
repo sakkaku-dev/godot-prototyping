@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvdul7olno8c2"]
+[gd_scene load_steps=8 format=3 uid="uid://bvdul7olno8c2"]
 
 [ext_resource type="Texture2D" uid="uid://cyx7atbwwtiyk" path="res://assets/Tiny Dungeon/Tiles/tile_0121.png" id="1_hp0bv"]
 [ext_resource type="Script" path="res://games/type_wizard/typed/type_enemy.gd" id="1_nk8re"]
+[ext_resource type="Resource" uid="uid://1f221w0eab4i" path="res://games/type_wizard/enemies/WalkEnemies.tres" id="2_b4uf6"]
 [ext_resource type="PackedScene" uid="uid://c32bmynbeb42f" path="res://games/type_wizard/typed/type_drop.tscn" id="2_q555s"]
 [ext_resource type="Script" path="res://combat/HitBox.gd" id="5_e6ckt"]
 [ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="5_kqypf"]
@@ -11,6 +12,7 @@ size = Vector2(12, 10)
 
 [node name="TypeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("typed_word", "screen_notifier")]
 script = ExtResource("1_nk8re")
+enemy_res = ExtResource("2_b4uf6")
 drop_scene = ExtResource("2_q555s")
 typed_word = NodePath("TypedWord")
 screen_notifier = NodePath("VisibleOnScreenNotifier2D")

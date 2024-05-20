@@ -73,6 +73,19 @@ const SPAWN_ENEMIES = [
 	"enchanter"
 ]
 
+const THROW_ENEMIES = [
+	"mountain giant",
+	"fire elemental",
+	"storm colossus",
+	"rock titan",
+	"ice behemoth",
+	"inferno drake",
+	"forest guardian",
+	"swamp leviathan",
+	"thunder wyvern",
+	"volcanic hydra"
+]
+
 const SCROLLS = [
 	"Vilmor",
 	"Tandril",
@@ -117,9 +130,6 @@ func get_random_projectile():
 	projectiles.append(letter)
 	return letter
 
-func is_spawner(enemy):
-	return enemy in SPAWN_ENEMIES
-
 func get_random_enemy():
 	if enemies.is_empty():
 		enemies = OTHER_ENEMIES.duplicate() if do_other_enemies else ENEMIES.duplicate()
@@ -131,6 +141,9 @@ func get_random_enemy():
 
 func get_random_spawner_enemy():
 	return SPAWN_ENEMIES.pick_random()
+
+func get_random_throw_enemy():
+	return THROW_ENEMIES.pick_random()
 
 func get_random_spell():
 	return spells.keys().pick_random()
