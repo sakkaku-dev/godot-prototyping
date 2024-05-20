@@ -127,7 +127,7 @@ func get_random_projectile():
 		projectiles = "abcdefghijklmnopqrstuvwz".split("")
 
 	var letter = projectiles.pick_random()
-	projectiles.append(letter)
+	projectiles.erase(letter)
 	return letter
 
 func get_random_enemy():

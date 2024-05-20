@@ -5,6 +5,8 @@ const GROUP = "Wizard"
 
 @export var attack_scene: PackedScene
 
+@onready var hurtbox = $Hurtbox
+
 func _ready():
 	add_to_group(GROUP)
 	

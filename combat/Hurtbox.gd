@@ -4,7 +4,8 @@ extends Area2D
 signal died()
 signal health_changed(hp)
 
-@export var health := 1
+@export var max_health := 1
+@onready var health := max_health
 
 func damage(dmg: int):
 	health -= dmg
