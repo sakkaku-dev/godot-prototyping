@@ -19,6 +19,7 @@ const GROUP = "Wizard"
 
 var resistance: Array[Resistance] = []
 var attacks: Array[Attack] = []
+var capacity := 0
 
 func _ready():
 	add_to_group(GROUP)
@@ -55,7 +56,4 @@ func set_health(v: int):
 	hurtbox.max_health += v
 
 func set_castle_capacity(v: int):
-	pass
-
-func set_range(v: int):
-	pass
+	capacity += v

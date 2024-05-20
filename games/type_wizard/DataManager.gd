@@ -106,7 +106,7 @@ var do_other_enemies := false
 var enemies := []
 var projectiles := []
 
-var upgrades = []
+var upgrades = {}
 var spells = {}
 
 func _ready():
@@ -121,8 +121,11 @@ func _ready():
 	for file in DirAccess.get_files_at(UPGRADE_FOLDER):
 		if not file.ends_with(".tres"): continue
 		
-		var upgrade = load(UPGRADE_FOLDER + file)
-		upgrades.append(upgrade)
+		var upgrade = load(UPGRADE_FOLDER + file) as UpgradeResource
+		var letter = upgrade.title.substr(0, 1)
+		if not letter in upgrades:
+			upgrades[letter] = []
+		upgrades[letter].append(upgrade)
 
 func get_random_projectile():
 	if projectiles.is_empty():
@@ -152,9 +155,19 @@ func get_random_spell():
 
 func get_random_upgrades(count = 3) -> Array[UpgradeResource]:
 	var result: Array[UpgradeResource] = []
+	var letters = upgrades.keys()
 	for i in range(count):
-		result.append(upgrades.pick_random())
+		var letter = letters.pick_random()
+		letters.erase(letter)
+		result.append(upgrades[letter].pick_random())
+	
 	return result
+
+func used_upgrade(res: UpgradeResource):
+	var letter = res.title.substr(0, 1)
+	upgrades[letter].erase(res)
+	if upgrades[letter].is_empty():
+		upgrades.erase(letter)
 
 func get_spell(scroll_name: String):
 	if scroll_name in spells:

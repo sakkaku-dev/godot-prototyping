@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ValueUpgradeResource" load_steps=2 format=3 uid="uid://dnvhu266biquq"]
+[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=2 format=3 uid="uid://dnvhu266biquq"]
 
 [ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceValue.gd" id="2_p8epe"]
 
@@ -8,3 +8,4 @@ value = "health"
 delta = 1
 title = "Health"
 text = "Increase the health of the castle"
+limit = 3

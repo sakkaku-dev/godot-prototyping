@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ValueUpgradeResource" load_steps=2 format=3 uid="uid://76mn0er6vklw"]
+[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=2 format=3 uid="uid://76mn0er6vklw"]
 
 [ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceValue.gd" id="1_6bvhn"]
 
@@ -8,3 +8,4 @@ value = "castle_capacity"
 delta = 1
 title = "Castle Upgrade"
 text = "Upgrade the castle to increase the number of soldiers it can hold"
+limit = 10
