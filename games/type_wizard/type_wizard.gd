@@ -23,6 +23,7 @@ func _ready():
 	key_reader.pressed_key.connect(_pressed_key)
 	key_reader.pressed_cancel.connect(_cancel_word)
 	upgrades.selected_upgrade.connect(_selected_upgrade)
+	manage.next_wave.connect(func(): wave_timer.start_wave())
 	
 	enemy_spawner.enemy_finished.connect(func(): current_word = null)
 	enemy_spawner.enemy_removed.connect(func(left):

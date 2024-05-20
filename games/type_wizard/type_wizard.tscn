@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=33 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bmti1r4wqqqm" path="res://assets/Tiny Dungeon/Tiles/tile_0102.png" id="20_jxr86"]
 [ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="21_y8f0q"]
 [ext_resource type="PackedScene" uid="uid://cx5of15itwen0" path="res://games/type_wizard/ui/shortcut.tscn" id="22_4n67u"]
+[ext_resource type="Texture2D" uid="uid://dqdc12ysbijbi" path="res://assets/Keyboard & Mouse/Dark/Shift_Key_Dark.png" id="25_wnp1b"]
 [ext_resource type="Script" path="res://games/type_wizard/Manage.gd" id="28_cet3j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fen5t"]
@@ -294,7 +295,7 @@ text = "__DESC__"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Manage" type="PanelContainer" parent="CanvasLayer/UI"]
+[node name="Manage" type="PanelContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("next_wave_btn", "pause", "key_reader")]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 1
 anchors_preset = 11
@@ -304,8 +305,44 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("28_cet3j")
+next_wave_btn = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TypedWord")
+pause = NodePath("../PauseBlur")
+key_reader = NodePath("KeyReader")
+
+[node name="KeyReader" type="Node" parent="CanvasLayer/UI/Manage"]
+script = ExtResource("4_4bt4h")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/Manage"]
 layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MarginContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("25_wnp1b")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="TypedWord" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("21_y8f0q")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "NEXT WAVE"
+highlight_color = Color(0.870588, 0, 0.580392, 1)
 
 [connection signal="picked_up" from="Root/Wizard/PickupArea" to="." method="_on_pickup_area_picked_up"]
