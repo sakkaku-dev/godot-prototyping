@@ -1,8 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=26 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/WaveTimer.gd" id="2_04g0y"]
-[ext_resource type="PackedScene" uid="uid://c32bmynbeb42f" path="res://games/type_wizard/type_drop.tscn" id="2_kup4k"]
 [ext_resource type="PackedScene" uid="uid://bvdul7olno8c2" path="res://games/type_wizard/type_enemy.tscn" id="2_w600i"]
 [ext_resource type="Texture2D" uid="uid://bh0dwoj5krcnl" path="res://assets/Tiny Dungeon/Tiles/tile_0084.png" id="2_xy5s2"]
 [ext_resource type="TileSet" uid="uid://qb3qobjripr6" path="res://games/type_wizard/type_wizard.tres" id="3_6d2mj"]
@@ -15,9 +14,11 @@
 [ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/type_game.tres" id="8_1tsrj"]
 [ext_resource type="Script" path="res://games/type_wizard/PickupArea.gd" id="8_y2q8n"]
 [ext_resource type="Script" path="res://games/type_wizard/Countdown.gd" id="10_f2lwa"]
+[ext_resource type="Script" path="res://games/type_wizard/Wizard.gd" id="12_b5tcl"]
 [ext_resource type="Script" path="res://games/type_wizard/Upgrades.gd" id="12_f4n8r"]
 [ext_resource type="PackedScene" uid="uid://ccbmop0unfx8t" path="res://games/type_wizard/upgrade_item.tscn" id="12_oh1yd"]
 [ext_resource type="Script" path="res://games/type_wizard/PauseBlur.gd" id="13_h3nru"]
+[ext_resource type="PackedScene" uid="uid://cw1dvt2pf04" path="res://games/type_wizard/bullet.tscn" id="13_j7b4n"]
 [ext_resource type="Shader" path="res://shaders/blur.gdshader" id="17_fmius"]
 [ext_resource type="Script" path="res://games/type_wizard/ItemPickUp.gd" id="19_3lo2h"]
 [ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed_word.tscn" id="21_y8f0q"]
@@ -34,8 +35,6 @@ shader_parameter/lod = 2.0
 
 [node name="TypeWizard" type="Node2D" node_paths=PackedStringArray("wave_timer", "upgrades", "blur", "pickup_dialog")]
 script = ExtResource("1_pe1fc")
-drop_chance = 0.3
-drop_scene = ExtResource("2_kup4k")
 wave_timer = NodePath("WaveTimer")
 enemies = Array[PackedScene]([ExtResource("2_w600i")])
 upgrades = NodePath("CanvasLayer/UI/Upgrades")
@@ -49,6 +48,7 @@ script = ExtResource("4_4bt4h")
 script = ExtResource("4_csuax")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
+wait_time = 10.0
 one_shot = true
 script = ExtResource("2_04g0y")
 enemy_spawn_timer = NodePath("RandomTimer")
@@ -70,10 +70,10 @@ y_sort_enabled = true
 [node name="TileMap" type="TileMap" parent="Root"]
 tile_set = ExtResource("3_6d2mj")
 format = 2
-layer_0/tile_data = PackedInt32Array(-131073, 1, 10, -65537, 589824, 4, -1, 589824, 4, -196608, 65537, 10, -131072, 262144, 3, -65536, 589824, 3, -196607, 131073, 10, -131071, 720896, 4, -65535, 720896, 4, -196609, 1, 8, -262144, 65537, 8, -262143, 131073, 8)
+layer_0/tile_data = PackedInt32Array(-131073, 1, 8, -65537, 1, 10, -1, 589824, 4, -196608, 65537, 8, -131072, 65537, 10, -65536, 262144, 3, -196607, 131073, 8, -131071, 131073, 10, -65535, 720896, 4, 65535, 589824, 4, 0, 589824, 3, 1, 720896, 4)
 
 [node name="Hurtbox" type="Area2D" parent="Root/TileMap"]
-position = Vector2(8, -15)
+position = Vector2(8, -4)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_2v12g")
@@ -82,6 +82,7 @@ health = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Root/TileMap/Hurtbox"]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_fen5t")
+debug_color = Color(0.985284, 0.11917, 1.92523e-07, 0.42)
 
 [node name="PickupArea" type="Area2D" parent="Root/TileMap"]
 collision_layer = 0
@@ -89,12 +90,15 @@ collision_mask = 32
 script = ExtResource("8_y2q8n")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Root/TileMap/PickupArea"]
-position = Vector2(8, -11)
+position = Vector2(8, 0)
 shape = SubResource("RectangleShape2D_mwjhe")
 
 [node name="Player" type="Sprite2D" parent="."]
-position = Vector2(0, -52)
+position = Vector2(0, -29)
 texture = ExtResource("2_xy5s2")
+offset = Vector2(0, -5)
+script = ExtResource("12_b5tcl")
+attack_scene = ExtResource("13_j7b4n")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -7)

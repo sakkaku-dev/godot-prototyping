@@ -16,7 +16,7 @@ func _ready():
 		moving = true
 		start_pos = global_position
 	)
-	typed_word.typing.connect(func(typed):
+	typed_word.typing.connect(func():
 		var remaining_distance = typed_word.typed.length() / float(typed_word.word.length())
 		var dir = Vector2.ZERO - start_pos
 		destination = start_pos + dir * remaining_distance

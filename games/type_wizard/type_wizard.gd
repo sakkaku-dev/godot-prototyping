@@ -1,11 +1,7 @@
 extends Node2D
 
-@export var drop_chance := 0.1
-@export var drop_scene: PackedScene
-
 @export var wave_timer: WaveTimer
 @export var enemies: Array[PackedScene] = []
-@export var enemy_spawn_distance_from_player := 250
 
 @export_category("UI Nodes")
 @export var upgrades: Upgrades
@@ -34,24 +30,15 @@ func _selected_upgrade(upgrade: UpgradeResource):
 func _spawn():
 	var enemy = enemies.pick_random().instantiate()
 	enemy.set_word(data_manager.get_random_enemy())
-	enemy.global_position = (Vector2.RIGHT * enemy_spawn_distance_from_player).rotated(randf_range(0, TAU))
-	enemy.finished.connect(func(): _maybe_drop_item(enemy.global_position))
+	enemy.finished.connect(func(): current_word = null)
+	enemy.dropped.connect(func(node): root.add_child(node))
 	enemy.removed.connect(func():
-		current_word = null
-		
 		var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
 		enemies.erase(enemy)
 		if wave_timer.is_stopped() and enemies.is_empty():
 			_wave_ended()
 	)
 	root.add_child(enemy)
-
-func _maybe_drop_item(pos: Vector2):
-	if randf() < drop_chance:
-		var node = drop_scene.instantiate()
-		node.global_position = pos
-		node.set_word("scrolls")
-		root.add_child(node)
 
 func _pressed_key(key: String, shift: bool):
 	if shift:
@@ -64,12 +51,15 @@ func _pressed_key(key: String, shift: bool):
 			shift_word.handle_key(key)
 	else:
 		if not current_word:
-			var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
+			var enemies = _get_enemies()
 			current_word = _find_first_words_with(key, enemies)
 			print("Searching for enemy: %s" % current_word)
 		
 		if current_word:
 			current_word.handle_key(key)
+
+func _get_enemies():
+	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP).filter(func(x): return not x.is_finished)
 
 func _find_first_words_with(key: String, nodes: Array):
 	var matches = []

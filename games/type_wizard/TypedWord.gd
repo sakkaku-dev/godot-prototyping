@@ -1,7 +1,7 @@
 class_name TypedWord
 extends RichTextLabel
 
-signal typing(typed, remaining)
+signal typing()
 signal type_finish()
 signal type_start()
 signal type_cancel()
@@ -18,10 +18,15 @@ var typed = "":
 	set(v):
 		typed = v
 		update_word()
-		typing.emit(typed)
 		
 		if typed == word:
 			type_finish.emit()
+var hit := 0:
+	set(v):
+		hit = v
+		hit += _get_num_of_spaces(hit)
+		update_word()
+
 var focused := false:
 	set(v):
 		focused = v
@@ -36,11 +41,14 @@ func _ready():
 	
 	add_theme_constant_override("outline_size", 5)
 
+func is_fully_hit():
+	return hit >= word.length()
+
 func update_word():
 	if highlight_first and typed.length() == 0:
 		text = "[center][typed until=1 colored=false]%s[/typed][/center]" % word
 	else:
-		text = "[center][typed until=%s]%s[/typed][/center]" % [typed.length(), word]
+		text = "[center][typed until=%s hit=%s jump=false]%s[/typed][/center]" % [typed.length(), hit, word]
 
 func handle_key(key: String):
 	if typed.length() >= word.length():
@@ -53,16 +61,19 @@ func handle_key(key: String):
 			_highlight()
 		
 		typed += key.to_lower()
-		_fill_spaces()
+		typed += " ".repeat(_get_num_of_spaces(typed.length()))
+		typing.emit()
 
-func _fill_spaces():
-	if typed.length() == word.length():
-		return
+func _get_num_of_spaces(from: int):
+	if from >= word.length():
+		return 0
 	
-	var next_word_char = word[typed.length()]
+	var next_word_char = word[from]
+	var count = 0
 	while next_word_char == " ":
-		typed += next_word_char
-		next_word_char = word[typed.length()]
+		count += 1
+		next_word_char = word[from + count]
+	return count
 
 func _highlight():
 	self.focused = true
