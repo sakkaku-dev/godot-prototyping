@@ -15,3 +15,6 @@ func attack(target: TypedCharacter):
 	node.global_position = global_position
 	node.target = target
 	get_tree().current_scene.add_child(node)
+
+func upgrade(res: UpgradeResource):
+	hurtbox.max_health += 1

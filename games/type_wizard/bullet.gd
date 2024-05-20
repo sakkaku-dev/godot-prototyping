@@ -1,7 +1,7 @@
 class_name Bullet
 extends CharacterBody2D
 
-@export var speed := 60
+@export var speed := 70
 
 var target: TypedCharacter:
 	set(v):

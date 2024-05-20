@@ -11,6 +11,7 @@ extends Node2D
 @onready var data_manager = $DataManager
 @onready var key_reader = $KeyReader
 @onready var enemy_spawner = $EnemySpawner
+@onready var wizard = $Root/Wizard
 
 var current_word: TypedCharacter
 var shift_word: TypedCharacter
@@ -31,6 +32,7 @@ func _wave_ended():
 	upgrades.show_upgrades(data_manager.get_random_upgrades())
 
 func _selected_upgrade(upgrade: UpgradeResource):
+	wizard.upgrade(upgrade)
 	wave_timer.start_wave()
 
 func _pressed_key(key: String, shift: bool):

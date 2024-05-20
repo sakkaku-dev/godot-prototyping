@@ -62,7 +62,7 @@ script = ExtResource("4_4bt4h")
 script = ExtResource("4_csuax")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
-wait_time = 2.0
+wait_time = 5.0
 one_shot = true
 script = ExtResource("2_04g0y")
 enemy_spawn_timer = NodePath("RandomTimer")
@@ -81,35 +81,35 @@ layer_0/tile_data = PackedInt32Array(589838, 131073, 3, 524302, 131073, 2, 45876
 [node name="Root" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="TileMap" type="TileMap" parent="Root"]
+[node name="Wizard" type="TileMap" parent="Root"]
 tile_set = ExtResource("3_6d2mj")
 format = 2
 layer_0/tile_data = PackedInt32Array(-131073, 1, 8, -65537, 1, 10, -1, 589824, 4, -196608, 65537, 8, -131072, 65537, 10, -65536, 262144, 3, -196607, 131073, 8, -131071, 131073, 10, -65535, 720896, 4, 65535, 589824, 4, 0, 589824, 3, 1, 720896, 4)
 script = ExtResource("12_b5tcl")
 attack_scene = ExtResource("13_j7b4n")
 
-[node name="Hurtbox" type="Area2D" parent="Root/TileMap"]
+[node name="Hurtbox" type="Area2D" parent="Root/Wizard"]
 position = Vector2(8, -4)
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("4_2v12g")
 max_health = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Root/TileMap/Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Root/Wizard/Hurtbox"]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_fen5t")
 debug_color = Color(0.985284, 0.11917, 1.92523e-07, 0.42)
 
-[node name="PickupArea" type="Area2D" parent="Root/TileMap"]
+[node name="PickupArea" type="Area2D" parent="Root/Wizard"]
 collision_layer = 0
 collision_mask = 32
 script = ExtResource("8_y2q8n")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Root/TileMap/PickupArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Root/Wizard/PickupArea"]
 position = Vector2(8, 0)
 shape = SubResource("RectangleShape2D_mwjhe")
 
-[node name="Player" type="Sprite2D" parent="Root/TileMap"]
+[node name="Player" type="Sprite2D" parent="Root/Wizard"]
 position = Vector2(0, -29)
 texture = ExtResource("2_xy5s2")
 offset = Vector2(0, -5)
@@ -164,7 +164,7 @@ size_flags_vertical = 0
 theme_override_constants/separation = 0
 script = ExtResource("7_f1yk8")
 icon = ExtResource("20_jxr86")
-hurtbox = NodePath("../../../../../Root/TileMap/Hurtbox")
+hurtbox = NodePath("../../../../../Root/Wizard/Hurtbox")
 
 [node name="Counter" type="MarginContainer" parent="CanvasLayer/UI/GameUI"]
 layout_mode = 1
@@ -274,4 +274,4 @@ text = "__DESC__"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[connection signal="picked_up" from="Root/TileMap/PickupArea" to="." method="_on_pickup_area_picked_up"]
+[connection signal="picked_up" from="Root/Wizard/PickupArea" to="." method="_on_pickup_area_picked_up"]

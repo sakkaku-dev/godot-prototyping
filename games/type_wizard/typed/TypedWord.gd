@@ -18,9 +18,6 @@ var typed = "":
 	set(v):
 		typed = v
 		update_word()
-		
-		if typed == word:
-			type_finish.emit()
 var hit := 0:
 	set(v):
 		hit = v
@@ -33,12 +30,7 @@ var focused := false:
 		add_theme_color_override("font_outline_color", highlight_color if focused else Color.BLACK)
 
 func _ready():
-	bbcode_enabled = true
-	fit_content = true
-	scroll_active = false
-	autowrap_mode = TextServer.AUTOWRAP_OFF
 	self.focused = false
-	
 	add_theme_constant_override("outline_size", 5)
 
 func is_fully_hit():
@@ -63,6 +55,9 @@ func handle_key(key: String):
 		typed += key.to_lower()
 		typed += " ".repeat(_get_num_of_spaces(typed.length()))
 		typing.emit()
+		
+		if typed == word:
+			type_finish.emit()
 
 func _get_num_of_spaces(from: int):
 	if from >= word.length():
