@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cr8ki2xhv8i73"]
 
-[ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/type_game.tres" id="1_8umst"]
+[ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/ui/type_game.tres" id="1_8umst"]
 [ext_resource type="Script" path="res://games/type_wizard/TypedWord.gd" id="1_mdvmi"]
 [ext_resource type="RichTextEffect" uid="uid://cry2uk8is7g4p" path="res://games/type_wizard/typed_effect.tres" id="1_rjw53"]
 

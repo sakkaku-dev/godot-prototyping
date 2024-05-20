@@ -1,19 +1,6 @@
 class_name WaveTimer
 extends Timer
 
-const WORDS = [
-	"castle",
-	"wizard",
-	"dragon",
-	"sorcery",
-	"knight",
-	"enchanted",
-	"dungeon",
-	"goblin",
-	"alchemy",
-	"tome"
-]
-
 signal spawn()
 signal wave_started()
 signal wave_stopped()

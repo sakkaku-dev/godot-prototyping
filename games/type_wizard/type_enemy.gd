@@ -6,6 +6,7 @@ signal dropped(node)
 
 const ENEMY_GROUP = "TypedEnemy"
 
+@export var speed := 10
 @export var drop_chance := 0.1
 @export var drop_scene: PackedScene
 @export var enemy_spawn_distance_from_player := 250
@@ -27,7 +28,9 @@ func _ready():
 	global_position = (Vector2.RIGHT * enemy_spawn_distance_from_player).rotated(randf_range(0, TAU))
 
 func _physics_process(delta):
-	center_move.move(self, delta)
+	var dir = global_position.direction_to(Vector2.ZERO)
+	velocity = dir * speed
+	move_and_slide()
 
 func hit():
 	typed_word.hit += 1

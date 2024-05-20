@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://dt1lwp3hu1cmq"]
 
-[ext_resource type="FontFile" uid="uid://w106d45rgk70" path="res://games/type_wizard/editundo.ttf" id="1_dwydw"]
+[ext_resource type="FontFile" uid="uid://w106d45rgk70" path="res://games/type_wizard/ui/editundo.ttf" id="1_dwydw"]
 
 [resource]
 default_font = ExtResource("1_dwydw")
