@@ -7,6 +7,7 @@ extends Node2D
 @export var upgrades: Upgrades
 @export var blur: PauseBlur
 @export var pickup_dialog: ItemPickUp
+@export var manage: Manage
 
 @onready var data_manager = $DataManager
 @onready var key_reader = $KeyReader
@@ -35,7 +36,7 @@ func _wave_ended():
 func _selected_upgrade(upgrade: UpgradeResource):
 	wizard.upgrade(upgrade)
 	data_manager.used_upgrade(upgrade)
-	wave_timer.start_wave()
+	manage.open()
 
 func _pressed_key(key: String, shift: bool):
 	if shift:
