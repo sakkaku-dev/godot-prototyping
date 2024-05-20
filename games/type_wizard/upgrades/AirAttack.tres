@@ -1,8 +1,9 @@
-[gd_resource type="Resource" script_class="UpgradeResource" load_steps=2 format=3 uid="uid://i2hpoq25s73g"]
+[gd_resource type="Resource" script_class="UpgradeResourceAttack" load_steps=2 format=3 uid="uid://i2hpoq25s73g"]
 
-[ext_resource type="Script" path="res://games/type_wizard/UpgradeResource.gd" id="1_jrt88"]
+[ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceAttack.gd" id="1_jrt88"]
 
 [resource]
 script = ExtResource("1_jrt88")
+attack = 1
 title = "Air Attack"
 text = "Attack the enemy using air to push him and others nearby back "

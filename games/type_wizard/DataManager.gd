@@ -119,6 +119,8 @@ func _ready():
 		spells[scroll] = spell
 
 	for file in DirAccess.get_files_at(UPGRADE_FOLDER):
+		if not file.ends_with(".tres"): continue
+		
 		var upgrade = load(UPGRADE_FOLDER + file)
 		upgrades.append(upgrade)
 
