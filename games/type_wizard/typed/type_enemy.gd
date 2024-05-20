@@ -18,10 +18,7 @@ var has_emitted_stop := false
 func _ready():
 	super._ready()
 	add_to_group(ENEMY_GROUP)
-	finished.connect(func():
-		typed_word.reset()
-		typed_word.modulate = Color.DIM_GRAY
-	)
+	finished.connect(func(): typed_word.cancel())
 	hit_box.hit.connect(func(): removed.emit())
 	removed.connect(func(): queue_free())
 	
@@ -52,3 +49,6 @@ func _maybe_drop_item(pos: Vector2):
 		node.global_position = pos
 		node.set_word("scrolls")
 		dropped.emit(node)
+
+func cancel():
+	typed_word.cancel()

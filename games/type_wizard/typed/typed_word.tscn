@@ -9,6 +9,7 @@ z_index = 10
 clip_contents = false
 theme = ExtResource("1_2ocwi")
 bbcode_enabled = true
+text = "__teasdasdasdasdasdasdasdasasdasst__"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0

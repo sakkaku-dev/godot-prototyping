@@ -15,7 +15,6 @@ var is_finished := false
 func _ready():
 	typed_word.type_finish.connect(func(): finished.emit())
 	typed_word.type_start.connect(func(): z_index = 10)
-	#typed_word.type_cancel.connect(func(): z_index = 0)
 	finished.connect(func(): is_finished = true)
 	add_to_group(GROUP)
 
@@ -27,6 +26,9 @@ func set_word(word: String):
 
 func get_word():
 	return typed_word.word
+
+func get_remaining_word():
+	return typed_word.get_remaining_word()
 
 func is_on_screen():
 	if screen_notifier:

@@ -45,5 +45,5 @@ func handle_key(key: String, shift: bool):
 func _cancel():
 	if not current_node: return
 	
-	current_node.cancel()
+	current_node.reset()
 	current_node = null

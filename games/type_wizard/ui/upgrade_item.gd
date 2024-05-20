@@ -20,5 +20,5 @@ func _ready():
 func handle_key(w: String):
 	title.handle_key(w)
 
-func cancel():
+func reset():
 	title.reset()

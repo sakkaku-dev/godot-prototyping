@@ -4,19 +4,20 @@ extends RichTextEffect
 
 @export var hit_color := Color.RED
 @export var color := Color.WHITE
+@export var unfocus_color := Color.WHITE
 @export var jump_height := 5
 @export var frequency := 5
 
-# Syntax: [typed until=2 hit=1 colored=true jump=true][/typed]
+# Syntax: [typed until=2 hit=1 color=#234234 jump=true][/typed]
 var bbcode = "typed"
 
 func _process_custom_fx(char_fx):
 	var idx = char_fx.relative_index
 
 	var until = char_fx.env.get("until", 0)
-	var colored = char_fx.env.get("colored", true)
+	var color = char_fx.env.get("color", "")
 	if idx < until:
-		if colored:
+		if color is Color:
 			char_fx.color = color
 
 		var jump = char_fx.env.get("jump", true)
@@ -28,8 +29,7 @@ func _process_custom_fx(char_fx):
 	
 	var hit = char_fx.env.get("hit", 0)
 	if idx < hit:
-		if colored:
-			char_fx.color = hit_color
+		char_fx.color = hit_color
 		
 	return true
 

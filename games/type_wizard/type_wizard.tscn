@@ -50,8 +50,7 @@ script = ExtResource("3_0egq1")
 enemy_scene = ExtResource("2_w600i")
 enemy_spawner_scene = ExtResource("4_br2l4")
 enemy_thrower_scene = ExtResource("5_83kfe")
-spawner_enemy_chance = 0.05
-throw_enemy_chance = 0.9
+spawner_enemy_chance = 0.1
 data = NodePath("../DataManager")
 root = NodePath("../Root")
 
@@ -62,7 +61,7 @@ script = ExtResource("4_4bt4h")
 script = ExtResource("4_csuax")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
-wait_time = 2.0
+wait_time = 5.0
 one_shot = true
 script = ExtResource("2_04g0y")
 enemy_spawn_timer = NodePath("RandomTimer")

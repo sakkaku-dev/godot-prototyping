@@ -20,6 +20,7 @@ func _ready():
 	wave_timer.start_wave()
 	wave_timer.spawn.connect(func(): enemy_spawner.spawn())
 	key_reader.pressed_key.connect(_pressed_key)
+	key_reader.pressed_cancel.connect(_cancel_word)
 	upgrades.selected_upgrade.connect(_selected_upgrade)
 	
 	enemy_spawner.enemy_finished.connect(func(): current_word = null)
@@ -54,12 +55,17 @@ func _pressed_key(key: String, shift: bool):
 		if current_word:
 			current_word.handle_key(key)
 
+func _cancel_word():
+	if not current_word: return
+	current_word.cancel()
+	current_word = null
+
 func _find_first_words_with(key: String, nodes: Array):
 	var matches = []
 	for node in nodes:
 		if not node.is_on_screen(): continue
 		
-		if node.get_word().to_lower().begins_with(key.to_lower()):
+		if node.get_remaining_word().to_lower().begins_with(key.to_lower()):
 			matches.append(node)
 	
 	var closest = null
