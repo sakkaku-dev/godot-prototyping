@@ -7,5 +7,5 @@
 script = ExtResource("1_fvjru")
 move_until_distance = 0.0
 speed = 10.0
-drop_chance = 0.05
+drop_chance = 0.8
 sprite = ExtResource("2_lka5u")

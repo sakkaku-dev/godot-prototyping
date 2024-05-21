@@ -289,7 +289,6 @@ theme_override_constants/separation = 10
 
 [node name="Title" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("21_y8f0q")]
 layout_mode = 2
-highlight_first = true
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
@@ -367,7 +366,6 @@ layout_mode = 2
 [node name="Attack" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer" instance=ExtResource("21_y8f0q")]
 layout_mode = 2
 size_flags_horizontal = 4
-highlight_first = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
@@ -382,7 +380,6 @@ layout_mode = 2
 [node name="Castle" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer3" instance=ExtResource("21_y8f0q")]
 layout_mode = 2
 size_flags_horizontal = 4
-highlight_first = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer3"]
 custom_minimum_size = Vector2(0, 30)
@@ -397,7 +394,6 @@ layout_mode = 2
 [node name="Scrolls" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer2" instance=ExtResource("21_y8f0q")]
 layout_mode = 2
 size_flags_horizontal = 4
-highlight_first = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer2"]
 custom_minimum_size = Vector2(0, 30)
@@ -431,7 +427,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "NEXT WAVE"
 highlight_color = Color(0.870588, 0, 0.580392, 1)
-highlight_first = true
 
 [node name="Attacks" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MainPanel"]
 layout_mode = 2

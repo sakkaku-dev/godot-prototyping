@@ -8,6 +8,7 @@ var current_node
 func remove_all():
 	for n in nodes:
 		n.queue_free()
+	current_node = null
 	nodes = []
 
 func handle_key(key: String):

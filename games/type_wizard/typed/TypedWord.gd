@@ -5,8 +5,10 @@ signal typing()
 signal type_finish()
 signal type_start()
 
+@export var text_color := Color.BLACK
 @export var highlight_color := Color("0084d3")
-@export var highlight_first := false
+@export var highlight_first := true
+@export var jump := true
 
 var word = "":
 	set(v):
@@ -41,10 +43,9 @@ func is_fully_hit():
 
 func update_word():
 	if highlight_first and typed.length() == 0:
-		text = "[center][typed until=1 colored=false]%s[/typed][/center]" % word
+		text = "[center][typed until=1]%s[/typed][/center]" % word
 	else:
-		var color = Color.BLACK if focused else Color.DIM_GRAY
-		text = "[center][typed until=%s hit=%s color=#%s jump=false]%s[/typed][/center]" % [typed.length(), hit, color.to_html(false), word]
+		text = "[center][typed until=%s jump=%s color=#%s]%s[/typed][/center]" % [typed.length(), jump, text_color.to_html(), word]
 
 func handle_key(key: String):
 	if typed.length() >= word.length():

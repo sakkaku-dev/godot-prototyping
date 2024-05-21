@@ -29,4 +29,7 @@ offset_right = 28.0
 offset_bottom = 8.0
 grow_horizontal = 2
 text = "__test__"
+text_color = Color(1, 0, 0, 0)
 highlight_color = Color(0.870588, 0, 0.580392, 1)
+highlight_first = false
+jump = false

@@ -2,9 +2,8 @@
 class_name TypedEffect
 extends RichTextEffect
 
-@export var hit_color := Color.RED
-@export var color := Color.WHITE
-@export var unfocus_color := Color.WHITE
+#@export var hit_color := Color.RED
+#@export var color := Color.WHITE
 @export var jump_height := 5
 @export var frequency := 5
 
@@ -17,8 +16,8 @@ func _process_custom_fx(char_fx):
 	var until = char_fx.env.get("until", 0)
 	var color = char_fx.env.get("color", "")
 	if idx < until:
-		if color is Color:
-			char_fx.color = color
+		if color is String and color != "":
+			char_fx.color = Color(color)
 
 		var jump = char_fx.env.get("jump", true)
 		if jump:
@@ -27,9 +26,9 @@ func _process_custom_fx(char_fx):
 			char_fx.offset.y -= _get_offset(char_fx.elapsed_time, offset)
 	
 	
-	var hit = char_fx.env.get("hit", 0)
-	if idx < hit:
-		char_fx.color = hit_color
+	#var hit = char_fx.env.get("hit", 0)
+	#if idx < hit:
+		#char_fx.color = hit_color
 		
 	return true
 
