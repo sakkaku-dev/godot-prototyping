@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ShortcutResource" load_steps=5 format=3 uid="uid://dhejg6dyfy0xv"]
+
+[ext_resource type="Texture2D" uid="uid://bl5d27wwofou7" path="res://assets/Tiny Dungeon/Tiles/tile_0060.png" id="1_yvc3d"]
+[ext_resource type="Texture2D" uid="uid://dqdc12ysbijbi" path="res://assets/Keyboard & Mouse/Dark/Shift_Key_Dark.png" id="2_o841n"]
+[ext_resource type="Script" path="res://games/type_wizard/ui/ShortcutResource.gd" id="3_y6wfh"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ooqcm"]
+device = -1
+keycode = 4194325
+
+[resource]
+script = ExtResource("3_y6wfh")
+image = ExtResource("1_yvc3d")
+key_image = ExtResource("2_o841n")
+event = SubResource("InputEventKey_ooqcm")

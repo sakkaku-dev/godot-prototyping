@@ -8,7 +8,10 @@ extends CharacterBody2D
 
 @onready var sprite_2d = $Sprite2D
 
-var speed_multiplier := 1.0
+var speed_multiplier := 1.0:
+	set(v):
+		speed_multiplier = min(v, max_speed_multiplier)
+
 var effects := []
 
 var on_hit_effects := []

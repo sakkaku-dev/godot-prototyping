@@ -1,9 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://cx5of15itwen0"]
+[gd_scene load_steps=6 format=3 uid="uid://cx5of15itwen0"]
 
 [ext_resource type="Texture2D" uid="uid://b4bmpuahnpg7k" path="res://assets/UI Base Pack/PNG/blue_button07.png" id="1_6j5s5"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/shortcut.gd" id="1_u4thp"]
 [ext_resource type="Texture2D" uid="uid://bl5d27wwofou7" path="res://assets/Tiny Dungeon/Tiles/tile_0060.png" id="2_okrcg"]
-[ext_resource type="Resource" uid="uid://dhejg6dyfy0xv" path="res://games/type_wizard/ui/shift_key.tres" id="2_ukfet"]
 [ext_resource type="Texture2D" uid="uid://dqdc12ysbijbi" path="res://assets/Keyboard & Mouse/Dark/Shift_Key_Dark.png" id="3_hrvvq"]
 [ext_resource type="Texture2D" uid="uid://bux5xmvv6avi8" path="res://assets/UI Base Pack/PNG/red_button04.png" id="3_iuu2k"]
 
@@ -12,7 +11,6 @@ custom_minimum_size = Vector2(15, 15)
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_u4thp")
-key_res = ExtResource("2_ukfet")
 texture = ExtResource("1_6j5s5")
 active_texture = ExtResource("3_iuu2k")
 image_rect = NodePath("Button/MarginContainer/Image")
