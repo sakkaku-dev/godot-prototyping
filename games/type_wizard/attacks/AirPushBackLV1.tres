@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="AirPushBackResource" load_steps=3 format=3 uid="uid://d05j428xdsyiw"]
+
+[ext_resource type="Script" path="res://games/type_wizard/attacks/AirPushBackResource.gd" id="1_iwwn4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5sopl"]
+size = Vector2(15, 30)
+
+[resource]
+script = ExtResource("1_iwwn4")
+shape = SubResource("RectangleShape2D_5sopl")
+push_force = 20.0

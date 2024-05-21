@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="LightningEffectResource" load_steps=2 format=3 uid="uid://dnytjnppjd7n6"]
+
+[ext_resource type="Script" path="res://games/type_wizard/attacks/LightningEffectResource.gd" id="1_3k25u"]
+
+[resource]
+script = ExtResource("1_3k25u")

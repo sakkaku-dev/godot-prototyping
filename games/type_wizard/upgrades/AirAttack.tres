@@ -1,9 +1,12 @@
-[gd_resource type="Resource" script_class="UpgradeResourceAttack" load_steps=2 format=3 uid="uid://i2hpoq25s73g"]
+[gd_resource type="Resource" script_class="UpgradeResourceAttack" load_steps=3 format=3 uid="uid://i2hpoq25s73g"]
 
 [ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceAttack.gd" id="1_jrt88"]
+[ext_resource type="Resource" uid="uid://d05j428xdsyiw" path="res://games/type_wizard/attacks/AirPushBackLV1.tres" id="1_ju7cq"]
 
 [resource]
 script = ExtResource("1_jrt88")
 attack = 1
+effect = ExtResource("1_ju7cq")
 title = "Air Attack"
 text = "Attack the enemy using air to push him and others nearby back "
+limit = 1

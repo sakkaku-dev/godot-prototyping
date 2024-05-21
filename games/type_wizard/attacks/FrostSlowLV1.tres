@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="FrostSlowResource" load_steps=2 format=3 uid="uid://b1cxqo50sv6wm"]
+
+[ext_resource type="Script" path="res://games/type_wizard/attacks/FrostSlowResource.gd" id="1_ufpn5"]
+
+[resource]
+script = ExtResource("1_ufpn5")
+slow = 0.5

@@ -301,6 +301,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Manage" type="Control" parent="CanvasLayer/UI" node_paths=PackedStringArray("player", "next_wave_btn", "attack_btn", "scroll_btn", "castle_btn", "main_panel", "attack_panel", "pause", "key_reader")]
+visible = false
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 1
 anchors_preset = 11

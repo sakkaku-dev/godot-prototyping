@@ -37,7 +37,8 @@ func _wave_ended():
 func _selected_upgrade(upgrade: UpgradeResource):
 	wizard.upgrade(upgrade)
 	data_manager.used_upgrade(upgrade)
-	manage.open()
+	#manage.open()
+	wave_timer.start_wave()
 
 func _pressed_key(key: String, shift: bool):
 	if shift:

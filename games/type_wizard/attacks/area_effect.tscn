@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv5ab745vkf6o"]
+
+[ext_resource type="Script" path="res://games/type_wizard/attacks/area_effect.gd" id="1_mb368"]
+
+[node name="AirPushBack" type="Area2D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_mb368")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

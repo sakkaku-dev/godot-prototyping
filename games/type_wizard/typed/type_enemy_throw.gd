@@ -21,5 +21,5 @@ func _on_throw_timer_timeout():
 	throw_timer.random_start()
 
 func _physics_process(delta):
-	if not is_throwing:
+	if not is_throwing or knockback.length() > 0:
 		super._physics_process(delta)

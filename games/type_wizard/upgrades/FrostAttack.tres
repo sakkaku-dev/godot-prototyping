@@ -1,9 +1,12 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://5sc1tt1sypn0"]
+[gd_resource type="Resource" script_class="UpgradeResourceAttack" load_steps=3 format=3 uid="uid://5sc1tt1sypn0"]
 
+[ext_resource type="Resource" uid="uid://b1cxqo50sv6wm" path="res://games/type_wizard/attacks/FrostSlowLV1.tres" id="1_3cxma"]
 [ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceAttack.gd" id="1_gv6gp"]
 
 [resource]
 script = ExtResource("1_gv6gp")
-feature = 0
+attack = 0
+effect = ExtResource("1_3cxma")
 title = "Frost Attack"
 text = "Attack the enemy using frost to slow him down"
+limit = 1

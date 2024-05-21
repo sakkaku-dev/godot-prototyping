@@ -31,6 +31,11 @@ func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
 	node.global_position = global_position
 	node.target = target
+	
+	for atk in attacks:
+		if atk.effect == null: continue
+		node.effects.append(atk.effect)
+		
 	get_tree().current_scene.add_child(node)
 
 #######################
