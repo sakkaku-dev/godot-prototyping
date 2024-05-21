@@ -63,6 +63,9 @@ func handle_key(key: String):
 		if typed == word:
 			type_finish.emit()
 
+func get_word():
+	return word
+
 func _get_num_of_spaces(from: int):
 	if from >= word.length():
 		return 0

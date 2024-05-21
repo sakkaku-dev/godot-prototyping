@@ -22,3 +22,6 @@ func handle_key(w: String):
 
 func reset():
 	title.reset()
+
+func get_word():
+	return title.word

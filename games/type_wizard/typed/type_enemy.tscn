@@ -32,7 +32,7 @@ script = ExtResource("5_e6ckt")
 shape = SubResource("RectangleShape2D_75di2")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0, 2.25)
+position = Vector2(-8, 7)
 scale = Vector2(0.2, 0.183333)
 
 [node name="TypedWord" parent="." instance=ExtResource("5_kqypf")]

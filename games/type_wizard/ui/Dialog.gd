@@ -11,6 +11,8 @@ var tw: Tween
 func _ready():
 	pivot_offset = size / 2
 	hide()
+	process_mode = Node.PROCESS_MODE_DISABLED
+	
 	if key_reader:
 		key_reader.pressed_key.connect(handle_key)
 

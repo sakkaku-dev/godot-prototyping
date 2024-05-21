@@ -13,12 +13,15 @@ enum Resistance {
 
 const GROUP = "Wizard"
 
+signal attacks_changed(x)
+signal resistance_changed(x)
+
 @export var attack_scene: PackedScene
 
 @onready var hurtbox = $Hurtbox
 
-var resistances: Array[Resistance] = []
-var attacks: Array[Attack] = []
+var resistances: Array[UpgradeResourceResistance] = []
+var attacks: Array[UpgradeResourceAttack] = []
 var capacity := 0
 
 func _ready():
@@ -43,12 +46,13 @@ func upgrade(res: UpgradeResource):
 		callv(fn, [res.delta])
 	
 	elif res is UpgradeResourceAttack:
-		if res.attack in attacks: return
-		attacks.append(res.attack)
-
+		if res in attacks: return
+		attacks.append(res)
+		attacks_changed.emit(attacks)
 	elif res is UpgradeResourceResistance:
-		if res.resistance in resistances: return
-		resistances.append(res.resistance)
+		if res in resistances: return
+		resistances.append(res)
+		resistance_changed.emit(resistances)
 	else:
 		print("Unknown upgrade: %s" % res.title)
 	

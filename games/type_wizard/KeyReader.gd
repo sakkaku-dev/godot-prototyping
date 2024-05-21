@@ -15,7 +15,7 @@ func _unhandled_input(event: InputEvent):
 	var key = _get_key_of_event(event)
 	if not key: return
 	
-	pressed_key.emit(key, event.shift_pressed)
+	pressed_key.emit(key.to_lower(), event.shift_pressed)
 
 func _get_key_of_event(ev: InputEventKey):
 	var key = ev.duplicate() as InputEventKey

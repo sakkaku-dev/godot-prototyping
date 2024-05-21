@@ -6,18 +6,16 @@ signal selected_upgrade(res)
 @export var container: Control
 @export var upgrade_scene: PackedScene
 
-var upgrade_nodes = {}
-var current_node
+@onready var key_delegator = $KeyDelegator
 
 func _ready():
 	super._ready()
-	key_reader.pressed_cancel.connect(_cancel)
+	key_reader.pressed_cancel.connect(func(): key_delegator.cancel())
 
 func show_upgrades(upgrades: Array[UpgradeResource]):
 	for c in container.get_children():
 		container.remove_child(c)
-	upgrade_nodes.clear()
-	current_node = null
+	key_delegator.remove_all()
 	
 	for up in upgrades:
 		var node = upgrade_scene.instantiate()
@@ -26,24 +24,10 @@ func show_upgrades(upgrades: Array[UpgradeResource]):
 			selected_upgrade.emit(up)
 			close()
 		)
-		upgrade_nodes[up.title] = node
 		container.add_child(node)
+		key_delegator.nodes.append(node)
 	
 	open()
 
 func handle_key(key: String, shift: bool):
-	if not current_node:
-		print("Searching Upgrade Node starting with %s: %s" % [key, upgrade_nodes.keys()])
-		for title in upgrade_nodes:
-			if title.begins_with(key):
-				current_node = upgrade_nodes[title]
-				break
-		
-	if current_node:
-		current_node.handle_key(key)
-
-func _cancel():
-	if not current_node: return
-	
-	current_node.reset()
-	current_node = null
+	key_delegator.handle_key(key)

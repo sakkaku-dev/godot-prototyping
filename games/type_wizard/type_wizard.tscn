@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=35 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -29,6 +29,8 @@
 [ext_resource type="PackedScene" uid="uid://cx5of15itwen0" path="res://games/type_wizard/ui/shortcut.tscn" id="22_4n67u"]
 [ext_resource type="Texture2D" uid="uid://dqdc12ysbijbi" path="res://assets/Keyboard & Mouse/Dark/Shift_Key_Dark.png" id="25_wnp1b"]
 [ext_resource type="Script" path="res://games/type_wizard/Manage.gd" id="28_cet3j"]
+[ext_resource type="PackedScene" uid="uid://cho54lvn4k7tx" path="res://games/type_wizard/ui/attack_item.tscn" id="30_57bce"]
+[ext_resource type="Script" path="res://games/type_wizard/KeyDelegator.gd" id="30_ma2c0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fen5t"]
 size = Vector2(40, 20)
@@ -65,7 +67,7 @@ script = ExtResource("4_4bt4h")
 script = ExtResource("4_csuax")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 script = ExtResource("2_04g0y")
 enemy_spawn_timer = NodePath("RandomTimer")
@@ -224,6 +226,9 @@ upgrade_scene = ExtResource("12_oh1yd")
 pause = NodePath("../PauseBlur")
 key_reader = NodePath("KeyReader")
 
+[node name="KeyDelegator" type="Node" parent="CanvasLayer/UI/Upgrades"]
+script = ExtResource("30_ma2c0")
+
 [node name="KeyReader" type="Node" parent="CanvasLayer/UI/Upgrades"]
 script = ExtResource("4_4bt4h")
 
@@ -295,7 +300,7 @@ text = "__DESC__"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Manage" type="PanelContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("next_wave_btn", "pause", "key_reader")]
+[node name="Manage" type="Control" parent="CanvasLayer/UI" node_paths=PackedStringArray("player", "next_wave_btn", "attack_btn", "scroll_btn", "castle_btn", "main_panel", "attack_panel", "pause", "key_reader")]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 1
 anchors_preset = 11
@@ -305,31 +310,103 @@ anchor_bottom = 1.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("28_cet3j")
-next_wave_btn = NodePath("MarginContainer/VBoxContainer/HBoxContainer/TypedWord")
+player = NodePath("../../../Root/Wizard")
+attack_item_scene = ExtResource("30_57bce")
+next_wave_btn = NodePath("MainPanel/Main/HBoxContainer/TypedWord")
+attack_btn = NodePath("MainPanel/Main/VBoxContainer/Attack")
+scroll_btn = NodePath("MainPanel/Main/VBoxContainer2/Scrolls")
+castle_btn = NodePath("MainPanel/Main/VBoxContainer3/Castle")
+main_panel = NodePath("MainPanel/Main")
+attack_panel = NodePath("MainPanel/Attacks")
 pause = NodePath("../PauseBlur")
 key_reader = NodePath("KeyReader")
+
+[node name="KeyDelegator" type="Node" parent="CanvasLayer/UI/Manage"]
+script = ExtResource("30_ma2c0")
 
 [node name="KeyReader" type="Node" parent="CanvasLayer/UI/Manage"]
 script = ExtResource("4_4bt4h")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/Manage"]
-layout_mode = 2
+[node name="Panel" type="Panel" parent="CanvasLayer/UI/Manage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainPanel" type="MarginContainer" parent="CanvasLayer/UI/Manage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MarginContainer"]
+[node name="Main" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MainPanel"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MainPanel/Main"]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer"]
+[node name="Attack" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer" instance=ExtResource("21_y8f0q")]
+layout_mode = 2
+size_flags_horizontal = 4
+highlight_first = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+texture = ExtResource("7_psodk")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MainPanel/Main"]
+layout_mode = 2
+
+[node name="Castle" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer3" instance=ExtResource("21_y8f0q")]
+layout_mode = 2
+size_flags_horizontal = 4
+highlight_first = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer3"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+texture = ExtResource("7_psodk")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MainPanel/Main"]
+layout_mode = 2
+
+[node name="Scrolls" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer2" instance=ExtResource("21_y8f0q")]
+layout_mode = 2
+size_flags_horizontal = 4
+highlight_first = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MainPanel/Main/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+texture = ExtResource("7_psodk")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="CanvasLayer/UI/Manage/MainPanel/Main"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/Manage/MainPanel/Main"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer/HBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/UI/Manage/MainPanel/Main/HBoxContainer"]
 custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -338,11 +415,18 @@ texture = ExtResource("25_wnp1b")
 expand_mode = 2
 stretch_mode = 5
 
-[node name="TypedWord" parent="CanvasLayer/UI/Manage/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("21_y8f0q")]
+[node name="TypedWord" parent="CanvasLayer/UI/Manage/MainPanel/Main/HBoxContainer" instance=ExtResource("21_y8f0q")]
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 3
 size_flags_vertical = 4
 text = "NEXT WAVE"
 highlight_color = Color(0.870588, 0, 0.580392, 1)
+highlight_first = true
+
+[node name="Attacks" type="VBoxContainer" parent="CanvasLayer/UI/Manage/MainPanel"]
+layout_mode = 2
+
+[node name="AttackItem" parent="CanvasLayer/UI/Manage/MainPanel/Attacks" instance=ExtResource("30_57bce")]
+layout_mode = 2
 
 [connection signal="picked_up" from="Root/Wizard/PickupArea" to="." method="_on_pickup_area_picked_up"]
