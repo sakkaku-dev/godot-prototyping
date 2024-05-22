@@ -8,6 +8,7 @@ extends Node2D
 @export var blur: PauseBlur
 @export var pickup_dialog: ItemPickUp
 @export var manage: Manage
+@export var scrolls: ScrollsContainer
 
 @onready var data_manager = $DataManager
 @onready var key_reader = $KeyReader
@@ -32,6 +33,8 @@ func _ready():
 		if wave_timer.is_stopped() and left.is_empty():
 			_wave_ended()
 	)
+	
+	wizard.cast_spell.connect(func(scroll): print("Casting %s" % scroll))
 
 func _wave_ended():
 	upgrades.show_upgrades(data_manager.get_random_upgrades())
@@ -39,10 +42,13 @@ func _wave_ended():
 func _selected_upgrade(upgrade: UpgradeResource):
 	wizard.upgrade(upgrade)
 	data_manager.used_upgrade(upgrade)
-	#manage.open()
 	wave_timer.start_wave()
 
 func _pressed_key(key: String, shift: bool):
+	if wizard.casting:
+		scrolls.handle_key(key)
+		return
+
 	if shift:
 		if not shift_word:
 			var drops = get_tree().get_nodes_in_group(TypedDrop.DROP_GROUP)
@@ -66,6 +72,10 @@ func _handle_key(key, word):
 	wizard.handled_key(correctly_handled)
 
 func _cancel_word():
+	if wizard.casting:
+		scrolls.cancel()
+		return
+	
 	if not current_word: return
 	current_word.cancel()
 	current_word = null
@@ -93,3 +103,4 @@ func _on_pickup_area_picked_up(type):
 			return
 		
 		pickup_dialog.open_for_spells(scroll, data_manager.get_spell(scroll))
+		wizard.add_scroll(scroll)

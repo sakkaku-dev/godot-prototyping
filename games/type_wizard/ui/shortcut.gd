@@ -1,4 +1,7 @@
+class_name ShortcutKey
 extends Control
+
+signal changed(active)
 
 @export var key_res: ShortcutResource
 @export var texture: Texture2D
@@ -10,7 +13,11 @@ extends Control
 @export var key_image_rect: TextureRect
 @export var button_rect: TextureRect
 
-var active := false
+var active := false:
+	set(v):
+		active = v
+		changed.emit(active)
+		button_rect.texture = active_texture if active else texture
 
 func _ready():
 	image_rect.texture = key_res.image
@@ -24,8 +31,7 @@ func _unhandled_input(event: InputEvent):
 	
 	if toggle:
 		if key.pressed:
-			active = not active
+			self.active = not active
 	else:
-		active = key.pressed
+		self.active = key.pressed
 
-	button_rect.texture = active_texture if active else texture

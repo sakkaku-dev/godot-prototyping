@@ -3,15 +3,9 @@ extends Node
 
 signal pressed_key(key, shift)
 signal pressed_cancel()
-signal pressed_shift(pressed)
 
 func _unhandled_input(event: InputEvent):
 	if not event is InputEventKey: return
-	
-	if event.keycode == KEY_SHIFT:
-		pressed_shift.emit(event.pressed)
-		return
-	
 	if not event.pressed: return
 	
 	if event.is_action_pressed("ui_cancel"):

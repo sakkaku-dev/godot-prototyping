@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://baijc45byu0xr"]
+
+[ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/ui/type_game.tres" id="1_0cmdb"]
+[ext_resource type="Script" path="res://games/type_wizard/ui/spell_item.gd" id="1_6f4hl"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_r4t4b"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="2_702oa"]
+
+[node name="SpellItem" type="HBoxContainer" node_paths=PackedStringArray("count_label", "texture_rect", "typed_word")]
+theme = ExtResource("1_0cmdb")
+script = ExtResource("1_6f4hl")
+count_label = NodePath("TextureRect/MarginContainer/Label")
+texture_rect = NodePath("TextureRect")
+typed_word = NodePath("TypedWord")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+texture = ExtResource("1_r4t4b")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -9.0
+offset_top = -8.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="TextureRect/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+text = "2x"
+
+[node name="TypedWord" parent="." instance=ExtResource("2_702oa")]
+layout_mode = 2
+size_flags_vertical = 4

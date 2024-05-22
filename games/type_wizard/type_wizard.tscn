@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=39 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -29,7 +29,9 @@
 [ext_resource type="PackedScene" uid="uid://cx5of15itwen0" path="res://games/type_wizard/ui/shortcut.tscn" id="22_4n67u"]
 [ext_resource type="Resource" uid="uid://b7ljnksm87sbk" path="res://games/type_wizard/ui/spell_key.tres" id="23_xpuy1"]
 [ext_resource type="Resource" uid="uid://dhejg6dyfy0xv" path="res://games/type_wizard/ui/pickup_key.tres" id="23_xqc6x"]
+[ext_resource type="Script" path="res://games/type_wizard/ScrollsContainer.gd" id="25_vkq0j"]
 [ext_resource type="Texture2D" uid="uid://dqdc12ysbijbi" path="res://assets/Keyboard & Mouse/Dark/Shift_Key_Dark.png" id="25_wnp1b"]
+[ext_resource type="PackedScene" uid="uid://baijc45byu0xr" path="res://games/type_wizard/ui/spell_item.tscn" id="26_3h1d0"]
 [ext_resource type="Script" path="res://games/type_wizard/Manage.gd" id="28_cet3j"]
 [ext_resource type="PackedScene" uid="uid://cho54lvn4k7tx" path="res://games/type_wizard/ui/attack_item.tscn" id="30_57bce"]
 [ext_resource type="Script" path="res://games/type_wizard/KeyDelegator.gd" id="30_ma2c0"]
@@ -44,7 +46,7 @@ size = Vector2(52, 30)
 shader = ExtResource("17_fmius")
 shader_parameter/lod = 2.0
 
-[node name="TypeWizard" type="Node2D" node_paths=PackedStringArray("wave_timer", "upgrades", "blur", "pickup_dialog", "manage")]
+[node name="TypeWizard" type="Node2D" node_paths=PackedStringArray("wave_timer", "upgrades", "blur", "pickup_dialog", "manage", "scrolls")]
 script = ExtResource("1_pe1fc")
 wave_timer = NodePath("WaveTimer")
 enemies = Array[PackedScene]([ExtResource("2_w600i")])
@@ -52,6 +54,7 @@ upgrades = NodePath("CanvasLayer/UI/Upgrades")
 blur = NodePath("CanvasLayer/UI/PauseBlur")
 pickup_dialog = NodePath("CanvasLayer/UI/ItemPickUp")
 manage = NodePath("CanvasLayer/UI/Manage")
+scrolls = NodePath("CanvasLayer/UI/GameUI/Scrolls")
 
 [node name="EnemySpawner" type="Node2D" parent="." node_paths=PackedStringArray("data", "root")]
 script = ExtResource("3_0egq1")
@@ -89,16 +92,14 @@ layer_0/tile_data = PackedInt32Array(589838, 131073, 3, 524302, 131073, 2, 45876
 [node name="Root" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Wizard" type="TileMap" parent="Root"]
+[node name="Wizard" type="TileMap" parent="Root" node_paths=PackedStringArray("pickup_shortcut", "spells_shortcut")]
 tile_set = ExtResource("3_6d2mj")
 format = 2
 layer_0/tile_data = PackedInt32Array(-131073, 1, 8, -65537, 1, 10, -1, 589824, 4, -196608, 65537, 8, -131072, 65537, 10, -65536, 262144, 3, -196607, 131073, 8, -131071, 131073, 10, -65535, 720896, 4, 65535, 589824, 4, 0, 589824, 3, 1, 720896, 4)
 script = ExtResource("12_b5tcl")
 attack_scene = ExtResource("13_j7b4n")
-
-[node name="KeyReader" type="Node" parent="Root/Wizard"]
-process_mode = 3
-script = ExtResource("4_4bt4h")
+pickup_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/PickupKey")
+spells_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/SpellsKey")
 
 [node name="Hurtbox" type="Area2D" parent="Root/Wizard"]
 position = Vector2(8, -4)
@@ -223,7 +224,39 @@ layout_mode = 2
 key_res = ExtResource("23_xpuy1")
 toggle = true
 
+[node name="Scrolls" type="PanelContainer" parent="CanvasLayer/UI/GameUI" node_paths=PackedStringArray("container", "data", "wizard")]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("25_vkq0j")
+spell_item = ExtResource("26_3h1d0")
+container = NodePath("MarginContainer/VBoxContainer")
+data = NodePath("../../../../DataManager")
+wizard = NodePath("../../../../Root/Wizard")
+
+[node name="KeyDelegator" type="Node" parent="CanvasLayer/UI/GameUI/Scrolls"]
+script = ExtResource("30_ma2c0")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/GameUI/Scrolls"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/GameUI/Scrolls/MarginContainer"]
+layout_mode = 2
+
+[node name="SpellItem" parent="CanvasLayer/UI/GameUI/Scrolls/MarginContainer/VBoxContainer" instance=ExtResource("26_3h1d0")]
+layout_mode = 2
+
 [node name="Upgrades" type="MarginContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("container", "pause", "key_reader")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -260,6 +293,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="ItemPickUp" type="CenterContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("title_lbl", "icon", "desc_lbl", "name_lbl", "pause", "key_reader")]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

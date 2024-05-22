@@ -15,23 +15,33 @@ const GROUP = "Wizard"
 
 signal attacks_changed(x)
 signal resistance_changed(x)
+signal is_casting(casting)
+signal cast_spell(scroll)
 
 @export var attack_scene: PackedScene
 @export var max_combo := 1000
+@export var pickup_shortcut: ShortcutKey
+@export var spells_shortcut: ShortcutKey
 
 @onready var hurtbox = $Hurtbox
-@onready var key_reader = $KeyReader
 
 var resistances: Array[UpgradeResourceResistance] = []
 var attacks: Array[UpgradeResourceAttack] = []
 var capacity := 0
+var scrolls = {}
+
+var casting := false:
+	set(v):
+		casting = v
+		is_casting.emit(casting)
 
 var pickup_enabled := false
 var combo := 0
 
 func _ready():
 	add_to_group(GROUP)
-	key_reader.pressed_shift.connect(func(p): pickup_enabled = p)
+	pickup_shortcut.changed.connect(func(a): pickup_enabled = a)
+	spells_shortcut.changed.connect(func(a): self.casting = a)
 	
 func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
@@ -53,6 +63,19 @@ func handled_key(is_valid: bool):
 
 func get_combo_percentage():
 	return combo / float(max_combo)
+	
+func add_scroll(scroll):
+	if not scroll in scrolls:
+		scrolls[scroll] = 0
+	
+	scrolls[scroll] += 1
+
+func do_cast(scroll: String):
+	if not scroll in scrolls or scrolls[scroll] <= 0: return
+	
+	spells_shortcut.active = false
+	scrolls[scroll] -= 1
+	cast_spell.emit(scroll)
 
 #######################
 ## Upgrade Functions ##
