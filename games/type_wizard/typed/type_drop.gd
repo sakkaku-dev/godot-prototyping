@@ -15,15 +15,12 @@ var destination := Vector2.ZERO
 var highlight := false:
 	set(v):
 		highlight = v
-		z_index = 20 if highlight else 0
-		sprite_2d.material.set_shader_parameter("enable", highlight)
+		typed_word.visible = v
 
 func _ready():
 	super._ready()
 	add_to_group(DROP_GROUP)
-	
 	self.highlight = false
-	sprite_2d.material = sprite_2d.material.duplicate()
 	
 	typed_word.type_start.connect(func():
 		moving = true

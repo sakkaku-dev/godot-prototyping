@@ -17,6 +17,7 @@ signal attacks_changed(x)
 signal resistance_changed(x)
 
 @export var attack_scene: PackedScene
+@export var max_combo := 1000
 
 @onready var hurtbox = $Hurtbox
 @onready var key_reader = $KeyReader
@@ -26,6 +27,7 @@ var attacks: Array[UpgradeResourceAttack] = []
 var capacity := 0
 
 var pickup_enabled := false
+var combo := 0
 
 func _ready():
 	add_to_group(GROUP)
@@ -35,12 +37,22 @@ func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
 	node.global_position = global_position
 	node.target = target
+	node.add_speed_multipler(get_combo_percentage())
 	
 	for atk in attacks:
 		if atk.effect == null: continue
 		node.effects.append(atk.effect)
 	
 	get_tree().current_scene.add_child(node)
+
+func handled_key(is_valid: bool):
+	if is_valid:
+		combo += 1
+	else:
+		combo = 0
+
+func get_combo_percentage():
+	return combo / float(max_combo)
 
 #######################
 ## Upgrade Functions ##

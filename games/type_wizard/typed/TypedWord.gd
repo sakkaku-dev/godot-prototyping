@@ -49,7 +49,7 @@ func update_word():
 
 func handle_key(key: String):
 	if typed.length() >= word.length():
-		return
+		return false
 	
 	var next_word_char = word[typed.length()]
 	if next_word_char == key.to_lower():
@@ -63,6 +63,9 @@ func handle_key(key: String):
 		
 		if typed == word:
 			type_finish.emit()
+		return true
+	
+	return false
 
 func get_word():
 	return word

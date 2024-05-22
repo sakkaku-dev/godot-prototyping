@@ -1,8 +1,8 @@
 class_name Bullet
 extends CharacterBody2D
 
-@export var max_speed_multiplier := 10
-@export var speed := 70
+@export var max_speed_multiplier := 8
+@export var speed := 80
 @export var target_offset := 5
 @export var area_attack_scene: PackedScene
 
@@ -22,6 +22,11 @@ var target: TypedCharacter:
 		target = v
 		if target:
 			target.removed.connect(func(): queue_free())
+
+func add_speed_multipler(p: float):
+	var multiplier = 1 + (max_speed_multiplier - 1) * p
+	if multiplier > speed_multiplier:
+		self.speed_multiplier = multiplier
 
 func _ready():
 	for eff in effects:

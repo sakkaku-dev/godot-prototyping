@@ -14,6 +14,7 @@ const ENEMY_GROUP = "TypedEnemy"
 @onready var hit_box = $HitBox
 @onready var sprite_2d = $Sprite2D
 @onready var slow_timer = $SlowTimer
+@onready var player: Wizard = get_tree().get_first_node_in_group(Wizard.GROUP)
 
 var has_emitted_stop := false
 
@@ -23,7 +24,10 @@ var knockback := Vector2.ZERO
 func _ready():
 	super._ready()
 	add_to_group(ENEMY_GROUP)
-	finished.connect(func(): typed_word.cancel())
+	finished.connect(func():
+		typed_word.cancel()
+		z_index = 0
+	)
 	hit_box.hit.connect(func(): removed.emit())
 	removed.connect(func(): queue_free())
 	slow_timer.timeout.connect(func():
@@ -33,6 +37,9 @@ func _ready():
 	
 	typed_word.typing.connect(func(): wizard.attack(self))
 	sprite_2d.texture = enemy_res.sprite
+
+func _process(_delta):
+	typed_word.visible = not player.pickup_enabled
 
 func _physics_process(delta):
 	var dist = global_position.distance_to(Vector2.ZERO)

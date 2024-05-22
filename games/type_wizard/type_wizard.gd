@@ -49,16 +49,21 @@ func _pressed_key(key: String, shift: bool):
 			shift_word = _find_first_words_with(key, drops)
 			print("Searching for pickup item: %s" % shift_word)
 			
-		if shift_word:
-			shift_word.handle_key(key)
+		_handle_key(key, shift_word)
 	else:
 		if not current_word:
 			var enemies = enemy_spawner.get_available_enemies()
 			current_word = _find_first_words_with(key, enemies)
 			print("Searching for enemy: %s" % current_word)
 		
-		if current_word:
-			current_word.handle_key(key)
+		_handle_key(key, current_word)
+
+func _handle_key(key, word):
+	var correctly_handled = false
+	if word:
+		correctly_handled = word.handle_key(key)
+	
+	wizard.handled_key(correctly_handled)
 
 func _cancel_word():
 	if not current_word: return

@@ -14,12 +14,12 @@ var is_finished := false
 
 func _ready():
 	typed_word.type_finish.connect(func(): finished.emit())
-	typed_word.type_start.connect(func(): z_index = 10)
+	typed_word.type_start.connect(func(): z_index = 20)
 	finished.connect(func(): is_finished = true)
 	add_to_group(GROUP)
 
 func handle_key(key: String):
-	typed_word.handle_key(key)
+	return typed_word.handle_key(key)
 
 func set_word(word: String):
 	typed_word.word = word.to_lower()
