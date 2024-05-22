@@ -20,8 +20,10 @@ var shift_word: TypedCharacter
 func _ready():
 	wave_timer.start_wave()
 	wave_timer.spawn.connect(func(): enemy_spawner.spawn())
+
 	key_reader.pressed_key.connect(_pressed_key)
 	key_reader.pressed_cancel.connect(_cancel_word)
+
 	upgrades.selected_upgrade.connect(_selected_upgrade)
 	manage.next_wave.connect(func(): wave_timer.start_wave())
 	

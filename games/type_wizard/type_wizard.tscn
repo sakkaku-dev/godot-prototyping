@@ -58,7 +58,8 @@ script = ExtResource("3_0egq1")
 enemy_scene = ExtResource("2_w600i")
 enemy_spawner_scene = ExtResource("4_br2l4")
 enemy_thrower_scene = ExtResource("5_83kfe")
-spawner_enemy_chance = 0.1
+spawner_enemy_chance = 0.0
+throw_enemy_chance = 0.0
 data = NodePath("../DataManager")
 root = NodePath("../Root")
 
@@ -69,7 +70,7 @@ script = ExtResource("4_4bt4h")
 script = ExtResource("4_csuax")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
-wait_time = 2.0
+wait_time = 10.0
 one_shot = true
 script = ExtResource("2_04g0y")
 enemy_spawn_timer = NodePath("RandomTimer")
@@ -94,6 +95,10 @@ format = 2
 layer_0/tile_data = PackedInt32Array(-131073, 1, 8, -65537, 1, 10, -1, 589824, 4, -196608, 65537, 8, -131072, 65537, 10, -65536, 262144, 3, -196607, 131073, 8, -131071, 131073, 10, -65535, 720896, 4, 65535, 589824, 4, 0, 589824, 3, 1, 720896, 4)
 script = ExtResource("12_b5tcl")
 attack_scene = ExtResource("13_j7b4n")
+
+[node name="KeyReader" type="Node" parent="Root/Wizard"]
+process_mode = 3
+script = ExtResource("4_4bt4h")
 
 [node name="Hurtbox" type="Area2D" parent="Root/Wizard"]
 position = Vector2(8, -4)

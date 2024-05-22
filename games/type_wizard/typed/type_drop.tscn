@@ -1,8 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://c32bmynbeb42f"]
+[gd_scene load_steps=7 format=3 uid="uid://c32bmynbeb42f"]
 
 [ext_resource type="Script" path="res://games/type_wizard/typed/type_drop.gd" id="1_my55f"]
 [ext_resource type="Texture2D" uid="uid://dkp0t4g8pbvba" path="res://assets/Tiny Dungeon/Tiles/tile_0063.png" id="2_hrin8"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_me1ss"]
 [ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="3_tp3ht"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rlcpg"]
+shader = ExtResource("2_me1ss")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/width = 1.0
+shader_parameter/pattern = 1
+shader_parameter/inside = false
+shader_parameter/add_margins = true
+shader_parameter/enable = true
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ggqls"]
 
@@ -13,6 +23,7 @@ script = ExtResource("1_my55f")
 typed_word = NodePath("TypedWord")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_rlcpg")
 position = Vector2(0, -4)
 texture = ExtResource("2_hrin8")
 

@@ -19,13 +19,17 @@ signal resistance_changed(x)
 @export var attack_scene: PackedScene
 
 @onready var hurtbox = $Hurtbox
+@onready var key_reader = $KeyReader
 
 var resistances: Array[UpgradeResourceResistance] = []
 var attacks: Array[UpgradeResourceAttack] = []
 var capacity := 0
 
+var pickup_enabled := false
+
 func _ready():
 	add_to_group(GROUP)
+	key_reader.pressed_shift.connect(func(p): pickup_enabled = p)
 	
 func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
@@ -35,7 +39,7 @@ func attack(target: TypedCharacter):
 	for atk in attacks:
 		if atk.effect == null: continue
 		node.effects.append(atk.effect)
-		
+	
 	get_tree().current_scene.add_child(node)
 
 #######################
