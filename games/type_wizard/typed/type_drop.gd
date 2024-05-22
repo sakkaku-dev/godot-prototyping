@@ -43,3 +43,6 @@ func _physics_process(delta):
 	if dist > 0.1:
 		velocity = dir * dist * speed_multiplier
 		move_and_slide()
+
+func cancel():
+	typed_word.cancel()

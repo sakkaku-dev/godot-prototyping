@@ -2,6 +2,7 @@ extends Node2D
 
 signal enemy_removed(enemies_left)
 signal enemy_finished()
+signal drop_finished()
 
 @export var enemy_scene: PackedScene
 @export var enemy_spawner_scene: PackedScene
@@ -49,7 +50,10 @@ func _spawn_projectile(pos: Vector2, res: EnemyResource):
 func _add_enemy_to_scene(enemy: TypedEnemy, pos = _random_position()):
 	enemy.global_position = pos
 	enemy.finished.connect(func(): enemy_finished.emit())
-	enemy.dropped.connect(func(node): root.add_child(node))
+	enemy.dropped.connect(func(node):
+		node.finished.connect(func(): drop_finished.emit())
+		root.add_child(node)
+	)
 	enemy.removed.connect(func():
 		var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
 		enemies.erase(enemy)

@@ -24,7 +24,7 @@ var inner_tw: Tween
 
 func _ready():
 	super._ready()
-	key_reader.pressed_cancel.connect(func(): key_delegator.cancel())
+	key_reader.pressed_cancel.connect(func(_x): key_delegator.cancel())
 	key_delegator.nodes = [attack_btn, scroll_btn, castle_btn]
 	
 	closed.connect(func(): next_wave.emit())

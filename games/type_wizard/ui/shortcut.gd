@@ -15,6 +15,8 @@ signal changed(active)
 
 var active := false:
 	set(v):
+		if v == active: return
+		
 		active = v
 		changed.emit(active)
 		button_rect.texture = active_texture if active else texture
@@ -22,8 +24,13 @@ var active := false:
 func _ready():
 	image_rect.texture = key_res.image
 	key_image_rect.texture = key_res.key_image
+	
+func _process(delta):
+	if not toggle:
+		self.active = Input.is_key_pressed(key_res.event.keycode)
 
 func _unhandled_input(event: InputEvent):
+	if not toggle: return
 	if not event is InputEventKey: return
 	
 	var key = event as InputEventKey
@@ -34,4 +41,3 @@ func _unhandled_input(event: InputEvent):
 			self.active = not active
 	else:
 		self.active = key.pressed
-

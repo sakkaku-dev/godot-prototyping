@@ -10,7 +10,7 @@ signal selected_upgrade(res)
 
 func _ready():
 	super._ready()
-	key_reader.pressed_cancel.connect(func(): key_delegator.cancel())
+	key_reader.pressed_cancel.connect(func(_x): key_delegator.cancel())
 
 func show_upgrades(upgrades: Array[UpgradeResource]):
 	for c in container.get_children():

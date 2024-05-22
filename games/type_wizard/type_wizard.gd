@@ -15,8 +15,8 @@ extends Node2D
 @onready var enemy_spawner = $EnemySpawner
 @onready var wizard = $Root/Wizard
 
-var current_word: TypedCharacter
-var shift_word: TypedCharacter
+var enemy_word: TypedCharacter
+var pickup_word: TypedCharacter
 
 func _ready():
 	wave_timer.start_wave()
@@ -28,7 +28,8 @@ func _ready():
 	upgrades.selected_upgrade.connect(_selected_upgrade)
 	manage.next_wave.connect(func(): wave_timer.start_wave())
 	
-	enemy_spawner.enemy_finished.connect(func(): current_word = null)
+	enemy_spawner.drop_finished.connect(func(): pickup_word = null)
+	enemy_spawner.enemy_finished.connect(func(): enemy_word = null)
 	enemy_spawner.enemy_removed.connect(func(left):
 		if wave_timer.is_stopped() and left.is_empty():
 			_wave_ended()
@@ -50,19 +51,19 @@ func _pressed_key(key: String, shift: bool):
 		return
 
 	if shift:
-		if not shift_word:
+		if not pickup_word:
 			var drops = get_tree().get_nodes_in_group(TypedDrop.DROP_GROUP)
-			shift_word = _find_first_words_with(key, drops)
-			print("Searching for pickup item: %s" % shift_word)
+			pickup_word = _find_first_words_with(key, drops)
+			print("Searching for pickup item: %s" % pickup_word)
 			
-		_handle_key(key, shift_word)
+		_handle_key(key, pickup_word)
 	else:
-		if not current_word:
+		if not enemy_word:
 			var enemies = enemy_spawner.get_available_enemies()
-			current_word = _find_first_words_with(key, enemies)
-			print("Searching for enemy: %s" % current_word)
+			enemy_word = _find_first_words_with(key, enemies)
+			print("Searching for enemy: %s" % enemy_word)
 		
-		_handle_key(key, current_word)
+		_handle_key(key, enemy_word)
 
 func _handle_key(key, word):
 	var correctly_handled = false
@@ -71,14 +72,19 @@ func _handle_key(key, word):
 	
 	wizard.handled_key(correctly_handled)
 
-func _cancel_word():
+func _cancel_word(shift: bool):
 	if wizard.casting:
 		scrolls.cancel()
 		return
 	
-	if not current_word: return
-	current_word.cancel()
-	current_word = null
+	if shift:
+		if not pickup_word: return
+		#pickup_word.cancel()
+		#pickup_word = null
+	else:
+		if not enemy_word: return
+		enemy_word.cancel()
+		enemy_word = null
 
 func _find_first_words_with(key: String, nodes: Array):
 	var matches = []

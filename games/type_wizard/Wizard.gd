@@ -40,8 +40,10 @@ var combo := 0
 
 func _ready():
 	add_to_group(GROUP)
-	pickup_shortcut.changed.connect(func(a): pickup_enabled = a)
 	spells_shortcut.changed.connect(func(a): self.casting = a)
+	
+func _process(delta):
+	pickup_enabled = pickup_shortcut.active
 	
 func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
