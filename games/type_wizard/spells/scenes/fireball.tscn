@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://ofv1chccloce"]
+
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_mpogl"]
+[ext_resource type="Script" path="res://games/type_wizard/spells/scenes/fireball.gd" id="1_t4urm"]
+[ext_resource type="PackedScene" uid="uid://bpfxu72yopf3m" path="res://games/type_wizard/spells/scenes/burn_area.tscn" id="3_cjgh3"]
+
+[node name="Fireball" type="CharacterBody2D"]
+script = ExtResource("1_t4urm")
+burn_area = ExtResource("3_cjgh3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.453125, 0.453125)
+texture = ExtResource("1_mpogl")

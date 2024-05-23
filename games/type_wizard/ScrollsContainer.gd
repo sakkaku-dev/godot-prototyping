@@ -13,6 +13,7 @@ var tw: Tween
 
 func _ready():
 	wizard.is_casting.connect(func(c): toggle(c))
+	wizard.scrolls_changed.connect(func(): update())
 	hide()
 
 func update():
@@ -26,10 +27,7 @@ func update():
 		node.spell = data.get_spell(scroll)
 		node.count = scrolls[scroll]
 		node.scroll = scroll
-		node.cast.connect(func():
-			wizard.do_cast(scroll)
-			toggle(false)
-		)
+		node.cast.connect(func(): wizard.do_cast(scroll))
 		
 		container.add_child(node)
 		key_delegator.nodes.append(node)

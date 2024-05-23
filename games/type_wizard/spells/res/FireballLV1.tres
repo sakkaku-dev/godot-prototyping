@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="FireballResource" load_steps=3 format=3 uid="uid://buvqgrhmnkvhk"]
+
+[ext_resource type="Script" path="res://games/type_wizard/spells/res/FireballResource.gd" id="1_fnlov"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gu1wn"]
+radius = 50.0
+height = 100.0
+
+[resource]
+script = ExtResource("1_fnlov")
+speed = 200
+knockback = 10
+burn_speed = 0.1
+duration = 10.0
+shape = SubResource("CapsuleShape2D_gu1wn")

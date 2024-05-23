@@ -109,6 +109,7 @@ debug={
 2d_physics/layer_5="enemy_hurtbox"
 2d_physics/layer_6="interactable"
 2d_physics/layer_7="door"
+2d_physics/layer_8="effect_zone"
 
 [navigation]
 

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="IceZoneResource" load_steps=3 format=3 uid="uid://b0lthtpjb0dc8"]
+
+[ext_resource type="Script" path="res://games/type_wizard/spells/res/IceZoneResource.gd" id="1_2tt6c"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_pf5e4"]
+radius = 150.0
+height = 400.0
+
+[resource]
+script = ExtResource("1_2tt6c")
+slow_amount = 0.4
+duration = 3.0
+shape = SubResource("CapsuleShape2D_pf5e4")

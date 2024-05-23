@@ -10,7 +10,9 @@ const ENEMY_GROUP = "TypedEnemy"
 @export var enemy_res: EnemyResource
 @export var drop_scene: PackedScene
 @export var deaccel := 30
+@export var max_burn := 100
 
+@onready var effect_detector = $EffectDetector
 @onready var hit_box = $HitBox
 @onready var sprite_2d = $Sprite2D
 @onready var slow_timer = $SlowTimer
@@ -18,6 +20,13 @@ const ENEMY_GROUP = "TypedEnemy"
 
 var has_emitted_stop := false
 
+var burn_amount := 0.0:
+	set(v):
+		burn_amount = v
+		if burn_amount >= max_burn:
+			burn()
+
+var ice_zone_slow := 0.0
 var slow_amount := 0.0
 var knockback := Vector2.ZERO
 
@@ -40,6 +49,10 @@ func _ready():
 
 func _process(_delta):
 	typed_word.visible = not player.pickup_enabled
+	
+	for area in effect_detector.get_overlapping_areas():
+		if area.has_method("apply"):
+			area.apply(self)
 
 func _physics_process(delta):
 	var dist = global_position.distance_to(Vector2.ZERO)
@@ -49,12 +62,14 @@ func _physics_process(delta):
 			has_emitted_stop = true
 		return
 		
+	
 	if knockback.length() > 0:
 		velocity = knockback
 		knockback = knockback.move_toward(Vector2.ZERO, delta * deaccel)
 	else:
 		var dir = global_position.direction_to(Vector2.ZERO)
-		velocity = dir * enemy_res.speed * (1 - slow_amount) * (1 if is_on_screen() else 5)
+		velocity = dir * enemy_res.speed * (1 - slow_amount - ice_zone_slow) * (1 if is_on_screen() else 5)
+		
 	move_and_slide()
 
 func hit():
@@ -63,6 +78,14 @@ func hit():
 	if typed_word.is_fully_hit():
 		_maybe_drop_item(global_position)
 		removed.emit()
+
+func full_hit():
+	while not typed_word.is_fully_hit():
+		hit()
+
+func burn():
+	burn_amount = 0
+	hit()
 
 func apply(pos: Vector2, effects: Array):
 	for eff in effects:

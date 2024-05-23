@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bvdul7olno8c2"]
+[gd_scene load_steps=10 format=3 uid="uid://bvdul7olno8c2"]
 
 [ext_resource type="Texture2D" uid="uid://cyx7atbwwtiyk" path="res://assets/Tiny Dungeon/Tiles/tile_0121.png" id="1_hp0bv"]
 [ext_resource type="Script" path="res://games/type_wizard/typed/type_enemy.gd" id="1_nk8re"]
@@ -13,10 +13,12 @@ size = Vector2(16, 14)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_75di2"]
 size = Vector2(12, 10)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_weibh"]
+radius = 8.0
+
 [node name="TypeEnemy" type="CharacterBody2D" node_paths=PackedStringArray("typed_word", "screen_notifier")]
 z_index = 10
 collision_layer = 4
-collision_mask = 0
 script = ExtResource("1_nk8re")
 enemy_res = ExtResource("2_b4uf6")
 drop_scene = ExtResource("2_q555s")
@@ -57,3 +59,10 @@ jump = false
 
 [node name="SlowTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="EffectDetector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EffectDetector"]
+shape = SubResource("CircleShape2D_weibh")

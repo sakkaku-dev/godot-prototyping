@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpfxu72yopf3m"]
+
+[ext_resource type="PackedScene" uid="uid://ct32kfdi65la1" path="res://games/type_wizard/spells/scenes/shield_spell.tscn" id="1_twt0v"]
+[ext_resource type="Script" path="res://games/type_wizard/spells/scenes/BurnArea.gd" id="1_wyba3"]
+
+[node name="BurnArea" instance=ExtResource("1_twt0v")]
+script = ExtResource("1_wyba3")

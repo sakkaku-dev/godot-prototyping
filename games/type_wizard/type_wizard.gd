@@ -35,7 +35,10 @@ func _ready():
 			_wave_ended()
 	)
 	
-	wizard.cast_spell.connect(func(scroll): print("Casting %s" % scroll))
+	wizard.cast_spell.connect(func(scroll):
+		var spell = data_manager.get_spell(scroll)
+		wizard.cast(spell.spell)
+	)
 
 func _wave_ended():
 	upgrades.show_upgrades(data_manager.get_random_upgrades())

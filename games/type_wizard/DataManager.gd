@@ -114,6 +114,8 @@ func _ready():
 	add_to_group(GROUP)
 	var available_spell_names = SCROLLS.duplicate()
 	for file in DirAccess.get_files_at(SPELL_FOLDER):
+		if not file.ends_with(".tres"): continue
+		
 		var spell = load(SPELL_FOLDER + file)
 		var scroll = available_spell_names.pick_random()
 		available_spell_names.erase(scroll)
@@ -176,7 +178,7 @@ func used_upgrade(res: UpgradeResource):
 		
 		print("Removing upgrade %s" % res.title)
 
-func get_spell(scroll_name: String):
+func get_spell(scroll_name: String) -> SpellResource:
 	if scroll_name in spells:
 		return spells[scroll_name]
 	return null

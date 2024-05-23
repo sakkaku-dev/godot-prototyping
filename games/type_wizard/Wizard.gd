@@ -17,13 +17,20 @@ signal attacks_changed(x)
 signal resistance_changed(x)
 signal is_casting(casting)
 signal cast_spell(scroll)
+signal scrolls_changed()
 
 @export var attack_scene: PackedScene
 @export var max_combo := 1000
 @export var pickup_shortcut: ShortcutKey
 @export var spells_shortcut: ShortcutKey
 
+@export_category("Spells")
+@export var shield_scene: PackedScene
+@export var ice_zone_scene: PackedScene
+@export var fireball_scene: PackedScene
+
 @onready var hurtbox = $Hurtbox
+@onready var waiting_spell = $WaitingSpell
 
 var resistances: Array[UpgradeResourceResistance] = []
 var attacks: Array[UpgradeResourceAttack] = []
@@ -37,6 +44,7 @@ var casting := false:
 
 var pickup_enabled := false
 var combo := 0
+var next_attack
 
 func _ready():
 	add_to_group(GROUP)
@@ -46,6 +54,12 @@ func _process(delta):
 	pickup_enabled = pickup_shortcut.active
 	
 func attack(target: TypedCharacter):
+	if next_attack:
+		if target.get_remaining_word() == "":
+			next_attack.fire(target)
+			next_attack = null
+		return
+	
 	var node = attack_scene.instantiate()
 	node.global_position = global_position
 	node.target = target
@@ -71,13 +85,42 @@ func add_scroll(scroll):
 		scrolls[scroll] = 0
 	
 	scrolls[scroll] += 1
+	scrolls_changed.emit()
 
 func do_cast(scroll: String):
 	if not scroll in scrolls or scrolls[scroll] <= 0: return
 	
 	spells_shortcut.active = false
 	scrolls[scroll] -= 1
+	if scrolls[scroll] <= 0:
+		scrolls.erase(scroll)
+	
 	cast_spell.emit(scroll)
+	self.casting = false
+	scrolls_changed.emit()
+
+###################
+## Spell Casting ##
+###################
+
+func cast(spell: Resource):
+	if spell is ShieldResource:
+		_create_spell(spell, shield_scene)
+	elif spell is IceZoneResource:
+		_create_spell(spell, ice_zone_scene)
+	elif spell is FireballResource:
+		_create_next_attack_spell(spell, fireball_scene)
+
+func _create_spell(res: Resource, scene: PackedScene):
+	var node = scene.instantiate()
+	node.res = res
+	get_tree().current_scene.add_child(node)
+	return node
+
+func _create_next_attack_spell(res: Resource, scene: PackedScene):
+	var node = _create_spell(res, scene)
+	node.global_position = waiting_spell.global_position
+	next_attack = node
 
 #######################
 ## Upgrade Functions ##

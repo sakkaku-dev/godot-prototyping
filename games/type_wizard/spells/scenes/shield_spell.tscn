@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://ct32kfdi65la1"]
+
+[ext_resource type="Script" path="res://games/type_wizard/spells/scenes/shield_spell.gd" id="1_yyfjq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n7gy0"]
+radius = 73.5527
+
+[node name="Shield" type="Area2D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_yyfjq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CircleShape2D_n7gy0")
+
+[node name="Timer" type="Timer" parent="."]

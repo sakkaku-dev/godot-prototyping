@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=42 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -22,6 +22,9 @@
 [ext_resource type="PackedScene" uid="uid://ccbmop0unfx8t" path="res://games/type_wizard/ui/upgrade_item.tscn" id="12_oh1yd"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/PauseBlur.gd" id="13_h3nru"]
 [ext_resource type="PackedScene" uid="uid://cw1dvt2pf04" path="res://games/type_wizard/bullet.tscn" id="13_j7b4n"]
+[ext_resource type="PackedScene" uid="uid://baqhotmn6q8i" path="res://games/type_wizard/spells/scenes/ice_zone.tscn" id="14_q13o7"]
+[ext_resource type="PackedScene" uid="uid://ofv1chccloce" path="res://games/type_wizard/spells/scenes/fireball.tscn" id="15_muf88"]
+[ext_resource type="PackedScene" uid="uid://ct32kfdi65la1" path="res://games/type_wizard/spells/scenes/shield_spell.tscn" id="16_wjmef"]
 [ext_resource type="Shader" path="res://shaders/blur.gdshader" id="17_fmius"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/ItemPickUp.gd" id="19_3lo2h"]
 [ext_resource type="Texture2D" uid="uid://bmti1r4wqqqm" path="res://assets/Tiny Dungeon/Tiles/tile_0102.png" id="20_jxr86"]
@@ -93,6 +96,7 @@ layer_0/tile_data = PackedInt32Array(589838, 131073, 3, 524302, 131073, 2, 45876
 y_sort_enabled = true
 
 [node name="Wizard" type="TileMap" parent="Root" node_paths=PackedStringArray("pickup_shortcut", "spells_shortcut")]
+position = Vector2(-8, -1)
 tile_set = ExtResource("3_6d2mj")
 format = 2
 layer_0/tile_data = PackedInt32Array(-131073, 1, 8, -65537, 1, 10, -1, 589824, 4, -196608, 65537, 8, -131072, 65537, 10, -65536, 262144, 3, -196607, 131073, 8, -131071, 131073, 10, -65535, 720896, 4, 65535, 589824, 4, 0, 589824, 3, 1, 720896, 4)
@@ -100,6 +104,9 @@ script = ExtResource("12_b5tcl")
 attack_scene = ExtResource("13_j7b4n")
 pickup_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/PickupKey")
 spells_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/SpellsKey")
+shield_scene = ExtResource("16_wjmef")
+ice_zone_scene = ExtResource("14_q13o7")
+fireball_scene = ExtResource("15_muf88")
 
 [node name="Hurtbox" type="Area2D" parent="Root/Wizard"]
 position = Vector2(8, -4)
@@ -123,9 +130,12 @@ position = Vector2(8, 0)
 shape = SubResource("RectangleShape2D_mwjhe")
 
 [node name="Player" type="Sprite2D" parent="Root/Wizard"]
-position = Vector2(0, -29)
+position = Vector2(8, -29)
 texture = ExtResource("2_xy5s2")
 offset = Vector2(0, -5)
+
+[node name="WaitingSpell" type="Marker2D" parent="Root/Wizard"]
+position = Vector2(8, -74)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -7)
