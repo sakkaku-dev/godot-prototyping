@@ -19,12 +19,13 @@ signal is_casting(casting)
 signal cast_spell(scroll)
 signal scrolls_changed()
 
-@export var attack_scene: PackedScene
 @export var max_combo := 1000
 @export var pickup_shortcut: ShortcutKey
 @export var spells_shortcut: ShortcutKey
+@export var castle_archer: CastleArcher
 
-@export_category("Spells")
+@export_category("Attacks")
+@export var attack_scene: PackedScene
 @export var shield_scene: PackedScene
 @export var ice_zone_scene: PackedScene
 @export var fireball_scene: PackedScene
@@ -148,5 +149,8 @@ func upgrade(res: UpgradeResource):
 func set_health(v: int):
 	hurtbox.max_health += v
 
-func set_castle_capacity(v: int):
-	capacity += v
+func set_castle_archer_speedy(v: int):
+	castle_archer.attack_time += v
+
+func set_castle_archer_count(v: int):
+	castle_archer.arrows += v

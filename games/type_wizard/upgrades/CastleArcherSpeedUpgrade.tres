@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=2 format=3 uid="uid://76mn0er6vklw"]
+
+[ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceValue.gd" id="1_534lj"]
+
+[resource]
+script = ExtResource("1_534lj")
+value = "castle_archer_speed"
+delta = -0.2
+title = "Archer Speed"
+text = "Increase the attack speed of the castle archers"
+limit = 5

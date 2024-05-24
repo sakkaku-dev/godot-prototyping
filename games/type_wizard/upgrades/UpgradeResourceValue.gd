@@ -2,4 +2,4 @@ class_name UpgradeResourceValue
 extends UpgradeResource
 
 @export var value := ""
-@export var delta := 0
+@export var delta := 0.0

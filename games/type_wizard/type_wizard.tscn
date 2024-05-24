@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=44 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -17,6 +17,7 @@
 [ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/ui/type_game.tres" id="8_1tsrj"]
 [ext_resource type="Script" path="res://games/type_wizard/PickupArea.gd" id="8_y2q8n"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/Countdown.gd" id="10_f2lwa"]
+[ext_resource type="Script" path="res://games/type_wizard/CastleArcher.gd" id="11_a5leb"]
 [ext_resource type="Script" path="res://games/type_wizard/Wizard.gd" id="12_b5tcl"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/Upgrades.gd" id="12_f4n8r"]
 [ext_resource type="PackedScene" uid="uid://ccbmop0unfx8t" path="res://games/type_wizard/ui/upgrade_item.tscn" id="12_oh1yd"]
@@ -38,6 +39,9 @@
 [ext_resource type="Script" path="res://games/type_wizard/Manage.gd" id="28_cet3j"]
 [ext_resource type="PackedScene" uid="uid://cho54lvn4k7tx" path="res://games/type_wizard/ui/attack_item.tscn" id="30_57bce"]
 [ext_resource type="Script" path="res://games/type_wizard/KeyDelegator.gd" id="30_ma2c0"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e8fwe"]
+radius = 150.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fen5t"]
 size = Vector2(40, 20)
@@ -95,15 +99,29 @@ layer_0/tile_data = PackedInt32Array(589838, 131073, 3, 524302, 131073, 2, 45876
 [node name="Root" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Wizard" type="TileMap" parent="Root" node_paths=PackedStringArray("pickup_shortcut", "spells_shortcut")]
+[node name="CastleArcher" type="Area2D" parent="Root" node_paths=PackedStringArray("enemy_spawner", "attack_timer")]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("11_a5leb")
+attack_scene = ExtResource("13_j7b4n")
+enemy_spawner = NodePath("../../EnemySpawner")
+attack_timer = NodePath("Timer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Root/CastleArcher"]
+shape = SubResource("CircleShape2D_e8fwe")
+
+[node name="Timer" type="Timer" parent="Root/CastleArcher"]
+
+[node name="Wizard" type="TileMap" parent="Root" node_paths=PackedStringArray("pickup_shortcut", "spells_shortcut", "castle_archer")]
 position = Vector2(-8, -1)
 tile_set = ExtResource("3_6d2mj")
 format = 2
 layer_0/tile_data = PackedInt32Array(-131073, 1, 8, -65537, 1, 10, -1, 589824, 4, -196608, 65537, 8, -131072, 65537, 10, -65536, 262144, 3, -196607, 131073, 8, -131071, 131073, 10, -65535, 720896, 4, 65535, 589824, 4, 0, 589824, 3, 1, 720896, 4)
 script = ExtResource("12_b5tcl")
-attack_scene = ExtResource("13_j7b4n")
 pickup_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/PickupKey")
 spells_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/SpellsKey")
+castle_archer = NodePath("../CastleArcher")
+attack_scene = ExtResource("13_j7b4n")
 shield_scene = ExtResource("16_wjmef")
 ice_zone_scene = ExtResource("14_q13o7")
 fireball_scene = ExtResource("15_muf88")

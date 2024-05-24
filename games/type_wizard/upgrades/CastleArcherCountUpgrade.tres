@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=2 format=3 uid="uid://cqt4kyfnorbbe"]
+
+[ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceValue.gd" id="1_fmvdi"]
+
+[resource]
+script = ExtResource("1_fmvdi")
+value = "castle_archer_count"
+delta = 1.0
+title = "Archer Increase"
+text = "Increase the amount of archers"
+limit = 3

@@ -1,3 +1,4 @@
+class_name EnemySpawner
 extends Node2D
 
 signal enemy_removed(enemies_left)

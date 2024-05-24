@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("2_p8epe")
 value = "health"
-delta = 1
+delta = 1.0
 title = "Health"
 text = "Increase the health of the castle"
 limit = 3

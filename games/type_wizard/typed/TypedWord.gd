@@ -47,13 +47,18 @@ func update_word():
 	else:
 		text = "[center][typed until=%s jump=%s color=#%s]%s[/typed][/center]" % [typed.length(), jump, text_color.to_html(), word]
 
-func handle_key(key: String):
+func _next_char():
 	if typed.length() >= word.length():
-		return false
-	
-	var next_word_char = word[typed.length()]
+		return null
+	return word[typed.length()]
+
+func auto_type():
+	handle_key(_next_char(), false)
+
+func handle_key(key: String, grab_focus = true):
+	var next_word_char = _next_char()
 	if next_word_char == key.to_lower():
-		if not focused:
+		if not focused and grab_focus:
 			type_start.emit()
 			self.focused = true
 		

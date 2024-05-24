@@ -29,6 +29,7 @@ var burn_amount := 0.0:
 var ice_zone_slow := 0.0
 var slow_amount := 0.0
 var knockback := Vector2.ZERO
+var last_typed
 
 func _ready():
 	super._ready()
@@ -44,7 +45,12 @@ func _ready():
 		modulate = Color.WHITE
 	)
 	
-	typed_word.typing.connect(func(): wizard.attack(self))
+	typed_word.typing.connect(func():
+		if last_typed and not typed_word.focused:
+			last_typed.attack(self)
+		else:
+			wizard.attack(self)
+	)
 	sprite_2d.texture = enemy_res.sprite
 
 func _process(_delta):
@@ -71,6 +77,14 @@ func _physics_process(delta):
 		velocity = dir * enemy_res.speed * (1 - slow_amount - ice_zone_slow) * (1 if is_on_screen() else 5)
 		
 	move_and_slide()
+
+func auto_type(obj):
+	last_typed = obj
+	typed_word.auto_type()
+	
+func handle_key(key: String):
+	last_typed = null
+	return super.handle_key(key)
 
 func hit():
 	typed_word.hit += 1

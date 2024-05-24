@@ -34,3 +34,6 @@ func is_on_screen():
 	if screen_notifier:
 		return screen_notifier.is_on_screen()
 	return true
+
+func is_focused():
+	return typed_word.focused
