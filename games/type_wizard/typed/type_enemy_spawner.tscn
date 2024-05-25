@@ -20,7 +20,7 @@ texture = ExtResource("3_uqcfi")
 [node name="SpawnTimer" type="Timer" parent="." index="5"]
 autostart = true
 script = ExtResource("3_oqsdc")
-min_time = 2.0
-max_time = 3.0
+min_time = 3.0
+max_time = 5.0
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]

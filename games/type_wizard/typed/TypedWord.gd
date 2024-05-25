@@ -23,6 +23,9 @@ var hit := 0:
 	set(v):
 		hit = v
 		hit += _get_num_of_spaces(hit)
+		while hit > typed.length():
+			auto_type()
+		
 		update_word()
 
 var focused := false:
@@ -53,7 +56,9 @@ func _next_char():
 	return word[typed.length()]
 
 func auto_type():
-	handle_key(_next_char(), false)
+	var char = _next_char()
+	if char:
+		handle_key(char, false)
 
 func handle_key(key: String, grab_focus = true):
 	var next_word_char = _next_char()

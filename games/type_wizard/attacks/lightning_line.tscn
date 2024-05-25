@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cxe70uq5k3ma7"]
+
+[node name="LightningLine" type="Line2D"]
+width = 2.0
+default_color = Color(1, 0.855167, 0.21, 1)

@@ -70,7 +70,7 @@ func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
 	node.global_position = global_position
 	node.target = target
-	node.add_speed_multipler(get_combo_percentage())
+	#node.add_speed_multipler(get_combo_percentage())
 	
 	for atk in attacks:
 		if atk.effect == null: continue

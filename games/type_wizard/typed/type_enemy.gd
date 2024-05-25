@@ -12,6 +12,8 @@ const ENEMY_GROUP = "TypedEnemy"
 @export var deaccel := 30
 @export var max_burn := 100
 
+@export var lightning_scene: PackedScene
+
 @onready var effect_detector = $EffectDetector
 @onready var hit_box = $HitBox
 @onready var sprite_2d = $Sprite2D
@@ -44,7 +46,8 @@ func _ready():
 	
 	typed_word.typing.connect(func():
 		if last_typed and not typed_word.focused:
-			last_typed.attack(self)
+			if last_typed.has_method("attack"):
+				last_typed.attack(self)
 		else:
 			wizard.attack(self)
 	)
@@ -88,7 +91,8 @@ func handle_key(key: String):
 	last_typed = null
 	return super.handle_key(key)
 
-func hit():
+func hit(obj = null):
+	last_typed = obj
 	typed_word.hit += 1
 	
 	if typed_word.is_fully_hit():
@@ -111,6 +115,12 @@ func apply(pos: Vector2, effects: Array):
 		elif eff is AirPushBackResource:
 			var dir = pos.direction_to(global_position)
 			knockback = dir * eff.push_force
+		elif eff is LightningEffectResource:
+			var node = lightning_scene.instantiate()
+			node.res = eff
+			node.global_position = global_position
+			node.current.append(self)
+			get_tree().current_scene.add_child(node)
 
 func _maybe_drop_item(pos: Vector2):
 	if randf() < enemy_res.drop_chance:

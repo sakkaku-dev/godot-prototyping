@@ -20,7 +20,7 @@ texture = ExtResource("3_mkms0")
 one_shot = true
 autostart = true
 script = ExtResource("4_ggpwi")
-min_time = 3.0
-max_time = 5.0
+min_time = 4.0
+max_time = 6.0
 
 [connection signal="timeout" from="ThrowTimer" to="." method="_on_throw_timer_timeout"]

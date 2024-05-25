@@ -4,3 +4,5 @@
 
 [resource]
 script = ExtResource("1_3k25u")
+lightning_chance = 0.4
+drop_off = 0.2

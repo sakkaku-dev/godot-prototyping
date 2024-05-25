@@ -19,7 +19,6 @@ var enemy_word: TypedCharacter
 var pickup_word: TypedCharacter
 
 func _ready():
-	wave_timer.start_wave()
 	wave_timer.spawn.connect(func(): enemy_spawner.spawn())
 
 	key_reader.pressed_key.connect(_pressed_key)
@@ -42,6 +41,10 @@ func _ready():
 		var spell = data_manager.get_spell(scroll)
 		wizard.cast(spell.spell)
 	)
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept"):
+		wave_timer.start_wave()
 
 func _wave_ended():
 	var ups = data_manager.get_random_upgrades()

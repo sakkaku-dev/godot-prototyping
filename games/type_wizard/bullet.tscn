@@ -1,13 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://cw1dvt2pf04"]
+[gd_scene load_steps=6 format=3 uid="uid://cw1dvt2pf04"]
 
 [ext_resource type="Script" path="res://games/type_wizard/bullet.gd" id="1_jkm43"]
 [ext_resource type="Texture2D" uid="uid://42m8myr62key" path="res://assets/Shadow.png" id="1_pl8ld"]
 [ext_resource type="Texture2D" uid="uid://c5wkcxr8an1mi" path="res://assets/Tiny Town/Tiles/tile_0119.png" id="1_ym3r0"]
 [ext_resource type="PackedScene" uid="uid://bv5ab745vkf6o" path="res://games/type_wizard/attacks/area_effect.tscn" id="2_36e2o"]
+[ext_resource type="PackedScene" uid="uid://cxe70uq5k3ma7" path="res://games/type_wizard/attacks/lightning_line.tscn" id="3_mgarp"]
 
 [node name="Bullet" type="CharacterBody2D"]
 script = ExtResource("1_jkm43")
 area_attack_scene = ExtResource("2_36e2o")
+
+[node name="LightningLine" parent="." instance=ExtResource("3_mgarp")]
+points = PackedVector2Array(0, 0, 10, 10)
 
 [node name="Body" type="Node2D" parent="."]
 
