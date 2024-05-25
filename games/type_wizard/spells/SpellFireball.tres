@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="SpellResource" load_steps=3 format=3 uid="uid://dd7ubuxo84iu"]
+[gd_resource type="Resource" script_class="SpellResource" load_steps=4 format=3 uid="uid://dd7ubuxo84iu"]
 
+[ext_resource type="Texture2D" uid="uid://d2nrbbv3w4la1" path="res://assets/rpg_icons/release_v1.2-single_41.png" id="1_bfoci"]
 [ext_resource type="Script" path="res://games/type_wizard/spells/SpellResource.gd" id="1_s104o"]
 [ext_resource type="Resource" uid="uid://buvqgrhmnkvhk" path="res://games/type_wizard/spells/res/FireballLV1.tres" id="2_73dnw"]
 
@@ -7,4 +8,5 @@
 script = ExtResource("1_s104o")
 title = "Fireball"
 description = "Fire a fireball to an enemy target, causing AOE damage"
+icon = ExtResource("1_bfoci")
 spell = ExtResource("2_73dnw")

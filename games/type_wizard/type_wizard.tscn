@@ -253,6 +253,7 @@ key_res = ExtResource("23_xpuy1")
 toggle = true
 
 [node name="Scrolls" type="PanelContainer" parent="CanvasLayer/UI/GameUI" node_paths=PackedStringArray("container", "data", "wizard")]
+visible = false
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 1
 anchors_preset = 11

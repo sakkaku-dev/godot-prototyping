@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="SpellResource" load_steps=3 format=3 uid="uid://dbl17t31xqedi"]
+[gd_resource type="Resource" script_class="SpellResource" load_steps=4 format=3 uid="uid://dbl17t31xqedi"]
 
 [ext_resource type="Script" path="res://games/type_wizard/spells/SpellResource.gd" id="1_gbjyp"]
+[ext_resource type="Texture2D" uid="uid://cdtythxup4ho2" path="res://assets/rpg_icons/release_v1.2-single_98.png" id="1_jgftu"]
 [ext_resource type="Resource" uid="uid://c7y14812v8c5i" path="res://games/type_wizard/spells/res/ShieldLV1.tres" id="2_b81fm"]
 
 [resource]
 script = ExtResource("1_gbjyp")
 title = "Shield"
 description = "Create a temporary shield around the castle to negate all incoming damange"
+icon = ExtResource("1_jgftu")
 spell = ExtResource("2_b81fm")

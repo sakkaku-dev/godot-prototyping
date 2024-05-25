@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://ofv1chccloce"]
+[gd_scene load_steps=5 format=3 uid="uid://ofv1chccloce"]
 
-[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_mpogl"]
 [ext_resource type="Script" path="res://games/type_wizard/spells/scenes/fireball.gd" id="1_t4urm"]
 [ext_resource type="PackedScene" uid="uid://bpfxu72yopf3m" path="res://games/type_wizard/spells/scenes/burn_area.tscn" id="3_cjgh3"]
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="3_ls5wx"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_af3de"]
+shader = ExtResource("3_ls5wx")
+shader_parameter/radius = 1.0
+shader_parameter/fill = 1.0
+shader_parameter/bg_color = Color(0, 0, 0, 1)
 
 [node name="Fireball" type="CharacterBody2D"]
 script = ExtResource("1_t4urm")
@@ -10,6 +16,17 @@ burn_area = ExtResource("3_cjgh3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.453125, 0.453125)
-texture = ExtResource("1_mpogl")
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_af3de")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.0
+offset_top = -29.0
+offset_right = 29.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.84, 0.168, 0, 1)

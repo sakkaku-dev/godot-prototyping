@@ -1,12 +1,14 @@
-[gd_resource type="Resource" script_class="UpgradeResourceAttack" load_steps=3 format=3 uid="uid://b78nga8l7j37x"]
+[gd_resource type="Resource" script_class="UpgradeResourceAttack" load_steps=4 format=3 uid="uid://b78nga8l7j37x"]
 
 [ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceAttack.gd" id="1_wnbhf"]
 [ext_resource type="Resource" uid="uid://dnytjnppjd7n6" path="res://games/type_wizard/attacks/LightningLV1.tres" id="1_yaw6l"]
+[ext_resource type="Texture2D" uid="uid://cnyws7ekfvecd" path="res://assets/rpg_icons/release_v1.2-single_45.png" id="2_dqt0y"]
 
 [resource]
 script = ExtResource("1_wnbhf")
 attack = 2
 effect = ExtResource("1_yaw6l")
 title = "Lightning Attack"
+icon = ExtResource("2_dqt0y")
 text = "Attack the enemy using lightning that has a chance to hit nearby enemies  "
 limit = 1

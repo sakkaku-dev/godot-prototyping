@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="SpellResource" load_steps=3 format=3 uid="uid://dct1s5b18qmtk"]
+[gd_resource type="Resource" script_class="SpellResource" load_steps=4 format=3 uid="uid://dct1s5b18qmtk"]
 
+[ext_resource type="Texture2D" uid="uid://dspnuqpabjnxi" path="res://assets/rpg_icons/release_v1.2-single_70.png" id="1_r2egt"]
 [ext_resource type="Script" path="res://games/type_wizard/spells/SpellResource.gd" id="1_t744w"]
 [ext_resource type="Resource" uid="uid://b0lthtpjb0dc8" path="res://games/type_wizard/spells/res/IceZoneLV1.tres" id="2_lid25"]
 
@@ -7,4 +8,5 @@
 script = ExtResource("1_t744w")
 title = "Ice Zone"
 description = "Create an ice zone around the castle that slows down nearby enemies"
+icon = ExtResource("1_r2egt")
 spell = ExtResource("2_lid25")

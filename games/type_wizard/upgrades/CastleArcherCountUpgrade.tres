@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=2 format=3 uid="uid://cqt4kyfnorbbe"]
+[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=3 format=3 uid="uid://cqt4kyfnorbbe"]
 
 [ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceValue.gd" id="1_fmvdi"]
+[ext_resource type="Texture2D" uid="uid://d4b2oyec57xcf" path="res://assets/rpg_icons/release_v1.2-single_44.png" id="1_omid3"]
 
 [resource]
 script = ExtResource("1_fmvdi")
 value = "castle_archer_count"
 delta = 1.0
 title = "Archer Increase"
+icon = ExtResource("1_omid3")
 text = "Increase the amount of archers"
 limit = 3
