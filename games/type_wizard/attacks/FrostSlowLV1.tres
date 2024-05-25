@@ -5,3 +5,4 @@
 [resource]
 script = ExtResource("1_ufpn5")
 slow = 0.5
+duration = 2.0

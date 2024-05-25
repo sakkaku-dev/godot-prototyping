@@ -162,6 +162,8 @@ func get_random_upgrades(count = 3) -> Array[UpgradeResource]:
 	var letters = upgrades.keys()
 	for i in range(count):
 		var letter = letters.pick_random()
+		if not letter: break # not enough updates
+		
 		letters.erase(letter)
 		result.append(upgrades[letter].pick_random())
 	

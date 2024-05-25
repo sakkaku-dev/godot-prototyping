@@ -1,17 +1,49 @@
-[gd_scene load_steps=3 format=3 uid="uid://ct32kfdi65la1"]
+[gd_scene load_steps=6 format=3 uid="uid://ct32kfdi65la1"]
 
 [ext_resource type="Script" path="res://games/type_wizard/spells/scenes/shield_spell.gd" id="1_yyfjq"]
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="2_xk6lb"]
+[ext_resource type="Script" path="res://games/type_wizard/CircleIndicator.gd" id="3_kr6xs"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_n7gy0"]
-radius = 73.5527
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ng7n4"]
+height = 145.86
 
-[node name="Shield" type="Area2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rgou8"]
+shader = ExtResource("2_xk6lb")
+shader_parameter/radius = 0.99
+shader_parameter/inner_radius = 0.97
+shader_parameter/fill = 1.0
+shader_parameter/blur = 0.0078
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/inner_color = Color(0.183333, 0, 1, 0.235294)
+
+[node name="Shield" type="Area2D" node_paths=PackedStringArray("circle_indicator")]
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("1_yyfjq")
+circle_indicator = NodePath("CircleIndicator")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource("CircleShape2D_n7gy0")
+shape = SubResource("CapsuleShape2D_ng7n4")
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_rgou8")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.0
+offset_top = -156.0
+offset_right = 156.0
+offset_bottom = 156.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.582, 0, 0.97, 0.317647)
+
+[node name="CircleIndicator" type="Node" parent="." node_paths=PackedStringArray("color_rect", "collision_shape")]
+script = ExtResource("3_kr6xs")
+color_rect = NodePath("../ColorRect")
+collision_shape = NodePath("../CollisionShape2D")

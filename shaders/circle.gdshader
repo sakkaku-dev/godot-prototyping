@@ -1,8 +1,12 @@
 shader_type canvas_item;
 
 uniform float radius : hint_range(0.0, 1.0) = 1.0;
+uniform float inner_radius : hint_range(0.0, 1.0) = 0.0;
 uniform float fill : hint_range(0.0, 1.0) = 1.0;
+uniform float blur : hint_range(0., 0.2, .0001) = 0.0001;
+
 uniform vec4 bg_color: source_color = vec4(0., 0., 0., 1.);
+uniform vec4 inner_color: source_color = vec4(0., 0., 0., 0.);
 
 float remap(float i_min, float i_max, float o_min, float o_max, float val) {
 	float t = (val - i_min) / (i_max - i_min);
@@ -17,8 +21,15 @@ float mask(vec2 uv, float value)
 }
 
 void fragment() {
-	float inside_circle = 1. - step(radius/2.0, distance(UV, vec2(0.5,0.5)));
-	COLOR.a = inside_circle;
+	vec2 center = vec2(0.5, 0.5);
+	float dist = distance(UV, center);
+	float r = radius / 2.0;
+	float inside_circle = smoothstep(r + blur, r - blur, dist);
+	COLOR.a *= inside_circle;
+	
+	float inner_r = inner_radius / 2.0;
+	float inner_circle = 1. - smoothstep(inner_r + blur, inner_r - blur, dist);
+	COLOR = mix(inner_color, COLOR, inner_circle);
 	
 	vec2 uv = (UV * 2.0) - 1.0;
 	float t = mask(uv, fill);

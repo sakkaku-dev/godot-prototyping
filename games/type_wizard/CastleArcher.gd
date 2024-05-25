@@ -5,11 +5,14 @@ extends Area2D
 @export var enemy_spawner: EnemySpawner
 @export var attack_timer: Timer
 
+@onready var circle_indicator = $CircleIndicator
+
 var attack_time := 3.0
 var arrows := 0:
 	set(v):
 		if arrows == 0 and v > 0:
 			attack_timer.start(attack_time)
+			circle_indicator.show_indicator()
 		
 		arrows = v
 

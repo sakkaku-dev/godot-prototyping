@@ -40,10 +40,7 @@ func _ready():
 	)
 	hit_box.hit.connect(func(): removed.emit())
 	removed.connect(func(): queue_free())
-	slow_timer.timeout.connect(func():
-		slow_amount = 0.0
-		modulate = Color.WHITE
-	)
+	slow_timer.timeout.connect(func(): slow_amount = 0.0)
 	
 	typed_word.typing.connect(func():
 		if last_typed and not typed_word.focused:
@@ -59,6 +56,11 @@ func _process(_delta):
 	for area in effect_detector.get_overlapping_areas():
 		if area.has_method("apply"):
 			area.apply(self)
+			
+	modulate = Color.SKY_BLUE if _get_slow_amount() > 0 else Color.WHITE
+
+func _get_slow_amount():
+	return slow_amount + ice_zone_slow
 
 func _physics_process(delta):
 	var dist = global_position.distance_to(Vector2.ZERO)
@@ -74,7 +76,7 @@ func _physics_process(delta):
 		knockback = knockback.move_toward(Vector2.ZERO, delta * deaccel)
 	else:
 		var dir = global_position.direction_to(Vector2.ZERO)
-		velocity = dir * enemy_res.speed * (1 - slow_amount - ice_zone_slow) * (1 if is_on_screen() else 5)
+		velocity = dir * enemy_res.speed * (1 - _get_slow_amount()) * (1 if is_on_screen() else 5)
 		
 	move_and_slide()
 
@@ -105,7 +107,6 @@ func apply(pos: Vector2, effects: Array):
 	for eff in effects:
 		if eff is FrostSlowResource:
 			slow_amount = eff.slow
-			modulate = Color.SKY_BLUE
 			slow_timer.start(eff.duration)
 		elif eff is AirPushBackResource:
 			var dir = pos.direction_to(global_position)
