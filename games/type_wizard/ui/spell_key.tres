@@ -2,14 +2,14 @@
 
 [ext_resource type="Texture2D" uid="uid://brqx630kto4xt" path="res://assets/Tiny Dungeon/Tiles/tile_0130.png" id="1_5vhyi"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/ShortcutResource.gd" id="1_73ax8"]
-[ext_resource type="Texture2D" uid="uid://b44bbcerthal7" path="res://assets/Keyboard & Mouse/Dark/Tab_Key_Dark.png" id="1_rov3q"]
+[ext_resource type="Texture2D" uid="uid://dqdc12ysbijbi" path="res://assets/Keyboard & Mouse/Dark/Shift_Key_Dark.png" id="2_ujdgv"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_017df"]
 device = -1
-keycode = 4194306
+keycode = 4194325
 
 [resource]
 script = ExtResource("1_73ax8")
 image = ExtResource("1_5vhyi")
-key_image = ExtResource("1_rov3q")
+key_image = ExtResource("2_ujdgv")
 event = SubResource("InputEventKey_017df")

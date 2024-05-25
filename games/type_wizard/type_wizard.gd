@@ -48,12 +48,12 @@ func _selected_upgrade(upgrade: UpgradeResource):
 	data_manager.used_upgrade(upgrade)
 	wave_timer.start_wave()
 
-func _pressed_key(key: String, shift: bool):
+func _pressed_key(key: String, _shift: bool):
 	if wizard.casting:
 		scrolls.handle_key(key)
 		return
 
-	if shift:
+	if wizard.pickup_enabled:
 		if not pickup_word:
 			var drops = get_tree().get_nodes_in_group(TypedDrop.DROP_GROUP)
 			pickup_word = _find_first_words_with(key, drops)
@@ -75,12 +75,12 @@ func _handle_key(key, word):
 	
 	wizard.handled_key(correctly_handled)
 
-func _cancel_word(shift: bool):
+func _cancel_word(_shift: bool):
 	if wizard.casting:
 		scrolls.cancel()
 		return
 	
-	if shift:
+	if wizard.pickup_enabled:
 		if not pickup_word: return
 		#pickup_word.cancel()
 		#pickup_word = null

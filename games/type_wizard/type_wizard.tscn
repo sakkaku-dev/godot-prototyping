@@ -246,11 +246,11 @@ theme_override_constants/separation = 10
 [node name="PickupKey" parent="CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer" instance=ExtResource("22_4n67u")]
 layout_mode = 2
 key_res = ExtResource("23_xqc6x")
+toggle = true
 
 [node name="SpellsKey" parent="CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer" instance=ExtResource("22_4n67u")]
 layout_mode = 2
 key_res = ExtResource("23_xpuy1")
-toggle = true
 
 [node name="Scrolls" type="PanelContainer" parent="CanvasLayer/UI/GameUI" node_paths=PackedStringArray("container", "data", "wizard")]
 visible = false
