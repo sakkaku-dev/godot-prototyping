@@ -5,8 +5,10 @@ extends CharacterBody2D
 @export var speed := 80
 @export var target_offset := 5
 @export var area_attack_scene: PackedScene
+@export var height := 50
 
-@onready var sprite_2d = $Sprite2D
+@onready var arrow = $Body/Arrow
+@onready var body = $Body
 
 var speed_multiplier := 1.0:
 	set(v):
@@ -17,10 +19,12 @@ var effects := []
 var on_hit_effects := []
 var node_effects := []
 
+var start_dist := 0.0
 var target: TypedCharacter:
 	set(v):
 		target = v
 		if target:
+			start_dist = global_position.distance_to(target.global_position)
 			target.removed.connect(func(): queue_free())
 
 func add_speed_multipler(p: float):
@@ -40,7 +44,7 @@ func _ready():
 			on_hit_effects.append(eff)
 		elif eff is LightningEffectResource:
 			speed_multiplier = max_speed_multiplier + 10
-			sprite_2d.hide()
+			body.hide()
 
 func _physics_process(delta):
 	if not target: return
@@ -53,7 +57,11 @@ func _physics_process(delta):
 		velocity = dir * speed * speed_multiplier
 		move_and_slide()
 	
-	var dist = global_position.distance_squared_to(target.global_position)
+	var dist = global_position.distance_to(target.global_position)
+	
+	#var arrow_dir = Vector2.UP.rotated(-global_rotation)
+	#arrow.position = arrow_dir * height * (dist / start_dist)
+	
 	if dist < 5 * speed_multiplier:
 		_to_final_target(dir)
 		target.hit()

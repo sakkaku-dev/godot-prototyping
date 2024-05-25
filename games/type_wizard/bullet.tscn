@@ -9,13 +9,17 @@
 script = ExtResource("1_jkm43")
 area_attack_scene = ExtResource("2_36e2o")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Sprite2D2" type="Sprite2D" parent="Body"]
 visible = false
 modulate = Color(1, 1, 1, 0.513726)
+position = Vector2(-3, 0)
 scale = Vector2(0.444444, 0.444444)
 texture = ExtResource("1_pl8ld")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Arrow" type="Sprite2D" parent="Body"]
 position = Vector2(-4, 0)
 rotation = 0.785398
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_ym3r0")
