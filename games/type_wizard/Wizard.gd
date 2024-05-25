@@ -18,6 +18,7 @@ signal resistance_changed(x)
 signal is_casting(casting)
 signal cast_spell(scroll)
 signal scrolls_changed()
+signal level_up()
 
 @export var max_combo := 1000
 @export var pickup_shortcut: ShortcutKey
@@ -32,6 +33,7 @@ signal scrolls_changed()
 
 @onready var hurtbox = $Hurtbox
 @onready var waiting_spell = $WaitingSpell
+@onready var level_manager = $LevelManager
 
 var resistances: Array[UpgradeResourceResistance] = []
 var attacks: Array[UpgradeResourceAttack] = []
@@ -50,10 +52,14 @@ var next_attack
 func _ready():
 	add_to_group(GROUP)
 	spells_shortcut.changed.connect(func(a): self.casting = a)
+	level_manager.level_up.connect(func(_lvl): level_up.emit())
 	
 func _process(delta):
 	pickup_enabled = pickup_shortcut.active
-	
+
+func killed_enemy(e):
+	level_manager.receive_exp(e)
+
 func attack(target: TypedCharacter):
 	if next_attack:
 		if target.get_remaining_word() == "":

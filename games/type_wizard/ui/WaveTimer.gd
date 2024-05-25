@@ -8,11 +8,11 @@ signal wave_stopped()
 @export var enemy_spawn_timer: RandomTimer
 
 func _ready():
-	timeout.connect(func(): _stop_wave())
+	#timeout.connect(func(): _stop_wave())
 	enemy_spawn_timer.timeout.connect(func(): spawn.emit())
 
 func start_wave():
-	start()
+	#start()
 	enemy_spawn_timer.start()
 	wave_started.emit()
 

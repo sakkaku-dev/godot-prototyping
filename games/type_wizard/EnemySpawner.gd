@@ -1,7 +1,7 @@
 class_name EnemySpawner
 extends Node2D
 
-signal enemy_removed(enemies_left)
+signal enemy_removed(enemy)
 signal enemy_finished()
 signal drop_finished()
 
@@ -58,7 +58,7 @@ func _add_enemy_to_scene(enemy: TypedEnemy, pos = _random_position()):
 	enemy.removed.connect(func():
 		var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
 		enemies.erase(enemy)
-		enemy_removed.emit(enemies)
+		enemy_removed.emit(enemy)
 	)
 	root.add_child(enemy)
 

@@ -25,14 +25,17 @@ func _ready():
 	key_reader.pressed_key.connect(_pressed_key)
 	key_reader.pressed_cancel.connect(_cancel_word)
 
+	wizard.level_up.connect(func(): _wave_ended())
 	upgrades.selected_upgrade.connect(_selected_upgrade)
-	manage.next_wave.connect(func(): wave_timer.start_wave())
+	#manage.next_wave.connect(func(): wave_timer.start_wave())
 	
 	enemy_spawner.drop_finished.connect(func(): pickup_word = null)
 	enemy_spawner.enemy_finished.connect(func(): enemy_word = null)
-	enemy_spawner.enemy_removed.connect(func(left):
-		if wave_timer.is_stopped() and left.is_empty():
-			_wave_ended()
+	enemy_spawner.enemy_removed.connect(func(e):
+		#if wave_timer.is_stopped() and left.is_empty():
+			#_wave_ended()
+		
+		wizard.killed_enemy(e)
 	)
 	
 	wizard.cast_spell.connect(func(scroll):
@@ -41,7 +44,9 @@ func _ready():
 	)
 
 func _wave_ended():
-	upgrades.show_upgrades(data_manager.get_random_upgrades())
+	var ups = data_manager.get_random_upgrades()
+	if not ups.is_empty():
+		upgrades.show_upgrades(ups)
 
 func _selected_upgrade(upgrade: UpgradeResource):
 	wizard.upgrade(upgrade)
