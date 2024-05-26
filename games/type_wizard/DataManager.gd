@@ -160,13 +160,14 @@ func get_random_spell():
 func get_random_upgrades(count = 3) -> Array[UpgradeResource]:
 	var result: Array[UpgradeResource] = []
 	var letters = upgrades.keys()
-	if not letters.is_empty():
-		for i in range(count):
-			var letter = letters.pick_random()
-			if not letter: break # not enough updates
-			
-			letters.erase(letter)
-			result.append(upgrades[letter].pick_random())
+	for i in range(count):
+		if letters.is_empty(): break
+		
+		var letter = letters.pick_random()
+		if not letter: break # not enough updates
+		
+		letters.erase(letter)
+		result.append(upgrades[letter].pick_random())
 	
 	return result
 

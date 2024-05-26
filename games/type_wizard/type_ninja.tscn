@@ -1,19 +1,51 @@
-[gd_scene load_steps=11 format=3 uid="uid://dqsrstph2hwg3"]
+[gd_scene load_steps=30 format=3 uid="uid://dqsrstph2hwg3"]
 
 [ext_resource type="Script" path="res://games/type_wizard/EnemySpawner.gd" id="1_aakc8"]
+[ext_resource type="Script" path="res://games/type_wizard/type_ninja.gd" id="1_h1ned"]
 [ext_resource type="PackedScene" uid="uid://bvdul7olno8c2" path="res://games/type_wizard/typed/type_enemy.tscn" id="2_6rggb"]
 [ext_resource type="PackedScene" uid="uid://djxy0fp1fil6b" path="res://games/type_wizard/typed/type_enemy_spawner.tscn" id="3_cjmsg"]
 [ext_resource type="PackedScene" uid="uid://ny16v8jmkvch" path="res://games/type_wizard/typed/type_enemy_throw.tscn" id="4_536mb"]
 [ext_resource type="Script" path="res://games/type_wizard/DataManager.gd" id="5_h4rqp"]
+[ext_resource type="Script" path="res://games/type_wizard/TypingNinja.gd" id="5_snl4t"]
 [ext_resource type="TileSet" uid="uid://qb3qobjripr6" path="res://games/type_wizard/type_wizard.tres" id="6_u8ucr"]
 [ext_resource type="Texture2D" uid="uid://daoaakwpeedy1" path="res://assets/Tiny Dungeon/Tiles/tile_0087.png" id="6_yxgay"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="7_x4gls"]
 [ext_resource type="Script" path="res://games/type_wizard/LevelManager.gd" id="12_3lkcv"]
+[ext_resource type="Script" path="res://games/type_wizard/KeyReader.gd" id="12_h25dx"]
+[ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/ui/type_game.tres" id="13_we56g"]
+[ext_resource type="Shader" path="res://shaders/blur.gdshader" id="14_tr7pa"]
+[ext_resource type="Script" path="res://games/type_wizard/ui/PauseBlur.gd" id="15_lu4wk"]
+[ext_resource type="Script" path="res://games/type_wizard/ui/HealthBar.gd" id="16_8wipx"]
 [ext_resource type="Script" path="res://combat/Hurtbox.gd" id="16_j5ssk"]
+[ext_resource type="Texture2D" uid="uid://bmti1r4wqqqm" path="res://assets/Tiny Dungeon/Tiles/tile_0102.png" id="17_s6g3j"]
+[ext_resource type="Script" path="res://games/type_wizard/LevelInfo.gd" id="19_153g6"]
+[ext_resource type="Script" path="res://games/type_wizard/ui/Upgrades.gd" id="20_kd5d1"]
+[ext_resource type="PackedScene" uid="uid://ccbmop0unfx8t" path="res://games/type_wizard/ui/upgrade_item.tscn" id="21_4m72m"]
+[ext_resource type="Script" path="res://games/type_wizard/KeyDelegator.gd" id="22_ye7f3"]
+[ext_resource type="Script" path="res://games/type_wizard/ui/ItemPickUp.gd" id="23_iqf2q"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="24_yrf2s"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="25_6rtfb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3nosv"]
 size = Vector2(10, 10)
 
-[node name="TypeNinja" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vo7i8"]
+shader = ExtResource("14_tr7pa")
+shader_parameter/lod = 2.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylk8m"]
+bg_color = Color(0.163502, 0.163502, 0.163502, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_odckq"]
+bg_color = Color(1, 0.8815, 0.21, 1)
+
+[node name="TypeNinja" type="Node2D" node_paths=PackedStringArray("spawner", "ninja")]
+script = ExtResource("1_h1ned")
+spawner = NodePath("Root/Ninja/EnemySpawner")
+ninja = NodePath("Root/Ninja")
+
+[node name="KeyReader" type="Node" parent="."]
+script = ExtResource("12_h25dx")
 
 [node name="DataManager" type="Node" parent="."]
 script = ExtResource("5_h4rqp")
@@ -28,7 +60,13 @@ layer_0/tile_data = PackedInt32Array(589838, 65537, 2, 524302, 65537, 2, 458766,
 [node name="Root" type="Node2D" parent="."]
 y_sort_enabled = true
 
+[node name="Camera2D" type="Camera2D" parent="Root"]
+
 [node name="Ninja" type="CharacterBody2D" parent="Root"]
+script = ExtResource("5_snl4t")
+
+[node name="TypeTimer" type="Timer" parent="Root/Ninja"]
+one_shot = true
 
 [node name="EnemySpawner" type="Node2D" parent="Root/Ninja" node_paths=PackedStringArray("data", "root")]
 script = ExtResource("1_aakc8")
@@ -40,6 +78,10 @@ throw_enemy_chance = 0.0
 enemy_spawn_distance_from_player = 280
 data = NodePath("../../../DataManager")
 root = NodePath("../..")
+
+[node name="RandomTimer" type="Timer" parent="Root/Ninja/EnemySpawner"]
+autostart = true
+script = ExtResource("7_x4gls")
 
 [node name="Player" type="Sprite2D" parent="Root/Ninja"]
 texture = ExtResource("6_yxgay")
@@ -59,4 +101,176 @@ max_health = 3
 shape = SubResource("RectangleShape2D_3nosv")
 debug_color = Color(0.985284, 0.11917, 1.92523e-07, 0.42)
 
-[node name="Camera2D" type="Camera2D" parent="Root/Ninja"]
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Root/Ninja"]
+remote_path = NodePath("../../Camera2D")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("13_we56g")
+
+[node name="PauseBlur" type="ColorRect" parent="CanvasLayer/UI"]
+visible = false
+material = SubResource("ShaderMaterial_vo7i8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("15_lu4wk")
+
+[node name="GameUI" type="Control" parent="CanvasLayer/UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Health" type="MarginContainer" parent="CanvasLayer/UI/GameUI"]
+layout_mode = 0
+offset_right = 52.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/GameUI/Health" node_paths=PackedStringArray("hurtbox")]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/separation = 0
+script = ExtResource("16_8wipx")
+icon = ExtResource("17_s6g3j")
+hurtbox = NodePath("../../../../../Root/Ninja/Hurtbox")
+
+[node name="Counter" type="MarginContainer" parent="CanvasLayer/UI/GameUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.0
+offset_right = 58.0
+offset_bottom = 18.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/GameUI/Counter" node_paths=PackedStringArray("level", "level_label", "exp_bar")]
+layout_mode = 2
+script = ExtResource("19_153g6")
+level = NodePath("../../../../../Root/Ninja/LevelManager")
+level_label = NodePath("Label")
+exp_bar = NodePath("ProgressBar")
+
+[node name="Label" type="Label" parent="CanvasLayer/UI/GameUI/Counter/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+text = "1"
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/UI/GameUI/Counter/HBoxContainer"]
+modulate = Color(1, 1, 1, 0.666667)
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_ylk8m")
+theme_override_styles/fill = SubResource("StyleBoxFlat_odckq")
+value = 27.61
+show_percentage = false
+
+[node name="Upgrades" type="MarginContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("container", "pause", "key_reader")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+script = ExtResource("20_kd5d1")
+container = NodePath("HBoxContainer")
+upgrade_scene = ExtResource("21_4m72m")
+pause = NodePath("../PauseBlur")
+key_reader = NodePath("KeyReader")
+
+[node name="KeyDelegator" type="Node" parent="CanvasLayer/UI/Upgrades"]
+script = ExtResource("22_ye7f3")
+
+[node name="KeyReader" type="Node" parent="CanvasLayer/UI/Upgrades"]
+script = ExtResource("12_h25dx")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/UI/Upgrades"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ItemPickUp" type="CenterContainer" parent="CanvasLayer/UI" node_paths=PackedStringArray("title_lbl", "icon", "desc_lbl", "name_lbl", "pause", "key_reader")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("23_iqf2q")
+title_lbl = NodePath("PanelContainer/MarginContainer/VBoxContainer/Title")
+icon = NodePath("PanelContainer/MarginContainer/VBoxContainer/Icon")
+desc_lbl = NodePath("PanelContainer/MarginContainer/VBoxContainer/Desc")
+name_lbl = NodePath("PanelContainer/MarginContainer/VBoxContainer/Name")
+pause = NodePath("../PauseBlur")
+key_reader = NodePath("KeyReader")
+
+[node name="KeyReader" type="Node" parent="CanvasLayer/UI/ItemPickUp"]
+script = ExtResource("12_h25dx")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/UI/ItemPickUp"]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/UI/ItemPickUp/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Title" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer" instance=ExtResource("24_yrf2s")]
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+texture = ExtResource("25_6rtfb")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "__SPELL__"
+horizontal_alignment = 1
+
+[node name="Desc" type="Label" parent="CanvasLayer/UI/ItemPickUp/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "__DESC__"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="timeout" from="Root/Ninja/EnemySpawner/RandomTimer" to="Root/Ninja/EnemySpawner" method="spawn"]

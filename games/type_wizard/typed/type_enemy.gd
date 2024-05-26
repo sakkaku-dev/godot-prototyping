@@ -18,7 +18,8 @@ const ENEMY_GROUP = "TypedEnemy"
 @onready var hit_box = $HitBox
 @onready var sprite_2d = $Sprite2D
 @onready var slow_timer = $SlowTimer
-@onready var player: Wizard = get_tree().get_first_node_in_group(Wizard.GROUP)
+
+@onready var ninja: TypingNinja = get_tree().get_first_node_in_group(TypingNinja.GROUP)
 
 var has_emitted_stop := false
 
@@ -45,16 +46,22 @@ func _ready():
 	slow_timer.timeout.connect(func(): slow_amount = 0.0)
 	
 	typed_word.typing.connect(func():
-		if last_typed and not typed_word.focused:
-			if last_typed.has_method("attack"):
-				last_typed.attack(self)
-		else:
-			wizard.attack(self)
+		if wizard:
+			if last_typed and not typed_word.focused:
+				if last_typed.has_method("attack"):
+					last_typed.attack(self)
+			else:
+				wizard.attack(self)
 	)
 	sprite_2d.texture = enemy_res.sprite
 
 func _process(_delta):
-	typed_word.visible = not player.pickup_enabled
+	if wizard:
+		typed_word.visible = not wizard.pickup_enabled
+	
+	if ninja:
+		typed_word.focused = typed_word.get_word().begins_with(ninja.typed) if ninja.typed != "" else false
+		typed_word.typed = ninja.typed if typed_word.focused else ""
 	
 	for area in effect_detector.get_overlapping_areas():
 		if area.has_method("apply"):
@@ -62,11 +69,18 @@ func _process(_delta):
 			
 	modulate = Color.SKY_BLUE if _get_slow_amount() > 0 else Color.WHITE
 
+func get_target_pos():
+	if ninja:
+		return ninja.global_position
+	
+	return Vector2.ZERO
+
 func _get_slow_amount():
 	return slow_amount + ice_zone_slow
 
 func _physics_process(delta):
-	var dist = global_position.distance_to(Vector2.ZERO)
+	var target = get_target_pos()
+	var dist = global_position.distance_to(target)
 	if dist <= enemy_res.move_until_distance:
 		if not has_emitted_stop:
 			stopped.emit()
@@ -78,7 +92,7 @@ func _physics_process(delta):
 		velocity = knockback
 		knockback = knockback.move_toward(Vector2.ZERO, delta * deaccel)
 	else:
-		var dir = global_position.direction_to(Vector2.ZERO)
+		var dir = global_position.direction_to(target)
 		velocity = dir * enemy_res.speed * (1 - _get_slow_amount()) * (1 if is_on_screen() else 5)
 		
 	move_and_slide()
@@ -131,3 +145,6 @@ func _maybe_drop_item(pos: Vector2):
 
 func cancel():
 	typed_word.cancel()
+
+func reset():
+	typed_word.reset()

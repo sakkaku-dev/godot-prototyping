@@ -2,7 +2,7 @@ class_name EnemySpawner
 extends Node2D
 
 signal enemy_removed(enemy)
-signal enemy_finished()
+signal enemy_finished(e)
 signal drop_finished()
 
 @export var enemy_scene: PackedScene
@@ -50,14 +50,14 @@ func _spawn_projectile(pos: Vector2, res: EnemyResource):
 
 func _add_enemy_to_scene(enemy: TypedEnemy, pos = _random_position()):
 	enemy.global_position = pos
-	enemy.finished.connect(func(): enemy_finished.emit())
+	enemy.finished.connect(func(): enemy_finished.emit(enemy))
 	enemy.dropped.connect(func(node):
 		node.finished.connect(func(): drop_finished.emit())
 		root.add_child(node)
 	)
 	enemy.removed.connect(func():
-		var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
-		enemies.erase(enemy)
+		#var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
+		#enemies.erase(enemy)
 		enemy_removed.emit(enemy)
 	)
 	root.add_child(enemy)
@@ -66,4 +66,4 @@ func get_available_enemies():
 	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP).filter(func(x): return not x.is_finished)
 
 func _random_position():
-	return (Vector2.RIGHT * enemy_spawn_distance_from_player).rotated(randf_range(0, TAU))
+	return global_position + (Vector2.RIGHT * enemy_spawn_distance_from_player).rotated(randf_range(0, TAU))
