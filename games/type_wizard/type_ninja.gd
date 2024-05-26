@@ -2,6 +2,8 @@ extends Node2D
 
 @export var spawner: EnemySpawner
 @export var ninja: TypingNinja
+@export var random_timer: RandomTimer
+
 @onready var key_reader = $KeyReader
 
 func _ready():
@@ -13,3 +15,7 @@ func _pressed_cancel(_shift: bool):
 
 func _pressed_key(key: String, _shift: bool):
 	ninja.typing(key)
+
+func _unhandled_input(event):
+	if event.is_action_pressed("ui_accept"):
+		random_timer.start()
