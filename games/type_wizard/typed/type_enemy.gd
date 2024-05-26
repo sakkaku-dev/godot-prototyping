@@ -62,6 +62,7 @@ func _process(_delta):
 	if ninja:
 		typed_word.focused = typed_word.get_word().begins_with(ninja.typed) if ninja.typed != "" else false
 		typed_word.typed = ninja.typed if typed_word.focused else ""
+		z_index = 10 if typed_word.focused else 0
 	
 	for area in effect_detector.get_overlapping_areas():
 		if area.has_method("apply"):
@@ -96,6 +97,10 @@ func _physics_process(delta):
 		velocity = dir * enemy_res.speed * (1 - _get_slow_amount()) * (1 if is_on_screen() else 5)
 		
 	move_and_slide()
+
+func apply_knockback(from: Vector2, force: float):
+	var dir = from.direction_to(global_position)
+	knockback = dir * force
 
 func auto_type(obj):
 	last_typed = obj
