@@ -38,6 +38,10 @@ func generate():
 func is_room_cleared():
 	return coord in cleared
 
+func set_room_cleared():
+	if not is_room_cleared():
+		cleared.append(coord)
+
 func _mark_item_rooms():
 	for room in rooms:
 		var close_items = items.filter(func(p): return Vector2(abs(p - room)).length() <= 2)

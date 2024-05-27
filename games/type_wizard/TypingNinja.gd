@@ -3,7 +3,6 @@ extends CharacterBody2D
 
 const GROUP = "TypingNinja"
 
-@export var enemy_spawner: EnemySpawner
 @export var knockback_force := 20
 
 @onready var level_manager = $LevelManager
@@ -67,7 +66,9 @@ func _show():
 	invincible_timer.start()
 
 func _get_typed_enemies(s: String) -> Array:
-	return enemy_spawner.get_available_enemies().filter(func(e): return e.get_word().begins_with(s))
+	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP) \
+		.filter(func(x): return not x.is_finished) \
+		.filter(func(e): return e.get_word().begins_with(s))
 
 func _get_typed_words(s: String) -> Array:
 	return get_tree().get_nodes_in_group(TypedWord.GROUP).filter(func(e): return not e.is_finished() and e.get_word().begins_with(s))

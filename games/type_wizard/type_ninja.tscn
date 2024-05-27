@@ -1,17 +1,12 @@
-[gd_scene load_steps=37 format=3 uid="uid://dqsrstph2hwg3"]
+[gd_scene load_steps=32 format=3 uid="uid://dqsrstph2hwg3"]
 
-[ext_resource type="Script" path="res://games/type_wizard/EnemySpawner.gd" id="1_aakc8"]
 [ext_resource type="Script" path="res://games/type_wizard/type_ninja.gd" id="1_h1ned"]
-[ext_resource type="PackedScene" uid="uid://bvdul7olno8c2" path="res://games/type_wizard/typed/type_enemy.tscn" id="2_6rggb"]
 [ext_resource type="Script" path="res://games/type_wizard/RoomManager.gd" id="2_cjyhs"]
-[ext_resource type="PackedScene" uid="uid://djxy0fp1fil6b" path="res://games/type_wizard/typed/type_enemy_spawner.tscn" id="3_cjmsg"]
-[ext_resource type="PackedScene" uid="uid://ny16v8jmkvch" path="res://games/type_wizard/typed/type_enemy_throw.tscn" id="4_536mb"]
 [ext_resource type="Script" path="res://games/type_wizard/DataManager.gd" id="5_h4rqp"]
 [ext_resource type="Script" path="res://games/type_wizard/TypingNinja.gd" id="5_snl4t"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="6_ewqwe"]
 [ext_resource type="Texture2D" uid="uid://daoaakwpeedy1" path="res://assets/Tiny Dungeon/Tiles/tile_0087.png" id="6_yxgay"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="7_r6cs4"]
-[ext_resource type="Script" path="res://util/RandomTimer.gd" id="7_x4gls"]
 [ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="8_l83nj"]
 [ext_resource type="Script" path="res://games/type_wizard/LevelManager.gd" id="12_3lkcv"]
 [ext_resource type="Script" path="res://games/type_wizard/KeyReader.gd" id="12_h25dx"]
@@ -53,11 +48,9 @@ bg_color = Color(0.163502, 0.163502, 0.163502, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_odckq"]
 bg_color = Color(1, 0.8815, 0.21, 1)
 
-[node name="TypeNinja" type="Node2D" node_paths=PackedStringArray("spawner", "ninja", "random_timer")]
+[node name="TypeNinja" type="Node2D" node_paths=PackedStringArray("ninja")]
 script = ExtResource("1_h1ned")
-spawner = NodePath("Root/EnemySpawner")
 ninja = NodePath("Root/Ninja")
-random_timer = NodePath("Root/EnemySpawner/RandomTimer")
 
 [node name="RoomManager" type="Node" parent="."]
 script = ExtResource("2_cjyhs")
@@ -68,7 +61,8 @@ script = ExtResource("12_h25dx")
 [node name="DataManager" type="Node" parent="."]
 script = ExtResource("5_h4rqp")
 
-[node name="TypeRoom" parent="." instance=ExtResource("30_cv3xf")]
+[node name="TypeRoom" parent="." node_paths=PackedStringArray("player") instance=ExtResource("30_cv3xf")]
+player = NodePath("../Root/Ninja")
 
 [node name="Root" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -82,23 +76,8 @@ script = ExtResource("6_ewqwe")
 script = ExtResource("7_r6cs4")
 tween_resource = SubResource("Resource_c7t1a")
 
-[node name="EnemySpawner" type="Node2D" parent="Root" node_paths=PackedStringArray("data", "root")]
-script = ExtResource("1_aakc8")
-enemy_scene = ExtResource("2_6rggb")
-enemy_spawner_scene = ExtResource("3_cjmsg")
-enemy_thrower_scene = ExtResource("4_536mb")
-spawner_enemy_chance = 0.0
-throw_enemy_chance = 0.0
-enemy_spawn_distance_from_player = 280
-data = NodePath("../../DataManager")
-root = NodePath("..")
-
-[node name="RandomTimer" type="Timer" parent="Root/EnemySpawner"]
-script = ExtResource("7_x4gls")
-
-[node name="Ninja" type="CharacterBody2D" parent="Root" node_paths=PackedStringArray("enemy_spawner") groups=["TypingNinja"]]
+[node name="Ninja" type="CharacterBody2D" parent="Root" groups=["TypingNinja"]]
 script = ExtResource("5_snl4t")
-enemy_spawner = NodePath("../EnemySpawner")
 
 [node name="InvincibleTimer" type="Timer" parent="Root/Ninja"]
 one_shot = true
@@ -309,5 +288,3 @@ layout_mode = 2
 text = "__DESC__"
 horizontal_alignment = 1
 autowrap_mode = 3
-
-[connection signal="timeout" from="Root/EnemySpawner/RandomTimer" to="Root/EnemySpawner" method="spawn"]
