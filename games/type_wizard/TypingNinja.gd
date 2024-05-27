@@ -34,21 +34,22 @@ func _enemy_finished(enemy: TypedEnemy):
 
 func typing(key: String):
 	var word = typed + key
-	var enemies = _get_enemies_for_typed(word)
+	var enemies = _get_typed_enemies(word)
 	if enemies.is_empty():
-		reset()
-		return
-		#word = key
-		#enemies = _get_enemies_for_typed(word)
-	
-	for enemy in enemies:
-		if enemy.get_word() == word:
-			_enemy_finished(enemy)
+		var words = _get_typed_words(word)
+		if words.is_empty():
+			reset()
 			return
+	else:
+		for enemy in enemies:
+			if enemy.get_word() == word:
+				_enemy_finished(enemy)
+				return
+		
+		if not enemies.is_empty():
+			_hide()
 	
 	typed = word
-	if not enemies.is_empty():
-		_hide()
 
 
 func _hide():
@@ -65,6 +66,8 @@ func _show():
 	show()
 	invincible_timer.start()
 
-func _get_enemies_for_typed(s: String) -> Array:
+func _get_typed_enemies(s: String) -> Array:
 	return enemy_spawner.get_available_enemies().filter(func(e): return e.get_word().begins_with(s))
 
+func _get_typed_words(s: String) -> Array:
+	return get_tree().get_nodes_in_group(TypedWord.GROUP).filter(func(e): return not e.is_finished() and e.get_word().begins_with(s))

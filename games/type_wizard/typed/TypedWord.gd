@@ -7,10 +7,13 @@ signal typing()
 signal type_finish()
 signal type_start()
 
+@export var independent := true
 @export var text_color := Color.BLACK
 @export var highlight_color := Color("0084d3")
 @export var highlight_first := true
 @export var jump := true
+
+@onready var ninja: TypingNinja = get_tree().get_first_node_in_group(TypingNinja.GROUP)
 
 @export var word = "":
 	set(v):
@@ -38,13 +41,20 @@ var focused := false:
 
 func _ready():
 	self.focused = false
-	add_to_group(GROUP)
+	if independent:
+		add_to_group(GROUP)
+	
 	add_theme_constant_override("outline_size", 5)
+
+func _process(delta):
+	if ninja:
+		self.focused = word.begins_with(ninja.typed) if ninja.typed != "" else false
+		self.typed = ninja.typed if focused else ""
 
 func get_remaining_word():
 	return word.substr(typed.length())
 
-func is_fully_hit():
+func is_finished():
 	return hit >= word.length()
 
 func update_word():

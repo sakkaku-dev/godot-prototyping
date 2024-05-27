@@ -55,6 +55,7 @@ offset_right = 46.5
 offset_bottom = 8.0
 grow_horizontal = 2
 text = "__test__"
+independent = false
 highlight_first = false
 jump = false
 

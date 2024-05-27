@@ -19,8 +19,6 @@ const ENEMY_GROUP = "TypedEnemy"
 @onready var sprite_2d = $Sprite2D
 @onready var slow_timer = $SlowTimer
 
-@onready var ninja: TypingNinja = get_tree().get_first_node_in_group(TypingNinja.GROUP)
-
 var has_emitted_stop := false
 
 var burn_amount := 0.0:
@@ -59,10 +57,7 @@ func _process(_delta):
 	if wizard:
 		typed_word.visible = not wizard.pickup_enabled
 	
-	if ninja:
-		typed_word.focused = typed_word.get_word().begins_with(ninja.typed) if ninja.typed != "" else false
-		typed_word.typed = ninja.typed if typed_word.focused else ""
-		z_index = 10 if typed_word.focused else 0
+	z_index = 10 if typed_word.focused else 0
 	
 	for area in effect_detector.get_overlapping_areas():
 		if area.has_method("apply"):
@@ -71,8 +66,8 @@ func _process(_delta):
 	modulate = Color.SKY_BLUE if _get_slow_amount() > 0 else Color.WHITE
 
 func get_target_pos():
-	if ninja:
-		return ninja.global_position
+	if typed_word.ninja:
+		return typed_word.ninja.global_position
 	
 	return Vector2.ZERO
 
@@ -114,12 +109,12 @@ func hit(obj = null):
 	last_typed = obj
 	typed_word.hit += 1
 	
-	if typed_word.is_fully_hit():
+	if typed_word.is_finished():
 		_maybe_drop_item(global_position)
 		removed.emit()
 
 func full_hit():
-	while not typed_word.is_fully_hit():
+	while not typed_word.is_finished():
 		hit()
 
 func burn():
