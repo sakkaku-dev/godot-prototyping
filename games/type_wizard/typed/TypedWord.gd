@@ -1,6 +1,8 @@
 class_name TypedWord
 extends RichTextLabel
 
+const GROUP = "TypedWord"
+
 signal typing()
 signal type_finish()
 signal type_start()
@@ -10,7 +12,7 @@ signal type_start()
 @export var highlight_first := true
 @export var jump := true
 
-var word = "":
+@export var word = "":
 	set(v):
 		word = v.to_lower().strip_edges()
 		typed = ""
@@ -36,6 +38,7 @@ var focused := false:
 
 func _ready():
 	self.focused = false
+	add_to_group(GROUP)
 	add_theme_constant_override("outline_size", 5)
 
 func get_remaining_word():

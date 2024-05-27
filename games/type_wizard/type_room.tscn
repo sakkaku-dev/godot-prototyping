@@ -1,0 +1,87 @@
+[gd_scene load_steps=4 format=3 uid="uid://41nya1hpni78"]
+
+[ext_resource type="TileSet" uid="uid://qb3qobjripr6" path="res://games/type_wizard/type_wizard.tres" id="1_8q3ap"]
+[ext_resource type="Script" path="res://games/type_wizard/TypeDoor.gd" id="2_85l8b"]
+[ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="2_hr713"]
+
+[node name="TypeRoom" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("1_8q3ap")
+format = 2
+
+[node name="LeftDoor" type="Node2D" parent="."]
+position = Vector2(-349, 0)
+script = ExtResource("2_85l8b")
+
+[node name="TypedWord" parent="LeftDoor" instance=ExtResource("2_hr713")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -4.0
+offset_right = 26.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+highlight_first = false
+word = "left"
+
+[node name="RightDoor" type="Node2D" parent="."]
+position = Vector2(302, 0)
+script = ExtResource("2_85l8b")
+
+[node name="TypedWord" parent="RightDoor" instance=ExtResource("2_hr713")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -4.0
+offset_right = 26.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+highlight_first = false
+word = "right"
+
+[node name="UpDoor" type="Node2D" parent="."]
+position = Vector2(0, -158)
+script = ExtResource("2_85l8b")
+
+[node name="TypedWord" parent="UpDoor" instance=ExtResource("2_hr713")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -4.0
+offset_right = 26.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+highlight_first = false
+word = "up"
+
+[node name="DownDoor" type="Node2D" parent="."]
+position = Vector2(0, 152)
+script = ExtResource("2_85l8b")
+
+[node name="TypedWord" parent="DownDoor" instance=ExtResource("2_hr713")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.5
+offset_top = -4.0
+offset_right = 26.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+highlight_first = false
+word = "down"

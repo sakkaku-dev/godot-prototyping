@@ -5,6 +5,7 @@ extends Node2D
 @export var random_timer: RandomTimer
 
 @onready var key_reader = $KeyReader
+@onready var room_manager = $RoomManager
 
 func _ready():
 	key_reader.pressed_key.connect(_pressed_key)
