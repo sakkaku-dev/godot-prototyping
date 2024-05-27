@@ -9,21 +9,17 @@ extends Node2D
 @onready var up_door = $UpDoor
 @onready var down_door = $DownDoor
 
+@onready var chest = $Chest
 @onready var tile_map = $TileMap
 @onready var enemy_spawner = $EnemySpawner
+
+@onready var doors = [left_door, right_door, up_door, down_door]
 
 var enemies := 0
 var move_dir: Vector2i
 
 func _ready():
-	var doors = [left_door, right_door, up_door, down_door]
-	
-	for d in doors:
-		d.move.connect(func(dir):
-			room_manager.coord += dir
-			move_dir = dir
-		)
-		_update_door(d)
+	_initialize()
 	
 	enemy_spawner.enemy_removed.connect(func(e):
 		enemies -= 1
@@ -34,6 +30,8 @@ func _ready():
 	)
 	room_manager.changed.connect(func():
 		await SceneManager.fade_out()
+		chest.hide()
+		
 		var target_door = null
 		for d in doors:
 			_update_door(d)
@@ -41,7 +39,10 @@ func _ready():
 				target_door = d
 			
 		if not room_manager.is_room_cleared():
-			enemies = enemy_spawner.spawn_enemies(player)
+			if room_manager.is_enemy_room():
+				enemies = enemy_spawner.spawn_enemies(player)
+			elif room_manager.is_item_room():
+				chest.show()
 		
 		if target_door:
 			player.global_position = target_door.global_position
@@ -49,6 +50,16 @@ func _ready():
 		await get_tree().create_timer(0.5).timeout
 		await SceneManager.fade_in()
 	)
+	
+	chest.picked_up.connect(func(): print("Received item"))
+
+func _initialize():
+	for d in doors:
+		d.move.connect(func(dir):
+			room_manager.coord += dir
+			move_dir = dir
+		)
+		_update_door(d)
 
 func _update_door(door):
 	door.update(door.dir in room_manager.get_linked_dirs() and room_manager.is_room_cleared())

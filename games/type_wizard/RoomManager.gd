@@ -22,6 +22,7 @@ const DIRS = [Vector2i.LEFT, Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN]
 		changed.emit()
 
 var boss_room: Vector2i
+var pre_boss_room: Vector2i
 var rooms = {}
 var items = []
 
@@ -35,8 +36,20 @@ func generate():
 	_mark_boss_room()
 	self.coord = spawn
 
+func is_item_room():
+	return coord in items
+
+func is_boss_room():
+	return coord == boss_room
+
+func is_pre_boss_room():
+	return coord == pre_boss_room
+
+func is_enemy_room():
+	return not is_item_room() and not is_boss_room() and not is_pre_boss_room()
+
 func is_room_cleared():
-	return coord in cleared
+	return coord in cleared or is_item_room() or is_pre_boss_room()
 
 func set_room_cleared():
 	if not is_room_cleared():
@@ -49,7 +62,12 @@ func _mark_item_rooms():
 			items.append(room)
 
 func _mark_boss_room():
-	boss_room = _get_random_boss_room()
+	var x = _get_random_boss_room()
+	if x.is_empty():
+		return
+	
+	pre_boss_room = x[0]
+	boss_room = x[1]
 	rooms[boss_room] = {}
 
 func _get_random_boss_room():
@@ -60,9 +78,9 @@ func _get_random_boss_room():
 		for dir in _get_unlinked_dirs(room):
 			var pos = room + dir
 			if get_linked_dirs(pos).size() == 1 and not pos in items:
-				return pos
+				return [room, pos]
 	
-	return null
+	return []
 
 func _get_unlinked_dirs(pos: Vector2i) -> Array:
 	return _get_available_dirs(pos).filter(func(d): return not (pos + d) in rooms)

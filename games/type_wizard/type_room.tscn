@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://41nya1hpni78"]
+[gd_scene load_steps=11 format=3 uid="uid://41nya1hpni78"]
 
 [ext_resource type="TileSet" uid="uid://qb3qobjripr6" path="res://games/type_wizard/type_wizard.tres" id="1_8q3ap"]
 [ext_resource type="Script" path="res://games/type_wizard/type_room.gd" id="1_vaoo0"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://djxy0fp1fil6b" path="res://games/type_wizard/typed/type_enemy_spawner.tscn" id="7_13au6"]
 [ext_resource type="PackedScene" uid="uid://ny16v8jmkvch" path="res://games/type_wizard/typed/type_enemy_throw.tscn" id="8_mflrm"]
 [ext_resource type="Script" path="res://games/type_wizard/DataManager.gd" id="9_eau8a"]
+[ext_resource type="Script" path="res://games/type_wizard/Chest.gd" id="10_xvgue"]
 
 [node name="TypeRoom" type="Node2D"]
 script = ExtResource("1_vaoo0")
@@ -109,3 +110,9 @@ tile_map = NodePath("../TileMap")
 
 [node name="DataManager" type="Node" parent="."]
 script = ExtResource("9_eau8a")
+
+[node name="Chest" type="Node2D" parent="."]
+script = ExtResource("10_xvgue")
+
+[node name="TypedWord" parent="Chest" instance=ExtResource("2_hr713")]
+word = "chest"
