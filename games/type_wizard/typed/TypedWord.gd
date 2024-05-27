@@ -24,6 +24,10 @@ var typed = "":
 	set(v):
 		typed = v
 		update_word()
+		
+		if independent and typed == word and not emitted_finished:
+			emitted_finished = true
+			type_finish.emit()
 var hit := 0:
 	set(v):
 		hit = v
@@ -32,6 +36,7 @@ var hit := 0:
 			auto_type()
 		
 		update_word()
+var emitted_finished := false
 
 var focused := false:
 	set(v):
@@ -84,11 +89,14 @@ func handle_key(key: String, grab_focus = true):
 		typed += " ".repeat(_get_num_of_spaces(typed.length()))
 		typing.emit()
 		
-		if typed == word:
-			type_finish.emit()
+		check_word()
 		return true
 	
 	return false
+
+func check_word():
+	if typed == word:
+		type_finish.emit()
 
 func get_word():
 	return word
@@ -110,3 +118,4 @@ func cancel():
 func reset():
 	self.word = word
 	self.focused = false
+	emitted_finished = false

@@ -35,8 +35,9 @@ func _enemy_finished(enemy: TypedEnemy):
 func typing(key: String):
 	var word = typed + key
 	var enemies = _get_typed_enemies(word)
+	var words = []
 	if enemies.is_empty():
-		var words = _get_typed_words(word)
+		words = _get_typed_words(word)
 		if words.is_empty():
 			reset()
 			return
@@ -50,7 +51,6 @@ func typing(key: String):
 			_hide()
 	
 	typed = word
-
 
 func _hide():
 	hide()

@@ -14,6 +14,10 @@ const DIRS = [Vector2i.LEFT, Vector2i.UP, Vector2i.RIGHT, Vector2i.DOWN]
 @onready var cleared = [spawn]
 @onready var coord: Vector2i = spawn:
 	set(v):
+		if not coord in rooms:
+			print("Invalid move to %s" % coord)
+			return
+		
 		coord = v
 		changed.emit()
 
@@ -51,7 +55,7 @@ func _get_random_boss_room():
 	for room in room_keys:
 		for dir in _get_unlinked_dirs(room):
 			var pos = room + dir
-			if _get_linked_dirs(pos).size() == 1 and not pos in items:
+			if get_linked_dirs(pos).size() == 1 and not pos in items:
 				return pos
 	
 	return null
@@ -59,7 +63,7 @@ func _get_random_boss_room():
 func _get_unlinked_dirs(pos: Vector2i) -> Array:
 	return _get_available_dirs(pos).filter(func(d): return not (pos + d) in rooms)
 
-func _get_linked_dirs(pos: Vector2i) -> Array:
+func get_linked_dirs(pos: Vector2i = coord) -> Array:
 	return _get_available_dirs(pos).filter(func(d): return (pos + d) in rooms)
 
 func _get_available_dirs(pos: Vector2i):

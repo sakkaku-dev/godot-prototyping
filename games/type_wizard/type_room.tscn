@@ -1,17 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://41nya1hpni78"]
+[gd_scene load_steps=5 format=3 uid="uid://41nya1hpni78"]
 
 [ext_resource type="TileSet" uid="uid://qb3qobjripr6" path="res://games/type_wizard/type_wizard.tres" id="1_8q3ap"]
+[ext_resource type="Script" path="res://games/type_wizard/type_room.gd" id="1_vaoo0"]
 [ext_resource type="Script" path="res://games/type_wizard/TypeDoor.gd" id="2_85l8b"]
 [ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="2_hr713"]
 
 [node name="TypeRoom" type="Node2D"]
+script = ExtResource("1_vaoo0")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_8q3ap")
 format = 2
 
 [node name="LeftDoor" type="Node2D" parent="."]
-position = Vector2(-349, 0)
+position = Vector2(-277, 0)
 script = ExtResource("2_85l8b")
 
 [node name="TypedWord" parent="LeftDoor" instance=ExtResource("2_hr713")]
@@ -30,8 +32,9 @@ highlight_first = false
 word = "left"
 
 [node name="RightDoor" type="Node2D" parent="."]
-position = Vector2(302, 0)
+position = Vector2(272, 0)
 script = ExtResource("2_85l8b")
+dir = Vector2i(1, 0)
 
 [node name="TypedWord" parent="RightDoor" instance=ExtResource("2_hr713")]
 anchors_preset = 8
@@ -51,6 +54,7 @@ word = "right"
 [node name="UpDoor" type="Node2D" parent="."]
 position = Vector2(0, -158)
 script = ExtResource("2_85l8b")
+dir = Vector2i(0, -1)
 
 [node name="TypedWord" parent="UpDoor" instance=ExtResource("2_hr713")]
 anchors_preset = 8
@@ -70,6 +74,7 @@ word = "up"
 [node name="DownDoor" type="Node2D" parent="."]
 position = Vector2(0, 152)
 script = ExtResource("2_85l8b")
+dir = Vector2i(0, 1)
 
 [node name="TypedWord" parent="DownDoor" instance=ExtResource("2_hr713")]
 anchors_preset = 8
