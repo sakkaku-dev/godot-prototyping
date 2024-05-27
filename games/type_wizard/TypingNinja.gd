@@ -40,7 +40,7 @@ func typing(key: String):
 		words = _get_typed_words(word)
 		if words.is_empty():
 			reset()
-			return
+			word = key
 	else:
 		for enemy in enemies:
 			if enemy.get_word() == word:

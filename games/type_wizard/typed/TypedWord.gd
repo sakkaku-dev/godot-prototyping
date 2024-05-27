@@ -12,6 +12,7 @@ signal type_start()
 @export var highlight_color := Color("0084d3")
 @export var highlight_first := true
 @export var jump := true
+@export var enabled := true
 
 @onready var ninja: TypingNinja = get_tree().get_first_node_in_group(TypingNinja.GROUP)
 
@@ -52,7 +53,7 @@ func _ready():
 	add_theme_constant_override("outline_size", 5)
 
 func _process(delta):
-	if ninja:
+	if ninja and enabled:
 		self.focused = word.begins_with(ninja.typed) if ninja.typed != "" else false
 		self.typed = ninja.typed if focused else ""
 

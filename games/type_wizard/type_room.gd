@@ -12,8 +12,16 @@ func _ready():
 	
 	for d in doors:
 		d.move.connect(func(dir): room_manager.coord += dir)
+		_update_door(d)
 	
 	room_manager.changed.connect(func():
+		await SceneManager.fade_out()
 		for d in doors:
-			d.update()
+			_update_door(d)
+		
+		await get_tree().create_timer(0.5).timeout
+		await SceneManager.fade_in()
 	)
+
+func _update_door(door):
+	door.update(door.dir in room_manager.get_linked_dirs() and room_manager.is_room_cleared())
