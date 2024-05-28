@@ -3,6 +3,7 @@ extends CharacterBody2D
 
 const GROUP = "TypingNinja"
 
+@export var speed := 30
 @export var knockback_force := 20
 
 @onready var level_manager = $LevelManager
@@ -11,12 +12,20 @@ const GROUP = "TypingNinja"
 @onready var push_back = $PushBack
 @onready var invincible_timer = $InvincibleTimer
 
+var move_target
 var typed := ""
 
 func _ready():
 	add_to_group(GROUP)
 	type_timer.timeout.connect(reset)
 	invincible_timer.timeout.connect(func(): hurtbox.monitorable = true)
+
+func _physics_process(delta):
+	if move_target == null: return
+	
+	var dir = global_position.direction_to(move_target)
+	velocity = dir * speed
+	move_and_slide()
 
 func killed(enemy: TypedEnemy):
 	level_manager.receive_exp(enemy)

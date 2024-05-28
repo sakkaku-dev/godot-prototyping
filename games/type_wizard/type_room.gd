@@ -31,6 +31,7 @@ func _ready():
 	room_manager.changed.connect(func():
 		await SceneManager.fade_out()
 		chest.hide()
+		player.move_target = null
 		
 		var target_door = null
 		for d in doors:
@@ -38,14 +39,16 @@ func _ready():
 			if d.dir == -move_dir:
 				target_door = d
 			
-		if not room_manager.is_room_cleared():
-			if room_manager.is_enemy_room():
-				enemies = enemy_spawner.spawn_enemies(player)
-			elif room_manager.is_item_room():
-				chest.show()
+		if room_manager.is_enemy_room() and not room_manager.is_room_cleared():
+			enemies = enemy_spawner.spawn_enemies(player)
+		
+		if room_manager.is_item_room():
+			chest.set_word("chest")
 		
 		if target_door:
 			player.global_position = target_door.global_position
+			#if room_manager.is_room_cleared():
+				#player.move_target = global_position
 		
 		await get_tree().create_timer(0.5).timeout
 		await SceneManager.fade_in()
@@ -56,6 +59,7 @@ func _ready():
 func _initialize():
 	for d in doors:
 		d.move.connect(func(dir):
+			#player.move_target = d.global_position
 			room_manager.coord += dir
 			move_dir = dir
 		)

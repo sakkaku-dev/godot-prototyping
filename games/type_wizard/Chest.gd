@@ -12,3 +12,7 @@ func _ready():
 		picked_up.emit()
 		hide()
 	)
+
+func set_word(w):
+	typed_word.word = w
+	show()
