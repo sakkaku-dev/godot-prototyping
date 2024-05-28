@@ -49,6 +49,8 @@ var pickup_enabled := false
 var combo := 0
 var next_attack
 
+var typed := ""
+
 func _ready():
 	add_to_group(GROUP)
 	spells_shortcut.changed.connect(func(a): self.casting = a)
@@ -56,9 +58,6 @@ func _ready():
 	
 func _process(delta):
 	pickup_enabled = pickup_shortcut.active
-
-func killed_enemy(e):
-	level_manager.receive_exp(e)
 
 func attack(target: TypedCharacter):
 	if next_attack:
@@ -78,11 +77,33 @@ func attack(target: TypedCharacter):
 	
 	get_tree().current_scene.add_child(node)
 
-func handled_key(is_valid: bool):
-	if is_valid:
-		combo += 1
-	else:
-		combo = 0
+func handle_key(key: String):
+	var word = typed + key
+	var enemies = _get_typed_enemies(word)
+	var words = []
+	if enemies.is_empty():
+		cancel()
+		word = key
+		enemies = _get_typed_enemies(word)
+	
+	for enemy in enemies:
+		if enemy.get_word() == word:
+			enemy.removed.emit()
+			killed_enemy(enemy)
+			return
+
+	typed = word
+
+func killed_enemy(e):
+	level_manager.receive_exp(e)
+
+func cancel():
+	typed = ""
+
+func _get_typed_enemies(s: String) -> Array:
+	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP) \
+		.filter(func(x): return not x.is_finished) \
+		.filter(func(e): return e.get_word().begins_with(s))
 
 func get_combo_percentage():
 	return combo / float(max_combo)

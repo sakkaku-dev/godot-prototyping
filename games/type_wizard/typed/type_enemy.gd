@@ -56,6 +56,10 @@ func _ready():
 func _process(_delta):
 	typed_word.visible = not player.pickup_enabled
 	
+	if player:
+		typed_word.focused = typed_word.word.begins_with(player.typed) and player.typed != ""
+		typed_word.typed = player.typed if typed_word.focused else ""
+	
 	for area in effect_detector.get_overlapping_areas():
 		if area.has_method("apply"):
 			area.apply(self)

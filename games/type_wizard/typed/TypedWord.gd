@@ -10,6 +10,7 @@ signal type_start()
 @export var highlight_first := true
 @export var jump := true
 
+
 var word = "":
 	set(v):
 		word = v.to_lower().strip_edges()

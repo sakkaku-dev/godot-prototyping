@@ -61,41 +61,45 @@ func _pressed_key(key: String, _shift: bool):
 		scrolls.handle_key(key)
 		return
 
-	if wizard.pickup_enabled:
-		if not pickup_word:
-			var drops = get_tree().get_nodes_in_group(TypedDrop.DROP_GROUP)
-			pickup_word = _find_first_words_with(key, drops)
-			print("Searching for pickup item: %s" % pickup_word)
-			
-		_handle_key(key, pickup_word)
-	else:
-		if not enemy_word:
-			var enemies = enemy_spawner.get_available_enemies()
-			enemy_word = _find_first_words_with(key, enemies)
-			print("Searching for enemy: %s" % enemy_word)
-		
-		_handle_key(key, enemy_word)
+	wizard.handle_key(key)
 
-func _handle_key(key, word):
-	var correctly_handled = false
-	if word:
-		correctly_handled = word.handle_key(key)
-	
-	wizard.handled_key(correctly_handled)
+	#if wizard.pickup_enabled:
+		#if not pickup_word:
+			#var drops = get_tree().get_nodes_in_group(TypedDrop.DROP_GROUP)
+			#pickup_word = _find_first_words_with(key, drops)
+			#print("Searching for pickup item: %s" % pickup_word)
+			#
+		#_handle_key(key, pickup_word)
+	#else:
+		#if not enemy_word:
+			#var enemies = enemy_spawner.get_available_enemies()
+			#enemy_word = _find_first_words_with(key, enemies)
+			#print("Searching for enemy: %s" % enemy_word)
+		#
+		#_handle_key(key, enemy_word)
+
+#func _handle_key(key, word):
+	#var correctly_handled = false
+	#if word:
+		#correctly_handled = word.handle_key(key)
+	#
+	#wizard.handled_key(correctly_handled)
 
 func _cancel_word(_shift: bool):
 	if wizard.casting:
 		scrolls.cancel()
 		return
+		
+	wizard.cancel()
 	
-	if wizard.pickup_enabled:
-		if not pickup_word: return
-		#pickup_word.cancel()
-		#pickup_word = null
-	else:
-		if not enemy_word: return
-		enemy_word.cancel()
-		enemy_word = null
+	#if wizard.pickup_enabled:
+		#if not pickup_word: return
+		##pickup_word.cancel()
+		##pickup_word = null
+	#else:
+		#if not enemy_word: return
+		#enemy_word.cancel()
+		#enemy_word = null
 
 func _find_first_words_with(key: String, nodes: Array):
 	var matches = []
