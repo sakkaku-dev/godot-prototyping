@@ -88,27 +88,6 @@ func handle_key(key: String):
 	key_delegator.nodes = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP).filter(func(x): return not x.is_finished)
 	key_delegator.handle_key(key)
 	typed = key_delegator.typed
-	
-	#var word = typed + key
-	#var enemies = _get_typed_enemies(word)
-	#var words = []
-	#if enemies.is_empty():
-		#cancel()
-		#word = key
-		#enemies = _get_typed_enemies(word)
-		#
-	#if not enemies.is_empty() and word.length() == 1:
-		#wpm_calculator.start_type()
-	#
-	#for enemy in enemies:
-		#if enemy.get_word() == word:
-			#enemy.finish_word()
-			#wpm_calculator.finish_type(word)
-			#attack(enemy)
-			#typed = ""
-			#return
-#
-	#typed = word
 
 func killed_enemy(e):
 	level_manager.receive_exp(e)
