@@ -47,10 +47,10 @@ func _update_typed():
 			node.set_typed(typed)
 
 		if node.get_word() == typed and not found:
-			finished.emit(node)
-			found = true
 			if wpm_calc:
 				wpm_calc.finish_type(typed)
+			finished.emit(node)
+			found = true
 			cancel()
 
 func _get_nodes_starting_with(nodes: Array, text: String) -> Array:

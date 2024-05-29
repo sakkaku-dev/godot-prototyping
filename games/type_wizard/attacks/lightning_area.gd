@@ -23,6 +23,7 @@ func _lightning_chain():
 	for body in bodies:
 		if body == null or body.is_queued_for_deletion(): continue
 		body.finish_word()
+		body.hit_health()
 		
 		var line = load(SCENE).instantiate()
 		line.current = current.duplicate()

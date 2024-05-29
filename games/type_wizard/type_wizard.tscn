@@ -139,6 +139,10 @@ shield_scene = ExtResource("16_wjmef")
 ice_zone_scene = ExtResource("14_q13o7")
 fireball_scene = ExtResource("15_muf88")
 
+[node name="KeyDelegator" type="Node" parent="Root/Wizard" node_paths=PackedStringArray("wpm_calc")]
+script = ExtResource("30_ma2c0")
+wpm_calc = NodePath("../../../WPMCalculator")
+
 [node name="LevelManager" type="Node" parent="Root/Wizard"]
 script = ExtResource("16_aar1a")
 

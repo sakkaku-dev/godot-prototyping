@@ -36,6 +36,7 @@ signal level_up()
 @onready var waiting_spell = $WaitingSpell
 @onready var level_manager = $LevelManager
 @onready var player = $Player
+@onready var key_delegator = $KeyDelegator
 
 var resistances: Array[UpgradeResourceResistance] = []
 var attacks: Array[UpgradeResourceAttack] = []
@@ -57,6 +58,10 @@ func _ready():
 	add_to_group(GROUP)
 	spells_shortcut.changed.connect(func(a): self.casting = a)
 	level_manager.level_up.connect(func(_lvl): level_up.emit())
+	key_delegator.finished.connect(func(enemy):
+		enemy.finish_word()
+		attack(enemy)
+	)
 	
 func _process(delta):
 	pickup_enabled = pickup_shortcut.active
@@ -80,33 +85,37 @@ func attack(target: TypedCharacter):
 	get_tree().current_scene.add_child(node)
 
 func handle_key(key: String):
-	var word = typed + key
-	var enemies = _get_typed_enemies(word)
-	var words = []
-	if enemies.is_empty():
-		cancel()
-		word = key
-		enemies = _get_typed_enemies(word)
-		
-	if not enemies.is_empty() and word.length() == 1:
-		wpm_calculator.start_type()
+	key_delegator.nodes = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP).filter(func(x): return not x.is_finished)
+	key_delegator.handle_key(key)
+	typed = key_delegator.typed
 	
-	for enemy in enemies:
-		if enemy.get_word() == word:
-			enemy.finish_word()
-			wpm_calculator.finish_type(word)
-			attack(enemy)
-			typed = ""
-			return
-
-	typed = word
+	#var word = typed + key
+	#var enemies = _get_typed_enemies(word)
+	#var words = []
+	#if enemies.is_empty():
+		#cancel()
+		#word = key
+		#enemies = _get_typed_enemies(word)
+		#
+	#if not enemies.is_empty() and word.length() == 1:
+		#wpm_calculator.start_type()
+	#
+	#for enemy in enemies:
+		#if enemy.get_word() == word:
+			#enemy.finish_word()
+			#wpm_calculator.finish_type(word)
+			#attack(enemy)
+			#typed = ""
+			#return
+#
+	#typed = word
 
 func killed_enemy(e):
 	level_manager.receive_exp(e)
 
 func cancel():
-	typed = ""
-	wpm_calculator.cancel_type()
+	key_delegator.cancel()
+	typed = key_delegator.typed
 
 func _get_typed_enemies(s: String) -> Array:
 	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP) \
