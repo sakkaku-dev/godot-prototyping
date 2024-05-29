@@ -58,21 +58,6 @@ func _cancel_word(_shift: bool):
 		
 	wizard.cancel()
 
-func _find_first_words_with(key: String, nodes: Array):
-	var matches = []
-	for node in nodes:
-		if not node.is_on_screen(): continue
-		
-		if node.get_remaining_word().to_lower().begins_with(key.to_lower()):
-			matches.append(node)
-	
-	var closest = null
-	for m in matches:
-		if closest == null or m.global_position.length() < closest.global_position.length():
-			closest = m
-	
-	return closest
-
 func _on_pickup_area_picked_up(type):
 	if type == "scrolls":
 		var scroll = data_manager.get_random_spell()

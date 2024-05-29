@@ -34,6 +34,7 @@ signal level_up()
 @onready var hurtbox = $Hurtbox
 @onready var waiting_spell = $WaitingSpell
 @onready var level_manager = $LevelManager
+@onready var player = $Player
 
 var resistances: Array[UpgradeResourceResistance] = []
 var attacks: Array[UpgradeResourceAttack] = []
@@ -61,15 +62,13 @@ func _process(delta):
 
 func attack(target: TypedCharacter):
 	if next_attack:
-		if target.get_remaining_word() == "":
-			next_attack.fire(target)
-			next_attack = null
+		next_attack.fire(target)
+		next_attack = null
 		return
 	
 	var node = attack_scene.instantiate()
-	node.global_position = global_position
+	node.global_position = player.global_position
 	node.target = target
-	#node.add_speed_multipler(get_combo_percentage())
 	
 	for atk in attacks:
 		if atk.effect == null: continue
@@ -88,7 +87,8 @@ func handle_key(key: String):
 	
 	for enemy in enemies:
 		if enemy.get_word() == word:
-			enemy.hit_health()
+			enemy.finish_word()
+			attack(enemy)
 			return
 
 	typed = word

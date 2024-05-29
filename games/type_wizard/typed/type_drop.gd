@@ -18,7 +18,6 @@ var highlight := false:
 		typed_word.visible = v
 
 func _ready():
-	super._ready()
 	add_to_group(DROP_GROUP)
 	self.highlight = false
 	

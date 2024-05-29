@@ -43,9 +43,6 @@ script = ExtResource("5_e6ckt")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("RectangleShape2D_75di2")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-scale = Vector2(0.7, 0.7)
-
 [node name="TypedWord" parent="." instance=ExtResource("5_kqypf")]
 anchors_preset = 5
 anchor_left = 0.5
@@ -67,3 +64,5 @@ collision_mask = 128
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EffectDetector"]
 shape = SubResource("CircleShape2D_weibh")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

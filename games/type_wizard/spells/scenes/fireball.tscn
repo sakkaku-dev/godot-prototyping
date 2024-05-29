@@ -7,8 +7,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_af3de"]
 shader = ExtResource("3_ls5wx")
 shader_parameter/radius = 1.0
+shader_parameter/inner_radius = 0.0
 shader_parameter/fill = 1.0
+shader_parameter/blur = 0.0001
 shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/inner_color = Color(0, 0, 0, 0)
 
 [node name="Fireball" type="CharacterBody2D"]
 script = ExtResource("1_t4urm")
