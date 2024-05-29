@@ -1,6 +1,13 @@
 class_name TypedEnemy
 extends TypedCharacter
 
+enum Type {
+	PROJECTILE,
+	NORMAL,
+	SPAWNER,
+	THROWER,
+}
+
 signal removed()
 signal dropped(node)
 signal stopped()
@@ -11,6 +18,7 @@ const ENEMY_GROUP = "TypedEnemy"
 @export var drop_scene: PackedScene
 @export var deaccel := 30
 @export var max_burn := 100
+@export var type := Type.NORMAL
 
 @export var lightning_scene: PackedScene
 
@@ -19,6 +27,7 @@ const ENEMY_GROUP = "TypedEnemy"
 @onready var sprite_2d = $Sprite2D
 @onready var slow_timer = $SlowTimer
 @onready var player: Wizard = get_tree().get_first_node_in_group(Wizard.GROUP)
+@onready var data: DataManager = get_tree().get_first_node_in_group(DataManager.GROUP)
 
 var has_emitted_stop := false
 
@@ -33,13 +42,22 @@ var slow_amount := 0.0
 var knockback := Vector2.ZERO
 var last_typed
 
+var is_finished := false
+var health := 1
+
 func _ready():
-	super._ready()
-	add_to_group(ENEMY_GROUP)
 	finished.connect(func():
-		typed_word.cancel()
-		z_index = 0
+		if health <= 0:
+			is_finished = true
+			typed_word.cancel()
+			removed.emit()
+		else:
+			_new_word()
 	)
+	_new_word()
+
+	add_to_group(ENEMY_GROUP)
+
 	hit_box.hit.connect(func(): removed.emit())
 	removed.connect(func(): queue_free())
 	slow_timer.timeout.connect(func(): slow_amount = 0.0)
@@ -53,12 +71,25 @@ func _ready():
 	)
 	sprite_2d.texture = enemy_res.sprite
 
+func hit_health():
+	finished.emit()
+	return health < 0
+
+func _new_word():
+	health -= 1
+	match type:
+		Type.NORMAL: typed_word.word = data.get_random_enemy()
+		Type.PROJECTILE: typed_word.word = data.get_random_projectile()
+		Type.SPAWNER: typed_word.word = data.get_random_spawner_enemy()
+		Type.THROWER: typed_word.word = data.get_random_throw_enemy()
+
 func _process(_delta):
-	typed_word.visible = not player.pickup_enabled
+	# typed_word.visible = not player.pickup_enabled
 	
 	if player:
 		typed_word.focused = typed_word.word.begins_with(player.typed) and player.typed != ""
 		typed_word.typed = player.typed if typed_word.focused else ""
+		z_index = 20 if typed_word.focused else 0
 	
 	for area in effect_detector.get_overlapping_areas():
 		if area.has_method("apply"):
@@ -91,25 +122,25 @@ func auto_type(obj):
 	last_typed = obj
 	typed_word.auto_type()
 	
-func handle_key(key: String):
-	last_typed = null
-	return super.handle_key(key)
+#func handle_key(key: String):
+	#last_typed = null
+	#return super.handle_key(key)
 
-func hit(obj = null):
-	last_typed = obj
-	typed_word.hit += 1
-	
-	if typed_word.is_fully_hit():
-		_maybe_drop_item(global_position)
-		removed.emit()
-
-func full_hit():
-	while not typed_word.is_fully_hit():
-		hit()
+#func hit(obj = null):
+	#last_typed = obj
+	#typed_word.hit += 1
+	#
+	#if typed_word.is_fully_hit():
+		#_maybe_drop_item(global_position)
+		#removed.emit()
+#
+#func full_hit():
+	#while not typed_word.is_fully_hit():
+		#hit()
 
 func burn():
 	burn_amount = 0
-	hit()
+	#hit()
 
 func apply(pos: Vector2, effects: Array):
 	for eff in effects:

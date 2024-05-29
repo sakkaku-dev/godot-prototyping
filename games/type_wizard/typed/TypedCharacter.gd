@@ -1,8 +1,6 @@
 class_name TypedCharacter
 extends CharacterBody2D
 
-const GROUP = "TypedCharacter"
-
 signal finished()
 
 @export var typed_word: TypedWord
@@ -10,13 +8,9 @@ signal finished()
 
 @onready var wizard: Wizard = get_tree().get_first_node_in_group(Wizard.GROUP)
 
-var is_finished := false
-
 func _ready():
 	typed_word.type_finish.connect(func(): finished.emit())
 	typed_word.type_start.connect(func(): z_index = 20)
-	finished.connect(func(): is_finished = true)
-	add_to_group(GROUP)
 
 func handle_key(key: String):
 	return typed_word.handle_key(key)

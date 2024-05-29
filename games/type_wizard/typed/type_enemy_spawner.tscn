@@ -13,6 +13,7 @@ spawn_enemy_res = ExtResource("3_fric7")
 offset = 5
 spawn_count = 1
 enemy_res = ExtResource("3_3mcpv")
+type = 2
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_uqcfi")

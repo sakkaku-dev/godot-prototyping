@@ -12,6 +12,7 @@ script = ExtResource("2_h0tp1")
 throw_enemy = ExtResource("3_bpgpb")
 throw_stop_time = 0.5
 enemy_res = ExtResource("3_jn4rq")
+type = 3
 
 [node name="Sprite2D" parent="." index="1"]
 texture = ExtResource("3_mkms0")

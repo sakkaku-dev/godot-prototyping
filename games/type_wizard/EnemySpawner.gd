@@ -26,25 +26,22 @@ func spawn():
 
 func _spawn_spawner_enemy():
 	var enemy = enemy_spawner_scene.instantiate() as TypedEnemySpawner
-	enemy.set_word(data.get_random_spawner_enemy())
 	enemy.spawn_enemy.connect(_spawn_projectile)
 	_add_enemy_to_scene(enemy)
 
 func _spawn_throw_enemy():
 	var enemy = enemy_thrower_scene.instantiate() as TypedEnemyThrow
-	enemy.set_word(data.get_random_throw_enemy())
 	enemy.spawn_enemy.connect(_spawn_projectile)
 	_add_enemy_to_scene(enemy)
 
-func _spawn_normal_enemy(word = data.get_random_enemy()):
+func _spawn_normal_enemy():
 	var enemy = enemy_scene.instantiate()
-	enemy.set_word(word)
 	_add_enemy_to_scene(enemy)
 
 func _spawn_projectile(pos: Vector2, res: EnemyResource):
 	var node = enemy_scene.instantiate() as TypedEnemy
 	node.enemy_res = res
-	node.set_word(data.get_random_projectile())
+	node.type = TypedEnemy.Type.PROJECTILE
 	node.z_index = 50
 	_add_enemy_to_scene(node, pos)
 
@@ -56,8 +53,8 @@ func _add_enemy_to_scene(enemy: TypedEnemy, pos = _random_position()):
 		root.add_child(node)
 	)
 	enemy.removed.connect(func():
-		var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
-		enemies.erase(enemy)
+		# var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
+		# enemies.erase(enemy)
 		enemy_removed.emit(enemy)
 	)
 	root.add_child(enemy)
