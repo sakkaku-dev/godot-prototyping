@@ -10,7 +10,6 @@ signal drop_finished()
 @export var enemy_thrower_scene: PackedScene
 @export var spawner_enemy_chance := 0.3
 @export var throw_enemy_chance := 0.3
-@export var enemy_spawn_distance_from_player := 250
 
 @export var data: DataManager
 @export var root: Node2D
@@ -47,15 +46,11 @@ func _spawn_projectile(pos: Vector2, res: EnemyResource):
 
 func _add_enemy_to_scene(enemy: TypedEnemy, pos = _random_position()):
 	enemy.global_position = pos
+	enemy.target = Vector2(0, pos.y)
 	enemy.finished.connect(func(): enemy_finished.emit())
 	enemy.dropped.connect(func(node):
 		node.finished.connect(func(): drop_finished.emit())
 		root.add_child(node)
-	)
-	enemy.removed.connect(func():
-		# var enemies = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP)
-		# enemies.erase(enemy)
-		enemy_removed.emit(enemy)
 	)
 	root.add_child(enemy)
 
@@ -63,4 +58,7 @@ func get_available_enemies():
 	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP).filter(func(x): return not x.is_finished)
 
 func _random_position():
-	return (Vector2.RIGHT * enemy_spawn_distance_from_player).rotated(randf_range(0, TAU))
+	var vp = get_viewport_rect().size
+	var start = Vector2.ZERO + Vector2.RIGHT * vp.x
+	var height = (vp.y - 20) / 2
+	return start + Vector2.UP * randf_range(-height, height)

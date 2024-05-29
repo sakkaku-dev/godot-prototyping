@@ -15,9 +15,6 @@ extends Node2D
 @onready var enemy_spawner = $EnemySpawner
 @onready var wizard = $Root/Wizard
 
-var enemy_word: TypedCharacter
-var pickup_word: TypedCharacter
-
 func _ready():
 	wave_timer.spawn.connect(func(): enemy_spawner.spawn())
 
@@ -27,15 +24,6 @@ func _ready():
 	wizard.level_up.connect(func(): _wave_ended())
 	upgrades.selected_upgrade.connect(_selected_upgrade)
 	#manage.next_wave.connect(func(): wave_timer.start_wave())
-	
-	enemy_spawner.drop_finished.connect(func(): pickup_word = null)
-	enemy_spawner.enemy_finished.connect(func(): enemy_word = null)
-	enemy_spawner.enemy_removed.connect(func(e):
-		#if wave_timer.is_stopped() and left.is_empty():
-			#_wave_ended()
-		
-		wizard.killed_enemy(e)
-	)
 	
 	wizard.cast_spell.connect(func(scroll):
 		var spell = data_manager.get_spell(scroll)
@@ -63,43 +51,12 @@ func _pressed_key(key: String, _shift: bool):
 
 	wizard.handle_key(key)
 
-	#if wizard.pickup_enabled:
-		#if not pickup_word:
-			#var drops = get_tree().get_nodes_in_group(TypedDrop.DROP_GROUP)
-			#pickup_word = _find_first_words_with(key, drops)
-			#print("Searching for pickup item: %s" % pickup_word)
-			#
-		#_handle_key(key, pickup_word)
-	#else:
-		#if not enemy_word:
-			#var enemies = enemy_spawner.get_available_enemies()
-			#enemy_word = _find_first_words_with(key, enemies)
-			#print("Searching for enemy: %s" % enemy_word)
-		#
-		#_handle_key(key, enemy_word)
-
-#func _handle_key(key, word):
-	#var correctly_handled = false
-	#if word:
-		#correctly_handled = word.handle_key(key)
-	#
-	#wizard.handled_key(correctly_handled)
-
 func _cancel_word(_shift: bool):
 	if wizard.casting:
 		scrolls.cancel()
 		return
 		
 	wizard.cancel()
-	
-	#if wizard.pickup_enabled:
-		#if not pickup_word: return
-		##pickup_word.cancel()
-		##pickup_word = null
-	#else:
-		#if not enemy_word: return
-		#enemy_word.cancel()
-		#enemy_word = null
 
 func _find_first_words_with(key: String, nodes: Array):
 	var matches = []

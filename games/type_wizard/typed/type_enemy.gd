@@ -30,6 +30,7 @@ const ENEMY_GROUP = "TypedEnemy"
 @onready var data: DataManager = get_tree().get_first_node_in_group(DataManager.GROUP)
 
 var has_emitted_stop := false
+var target := Vector2.ZERO
 
 var burn_amount := 0.0:
 	set(v):
@@ -101,7 +102,7 @@ func _get_slow_amount():
 	return slow_amount + ice_zone_slow
 
 func _physics_process(delta):
-	var dist = global_position.distance_to(Vector2.ZERO)
+	var dist = global_position.distance_to(target)
 	if dist <= enemy_res.move_until_distance:
 		if not has_emitted_stop:
 			stopped.emit()
@@ -113,7 +114,7 @@ func _physics_process(delta):
 		velocity = knockback
 		knockback = knockback.move_toward(Vector2.ZERO, delta * deaccel)
 	else:
-		var dir = global_position.direction_to(Vector2.ZERO)
+		var dir = global_position.direction_to(target)
 		velocity = dir * enemy_res.speed * (1 - _get_slow_amount()) * (1 if is_on_screen() else 5)
 		
 	move_and_slide()
