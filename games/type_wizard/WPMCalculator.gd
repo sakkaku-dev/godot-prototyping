@@ -24,7 +24,8 @@ func cancel_type():
 	time = -1.0
 
 func finish_type(word: String):
-	if word.length() == 1:
+	print("Finished with %s in %s" % [word, time])
+	if word.length() == 1 or time < 0:
 		return
 	
 	var words_count = word.length() / char_in_words

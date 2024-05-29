@@ -25,3 +25,6 @@ func reset():
 
 func get_word():
 	return title.word
+
+func set_typed(typed: String):
+	title.set_typed(typed)

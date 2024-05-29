@@ -14,8 +14,8 @@ signal type_start()
 @export var word = "":
 	set(v):
 		word = v.to_lower().strip_edges()
-		if remove_spaces:
-			word = word.replace(" ", "")
+		#if remove_spaces:
+		word = word.replace(" ", "")
 		
 		typed = ""
 		update_word()
@@ -83,6 +83,10 @@ func handle_key(key: String, grab_focus = true):
 
 func get_word():
 	return word
+
+func set_typed(player_typed: String):
+	self.focused = word.begins_with(player_typed) and player_typed != ""
+	self.typed = player_typed if focused else ""
 
 func _get_num_of_spaces(from: int):
 	if from >= word.length():

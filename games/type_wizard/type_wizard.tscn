@@ -100,6 +100,7 @@ script = ExtResource("4_4bt4h")
 script = ExtResource("4_csuax")
 
 [node name="WPMCalculator" type="Node" parent="."]
+process_mode = 3
 script = ExtResource("23_lfksy")
 
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
@@ -379,8 +380,9 @@ upgrade_scene = ExtResource("12_oh1yd")
 pause = NodePath("../PauseBlur")
 key_reader = NodePath("KeyReader")
 
-[node name="KeyDelegator" type="Node" parent="CanvasLayer/UI/Upgrades"]
+[node name="KeyDelegator" type="Node" parent="CanvasLayer/UI/Upgrades" node_paths=PackedStringArray("wpm_calc")]
 script = ExtResource("30_ma2c0")
+wpm_calc = NodePath("../../../../WPMCalculator")
 
 [node name="KeyReader" type="Node" parent="CanvasLayer/UI/Upgrades"]
 script = ExtResource("4_4bt4h")

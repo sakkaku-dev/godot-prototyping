@@ -20,4 +20,4 @@ func receive_exp(enemy: TypedEnemy):
 	if len < 3:
 		return
 	
-	self.exp += 10 if len < 9 else 20
+	self.exp += (10 if len < 9 else 20)

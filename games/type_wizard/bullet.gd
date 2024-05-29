@@ -1,7 +1,7 @@
 class_name Bullet
 extends CharacterBody2D
 
-@export var speed := 80
+@export var speed := 100
 @export var target_offset := 5
 @export var area_attack_scene: PackedScene
 @export var height := 50
@@ -53,7 +53,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 	var dist = global_position.distance_to(target.global_position)
-	if dist < speed / 2:
+	if dist < speed / 5:
 		_to_final_target(dir)
 		_final_hit()
 

@@ -11,6 +11,10 @@ signal selected_upgrade(res)
 func _ready():
 	super._ready()
 	key_reader.pressed_cancel.connect(func(_x): key_delegator.cancel())
+	key_delegator.finished.connect(func(node):
+		selected_upgrade.emit(node.upgrade)
+		close()
+	)
 
 func show_upgrades(upgrades: Array[UpgradeResource]):
 	for c in container.get_children():
@@ -20,10 +24,6 @@ func show_upgrades(upgrades: Array[UpgradeResource]):
 	for up in upgrades:
 		var node = upgrade_scene.instantiate()
 		node.upgrade = up
-		node.finished.connect(func(): 
-			selected_upgrade.emit(up)
-			close()
-		)
 		container.add_child(node)
 		key_delegator.nodes.append(node)
 	
