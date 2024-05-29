@@ -21,9 +21,9 @@ func _ready():
 	key_reader.pressed_key.connect(_pressed_key)
 	key_reader.pressed_cancel.connect(_cancel_word)
 
+	enemy_spawner.enemy_killed.connect(func(e): wizard.killed_enemy(e))
 	wizard.level_up.connect(func(): _wave_ended())
 	upgrades.selected_upgrade.connect(_selected_upgrade)
-	#manage.next_wave.connect(func(): wave_timer.start_wave())
 	
 	wizard.cast_spell.connect(func(scroll):
 		var spell = data_manager.get_spell(scroll)

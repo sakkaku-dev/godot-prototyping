@@ -2,7 +2,7 @@ class_name EnemySpawner
 extends Node2D
 
 signal enemy_removed(enemy)
-signal enemy_finished()
+signal enemy_killed()
 signal drop_finished()
 
 @export var enemy_scene: PackedScene
@@ -47,7 +47,7 @@ func _spawn_projectile(pos: Vector2, res: EnemyResource):
 func _add_enemy_to_scene(enemy: TypedEnemy, pos = _random_position()):
 	enemy.global_position = pos
 	enemy.target = Vector2(0, pos.y)
-	enemy.finished.connect(func(): enemy_finished.emit())
+	enemy.killed.connect(func(): enemy_killed.emit(enemy))
 	enemy.dropped.connect(func(node):
 		node.finished.connect(func(): drop_finished.emit())
 		root.add_child(node)

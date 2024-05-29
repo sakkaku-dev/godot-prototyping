@@ -88,8 +88,7 @@ func handle_key(key: String):
 	
 	for enemy in enemies:
 		if enemy.get_word() == word:
-			if enemy.hit_health():
-				killed_enemy(enemy)
+			enemy.hit_health()
 			return
 
 	typed = word

@@ -11,6 +11,7 @@ enum Type {
 signal removed()
 signal dropped(node)
 signal stopped()
+signal killed()
 
 const ENEMY_GROUP = "TypedEnemy"
 
@@ -52,6 +53,7 @@ func _ready():
 			is_finished = true
 			typed_word.cancel()
 			removed.emit()
+			killed.emit()
 		else:
 			_new_word()
 	)
@@ -74,7 +76,6 @@ func _ready():
 
 func hit_health():
 	finished.emit()
-	return health < 0
 
 func _new_word():
 	health -= 1
