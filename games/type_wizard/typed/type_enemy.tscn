@@ -54,6 +54,7 @@ grow_horizontal = 2
 text = "__test__"
 highlight_first = false
 jump = false
+remove_spaces = true
 
 [node name="SlowTimer" type="Timer" parent="."]
 one_shot = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=52 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -34,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://bmti1r4wqqqm" path="res://assets/Tiny Dungeon/Tiles/tile_0102.png" id="20_jxr86"]
 [ext_resource type="PackedScene" uid="uid://cr8ki2xhv8i73" path="res://games/type_wizard/typed/typed_word.tscn" id="21_y8f0q"]
 [ext_resource type="PackedScene" uid="uid://cx5of15itwen0" path="res://games/type_wizard/ui/shortcut.tscn" id="22_4n67u"]
+[ext_resource type="Script" path="res://games/type_wizard/WPMCalculator.gd" id="23_lfksy"]
 [ext_resource type="Resource" uid="uid://b7ljnksm87sbk" path="res://games/type_wizard/ui/spell_key.tres" id="23_xpuy1"]
 [ext_resource type="Resource" uid="uid://dhejg6dyfy0xv" path="res://games/type_wizard/ui/pickup_key.tres" id="23_xqc6x"]
 [ext_resource type="Script" path="res://games/type_wizard/ScrollsContainer.gd" id="25_vkq0j"]
@@ -98,6 +99,9 @@ script = ExtResource("4_4bt4h")
 [node name="DataManager" type="Node" parent="."]
 script = ExtResource("4_csuax")
 
+[node name="WPMCalculator" type="Node" parent="."]
+script = ExtResource("23_lfksy")
+
 [node name="WaveTimer" type="Timer" parent="." node_paths=PackedStringArray("enemy_spawn_timer")]
 wait_time = 10.0
 one_shot = true
@@ -119,7 +123,7 @@ layer_0/tile_data = PackedInt32Array(589838, 65537, 2, 524302, 65537, 2, 458766,
 [node name="Root" type="Node2D" parent="."]
 y_sort_enabled = true
 
-[node name="Wizard" type="TileMap" parent="Root" node_paths=PackedStringArray("pickup_shortcut", "spells_shortcut", "castle_archer")]
+[node name="Wizard" type="TileMap" parent="Root" node_paths=PackedStringArray("pickup_shortcut", "spells_shortcut", "castle_archer", "wpm_calculator")]
 position = Vector2(8, -1)
 tile_set = ExtResource("3_6d2mj")
 format = 2
@@ -128,6 +132,7 @@ script = ExtResource("12_b5tcl")
 pickup_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/PickupKey")
 spells_shortcut = NodePath("../../CanvasLayer/UI/GameUI/Shortcuts/HBoxContainer/SpellsKey")
 castle_archer = NodePath("CastleArcher")
+wpm_calculator = NodePath("../../WPMCalculator")
 attack_scene = ExtResource("13_j7b4n")
 shield_scene = ExtResource("16_wjmef")
 ice_zone_scene = ExtResource("14_q13o7")

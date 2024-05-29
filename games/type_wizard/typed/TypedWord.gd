@@ -9,10 +9,14 @@ signal type_start()
 @export var highlight_color := Color("0084d3")
 @export var highlight_first := true
 @export var jump := true
+@export var remove_spaces := false
 
 @export var word = "":
 	set(v):
-		word = v.to_lower().strip_edges().replace(" ", "")
+		word = v.to_lower().strip_edges()
+		if remove_spaces:
+			word = word.replace(" ", "")
+		
 		typed = ""
 		update_word()
 var typed = "":
@@ -68,7 +72,7 @@ func handle_key(key: String, grab_focus = true):
 			self.focused = true
 		
 		typed += key.to_lower()
-		# typed += " ".repeat(_get_num_of_spaces(typed.length()))
+		typed += " ".repeat(_get_num_of_spaces(typed.length()))
 		typing.emit()
 		
 		if typed == word:
@@ -80,16 +84,16 @@ func handle_key(key: String, grab_focus = true):
 func get_word():
 	return word
 
-# func _get_num_of_spaces(from: int):
-# 	if from >= word.length():
-# 		return 0
-	
-# 	var next_word_char = word[from]
-# 	var count = 0
-# 	while next_word_char == " ":
-# 		count += 1
-# 		next_word_char = word[from + count]
-# 	return count
+func _get_num_of_spaces(from: int):
+	if from >= word.length():
+		return 0
+
+	var next_word_char = word[from]
+	var count = 0
+	while next_word_char == " ":
+		count += 1
+		next_word_char = word[from + count]
+	return count
 
 func cancel():
 	self.focused = false

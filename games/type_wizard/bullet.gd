@@ -23,7 +23,7 @@ var target: TypedCharacter:
 		if target:
 			start_dist = global_position.distance_to(target.global_position)
 			target.removed.connect(func():
-				if lightning_line.points.size() > 0:
+				if not lightning_line.visible:
 					queue_free()
 			)
 

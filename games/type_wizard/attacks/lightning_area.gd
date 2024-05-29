@@ -22,7 +22,7 @@ func _lightning_chain():
 	#print("Hitting %s of %s" % [bodies.size(), get_overlapping_bodies().size()])
 	for body in bodies:
 		if body == null or body.is_queued_for_deletion(): continue
-		body.hit(self)
+		body.finish_word()
 		
 		var line = load(SCENE).instantiate()
 		line.current = current.duplicate()

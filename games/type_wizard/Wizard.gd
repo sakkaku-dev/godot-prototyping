@@ -24,6 +24,7 @@ signal level_up()
 @export var pickup_shortcut: ShortcutKey
 @export var spells_shortcut: ShortcutKey
 @export var castle_archer: CastleArcher
+@export var wpm_calculator: WPMCalculator
 
 @export_category("Attacks")
 @export var attack_scene: PackedScene
@@ -69,6 +70,8 @@ func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
 	node.global_position = player.global_position
 	node.target = target
+	node.speed *= clamp(wpm_calculator.get_average_wpm(), 50, 150) / 50.
+	print("Average WPM: %s" % wpm_calculator.get_average_wpm())
 	
 	for atk in attacks:
 		if atk.effect == null: continue
@@ -84,11 +87,16 @@ func handle_key(key: String):
 		cancel()
 		word = key
 		enemies = _get_typed_enemies(word)
+		
+	if not enemies.is_empty() and word.length() == 1:
+		wpm_calculator.start_type()
 	
 	for enemy in enemies:
 		if enemy.get_word() == word:
 			enemy.finish_word()
+			wpm_calculator.finish_type(word)
 			attack(enemy)
+			typed = ""
 			return
 
 	typed = word
@@ -98,6 +106,7 @@ func killed_enemy(e):
 
 func cancel():
 	typed = ""
+	wpm_calculator.cancel_type()
 
 func _get_typed_enemies(s: String) -> Array:
 	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP) \
