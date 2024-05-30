@@ -51,16 +51,16 @@
 [ext_resource type="Script" path="res://games/type_wizard/KeyDelegator.gd" id="30_ma2c0"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e8fwe"]
-radius = 209.28
+radius = 463.001
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7mb1i"]
 shader = ExtResource("13_winx2")
 shader_parameter/radius = 0.99
-shader_parameter/inner_radius = 0.97
+shader_parameter/inner_radius = 0.98
 shader_parameter/fill = 1.0
-shader_parameter/blur = 0.0078
+shader_parameter/blur = 0.001
 shader_parameter/bg_color = Color(0, 0, 0, 1)
-shader_parameter/inner_color = Color(0, 0.683333, 1, 0.235294)
+shader_parameter/inner_color = Color(0, 0.682353, 1, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fen5t"]
 size = Vector2(40, 396)
@@ -152,11 +152,12 @@ wpm_calc = NodePath("../../../WPMCalculator")
 [node name="LevelManager" type="Node" parent="Root/Wizard"]
 script = ExtResource("16_aar1a")
 
-[node name="CastleArcher" type="Area2D" parent="Root/Wizard" node_paths=PackedStringArray("enemy_spawner", "attack_timer")]
+[node name="CastleArcher" type="Area2D" parent="Root/Wizard" node_paths=PackedStringArray("wizard", "enemy_spawner", "attack_timer")]
 position = Vector2(8, 1)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("11_a5leb")
+wizard = NodePath("..")
 attack_scene = ExtResource("13_j7b4n")
 enemy_spawner = NodePath("../../../EnemySpawner")
 attack_timer = NodePath("Timer")
@@ -186,6 +187,7 @@ grow_vertical = 2
 color = Color(0, 0.580392, 0.968627, 0.317647)
 
 [node name="Timer" type="Timer" parent="Root/Wizard/CastleArcher"]
+wait_time = 0.5
 
 [node name="Hurtbox" type="Area2D" parent="Root/Wizard"]
 position = Vector2(8, -4)

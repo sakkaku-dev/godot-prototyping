@@ -21,7 +21,7 @@ func _ready():
 	key_reader.pressed_key.connect(_pressed_key)
 	key_reader.pressed_cancel.connect(_cancel_word)
 
-	enemy_spawner.enemy_killed.connect(func(e): wizard.killed_enemy(e))
+	wizard.upgrade(load("res://games/type_wizard/upgrades/CastleArcherCountUpgrade.tres"))
 	wizard.level_up.connect(func(): _wave_ended())
 	upgrades.selected_upgrade.connect(_selected_upgrade)
 	

@@ -43,17 +43,19 @@ var burn_amount := 0.0:
 var ice_zone_slow := 0.0
 var slow_amount := 0.0
 var knockback := Vector2.ZERO
-var last_typed
 
 var is_finished := false
 
 @onready var max_health := 1
 @onready var health := max_health
 
+var words := []
+
 var hit := 0:
 	set(v):
 		hit = v
 		if hit >= max_health:
+			player.killed_enemy(self)
 			killed.emit()
 			removed.emit()
 
@@ -67,11 +69,17 @@ func _ready():
 	
 	sprite_2d.texture = enemy_res.sprite
 
+func hit_health(player: bool = false):
+	if player or typed_word.is_fully_hit():
+		self.hit += 1
+
+func auto_hit():
+	typed_word.hit += 1
+	if typed_word.is_fully_hit():
+		_new_word()
+
 func finish_word():
 	_new_word()
-
-func hit_health():
-	self.hit += 1
 
 func _new_word():
 	self.health -= 1
@@ -81,19 +89,18 @@ func _new_word():
 			Type.PROJECTILE: typed_word.word = data.get_random_projectile()
 			Type.SPAWNER: typed_word.word = data.get_random_spawner_enemy()
 			Type.THROWER: typed_word.word = data.get_random_throw_enemy()
+		
+		words.append(typed_word.word)
 	else:
 		typed_word.cancel()
 		typed_word.hide()
 		is_finished = true
 
+func set_typed(typed: String):
+	typed_word.set_typed(typed)
+	z_index = 20 if typed_word.focused else 0
+
 func _process(_delta):
-	# typed_word.visible = not player.pickup_enabled
-	
-	if player:
-		typed_word.focused = typed_word.word.begins_with(player.typed) and player.typed != ""
-		typed_word.typed = player.typed if typed_word.focused else ""
-		z_index = 20 if typed_word.focused else 0
-	
 	for area in effect_detector.get_overlapping_areas():
 		if area.has_method("apply"):
 			area.apply(self)
@@ -120,10 +127,6 @@ func _physics_process(delta):
 		velocity = dir * enemy_res.speed * (1 - _get_slow_amount())
 		
 	move_and_slide()
-
-func auto_type(obj):
-	last_typed = obj
-	typed_word.auto_type()
 
 func burn():
 	burn_amount = 0

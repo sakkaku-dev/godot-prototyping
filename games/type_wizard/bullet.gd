@@ -5,23 +5,20 @@ extends CharacterBody2D
 @export var target_offset := 5
 @export var area_attack_scene: PackedScene
 @export var height := 50
+@export var from_player := false
 
 @onready var arrow = $Body/Arrow
 @onready var body = $Body
 @onready var lightning_line = $LightningLine
 
 var effects := []
-
 var on_hit_effects := []
 var node_effects := []
 
-var has_hit = false
-var start_dist := 0.0
 var target: TypedCharacter:
 	set(v):
 		target = v
 		if target:
-			start_dist = global_position.distance_to(target.global_position)
 			target.removed.connect(func():
 				if not lightning_line.visible:
 					queue_free()
@@ -58,7 +55,8 @@ func _physics_process(delta):
 		_final_hit()
 
 func _final_hit(wait := 0.0):
-	target.hit_health()
+	target.hit_health(from_player)
+	
 	target.apply(global_position, on_hit_effects)
 	target = null
 	

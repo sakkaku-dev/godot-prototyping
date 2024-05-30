@@ -60,5 +60,5 @@ func get_available_enemies():
 func _random_position():
 	var vp = get_viewport_rect().size
 	var start = Vector2.ZERO + Vector2.RIGHT * vp.x
-	var height = (vp.y - 20) / 2
+	var height = (vp.y - 100) / 2
 	return start + Vector2.UP * randf_range(-height, height)

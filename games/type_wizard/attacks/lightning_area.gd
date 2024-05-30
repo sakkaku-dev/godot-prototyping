@@ -22,8 +22,8 @@ func _lightning_chain():
 	#print("Hitting %s of %s" % [bodies.size(), get_overlapping_bodies().size()])
 	for body in bodies:
 		if body == null or body.is_queued_for_deletion(): continue
-		body.finish_word()
-		body.hit_health()
+		body.auto_hit()
+		body.hit_health(false)
 		
 		var line = load(SCENE).instantiate()
 		line.current = current.duplicate()

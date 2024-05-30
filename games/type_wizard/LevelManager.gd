@@ -15,8 +15,8 @@ var exp := 0.0:
 		
 		experience_change.emit(exp)
 
-func receive_exp(enemy: TypedEnemy):
-	var len = enemy.get_word().length()
+func receive_exp(word: String):
+	var len = word.length()
 	if len < 3:
 		return
 	

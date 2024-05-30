@@ -18,6 +18,7 @@ signal type_start()
 		word = word.replace(" ", "")
 		
 		typed = ""
+		hit = 0
 		update_word()
 var typed = "":
 	set(v):
@@ -27,8 +28,8 @@ var hit := 0:
 	set(v):
 		hit = v
 		# hit += _get_num_of_spaces(hit)
-		while hit > typed.length():
-			auto_type()
+		#while hit > typed.length():
+			#auto_type()
 		
 		update_word()
 
@@ -52,34 +53,34 @@ func update_word():
 	if highlight_first and typed.length() == 0:
 		text = "[center][typed until=1]%s[/typed][/center]" % word
 	else:
-		text = "[center][typed until=%s jump=%s color=#%s]%s[/typed][/center]" % [typed.length(), jump, text_color.to_html(), word]
+		text = "[center][typed until=%s hit=%s jump=%s color=#%s]%s[/typed][/center]" % [typed.length(), hit, jump, text_color.to_html(), word]
 
 func _next_char():
 	if typed.length() >= word.length():
 		return null
 	return word[typed.length()]
 
-func auto_type():
-	var char = _next_char()
-	if char:
-		handle_key(char, false)
-
-func handle_key(key: String, grab_focus = true):
-	var next_word_char = _next_char()
-	if next_word_char == key.to_lower():
-		if not focused and grab_focus:
-			type_start.emit()
-			self.focused = true
-		
-		typed += key.to_lower()
-		typed += " ".repeat(_get_num_of_spaces(typed.length()))
-		typing.emit()
-		
-		if typed == word:
-			type_finish.emit()
-		return true
-	
-	return false
+#func auto_type():
+	#var char = _next_char()
+	#if char:
+		#handle_key(char, false)
+#
+#func handle_key(key: String, grab_focus = true):
+	#var next_word_char = _next_char()
+	#if next_word_char == key.to_lower():
+		#if not focused and grab_focus:
+			#type_start.emit()
+			#self.focused = true
+		#
+		#typed += key.to_lower()
+		#typed += " ".repeat(_get_num_of_spaces(typed.length()))
+		#typing.emit()
+		#
+		#if typed == word:
+			#type_finish.emit()
+		#return true
+	#
+	#return false
 
 func get_word():
 	return word

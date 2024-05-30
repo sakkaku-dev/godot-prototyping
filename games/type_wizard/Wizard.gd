@@ -20,7 +20,6 @@ signal cast_spell(scroll)
 signal scrolls_changed()
 signal level_up()
 
-@export var max_combo := 1000
 @export var pickup_shortcut: ShortcutKey
 @export var spells_shortcut: ShortcutKey
 @export var castle_archer: CastleArcher
@@ -49,7 +48,6 @@ var casting := false:
 		is_casting.emit(casting)
 
 var pickup_enabled := false
-var combo := 0
 var next_attack
 
 var typed := ""
@@ -75,6 +73,7 @@ func attack(target: TypedCharacter):
 	var node = attack_scene.instantiate()
 	node.global_position = player.global_position
 	node.target = target
+	node.from_player = true
 	node.speed *= clamp(wpm_calculator.get_average_wpm(), 50, 150) / 50.
 	print("Average WPM: %s" % wpm_calculator.get_average_wpm())
 	
@@ -87,22 +86,18 @@ func attack(target: TypedCharacter):
 func handle_key(key: String):
 	key_delegator.nodes = get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP).filter(func(x): return not x.is_finished)
 	key_delegator.handle_key(key)
-	typed = key_delegator.typed
 
-func killed_enemy(e):
-	level_manager.receive_exp(e)
+func killed_enemy(e: TypedEnemy):
+	for w in e.words:
+		level_manager.receive_exp(w)
 
 func cancel():
 	key_delegator.cancel()
-	typed = key_delegator.typed
 
 func _get_typed_enemies(s: String) -> Array:
 	return get_tree().get_nodes_in_group(TypedEnemy.ENEMY_GROUP) \
 		.filter(func(x): return not x.is_finished) \
 		.filter(func(e): return e.get_word().begins_with(s))
-
-func get_combo_percentage():
-	return combo / float(max_combo)
 	
 func add_scroll(scroll):
 	if not scroll in scrolls:

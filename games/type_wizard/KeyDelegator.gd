@@ -54,7 +54,7 @@ func _update_typed():
 			cancel()
 
 func _get_nodes_starting_with(nodes: Array, text: String) -> Array:
-	return nodes.filter(func(n): return n.has_method("get_word") and n.get_word().begins_with(text))
+	return nodes.filter(func(n): return n and not n.is_queued_for_deletion() and n.has_method("get_word") and n.get_word().begins_with(text))
 
 func cancel():
 	self.current_nodes = []
