@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=3 format=3 uid="uid://cqt4kyfnorbbe"]
+[gd_resource type="Resource" script_class="UpgradeResourceValue" load_steps=4 format=3 uid="uid://cqt4kyfnorbbe"]
 
 [ext_resource type="Script" path="res://games/type_wizard/upgrades/UpgradeResourceValue.gd" id="1_fmvdi"]
 [ext_resource type="Texture2D" uid="uid://d4b2oyec57xcf" path="res://assets/rpg_icons/release_v1.2-single_44.png" id="1_omid3"]
+[ext_resource type="Resource" uid="uid://76mn0er6vklw" path="res://games/type_wizard/upgrades/CastleArcherSpeedUpgrade.tres" id="3_p6phv"]
 
 [resource]
 script = ExtResource("1_fmvdi")
@@ -10,4 +11,5 @@ delta = 1.0
 title = "Archer Increase"
 icon = ExtResource("1_omid3")
 text = "Increase the amount of archers"
-limit = 3
+limit = 5
+unlock_upgrades = Array[Resource("res://games/type_wizard/upgrades/UpgradeResource.gd")]([ExtResource("3_p6phv")])

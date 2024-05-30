@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://dm6mv4a8c7d8o"]
+[gd_scene load_steps=57 format=3 uid="uid://dm6mv4a8c7d8o"]
 
 [ext_resource type="Script" path="res://games/type_wizard/type_wizard.gd" id="1_pe1fc"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/WaveTimer.gd" id="2_04g0y"]
@@ -15,9 +15,14 @@
 [ext_resource type="Script" path="res://games/type_wizard/ui/HealthBar.gd" id="7_f1yk8"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="7_psodk"]
 [ext_resource type="Theme" uid="uid://dt1lwp3hu1cmq" path="res://games/type_wizard/ui/type_game.tres" id="8_1tsrj"]
+[ext_resource type="Resource" uid="uid://i2hpoq25s73g" path="res://games/type_wizard/upgrades/AirAttack.tres" id="8_ncfsj"]
 [ext_resource type="Script" path="res://games/type_wizard/PickupArea.gd" id="8_y2q8n"]
+[ext_resource type="Resource" uid="uid://cqt4kyfnorbbe" path="res://games/type_wizard/upgrades/CastleArcherCountUpgrade.tres" id="9_imduq"]
+[ext_resource type="Resource" uid="uid://5sc1tt1sypn0" path="res://games/type_wizard/upgrades/FrostAttack.tres" id="10_deudr"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/Countdown.gd" id="10_f2lwa"]
 [ext_resource type="Script" path="res://games/type_wizard/CastleArcher.gd" id="11_a5leb"]
+[ext_resource type="Resource" uid="uid://dnvhu266biquq" path="res://games/type_wizard/upgrades/HealthIncrease.tres" id="11_xmyiw"]
+[ext_resource type="Resource" uid="uid://b78nga8l7j37x" path="res://games/type_wizard/upgrades/LightningAttack.tres" id="12_0vj0m"]
 [ext_resource type="Script" path="res://games/type_wizard/Wizard.gd" id="12_b5tcl"]
 [ext_resource type="Script" path="res://games/type_wizard/ui/Upgrades.gd" id="12_f4n8r"]
 [ext_resource type="PackedScene" uid="uid://ccbmop0unfx8t" path="res://games/type_wizard/ui/upgrade_item.tscn" id="12_oh1yd"]
@@ -98,6 +103,7 @@ script = ExtResource("4_4bt4h")
 
 [node name="DataManager" type="Node" parent="."]
 script = ExtResource("4_csuax")
+start_upgrades = Array[Resource("res://games/type_wizard/upgrades/UpgradeResource.gd")]([ExtResource("8_ncfsj"), ExtResource("9_imduq"), ExtResource("10_deudr"), ExtResource("11_xmyiw"), ExtResource("12_0vj0m")])
 
 [node name="WPMCalculator" type="Node" parent="."]
 process_mode = 3

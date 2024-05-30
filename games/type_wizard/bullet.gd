@@ -53,7 +53,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 	var dist = global_position.distance_to(target.global_position)
-	if dist < speed / 5:
+	if dist < speed / 10:
 		_to_final_target(dir)
 		_final_hit()
 

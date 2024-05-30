@@ -100,15 +100,15 @@ const SCROLLS = [
 ]
 
 const SPELL_FOLDER = "res://games/type_wizard/spells/"
-const UPGRADE_FOLDER = "res://games/type_wizard/upgrades/"
+
+@export var start_upgrades: Array[UpgradeResource] = []
 
 var do_other_enemies := false
 var enemies := []
 var projectiles := []
 
-var upgrades = {}
+var upgrades = []
 var spells = {}
-var upgrades_used = {}
 
 func _ready():
 	add_to_group(GROUP)
@@ -121,15 +121,7 @@ func _ready():
 		available_spell_names.erase(scroll)
 		spells[scroll] = spell
 
-	for file in DirAccess.get_files_at(UPGRADE_FOLDER):
-		if not file.ends_with(".tres"): continue
-		
-		var upgrade = load(UPGRADE_FOLDER + file) as UpgradeResource
-		var letter = upgrade.title.substr(0, 1)
-		if not letter in upgrades:
-			upgrades[letter] = []
-		upgrades[letter].append(upgrade)
-		upgrades_used[upgrade] = upgrade.limit
+	upgrades.append_array(start_upgrades)
 
 func get_random_projectile():
 	if projectiles.is_empty():
@@ -159,27 +151,26 @@ func get_random_spell():
 
 func get_random_upgrades(count = 3) -> Array[UpgradeResource]:
 	var result: Array[UpgradeResource] = []
-	var letters = upgrades.keys()
-	if not letters.is_empty():
+	var current_upgrade = upgrades.duplicate()
+	if not current_upgrade.is_empty():
 		for i in range(count):
-			var letter = letters.pick_random()
-			if not letter: break # not enough updates
-			
-			letters.erase(letter)
-			result.append(upgrades[letter].pick_random())
+			if current_upgrade.is_empty(): break
+			var up = current_upgrade.pick_random()
+			current_upgrade.erase(up)
+			result.append(up)
 	
 	return result
 
 func used_upgrade(res: UpgradeResource):
-	upgrades_used[res] -= 1
+	if not res.unlock_upgrades.is_empty():
+		var unlock = res.unlock_upgrades.pick_random()
+		res.unlock_upgrades.erase(unlock)
+		upgrades.append(unlock)
 	
-	if upgrades_used[res] <= 0:
-		var letter = res.title.substr(0, 1)
-		upgrades[letter].erase(res)
-		if upgrades[letter].is_empty():
-			upgrades.erase(letter)
-		
-		print("Removing upgrade %s" % res.title)
+	res.limit -= 1
+	if res.limit <= 0:
+		upgrades.erase(res)
+		print("Reached limit of upgrade %s" % res.title)
 
 func get_spell(scroll_name: String) -> SpellResource:
 	if scroll_name in spells:

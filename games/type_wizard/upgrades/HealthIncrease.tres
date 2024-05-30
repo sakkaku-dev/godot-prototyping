@@ -11,3 +11,4 @@ title = "Health"
 icon = ExtResource("1_bohwb")
 text = "Increase the health of the castle"
 limit = 3
+unlock_upgrades = Array[Resource("res://games/type_wizard/upgrades/UpgradeResource.gd")]([])
