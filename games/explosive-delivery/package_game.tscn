@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://c6gv0l16uuuh5"]
 
 [ext_resource type="Script" path="res://games/explosive-delivery/Truck.gd" id="1_b2xkh"]
-[ext_resource type="Script" path="res://games/explosive-delivery/ThirdPersonCamera.gd" id="2_k65a8"]
+[ext_resource type="Script" path="res://util/ThirdPersonCamera.gd" id="2_3ctgt"]
 [ext_resource type="PackedScene" uid="uid://dyx7xwme3bqvm" path="res://games/explosive-delivery/truck.tscn" id="3_vx8mf"]
 [ext_resource type="PackedScene" uid="uid://c7cxao3qk8qco" path="res://games/explosive-delivery/smoke.tscn" id="4_cv6mt"]
 [ext_resource type="MeshLibrary" uid="uid://ch0kn3ytb5lue" path="res://games/explosive-delivery/roads.tres" id="5_5tibw"]
@@ -30,8 +30,8 @@ steering = 15.0
 body_tilt = 45
 
 [node name="CameraRoot" type="Node3D" parent="Truck"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.797369, 0.657712)
-script = ExtResource("2_k65a8")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.79737, 0.657712)
+script = ExtResource("2_3ctgt")
 
 [node name="Camera3D" type="Camera3D" parent="Truck/CameraRoot"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.37236)

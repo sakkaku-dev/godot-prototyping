@@ -1,0 +1,84 @@
+[gd_scene load_steps=12 format=3 uid="uid://d0w46v78ijfkm"]
+
+[ext_resource type="MeshLibrary" uid="uid://dtf8dpcsv6brw" path="res://assets/Modular Buildings/lib.tres" id="1_054si"]
+[ext_resource type="Script" path="res://games/city/GridMap.gd" id="2_kfu4b"]
+[ext_resource type="Script" path="res://games/city/PlayerController3D.gd" id="3_4j1jq"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_upigt"]
+noise_type = 3
+frequency = 0.072
+fractal_type = 2
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_l7n5e"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4tysg"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mf2vc"]
+size = Vector3(0.119141, 0.531006, 0.0751953)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_4jk8y"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vb302"]
+
+[sub_resource type="Sky" id="Sky_4qhrc"]
+sky_material = SubResource("ProceduralSkyMaterial_vb302")
+
+[sub_resource type="Environment" id="Environment_bftm2"]
+background_mode = 2
+sky = SubResource("Sky_4qhrc")
+
+[node name="CityGame" type="Node3D"]
+
+[node name="GridMap" type="GridMap" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0111113, 0.000421524, 0.0124862)
+mesh_library = ExtResource("1_054si")
+cell_size = Vector3(1.3, 0.62, 1.3)
+data = {
+"cells": PackedInt32Array(0, 65534, 655377, 65536, 65534, 655377, 131072, 65534, 655377, -65536, 65534, 655377, -65536, 65533, 655377, 0, 65533, 655377, -65536, 0, 655377, 0, 0, 655377, 65536, 0, 655377, 131072, 0, 655377, 196608, 0, 655377, 262144, 0, 655377, 262144, 65534, 655377, 196608, 65534, 655377, 65536, 65533, 655377, 1, 0, 655377, 2, 0, 655377, 65534, 0, 655377, 65533, 0, 655377, 65532, 0, 655377, 65534, 1, 655377, 65534, 2, 655377, 65533, 1, 655377, 65532, 1, 655377, 131069, 0, 655377, 196605, 0, 655377, 262141, 0, 655377, 327677, 0, 655377, 131069, 1, 655377, 196605, 1, 655377, 131070, 0, 655377, 196606, 0, 655377, 262142, 0, 655377, 327678, 0, 655377, 393214, 0, 655377, 458750, 0, 655377, 131070, 1, 655377, 131070, 2, 655377, 196606, 2, 655377, 262142, 2, 655377, 196606, 1, 655377, 262142, 1, 655377, 327678, 1, 655377, 131068, 0, 655377, 196604, 0, 655377, 262140, 0, 655377, 327676, 0, 655377, 393212, 0, 655377, 458748, 0, 655377, 524284, 0, 655377, 131068, 1, 655377, 196604, 1, 655377, 262140, 1, 655377, 327676, 1, 655377, 65535, 1, 655377, 65535, 2, 655377, 131071, 2, 655377, 196607, 2, 655377, 262143, 2, 655377, 327679, 2, 655377, 327679, 1, 655377, 393215, 1, 655377, 262143, 1, 655377, 196607, 1, 655377, 131071, 1, 655377, -1, 65533, 655377, 65535, 65533, 655377, 131071, 65533, 655377, 196607, 65533, 655377, 262143, 65534, 655377, 327679, 65534, 655377, 393215, 65534, 655377, 458751, 65534, 655377, 524287, 65534, 655377, -1, 65534, 655377, 65535, 65534, 655377, 131071, 65534, 655377, 196607, 65534, 655377, 65537, 0, 655377, 131073, 0, 655377, 196609, 0, 655377, 262145, 0, 655377, 327681, 0, 655377, 393217, 0, 655377, 1, 65535, 655377, 65537, 65535, 655377, 131073, 65535, 655377, 196609, 65535, 655377, 262145, 65535, 655377, 327681, 65535, 655377, 393217, 65535, 655377, 458753, 65535, 655377, 524289, 65535, 655377, 65537, 65534, 655377, 1, 65533, 655377, 65537, 65533, 655377, 131073, 65534, 655377, 196609, 65534, 655377, 262145, 65534, 655377, 327681, 65534, 655377, 393217, 65534, 655377, 131073, 65533, 655377, 196609, 65533, 655377, 262145, 65533, 655377, 1, 1, 655377, 65537, 1, 655377, 131073, 1, 655377, 196609, 1, 655377)
+}
+script = ExtResource("2_kfu4b")
+size = Vector3i(40, 30, 40)
+noise = SubResource("FastNoiseLite_upigt")
+base_block = "building_017"
+metadata/_editor_floor_ = Vector3(1, 0, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.987408, 0.158193, -1.20713e-08, -0.0905409, 0.565139, 0.820012, 0.12972, -0.809687, 0.572346, -20.2891, 29.0787, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(50, 0, 0, 0, 1, 0, 0, 0, 50, 35.974, 0, 7.51073)
+mesh = SubResource("PlaneMesh_l7n5e")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4tysg")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("sprint_timer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61263, 1.10774, 5.25064)
+script = ExtResource("3_4j1jq")
+sprint_timer = NodePath("SprintTimer")
+
+[node name="SprintTimer" type="Timer" parent="CharacterBody3D"]
+wait_time = 0.2
+one_shot = true
+
+[node name="Pivot" type="Node3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.130829, 0.00104475)
+
+[node name="Camera" type="Camera3D" parent="CharacterBody3D/Pivot"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("BoxShape3D_mf2vc")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+visible = false
+mesh = SubResource("CapsuleMesh_4jk8y")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="CharacterBody3D"]
+omni_range = 2.6909
+omni_attenuation = 0.31864
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_bftm2")
