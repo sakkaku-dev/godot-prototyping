@@ -1,3 +1,10 @@
 # Godot 4+ specific ignores
 .godot/
 *.blend1
+glb_importer/
+assets/**/*.import
+assets/**/DAE format/
+assets/**/FBX format/
+assets/**/STL format/
+assets/**/OBJ format/
+assets/**/Source/

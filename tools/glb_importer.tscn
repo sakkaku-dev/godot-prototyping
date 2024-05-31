@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://ddgsvgvpexdho"]
+
+[ext_resource type="Script" path="res://tools/glb_importer.gd" id="1_st4o3"]
+
+[node name="GlbImporter" type="Node"]
+script = ExtResource("1_st4o3")
+root_folder = "res://assets/Modular Buildings"
