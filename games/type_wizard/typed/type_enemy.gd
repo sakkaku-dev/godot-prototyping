@@ -81,6 +81,9 @@ func auto_hit():
 func finish_word():
 	_new_word()
 
+func get_remaining_word():
+	return typed_word.get_remaining_word()
+
 func _new_word():
 	self.health -= 1
 	if health >= 0:

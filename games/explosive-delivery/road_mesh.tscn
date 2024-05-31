@@ -1,0 +1,28 @@
+[gd_scene load_steps=9 format=3 uid="uid://corsudubs6hlb"]
+
+[ext_resource type="PackedScene" uid="uid://y07pvq7sgxhe" path="res://assets/City Kit - Roads/Models/Scenes/road_bendSquare.tscn" id="1_e22dn"]
+[ext_resource type="PackedScene" uid="uid://bcib02kuemn56" path="res://assets/City Kit - Roads/Models/Scenes/road_crossroad.tscn" id="2_aymop"]
+[ext_resource type="PackedScene" uid="uid://n8fimpj5cxaq" path="res://assets/City Kit - Roads/Models/Scenes/road_end.tscn" id="3_u3s41"]
+[ext_resource type="PackedScene" uid="uid://pl4mtx4kou2p" path="res://assets/City Kit - Roads/Models/Scenes/road_intersection.tscn" id="4_gqlac"]
+[ext_resource type="PackedScene" uid="uid://d3a0g8iuuawgu" path="res://assets/City Kit - Roads/Models/Scenes/road_slant.tscn" id="5_ylrga"]
+[ext_resource type="PackedScene" uid="uid://v6bcy5qdduur" path="res://assets/City Kit - Roads/Models/Scenes/road_straight.tscn" id="6_jrdr7"]
+[ext_resource type="PackedScene" uid="uid://7hk21lupw6se" path="res://assets/City Kit - Roads/Models/Scenes/tile_high.tscn" id="7_eyegs"]
+[ext_resource type="PackedScene" uid="uid://diyng57knvtxp" path="res://assets/City Kit - Roads/Models/Scenes/tile_low.tscn" id="8_qtrae"]
+
+[node name="RoadMesh" type="Node3D"]
+
+[node name="road_bendSquare2" parent="." instance=ExtResource("1_e22dn")]
+
+[node name="road_crossroad2" parent="." instance=ExtResource("2_aymop")]
+
+[node name="road_end2" parent="." instance=ExtResource("3_u3s41")]
+
+[node name="road_intersection2" parent="." instance=ExtResource("4_gqlac")]
+
+[node name="road_slant2" parent="." instance=ExtResource("5_ylrga")]
+
+[node name="road_straight2" parent="." instance=ExtResource("6_jrdr7")]
+
+[node name="tile_high2" parent="." instance=ExtResource("7_eyegs")]
+
+[node name="tile_low2" parent="." instance=ExtResource("8_qtrae")]
