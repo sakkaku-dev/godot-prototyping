@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d3stqobnvht46"
-path="res://.godot/imported/ProphecyPanel_000.png-b2f00c3b7e7c347b82ec7745b0185afd.ctex"
+uid="uid://bbgfgtoyrckox"
+path="res://.godot/imported/Pillar_Bot_000.png-a1ad91026c1b0224e5f2678de388ab34.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/last-librarian/ProphecyPanel_000.png"
-dest_files=["res://.godot/imported/ProphecyPanel_000.png-b2f00c3b7e7c347b82ec7745b0185afd.ctex"]
+source_file="res://games/last-librarian/assets/Pillar_Bot_000.png"
+dest_files=["res://.godot/imported/Pillar_Bot_000.png-a1ad91026c1b0224e5f2678de388ab34.ctex"]
 
 [params]
 

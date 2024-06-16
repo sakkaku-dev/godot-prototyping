@@ -36,9 +36,13 @@ enum Knowledge {
 @onready var prophecy = Prophecy.values().pick_random()
 
 var combat_power := 0.0
+var defense_power := 0.0
 var science := 0.0 # Wisdom of the people -> chance to discover things on their own
 var survival := 0.0 # Basic survival skills -> below zero, gameover?
 var government := 0.0 # Anarchy, Democracy, Tyranny | [-1, 1]
+var globalization := 0.0
+
+var knowledges := []
 
 func _ready():
 	#intro.show_text(INTRO_TEXT)

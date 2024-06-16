@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://csnt75xo4v3yy"
-path="res://.godot/imported/Shiori_000.png-a0d0b0d13bd5a4c9c27f679b41124284.ctex"
+uid="uid://bxu841abxjw8"
+path="res://.godot/imported/Prophecy_000.png-887cf47f24c0283c4d0ff2496a9af0e2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/last-librarian/Shiori_000.png"
-dest_files=["res://.godot/imported/Shiori_000.png-a0d0b0d13bd5a4c9c27f679b41124284.ctex"]
+source_file="res://games/last-librarian/assets/Prophecy_000.png"
+dest_files=["res://.godot/imported/Prophecy_000.png-887cf47f24c0283c4d0ff2496a9af0e2.ctex"]
 
 [params]
 

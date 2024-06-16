@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2l7rihaifpts"
-path="res://.godot/imported/Tiles_000.png-72f4013cdf90d60033d539e940436a3c.ctex"
+uid="uid://csnt75xo4v3yy"
+path="res://.godot/imported/Shiori_000.png-71111d1f0d1b7b71ab4f15f80b45c5a9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/last-librarian/Tiles_000.png"
-dest_files=["res://.godot/imported/Tiles_000.png-72f4013cdf90d60033d539e940436a3c.ctex"]
+source_file="res://games/last-librarian/assets/Shiori_000.png"
+dest_files=["res://.godot/imported/Shiori_000.png-71111d1f0d1b7b71ab4f15f80b45c5a9.ctex"]
 
 [params]
 

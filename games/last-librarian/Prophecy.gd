@@ -2,7 +2,7 @@ extends Control
 
 const PROPHECIES = {
 	LastLibrarian.Prophecy.ALIEN: "In ancient prophecies, it is foretold that when the twin moons align, celestial gates will open, unleashing a malevolent force from the stars. Uncanny presences will descend upon the world, bringing cosmic winter and devastation with their advanced weaponry.",
-	LastLibrarian.Prophecy.METEORITE: "In ancient prophecies, it is foretold that when the constellation of the Falling Dragon aligns, a fiery celestial visitor will blaze through the heavens. Its arrival shaking the very foundations of the earth with devastating force.",
+	LastLibrarian.Prophecy.METEORITE: "In ancient prophecies, it is foretold that when the constellation of the falling dragon aligns, a fiery celestial visitor will blaze through the heavens. Its arrival shaking the very foundations of earth with devastating force.",
 	LastLibrarian.Prophecy.PANDEMIC: "In ancient prophecies, it is foretold that a dark shadow will descend upon the lands, spreading silently like a creeping mist. From distant shores, unseen maladies will emerge, sweeping across continents with relentless fury."
 }
 
