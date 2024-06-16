@@ -15,4 +15,4 @@ func _ready():
 	
 func _set_outline(enable: bool):
 	var mat = node.material as ShaderMaterial
-	mat.set_shader_parameter("enable", enable)
+	mat.set_shader_parameter("thickness", 1 if enable else 0)

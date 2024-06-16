@@ -1,0 +1,355 @@
+[gd_scene load_steps=23 format=3 uid="uid://bjdf4gupfyd8q"]
+
+[ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
+[ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
+[ext_resource type="Script" path="res://games/last-librarian/DialogContainer.gd" id="3_bhirj"]
+[ext_resource type="Script" path="res://games/last-librarian/AutoTypedLabel.gd" id="4_6np1i"]
+[ext_resource type="Script" path="res://games/last-librarian/Prophecy.gd" id="5_otm47"]
+[ext_resource type="Texture2D" uid="uid://d3stqobnvht46" path="res://games/last-librarian/ProphecyPanel_000.png" id="6_ewqxm"]
+[ext_resource type="Texture2D" uid="uid://d2l7rihaifpts" path="res://games/last-librarian/Tiles_000.png" id="6_mefp2"]
+[ext_resource type="Texture2D" uid="uid://csnt75xo4v3yy" path="res://games/last-librarian/Shiori_000.png" id="7_h1kxy"]
+[ext_resource type="Script" path="res://games/last-librarian/LibrarianPlayer.gd" id="7_yfgsx"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="8_rj5ox"]
+[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="9_68f3b"]
+[ext_resource type="Texture2D" uid="uid://bxu841abxjw8" path="res://games/last-librarian/Prophecy_000.png" id="9_erwli"]
+[ext_resource type="Script" path="res://util/Hand.gd" id="9_ms87v"]
+[ext_resource type="Script" path="res://util/Interactable.gd" id="10_ndd6a"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ycy"]
+bg_color = Color(0.08103, 0.0693, 0.09, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lciab"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jqe6k"]
+texture = ExtResource("6_mefp2")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(0, 0, 16, -16, 16, 16, -16, 16)
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:0/0/terrains_peering_bit/right_side = 0
+1:0/0/terrains_peering_bit/bottom_right_corner = 0
+1:0/0/terrains_peering_bit/bottom_side = 0
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrain = 0
+0:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:1/0/physics_layer_0/angular_velocity = 0.0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:1/0/terrains_peering_bit/right_side = 0
+0:1/0/terrains_peering_bit/bottom_right_corner = 0
+0:1/0/terrains_peering_bit/bottom_side = 0
+0:1/0/terrains_peering_bit/bottom_left_corner = 0
+0:1/0/terrains_peering_bit/left_side = 0
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrain = 0
+1:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:1/0/physics_layer_0/angular_velocity = 0.0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:1/0/terrains_peering_bit/right_side = 0
+1:1/0/terrains_peering_bit/bottom_right_corner = 0
+1:1/0/terrains_peering_bit/bottom_side = 0
+1:1/0/terrains_peering_bit/bottom_left_corner = 0
+1:1/0/terrains_peering_bit/left_side = 0
+1:1/0/terrains_peering_bit/top_side = 0
+1:1/0/terrains_peering_bit/top_right_corner = 0
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrain = 0
+2:1/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:1/0/physics_layer_0/angular_velocity = 0.0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:1/0/terrains_peering_bit/right_side = 0
+2:1/0/terrains_peering_bit/bottom_right_corner = 0
+2:1/0/terrains_peering_bit/bottom_side = 0
+2:1/0/terrains_peering_bit/bottom_left_corner = 0
+2:1/0/terrains_peering_bit/left_side = 0
+2:1/0/terrains_peering_bit/top_left_corner = 0
+2:1/0/terrains_peering_bit/top_side = 0
+2:1/0/terrains_peering_bit/top_right_corner = 0
+0:2/0 = 0
+0:2/0/terrain_set = 0
+0:2/0/terrain = 0
+0:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:2/0/physics_layer_0/angular_velocity = 0.0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:2/0/terrains_peering_bit/right_side = 0
+0:2/0/terrains_peering_bit/left_side = 0
+0:2/0/terrains_peering_bit/top_left_corner = 0
+0:2/0/terrains_peering_bit/top_side = 0
+0:2/0/terrains_peering_bit/top_right_corner = 0
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrain = 0
+1:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:2/0/physics_layer_0/angular_velocity = 0.0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:2/0/terrains_peering_bit/left_side = 0
+1:2/0/terrains_peering_bit/top_left_corner = 0
+1:2/0/terrains_peering_bit/top_side = 0
+2:2/0 = 0
+2:2/0/terrain_set = 0
+2:2/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:2/0/physics_layer_0/angular_velocity = 0.0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:3/0 = 0
+0:3/0/terrain_set = 0
+0:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:3/0/physics_layer_0/angular_velocity = 0.0
+0:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:3/0 = 0
+1:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:3/0/physics_layer_0/angular_velocity = 0.0
+1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:3/0 = 0
+2:3/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:3/0/physics_layer_0/angular_velocity = 0.0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+
+[sub_resource type="TileSet" id="TileSet_itgd1"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Floor"
+terrain_set_0/terrain_0/color = Color(0.0924317, 0.437451, 0.444691, 1)
+sources/1 = SubResource("TileSetAtlasSource_jqe6k")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_40afa"]
+shader = ExtResource("8_rj5ox")
+shader_parameter/thickness = 1.0
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = 0.0
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pcf5d"]
+size = Vector2(38, 44)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_71wdt"]
+radius = 9.5
+height = 49.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2e457"]
+radius = 30.1496
+
+[node name="LastLibrarian" type="Node2D"]
+script = ExtResource("1_j7d3a")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Intro" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label")]
+process_mode = 3
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("3_bhirj")
+label = NodePath("MarginContainer/PanelContainer/MarginContainer/Label")
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/Intro"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Intro"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Intro/MarginContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o0ycy")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Intro/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="CanvasLayer/Intro/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+text = "With this vast repository comes a solemn responsibility—to wield the power to restore or withhold, to guide or condemn. For she alone decides whether humanity will rise from its destruction, armed with the insights of its past, or continue blindly towards demise."
+autowrap_mode = 3
+script = ExtResource("4_6np1i")
+
+[node name="ProphecyUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "interactable", "game")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("5_otm47")
+label = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label")
+interactable = NodePath("../../Prophecy")
+game = NodePath("../..")
+
+[node name="Background2" type="ColorRect" parent="CanvasLayer/ProphecyUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.556863)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ProphecyUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -199.0
+offset_top = -127.0
+offset_right = 199.0
+offset_bottom = 127.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_ewqxm")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ProphecyUI"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -109.0
+offset_right = 100.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lciab")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ProphecyUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label" type="Label" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0823529, 0.113725, 0.156863, 1)
+theme_override_colors/font_outline_color = Color(0.0823529, 0.113725, 0.156863, 1)
+theme_override_constants/outline_size = 1
+text = "In ancient prophecies, it is foretold that when the twin moons align, celestial gates will open, unleashing a malevolent force from the stars. Uncanny presences will descend upon the world, bringing cosmic winter and devastation with their advanced weaponry."
+horizontal_alignment = 3
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.505882, 0.592157, 0.588235, 1)
+theme_override_colors/font_outline_color = Color(0.505882, 0.592157, 0.588235, 1)
+theme_override_constants/outline_size = 1
+text = "Only the chosen, armed with forgotten powers, will stand as the last hope against the approaching danger."
+horizontal_alignment = 3
+autowrap_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -374.0
+offset_top = -240.0
+offset_right = 374.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.141176, 0.0823529, 0.152941, 1)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="TileMap" type="TileMap" parent="."]
+position = Vector2(-8, 0)
+tile_set = SubResource("TileSet_itgd1")
+format = 2
+layer_0/tile_data = PackedInt32Array(393207, 1, 1, 393208, 1, 1, 393209, 1, 1, 393210, 1, 1, 393211, 1, 1, 393212, 1, 1, 393213, 1, 1, 393214, 1, 1, 393215, 1, 1, 327680, 1, 1, 393204, 1, 2, 393205, 1, 1, 393206, 1, 1, 327681, 65537, 1, 327682, 131073, 1, 327683, 131073, 1, 327684, 131073, 1, 327685, 131073, 1, 327686, 131073, 1, 327687, 131073, 1, 327688, 131073, 1, 327689, 131073, 1, 327690, 131073, 1, 262146, 1, 1, 262147, 1, 1, 262148, 1, 1, 262149, 1, 1, 262150, 65537, 1, 262151, 131073, 1, 262152, 131073, 1, 262153, 131073, 1, 262154, 65537, 2, 262155, 1, 2, 262156, 1, 2, 196615, 1, 1, 196616, 1, 1, 196617, 1, 1, 196618, 65537, 1, 196619, 1, 2, 196620, 1, 2, 262145, 65537, 0, 196614, 65537, 0, 327692, 1, 2, 327691, 1, 2, 458740, 1, 2, 458741, 1, 2, 458742, 1, 2, 458743, 1, 2, 458744, 1, 2, 458745, 1, 2, 458746, 1, 2, 458747, 1, 2, 458748, 1, 2, 458749, 1, 2, 458750, 1, 2, 458751, 1, 2, 393216, 1, 2, 393217, 1, 2, 393218, 1, 2, 393219, 1, 2, 393220, 1, 2, 393226, 1, 2, 393227, 1, 2, 393228, 1, 2, 393225, 1, 2, 393224, 1, 2, 393223, 1, 2, 393222, 1, 2, 393221, 1, 2, 393203, 1, 2, 458739, 1, 2, 262144, 1, 0, 196613, 1, 0, -327691, 1, 3, -327690, 1, 3, -327689, 1, 3, -327688, 1, 3, -327687, 1, 3, -327686, 1, 3, -327685, 1, 3, -327684, 1, 3, -327683, 1, 3, -327682, 1, 3, -327681, 1, 3, -393216, 1, 3, -393215, 1, 3, -393214, 1, 3, -393213, 1, 3, -393212, 1, 3, -393211, 1, 3, -393210, 1, 3, -393209, 1, 3, -393208, 1, 3, -393207, 1, 3, -393206, 131073, 3, -393227, 1, 2, -393226, 1, 2, -393225, 1, 2, -393224, 1, 2, -393223, 1, 2, -393222, 1, 2, -393221, 1, 2, -393220, 1, 2, -393219, 1, 2, -393218, 1, 2, -393217, 1, 2, -458752, 1, 2, -458751, 1, 2, -458750, 1, 2, -458749, 1, 2, -458748, 1, 2, -458747, 1, 2, -458746, 1, 2, -458745, 1, 2, -458744, 1, 2, -458743, 1, 2, -458742, 1, 2, -131085, 1, 2, -65549, 1, 2, -13, 1, 2, 65523, 1, 2, 131059, 1, 2, 196595, 1, 2, 262131, 1, 2, 327667, 1, 2, -393228, 1, 2, -327692, 1, 2, -262156, 1, 2, -196620, 1, 2, -131084, 1, 2, -65548, 1, 2, -12, 1, 2, 65524, 1, 2, 131060, 1, 2, 196596, 1, 2, 262132, 1, 2, 327668, 1, 2, -393229, 1, 2, -327693, 1, 2, -262157, 1, 2, -196621, 1, 2, -458741, 1, 2, -393205, 1, 2, -327669, 1, 2, -262133, 1, 2, -196597, 1, 2, -131061, 1, 2, -65525, 1, 2, 11, 1, 2, 65547, 1, 2, 131083, 1, 2, -458740, 1, 2, -393204, 1, 2, -327668, 1, 2, -262132, 1, 2, -196596, 1, 2, -131060, 1, 2, -65524, 1, 2, 12, 1, 2, 65548, 1, 2, 131084, 1, 2, -327670, 65537, 3, -262134, 65537, 3, -196598, 65537, 3, -131062, 65537, 3, -65526, 65537, 3, 10, 65537, 3, 65546, 65537, 3, 131082, 65537, 3)
+
+[node name="Prophecy" type="Area2D" parent="."]
+position = Vector2(267, 60)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("10_ndd6a")
+
+[node name="Sprite2D" type="Sprite2D" parent="Prophecy"]
+material = SubResource("ShaderMaterial_40afa")
+texture = ExtResource("9_erwli")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Prophecy"]
+shape = SubResource("RectangleShape2D_pcf5d")
+
+[node name="OutlineInteractable" type="Node" parent="Prophecy" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("9_68f3b")
+interactable = NodePath("..")
+node = NodePath("../Sprite2D")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-31, 111)
+collision_layer = 2
+floor_snap_length = 10.0
+script = ExtResource("7_yfgsx")
+speed = 130
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+texture = ExtResource("7_h1kxy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(0.5, 8.5)
+shape = SubResource("CapsuleShape2D_71wdt")
+
+[node name="Hand" type="Area2D" parent="Player"]
+collision_layer = 0
+collision_mask = 32
+script = ExtResource("9_ms87v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Hand"]
+shape = SubResource("CircleShape2D_2e457")

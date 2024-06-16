@@ -7,6 +7,8 @@ signal enable_highlight(enable)
 signal interacted(actor)
 signal interact_started(actor)
 
+@export var enabled := true
+
 var is_highlighted := false
 
 func _ready():
@@ -24,7 +26,9 @@ func unhighlight():
 	enable_highlight.emit(false)
 
 func interact(actor):
-	interacted.emit(actor)
+	if enabled:
+		interacted.emit(actor)
 
 func interact_start(actor):
-	interact_started.emit(actor)
+	if enabled:
+		interact_started.emit(actor)
