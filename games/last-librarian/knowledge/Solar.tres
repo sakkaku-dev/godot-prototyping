@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=3 format=3 uid="uid://dwu1of7bpbskn"]
+
+[ext_resource type="Resource" uid="uid://b6ltodwul6onl" path="res://games/last-librarian/knowledge/Satellite.tres" id="1_5h023"]
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_luvdl"]
+
+[resource]
+script = ExtResource("1_luvdl")
+name = "Solar Energy"
+description = ""
+chance_of_discovery = 0.4
+next_knowledge = Array[ExtResource("1_luvdl")]([ExtResource("1_5h023")])
+type = 1

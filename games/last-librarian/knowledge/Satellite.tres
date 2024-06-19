@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=3 format=3 uid="uid://b6ltodwul6onl"]
+
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_ckive"]
+[ext_resource type="Resource" uid="uid://di2pho4p1kw01" path="res://games/last-librarian/knowledge/Spaceship.tres" id="1_u56e0"]
+
+[resource]
+script = ExtResource("1_ckive")
+name = "Satellite"
+description = ""
+chance_of_discovery = 0.4
+next_knowledge = Array[ExtResource("1_ckive")]([ExtResource("1_u56e0")])
+type = 1

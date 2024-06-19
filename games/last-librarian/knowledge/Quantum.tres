@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=3 format=3 uid="uid://boxcbyojqgagi"]
+
+[ext_resource type="Resource" uid="uid://c1nvb7k1gsvwl" path="res://games/last-librarian/knowledge/Nanotec.tres" id="1_ln0wb"]
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_owha1"]
+
+[resource]
+script = ExtResource("1_owha1")
+name = "Quantum Mechanics"
+description = ""
+chance_of_discovery = 0.4
+next_knowledge = Array[ExtResource("1_owha1")]([ExtResource("1_ln0wb")])
+type = 1

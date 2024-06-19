@@ -2,12 +2,12 @@ shader_type canvas_item;
 render_mode unshaded;
 
 uniform float thickness : hint_range(0.0, 100.0);
-uniform int ring_count : hint_range(1,128) = 16;
+uniform int ring_count : hint_range(1,128) = 4;
 uniform float ring_offset : hint_range(0.0, 1.0, 0.01);
 uniform vec4 outline_color : source_color = vec4(1.0);
 uniform bool border_clipping_fix = true;
 uniform float aspect_ratio : hint_range(0.1, 10.0, 0.01) = 1.0;
-uniform bool square_border = false;
+uniform bool square_border = true;
 uniform vec2 offset;
 uniform bool max_or_add = false;
 

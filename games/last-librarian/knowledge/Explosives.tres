@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=3 format=3 uid="uid://des52hbscprd"]
+
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_4sr74"]
+[ext_resource type="Resource" uid="uid://b6lbbuto21gys" path="res://games/last-librarian/knowledge/EnergyWeapon.tres" id="1_dvu03"]
+
+[resource]
+script = ExtResource("1_4sr74")
+name = "Explosive"
+description = ""
+chance_of_discovery = 0.2
+next_knowledge = Array[ExtResource("1_4sr74")]([ExtResource("1_dvu03")])
+type = 0

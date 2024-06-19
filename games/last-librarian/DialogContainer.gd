@@ -14,7 +14,7 @@ func _ready():
 	finished.connect(func():
 		var out_tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		out_tw.tween_property(self, "modulate", Color.TRANSPARENT, 2.0)
-		get_tree().paused = true
+		get_tree().paused = false
 		
 		await out_tw.finished
 		hide()

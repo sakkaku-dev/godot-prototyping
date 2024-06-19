@@ -1,28 +1,40 @@
-[gd_scene load_steps=27 format=3 uid="uid://bjdf4gupfyd8q"]
+[gd_scene load_steps=41 format=3 uid="uid://bjdf4gupfyd8q"]
 
 [ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
 [ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
-[ext_resource type="Script" path="res://games/last-librarian/DialogContainer.gd" id="3_bhirj"]
+[ext_resource type="Resource" uid="uid://cnbl2lg8upe8k" path="res://games/last-librarian/knowledge/Craftmanship.tres" id="2_t3gu2"]
+[ext_resource type="Script" path="res://games/last-librarian/Intro.gd" id="3_hsfiw"]
+[ext_resource type="Resource" uid="uid://bh45gmy6slaih" path="res://games/last-librarian/knowledge/Physics.tres" id="3_pkpec"]
 [ext_resource type="Script" path="res://games/last-librarian/AutoTypedLabel.gd" id="4_6np1i"]
+[ext_resource type="Resource" uid="uid://bp6qnqkxyycv4" path="res://games/last-librarian/knowledge/Antibiotics.tres" id="4_j80po"]
 [ext_resource type="Script" path="res://games/last-librarian/Prophecy.gd" id="5_otm47"]
+[ext_resource type="Resource" uid="uid://d13i5xcfmtxfc" path="res://games/last-librarian/knowledge/Genetic.tres" id="5_rscmu"]
 [ext_resource type="Texture2D" uid="uid://d3stqobnvht46" path="res://games/last-librarian/assets/ProphecyPanel_000.png" id="6_ewqxm"]
 [ext_resource type="Texture2D" uid="uid://d2l7rihaifpts" path="res://games/last-librarian/assets/Tiles_000.png" id="6_mefp2"]
+[ext_resource type="Script" path="res://games/last-librarian/KnowledgeList.gd" id="7_34uwo"]
 [ext_resource type="Texture2D" uid="uid://blpu1xtgjp6ol" path="res://games/last-librarian/assets/BG_000.png" id="7_42xfc"]
 [ext_resource type="Texture2D" uid="uid://csnt75xo4v3yy" path="res://games/last-librarian/assets/Shiori_000.png" id="7_h1kxy"]
 [ext_resource type="Script" path="res://games/last-librarian/LibrarianPlayer.gd" id="7_yfgsx"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="8_rj5ox"]
+[ext_resource type="PackedScene" uid="uid://b5acumrpv21l8" path="res://games/last-librarian/knowledge_item.tscn" id="8_u6b41"]
 [ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="9_68f3b"]
 [ext_resource type="Texture2D" uid="uid://bxu841abxjw8" path="res://games/last-librarian/assets/Prophecy_000.png" id="9_erwli"]
 [ext_resource type="Script" path="res://util/Hand.gd" id="9_ms87v"]
 [ext_resource type="Script" path="res://util/Interactable.gd" id="10_ndd6a"]
+[ext_resource type="Script" path="res://games/last-librarian/NextDecade.gd" id="13_0i4d2"]
+[ext_resource type="Script" path="res://games/last-librarian/KnowledgeTree.gd" id="14_dv0c8"]
+[ext_resource type="PackedScene" uid="uid://ch55kv4gban7j" path="res://games/last-librarian/knowledge_node.tscn" id="15_tt867"]
 [ext_resource type="Texture2D" uid="uid://bbgfgtoyrckox" path="res://games/last-librarian/assets/Pillar_Bot_000.png" id="15_umrbr"]
+[ext_resource type="Script" path="res://games/last-librarian/CustomGraph.gd" id="16_jkwtb"]
 [ext_resource type="Texture2D" uid="uid://dbns5571xky25" path="res://games/last-librarian/assets/Pillar_Mid_000.png" id="16_uxsdf"]
 [ext_resource type="Texture2D" uid="uid://cqspdwhullcr8" path="res://games/last-librarian/assets/Pillar_Top_000.png" id="17_xikh7"]
+[ext_resource type="Script" path="res://games/last-librarian/ToggleButton.gd" id="18_u8qd7"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="22_5bu7n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lciab"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ycy"]
 bg_color = Color(0.08103, 0.0693, 0.09, 1)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lciab"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jqe6k"]
 texture = ExtResource("6_mefp2")
@@ -141,6 +153,21 @@ shader_parameter/max_or_add = false
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pcf5d"]
 size = Vector2(38, 44)
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pdxip"]
+shader = ExtResource("8_rj5ox")
+shader_parameter/thickness = 1.0
+shader_parameter/ring_count = 16
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uqius"]
+size = Vector2(26, 142)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_71wdt"]
 radius = 9.5
 height = 49.0
@@ -150,8 +177,247 @@ radius = 30.1496
 
 [node name="LastLibrarian" type="Node2D"]
 script = ExtResource("1_j7d3a")
+knowledges = Array[Resource("res://games/last-librarian/knowledge/KnowledgeResource.gd")]([ExtResource("2_t3gu2"), ExtResource("3_pkpec"), ExtResource("4_j80po"), ExtResource("5_rscmu")])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ProphecyUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "interactable", "game")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("5_otm47")
+label = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label")
+interactable = NodePath("../../TileMap/Prophecy")
+game = NodePath("../..")
+
+[node name="Background2" type="ColorRect" parent="CanvasLayer/ProphecyUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.556863)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ProphecyUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -208.0
+offset_top = -133.0
+offset_right = 209.0
+offset_bottom = 133.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_ewqxm")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ProphecyUI"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -109.0
+offset_right = 100.0
+offset_bottom = 111.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_lciab")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ProphecyUI/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.0823529, 0.113725, 0.156863, 1)
+theme_override_colors/font_outline_color = Color(0.0823529, 0.113725, 0.156863, 1)
+theme_override_constants/outline_size = 1
+text = "In ancient prophecies, it is foretold that when the twin moons align, uncanny presences will descend upon the world, unleashing a malevolent force from the stars, bringing cosmic winter and devastation with their advanced weaponry."
+horizontal_alignment = 3
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.505882, 0.592157, 0.588235, 1)
+theme_override_colors/font_outline_color = Color(0.505882, 0.592157, 0.588235, 1)
+theme_override_constants/outline_size = 1
+text = "Only the chosen, armed with forgotten powers, will stand as the last hope against the approaching danger."
+horizontal_alignment = 3
+autowrap_mode = 3
+
+[node name="KnowledgeList" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("container", "interactable")]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("7_34uwo")
+container = NodePath("ScrollContainer/PanelContainer/MarginContainer/VBoxContainer")
+item_scene = ExtResource("8_u6b41")
+interactable = NodePath("../../TileMap/Bookshelf")
+
+[node name="Background2" type="ColorRect" parent="CanvasLayer/KnowledgeList"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.556863)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/KnowledgeList"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 60.0
+offset_top = 34.0
+offset_right = -61.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeList/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeList/ScrollContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="GridContainer" parent="CanvasLayer/KnowledgeList/ScrollContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+columns = 3
+
+[node name="KnowledgeTree" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("graph")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("14_dv0c8")
+graph = NodePath("GraphEdit")
+node_scene = ExtResource("15_tt867")
+
+[node name="GraphEdit" type="GraphEdit" parent="CanvasLayer/KnowledgeTree"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/port_hotzone_inner_extent = 0
+theme_override_constants/port_hotzone_outer_extent = 0
+show_grid = false
+snapping_enabled = false
+connection_lines_curvature = 0.8
+connection_lines_thickness = 0.5
+zoom = 0.3
+zoom_min = 0.2
+zoom_max = 0.4
+minimap_enabled = false
+show_menu = false
+show_zoom_buttons = false
+show_grid_buttons = false
+show_minimap_button = false
+show_arrange_button = false
+script = ExtResource("16_jkwtb")
+
+[node name="Buttons" type="MarginContainer" parent="CanvasLayer"]
+process_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Buttons"]
+layout_mode = 2
+
+[node name="ToggleButton" type="TextureButton" parent="CanvasLayer/Buttons/VBoxContainer" node_paths=PackedStringArray("control")]
+custom_minimum_size = Vector2(20, 20)
+layout_mode = 2
+texture_normal = ExtResource("22_5bu7n")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("18_u8qd7")
+control = NodePath("../../../KnowledgeTree")
+
+[node name="NextDecade" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("start_text")]
+process_mode = 3
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("13_0i4d2")
+start_text = NodePath("Background2/CenterContainer/Label")
+
+[node name="Background2" type="ColorRect" parent="CanvasLayer/NextDecade"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.556863)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/NextDecade/Background2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/NextDecade/Background2/CenterContainer"]
+layout_mode = 2
+text = "A decade has passed"
 
 [node name="Intro" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label")]
 process_mode = 3
@@ -164,7 +430,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_junhf")
-script = ExtResource("3_bhirj")
+script = ExtResource("3_hsfiw")
 label = NodePath("MarginContainer/PanelContainer/MarginContainer/Label")
 
 [node name="Background" type="ColorRect" parent="CanvasLayer/Intro"]
@@ -208,95 +474,6 @@ layout_mode = 2
 text = "With this vast repository comes a solemn responsibility—to wield the power to restore or withhold, to guide or condemn. For she alone decides whether humanity will rise from its destruction, armed with the insights of its past, or continue blindly towards demise."
 autowrap_mode = 3
 script = ExtResource("4_6np1i")
-
-[node name="ProphecyUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "interactable", "game")]
-process_mode = 3
-visible = false
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_junhf")
-script = ExtResource("5_otm47")
-label = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label")
-interactable = NodePath("../../TileMap/Prophecy")
-game = NodePath("../..")
-
-[node name="Background2" type="ColorRect" parent="CanvasLayer/ProphecyUI"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0.556863)
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ProphecyUI"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -199.0
-offset_top = -127.0
-offset_right = 199.0
-offset_bottom = 127.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("6_ewqxm")
-expand_mode = 2
-stretch_mode = 5
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/ProphecyUI"]
-custom_minimum_size = Vector2(200, 0)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -109.0
-offset_right = 100.0
-offset_bottom = 111.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_lciab")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/ProphecyUI/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer"]
-layout_mode = 2
-theme_override_constants/separation = 30
-
-[node name="Label" type="Label" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.0823529, 0.113725, 0.156863, 1)
-theme_override_colors/font_outline_color = Color(0.0823529, 0.113725, 0.156863, 1)
-theme_override_constants/outline_size = 1
-text = "In ancient prophecies, it is foretold that when the twin moons align, celestial gates will open, unleashing a malevolent force from the stars. Uncanny presences will descend upon the world, bringing cosmic winter and devastation with their advanced weaponry."
-horizontal_alignment = 3
-autowrap_mode = 3
-
-[node name="Label3" type="Label" parent="CanvasLayer/ProphecyUI/PanelContainer/MarginContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_colors/font_color = Color(0.505882, 0.592157, 0.588235, 1)
-theme_override_colors/font_outline_color = Color(0.505882, 0.592157, 0.588235, 1)
-theme_override_constants/outline_size = 1
-text = "Only the chosen, armed with forgotten powers, will stand as the last hope against the approaching danger."
-horizontal_alignment = 3
-autowrap_mode = 3
 
 [node name="ColorRect" type="NinePatchRect" parent="."]
 anchors_preset = 8
@@ -369,10 +546,10 @@ texture = ExtResource("17_xikh7")
 position = Vector2(-8, 0)
 tile_set = SubResource("TileSet_itgd1")
 format = 2
-layer_0/tile_data = PackedInt32Array(393207, 1, 1, 393208, 1, 1, 393209, 1, 1, 393210, 1, 1, 393211, 1, 1, 393212, 1, 1, 393213, 1, 1, 393214, 1, 1, 393215, 1, 1, 327680, 1, 1, 393204, 1, 2, 393205, 1, 1, 393206, 1, 1, 327681, 65537, 1, 327682, 131073, 1, 327683, 131073, 1, 327684, 131073, 1, 327685, 131073, 1, 327686, 131073, 1, 327687, 131073, 1, 327688, 131073, 1, 327689, 131073, 1, 327690, 131073, 1, 262146, 1, 1, 262147, 1, 1, 262148, 1, 1, 262149, 1, 1, 262150, 65537, 1, 262151, 131073, 1, 262152, 131073, 1, 262153, 131073, 1, 262154, 65537, 2, 262155, 1, 2, 262156, 1, 2, 196615, 1, 1, 196616, 1, 1, 196617, 1, 1, 196618, 65537, 1, 196619, 1, 2, 196620, 1, 2, 262145, 65537, 0, 196614, 65537, 0, 327692, 1, 2, 327691, 1, 2, 458740, 1, 2, 458741, 1, 2, 458742, 1, 2, 458743, 1, 2, 458744, 1, 2, 458745, 1, 2, 458746, 1, 2, 458747, 1, 2, 458748, 1, 2, 458749, 1, 2, 458750, 1, 2, 458751, 1, 2, 393216, 1, 2, 393217, 1, 2, 393218, 1, 2, 393219, 1, 2, 393220, 1, 2, 393226, 1, 2, 393227, 1, 2, 393228, 1, 2, 393225, 1, 2, 393224, 1, 2, 393223, 1, 2, 393222, 1, 2, 393221, 1, 2, 393203, 1, 2, 458739, 1, 2, 262144, 1, 0, 196613, 1, 0, -327691, 1, 3, -327690, 1, 3, -327689, 1, 3, -327688, 1, 3, -327687, 1, 3, -327686, 1, 3, -327685, 1, 3, -327684, 1, 3, -327683, 1, 3, -327682, 1, 3, -327681, 1, 3, -393216, 1, 3, -393215, 1, 3, -393214, 1, 3, -393213, 1, 3, -393212, 1, 3, -393211, 1, 3, -393210, 1, 3, -393209, 1, 3, -393208, 1, 3, -393207, 1, 3, -393206, 131073, 3, -393227, 1, 2, -393226, 1, 2, -393225, 1, 2, -393224, 1, 2, -393223, 1, 2, -393222, 1, 2, -393221, 1, 2, -393220, 1, 2, -393219, 1, 2, -393218, 1, 2, -393217, 1, 2, -458752, 1, 2, -458751, 1, 2, -458750, 1, 2, -458749, 1, 2, -458748, 1, 2, -458747, 1, 2, -458746, 1, 2, -458745, 1, 2, -458744, 1, 2, -458743, 1, 2, -458742, 1, 2, -131085, 1, 2, -65549, 1, 2, -13, 1, 2, 65523, 1, 2, 131059, 1, 2, 196595, 1, 2, 262131, 1, 2, 327667, 1, 2, -393228, 1, 2, -327692, 1, 2, -262156, 1, 2, -196620, 1, 2, -131084, 1, 2, -65548, 1, 2, -12, 1, 2, 65524, 1, 2, 131060, 1, 2, 196596, 1, 2, 262132, 1, 2, 327668, 1, 2, -393229, 1, 2, -327693, 1, 2, -262157, 1, 2, -196621, 1, 2, -458741, 1, 2, -393205, 1, 2, -327669, 1, 2, -262133, 1, 2, -196597, 1, 2, -131061, 1, 2, -65525, 1, 2, 11, 1, 2, 65547, 1, 2, 131083, 1, 2, -458740, 1, 2, -393204, 1, 2, -327668, 1, 2, -262132, 1, 2, -196596, 1, 2, -131060, 1, 2, -65524, 1, 2, 12, 1, 2, 65548, 1, 2, 131084, 1, 2, -327670, 65537, 3, -262134, 65537, 3, -196598, 65537, 3, -131062, 65537, 3, -65526, 65537, 3, 10, 65537, 3, 65546, 65537, 3, 131082, 65537, 3)
+layer_0/tile_data = PackedInt32Array(393207, 1, 1, 393208, 1, 1, 393209, 1, 1, 393210, 1, 1, 393211, 1, 1, 393212, 1, 1, 393213, 1, 1, 393214, 1, 1, 393215, 1, 1, 327680, 1, 1, 393204, 1, 2, 393205, 1, 2, 393206, 1, 2, 327681, 65537, 1, 327682, 131073, 1, 327683, 131073, 1, 327684, 131073, 1, 327685, 131073, 1, 327686, 131073, 1, 327687, 131073, 1, 327688, 131073, 1, 327689, 131073, 1, 327690, 131073, 1, 262146, 1, 1, 262147, 1, 1, 262148, 1, 1, 262149, 1, 1, 262150, 65537, 1, 262151, 131073, 1, 262152, 131073, 1, 262153, 131073, 1, 262154, 65537, 2, 262155, 1, 2, 262156, 1, 2, 196615, 1, 1, 196616, 1, 1, 196617, 65537, 1, 196618, 1, 2, 196619, 1, 2, 196620, 1, 2, 262145, 65537, 0, 196614, 65537, 0, 327692, 1, 2, 327691, 1, 2, 458740, 1, 2, 458741, 1, 2, 458742, 1, 2, 458743, 1, 2, 458744, 1, 2, 458745, 1, 2, 458746, 1, 2, 458747, 1, 2, 458748, 1, 2, 458749, 1, 2, 458750, 1, 2, 458751, 1, 2, 393216, 1, 2, 393217, 1, 2, 393218, 1, 2, 393219, 1, 2, 393220, 1, 2, 393226, 1, 2, 393227, 1, 2, 393228, 1, 2, 393225, 1, 2, 393224, 1, 2, 393223, 1, 2, 393222, 1, 2, 393221, 1, 2, 393203, 1, 2, 458739, 1, 2, 262144, 1, 0, 196613, 1, 0, -327691, 1, 2, -327690, 1, 2, -327689, 1, 3, -327688, 1, 3, -327687, 1, 3, -327686, 1, 3, -327685, 1, 3, -327684, 1, 3, -327683, 1, 3, -327682, 1, 3, -327681, 1, 3, -393216, 1, 3, -393215, 1, 3, -393214, 1, 3, -393213, 1, 3, -393212, 1, 3, -393211, 1, 3, -393210, 1, 3, -393209, 1, 3, -393208, 1, 3, -393207, 131073, 3, -393206, 1, 2, -393227, 1, 2, -393226, 1, 2, -393225, 1, 2, -393224, 1, 2, -393223, 1, 2, -393222, 1, 2, -393221, 1, 2, -393220, 1, 2, -393219, 1, 2, -393218, 1, 2, -393217, 1, 2, -458752, 1, 2, -458751, 1, 2, -458750, 1, 2, -458749, 1, 2, -458748, 1, 2, -458747, 1, 2, -458746, 1, 2, -458745, 1, 2, -458744, 1, 2, -458743, 1, 2, -458742, 1, 2, -131085, 1, 2, -65549, 1, 2, -13, 1, 2, 65523, 1, 2, 131059, 1, 2, 196595, 1, 2, 262131, 1, 2, 327667, 1, 2, -393228, 1, 2, -327692, 1, 2, -262156, 1, 2, -196620, 1, 2, -131084, 1, 2, -65548, 1, 2, -12, 1, 2, 65524, 1, 2, 131060, 1, 2, 196596, 1, 2, 262132, 1, 2, 327668, 1, 2, -393229, 1, 2, -327693, 1, 2, -262157, 1, 2, -196621, 1, 2, -458741, 1, 2, -393205, 1, 2, -327669, 1, 2, -262133, 1, 2, -196597, 1, 2, -131061, 1, 2, -65525, 1, 2, 11, 1, 2, 65547, 1, 2, 131083, 1, 2, -458740, 1, 2, -393204, 1, 2, -327668, 1, 2, -262132, 1, 2, -196596, 1, 2, -131060, 1, 2, -65524, 1, 2, 12, 1, 2, 65548, 1, 2, 131084, 1, 2, -327670, 1, 2, -262134, 1, 2, -196598, 1, 2, -131062, 1, 2, -65526, 1, 2, 10, 1, 2, 65546, 1, 2, 131082, 1, 2, -262155, 1, 2, -196619, 1, 2, -131083, 1, 2, -65547, 1, 2, -11, 1, 2, 65525, 1, 2, 131061, 1, 2, 196597, 1, 2, 262133, 1, 2, 327669, 1, 2, -262154, 1, 2, -196618, 1, 2, -131082, 1, 2, -65546, 1, 2, -10, 1, 2, 65526, 1, 2, 131062, 1, 2, 196598, 1, 2, 262134, 1, 2, 327670, 1, 2, -327671, 65537, 3, -262135, 65537, 3, -196599, 65537, 3, -131063, 65537, 3, -65527, 65537, 3, 9, 65537, 3, 65545, 65537, 3, 131081, 65537, 3)
 
 [node name="Prophecy" type="Area2D" parent="TileMap"]
-position = Vector2(275, 60)
+position = Vector2(240, 60)
 collision_layer = 32
 collision_mask = 0
 script = ExtResource("10_ndd6a")
@@ -385,6 +562,42 @@ texture = ExtResource("9_erwli")
 shape = SubResource("RectangleShape2D_pcf5d")
 
 [node name="OutlineInteractable" type="Node" parent="TileMap/Prophecy" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("9_68f3b")
+interactable = NodePath("..")
+node = NodePath("../Sprite2D")
+
+[node name="Bookshelf" type="Area2D" parent="TileMap"]
+position = Vector2(91, 100)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("10_ndd6a")
+
+[node name="Sprite2D" type="Sprite2D" parent="TileMap/Bookshelf"]
+material = SubResource("ShaderMaterial_40afa")
+scale = Vector2(0.296875, 0.296875)
+texture = ExtResource("22_5bu7n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Bookshelf"]
+shape = SubResource("RectangleShape2D_pcf5d")
+
+[node name="OutlineInteractable" type="Node" parent="TileMap/Bookshelf" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("9_68f3b")
+interactable = NodePath("..")
+node = NodePath("../Sprite2D")
+
+[node name="Gate" type="Area2D" parent="TileMap"]
+position = Vector2(-280, 98)
+script = ExtResource("10_ndd6a")
+
+[node name="Sprite2D" type="Sprite2D" parent="TileMap/Gate"]
+material = SubResource("ShaderMaterial_pdxip")
+scale = Vector2(0.140625, 1)
+texture = ExtResource("22_5bu7n")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Gate"]
+shape = SubResource("RectangleShape2D_uqius")
+
+[node name="OutlineInteractable" type="Node" parent="TileMap/Gate" node_paths=PackedStringArray("interactable", "node")]
 script = ExtResource("9_68f3b")
 interactable = NodePath("..")
 node = NodePath("../Sprite2D")

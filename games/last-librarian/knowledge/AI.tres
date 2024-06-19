@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=4 format=3 uid="uid://b28rvy14ngk3a"]
+
+[ext_resource type="Resource" uid="uid://dkwrijnuwv1m6" path="res://games/last-librarian/knowledge/Nanobots.tres" id="1_761h4"]
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_drbr7"]
+[ext_resource type="Resource" uid="uid://di2pho4p1kw01" path="res://games/last-librarian/knowledge/Spaceship.tres" id="2_iapuc"]
+
+[resource]
+script = ExtResource("1_drbr7")
+name = "Artificial Intelligence"
+description = ""
+chance_of_discovery = 0.0
+next_knowledge = Array[ExtResource("1_drbr7")]([ExtResource("1_761h4"), ExtResource("2_iapuc")])
+type = 1

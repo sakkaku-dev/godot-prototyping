@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=3 format=3 uid="uid://duhvrnjadf4r3"]
+
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_cd4k6"]
+[ext_resource type="Resource" uid="uid://dkwrijnuwv1m6" path="res://games/last-librarian/knowledge/Nanobots.tres" id="1_kgh1r"]
+
+[resource]
+script = ExtResource("1_cd4k6")
+name = "Nanomedicine"
+description = ""
+chance_of_discovery = 0.4
+next_knowledge = Array[ExtResource("1_cd4k6")]([ExtResource("1_kgh1r")])
+type = 2

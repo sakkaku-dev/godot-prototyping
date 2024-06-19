@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=3 format=3 uid="uid://c1nvb7k1gsvwl"]
+
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_f1xnl"]
+[ext_resource type="Resource" uid="uid://duhvrnjadf4r3" path="res://games/last-librarian/knowledge/Nanomed.tres" id="1_xe8aw"]
+
+[resource]
+script = ExtResource("1_f1xnl")
+name = "Nano Technology"
+description = ""
+chance_of_discovery = 0.4
+next_knowledge = Array[ExtResource("1_f1xnl")]([ExtResource("1_xe8aw")])
+type = 1

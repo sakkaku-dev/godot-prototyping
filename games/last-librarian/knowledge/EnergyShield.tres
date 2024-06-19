@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="KnowledgeResource" load_steps=2 format=3 uid="uid://256o6dnbkv1l"]
+
+[ext_resource type="Script" path="res://games/last-librarian/knowledge/KnowledgeResource.gd" id="1_467wn"]
+
+[resource]
+script = ExtResource("1_467wn")
+name = "Energy Shield"
+description = ""
+chance_of_discovery = 0.4
+next_knowledge = Array[ExtResource("1_467wn")]([])
+type = 0
