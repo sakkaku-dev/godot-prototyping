@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bjdf4gupfyd8q"]
+[gd_scene load_steps=45 format=3 uid="uid://bjdf4gupfyd8q"]
 
 [ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
 [ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://d2l7rihaifpts" path="res://games/last-librarian/assets/Tiles_000.png" id="6_mefp2"]
 [ext_resource type="Script" path="res://games/last-librarian/KnowledgeList.gd" id="7_34uwo"]
 [ext_resource type="Texture2D" uid="uid://blpu1xtgjp6ol" path="res://games/last-librarian/assets/BG_000.png" id="7_42xfc"]
-[ext_resource type="Texture2D" uid="uid://csnt75xo4v3yy" path="res://games/last-librarian/assets/Shiori_000.png" id="7_h1kxy"]
 [ext_resource type="Script" path="res://games/last-librarian/LibrarianPlayer.gd" id="7_yfgsx"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="8_rj5ox"]
 [ext_resource type="PackedScene" uid="uid://b5acumrpv21l8" path="res://games/last-librarian/knowledge_item.tscn" id="8_u6b41"]
@@ -30,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://cqspdwhullcr8" path="res://games/last-librarian/assets/Pillar_Top_000.png" id="17_xikh7"]
 [ext_resource type="Script" path="res://games/last-librarian/ToggleButton.gd" id="18_u8qd7"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="22_5bu7n"]
+[ext_resource type="Texture2D" uid="uid://detlt40w6wnjn" path="res://games/last-librarian/assets/Shiori.png" id="29_0lyvo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lciab"]
 
@@ -174,6 +174,60 @@ height = 49.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2e457"]
 radius = 30.1496
+
+[sub_resource type="Animation" id="Animation_3mayb"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_3ffvc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_bq0cy"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2hkqh"]
+_data = {
+"RESET": SubResource("Animation_3ffvc"),
+"idle": SubResource("Animation_3mayb"),
+"walk": SubResource("Animation_bq0cy")
+}
 
 [node name="LastLibrarian" type="Node2D"]
 script = ExtResource("1_j7d3a")
@@ -609,10 +663,10 @@ position = Vector2(-31, 111)
 collision_layer = 2
 floor_snap_length = 10.0
 script = ExtResource("7_yfgsx")
-speed = 130
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
-texture = ExtResource("7_h1kxy")
+texture = ExtResource("29_0lyvo")
+hframes = 5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0.5, 8.5)
@@ -625,3 +679,8 @@ script = ExtResource("9_ms87v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Hand"]
 shape = SubResource("CircleShape2D_2e457")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player"]
+libraries = {
+"": SubResource("AnimationLibrary_2hkqh")
+}

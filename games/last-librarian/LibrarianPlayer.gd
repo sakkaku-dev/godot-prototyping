@@ -5,6 +5,7 @@ extends CharacterBody2D
 
 @onready var sprite_2d = $Sprite2D
 @onready var hand = $Hand
+@onready var animation_player = $AnimationPlayer
 
 func _physics_process(_delta):
 	var motion = get_motion()
@@ -12,6 +13,8 @@ func _physics_process(_delta):
 	
 	if motion:
 		sprite_2d.scale.x = -1 if motion < 0 else 1
+	
+	animation_player.play("walk" if velocity else "idle")
 	
 	if not is_on_floor():
 		velocity += Vector2.DOWN * gravity
