@@ -7,6 +7,7 @@
 script = ExtResource("1_gur1l")
 name = "Antibiotics"
 description = ""
-chance_of_discovery = 0.4
+chance_of_discovery = 0.5
 next_knowledge = Array[ExtResource("1_gur1l")]([ExtResource("1_mk3fm")])
 type = 2
+chance = 20

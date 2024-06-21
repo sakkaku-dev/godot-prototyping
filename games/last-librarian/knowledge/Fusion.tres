@@ -9,4 +9,5 @@ name = "Fusion Energy"
 description = ""
 chance_of_discovery = 0.4
 next_knowledge = Array[ExtResource("1_oq3mt")]([ExtResource("1_fx7yt")])
-type = 1
+type = 0
+chance = 10

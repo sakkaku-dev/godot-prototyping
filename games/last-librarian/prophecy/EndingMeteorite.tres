@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProphecyEnding" load_steps=3 format=3 uid="uid://h5j1lb4t3k3p"]
+
+[ext_resource type="Resource" uid="uid://di2pho4p1kw01" path="res://games/last-librarian/knowledge/Spaceship.tres" id="1_8q8mf"]
+[ext_resource type="Script" path="res://games/last-librarian/prophecy/ProphecyEnding.gd" id="1_khwfs"]
+
+[resource]
+script = ExtResource("1_khwfs")
+prophecy = 1
+required_knowledge = ExtResource("1_8q8mf")
+desc_text = "The meteorite crashed into earth"
+lose_text = "You failed to survive the meteorite"
+win_text = "You escape into space"

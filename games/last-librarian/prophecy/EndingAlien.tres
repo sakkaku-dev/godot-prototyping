@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ProphecyEnding" load_steps=3 format=3 uid="uid://ccism02k7tdne"]
+
+[ext_resource type="Script" path="res://games/last-librarian/prophecy/ProphecyEnding.gd" id="1_ms0d6"]
+[ext_resource type="Resource" uid="uid://256o6dnbkv1l" path="res://games/last-librarian/knowledge/EnergyShield.tres" id="1_yfs7r"]
+
+[resource]
+script = ExtResource("1_ms0d6")
+prophecy = 0
+required_knowledge = ExtResource("1_yfs7r")
+desc_text = "The aliens have arrived"
+lose_text = "The aliens has conquered earth"
+win_text = "Humanity has defeated the aliens"

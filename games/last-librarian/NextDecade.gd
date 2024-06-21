@@ -1,26 +1,11 @@
-extends Control
+extends DialogContaier
 
-@export var start_text: Label
+@export var start_text: AutoTypedLabel
+@onready var texture_rect = $Background2/TextureRect
 
-var tw: Tween
-
-func _ready():
-	hide()
-
-func open():
-	get_tree().paused = true
-	show()
+func set_bg_image(img: Texture2D):
+	texture_rect.modulate = Color.TRANSPARENT
+	texture_rect.texture = img
 	
-	tw = TweenCreator.create(self, tw).set_parallel(false)
-	tw.tween_property(self, "modulate", Color.WHITE, 1.0).from(Color.TRANSPARENT).set_ease(Tween.EASE_IN_OUT)
-	tw.tween_property(start_text, "modulate", Color.TRANSPARENT, 0.5).set_delay(3.0).set_ease(Tween.EASE_IN)
-	await tw.finished
-	
-	close()
-
-func close():
-	get_tree().paused = false
-	tw = TweenCreator.create(self, tw)
-	tw.tween_property(self, "modulate", Color.TRANSPARENT, 0.5)
-	await tw.finished
-	hide()
+	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(texture_rect, "modulate", Color.WHITE, 1.0)

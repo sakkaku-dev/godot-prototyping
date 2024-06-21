@@ -54,7 +54,9 @@ slot/0/right_icon = SubResource("ImageTexture_bcrr1")
 slot/0/draw_stylebox = true
 script = ExtResource("1_22snd")
 selected_connection_color = Color(0.31, 0.4135, 1, 1)
-connected_node_color = Color(0.31, 0.0248, 0.305247, 1)
+science_node_color = Color(0.174991, 0.000252578, 0.277921, 1)
+military_node_color = Color(0.27, 0, 0, 1)
+medicine_node_color = Color(0.0784798, 0.240386, 0, 1)
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2

@@ -10,4 +10,5 @@
 default_font = ExtResource("1_4ie4q")
 default_font_size = 10
 HScrollBar/styles/scroll = SubResource("StyleBoxEmpty_rmw8d")
+RichTextLabel/constants/line_separation = 5
 VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_uinp0")

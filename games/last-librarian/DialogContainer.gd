@@ -6,36 +6,47 @@ signal finished()
 @export var all_text = []
 @export var label: AutoTypedLabel
 
+@export var open_ease := Tween.EASE_OUT
+@export var open_duration := 1.0
+
+@export var close_ease := Tween.EASE_IN_OUT
+@export var close_duration := 2.0
+
 var text_id := -1
+var tw: Tween
 
 func _ready():
 	hide()
-	
-	finished.connect(func():
-		var out_tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		out_tw.tween_property(self, "modulate", Color.TRANSPARENT, 2.0)
-		get_tree().paused = false
-		
-		await out_tw.finished
-		hide()
-	)
 
-func show_text(text: Array):
-	all_text = text
+func close():
+	tw = TweenCreator.create(self, tw).set_ease(close_ease).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(self, "modulate", Color.TRANSPARENT, close_duration)
+	get_tree().paused = false
 	
-	var tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
-	tw.tween_property(self, "modulate", Color.WHITE, 1.0).from(Color.TRANSPARENT)
+	await tw.finished
+	hide()
+
+func open_with_text(text: Array):
+	update_text(text)
+
+	tw = TweenCreator.create(self, tw).set_ease(open_ease).set_trans(Tween.TRANS_CUBIC)
+	tw.tween_property(self, "modulate", Color.WHITE, open_duration).from(Color.TRANSPARENT)
 	show()
 	get_tree().paused = true
 	
+	await tw.finished
+
+func update_text(text: Array):
+	text_id = -1
+	all_text = text
 	_show_next()
 
 func _unhandled_input(event):
-	if event.is_action_pressed("continue"):
+	if visible and event.is_action_pressed("continue"):
 		_continue()
 
 func _gui_input(event):
-	if event.is_action_pressed("continue"):
+	if visible and event.is_action_pressed("continue"):
 		_continue()
 
 func _continue():

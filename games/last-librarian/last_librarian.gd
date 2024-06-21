@@ -2,12 +2,16 @@ class_name LastLibrarian
 extends Node2D
 
 const INTRO_TEXT = [
-	"In the distant future, the once mighty dominion of humanity lies on the brink of extinction, brought to the precipice by its own hubris and folly.",
-	"The ravages of relentless wars, heedless exploitation of resources, and unchecked technological advancement have exacted a devastating toll on the planet and its inhabitants.",
-	"Now, amidst the crumbling ruins of civilization, stripped of the knowledge that once defined its ascent, stands the Last Archiver.",
-	"She holds within her possession the accumulated wisdom of millennia, preserved within the hallowed halls of her ancient archive.",
+	"In the distant future, the once mighty dominion of humanity lies on the brink of extinction. The ravages of relentless wars, heedless exploitation of resources, and unchecked technological advancement have exacted a devastating toll on the planet and its inhabitants.",
+	"Now, amidst the crumbling ruins of civilization, stripped of the knowledge that once defined its ascent, stands the Last Archiver. She holds within her possession the accumulated wisdom of millennia, preserved within the hallowed halls of her ancient archive.",
 	"With this vast repository comes a solemn responsibility — to wield the power to restore or withhold, to guide or condemn. For she alone decides whether humanity will rise from its destruction or continue blindly towards demise."
 ]
+
+var prophecy_endings = {
+	Prophecy.ALIEN: load("res://games/last-librarian/prophecy/EndingAlien.tres"),
+	Prophecy.METEORITE: load("res://games/last-librarian/prophecy/EndingMeteorite.tres"),
+	Prophecy.PANDEMIC: load("res://games/last-librarian/prophecy/EndingPandemic.tres")
+}
 
 enum Prophecy {
 	ALIEN,
@@ -15,63 +19,104 @@ enum Prophecy {
 	PANDEMIC,
 }
 
+@export var max_loop := 8
+
 @onready var intro = $CanvasLayer/Intro
 @onready var prophecy_ui = $CanvasLayer/ProphecyUI
 @onready var knowledge_list = $CanvasLayer/KnowledgeList
 @onready var next_decade = $CanvasLayer/NextDecade
 @onready var knowledge_tree = $CanvasLayer/KnowledgeTree
-
 @onready var gate = $TileMap/Gate
+@onready var gameover = $CanvasLayer/Gameover
 
 @onready var prophecy = Prophecy.values().pick_random()
 
-@export var knowledges: Array[KnowledgeResource] = []
-
 var selected_knowledge: KnowledgeResource
+var loop = 0
 
 func _ready():
-	intro.show_text(INTRO_TEXT)
-	#intro.finished.connect(func():)
+	intro.open_with_text(INTRO_TEXT)
+	intro.finished.connect(func(): intro.close())
+
 	knowledge_list.select_knowledge.connect(func(res):
-		print("Selected knowledge %s" % res.name)
+		print("Selected knowledge %s" % (res.name if res else null))
 		selected_knowledge = res
 		knowledge_list.close()
 	)
 	
-	gate.interacted.connect(func(_a):
-		if selected_knowledge:
-			_give_knowledge(selected_knowledge)
-	)
+	gate.interacted.connect(func(_a): _give_knowledge(selected_knowledge))
 
 func _give_knowledge(knowledge: KnowledgeResource):
-	if knowledge_tree.get_node_for(knowledge).is_unlocked():
-		print("Knowledge %s already acquired" % knowledge.name)
-		return
-	
-	#if _has_all_required_knowledge(knowledge):
-	print("Learned knowledge %s" % knowledge.name)
-	knowledge_tree.unlocked(knowledge)
-	#else:
-		#pending_knowledge.append(knowledge)
+	if knowledge:
+		if knowledge_tree.get_node_for(knowledge).is_unlocked():
+			print("Knowledge %s already acquired" % knowledge.name)
+			return
+		
+		print("Learned knowledge %s" % knowledge.name)
+		_unlocked_knowledge(knowledge)
+	else:
+		print("Continue without any knowledge")
 	
 	selected_knowledge = null
-	_process_decade()
+	_process_decade(knowledge)
 
-func _has_all_required_knowledge(know: KnowledgeResource):
-	for x in knowledge_tree.get_node_for(know).get_prev_nodes():
-		if not x.is_unlocked():
-			return false
-	return true
+func _unlocked_knowledge(res: KnowledgeResource):
+	knowledge_tree.unlocked(res)
+	knowledge_list.unlocked(res)
 
-func _process_decade():
-	var discovered_knowledge = null
+func _get_auto_discovered_knowledge():
+	var discovered_knowledge = []
 	var available = knowledge_tree.get_all_possible_auto_discovery()
 	
 	for n in available:
-		if randf() < n.res.chance_of_discovery:
-			discovered_knowledge = n.res
+		if randf() < n.res.get_chance_of_discovery():
+			discovered_knowledge.append(n.res)
+
+	print("Auto discovered: %s" % [discovered_knowledge])
+	return discovered_knowledge
+
+func _process_decade(res: KnowledgeResource):
+	get_viewport().gui_release_focus()
 	
-	if discovered_knowledge:
-		knowledge_tree.unlocked(discovered_knowledge)
+	var discovered_knowledge = _get_auto_discovered_knowledge()
+	for k in discovered_knowledge:
+		_unlocked_knowledge(k)
 	
-	next_decade.open()
+	loop += 1
+	
+	var days_left = max_loop - loop
+	var msg = ['You have given humanity the knowledge of %s' % res.get_name_colored()]
+	var is_end = loop >= max_loop
+	if is_end:
+		msg.append('The last decade has passed and the prophesied day has arrived.')
+	else:
+		var start = 'A' if (days_left >= max_loop - 1) else ['A', 'Another'].pick_random()
+		if days_left > max_loop/2.:
+			msg.append('%s decade has passed as humanity is advancing close to the prophesied day' % [start])
+		else:
+			msg.append('%s decade has gone by. Only %s decades is left until the prophesied day' % [start, days_left])
+			
+
+	if not discovered_knowledge.is_empty():
+		var knowledge_text = ', '.join(discovered_knowledge.map(func(k): return k.get_name_colored()))
+		msg.append('Humanity has discovered %s in the %s decade' % [knowledge_text, 'final' if is_end else 'past'])
+	
+	await next_decade.open_with_text(msg)
+	await next_decade.finished
+	
+	if is_end:
+		var ending = prophecy_endings[prophecy] as ProphecyEnding
+		var ending_msg = []
+		ending_msg.append(ending.desc_text)
+
+		if knowledge_tree.is_knowledge_unlocked(ending.required_knowledge):
+			ending_msg.append(ending.win_text)
+		else:
+			ending_msg.append(ending.lose_text)
+		
+		next_decade.set_bg_image(ending.background_image)
+		next_decade.update_text(ending_msg)
+		await next_decade.finished
+		gameover.open()
+	else:
+		next_decade.close()

@@ -1,14 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://bjdf4gupfyd8q"]
+[gd_scene load_steps=49 format=3 uid="uid://bjdf4gupfyd8q"]
 
 [ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
 [ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
-[ext_resource type="Resource" uid="uid://cnbl2lg8upe8k" path="res://games/last-librarian/knowledge/Craftmanship.tres" id="2_t3gu2"]
 [ext_resource type="Script" path="res://games/last-librarian/Intro.gd" id="3_hsfiw"]
-[ext_resource type="Resource" uid="uid://bh45gmy6slaih" path="res://games/last-librarian/knowledge/Physics.tres" id="3_pkpec"]
 [ext_resource type="Script" path="res://games/last-librarian/AutoTypedLabel.gd" id="4_6np1i"]
-[ext_resource type="Resource" uid="uid://bp6qnqkxyycv4" path="res://games/last-librarian/knowledge/Antibiotics.tres" id="4_j80po"]
 [ext_resource type="Script" path="res://games/last-librarian/Prophecy.gd" id="5_otm47"]
-[ext_resource type="Resource" uid="uid://d13i5xcfmtxfc" path="res://games/last-librarian/knowledge/Genetic.tres" id="5_rscmu"]
 [ext_resource type="Texture2D" uid="uid://d3stqobnvht46" path="res://games/last-librarian/assets/ProphecyPanel_000.png" id="6_ewqxm"]
 [ext_resource type="Texture2D" uid="uid://d2l7rihaifpts" path="res://games/last-librarian/assets/Tiles_000.png" id="6_mefp2"]
 [ext_resource type="Script" path="res://games/last-librarian/KnowledgeList.gd" id="7_34uwo"]
@@ -20,10 +16,12 @@
 [ext_resource type="Texture2D" uid="uid://bxu841abxjw8" path="res://games/last-librarian/assets/Prophecy_000.png" id="9_erwli"]
 [ext_resource type="Script" path="res://util/Hand.gd" id="9_ms87v"]
 [ext_resource type="Script" path="res://util/Interactable.gd" id="10_ndd6a"]
+[ext_resource type="Texture2D" uid="uid://b4xdye7sbqier" path="res://games/last-librarian/assets/BookUI.png" id="11_jk4nm"]
 [ext_resource type="Script" path="res://games/last-librarian/NextDecade.gd" id="13_0i4d2"]
 [ext_resource type="Script" path="res://games/last-librarian/KnowledgeTree.gd" id="14_dv0c8"]
 [ext_resource type="PackedScene" uid="uid://ch55kv4gban7j" path="res://games/last-librarian/knowledge_node.tscn" id="15_tt867"]
 [ext_resource type="Texture2D" uid="uid://bbgfgtoyrckox" path="res://games/last-librarian/assets/Pillar_Bot_000.png" id="15_umrbr"]
+[ext_resource type="Script" path="res://games/last-librarian/Gameover.gd" id="16_chpge"]
 [ext_resource type="Script" path="res://games/last-librarian/CustomGraph.gd" id="16_jkwtb"]
 [ext_resource type="Texture2D" uid="uid://dbns5571xky25" path="res://games/last-librarian/assets/Pillar_Mid_000.png" id="16_uxsdf"]
 [ext_resource type="Texture2D" uid="uid://cqspdwhullcr8" path="res://games/last-librarian/assets/Pillar_Top_000.png" id="17_xikh7"]
@@ -33,8 +31,49 @@
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lciab"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3s5mr"]
+texture = ExtResource("11_jk4nm")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dccpp"]
+bg_color = Color(0, 0, 0, 0.729412)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ern41"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ycy"]
 bg_color = Color(0.08103, 0.0693, 0.09, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7dv0"]
+bg_color = Color(0.25098, 0.152941, 0.317647, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53myu"]
+bg_color = Color(0.478431, 0.211765, 0.482353, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ly4ia"]
+bg_color = Color(0.141176, 0.0823529, 0.152941, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jqe6k"]
 texture = ExtResource("6_mefp2")
@@ -175,8 +214,8 @@ height = 49.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_2e457"]
 radius = 30.1496
 
-[sub_resource type="Animation" id="Animation_3mayb"]
-resource_name = "idle"
+[sub_resource type="Animation" id="Animation_3ffvc"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -190,8 +229,8 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_3ffvc"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_3mayb"]
+resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -231,12 +270,12 @@ _data = {
 
 [node name="LastLibrarian" type="Node2D"]
 script = ExtResource("1_j7d3a")
-knowledges = Array[Resource("res://games/last-librarian/knowledge/KnowledgeResource.gd")]([ExtResource("2_t3gu2"), ExtResource("3_pkpec"), ExtResource("4_j80po"), ExtResource("5_rscmu")])
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="ProphecyUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "interactable", "game")]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -325,7 +364,6 @@ autowrap_mode = 3
 
 [node name="KnowledgeList" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("container", "interactable")]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -364,20 +402,23 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxTexture_3s5mr")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeList/ScrollContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
+theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="GridContainer" parent="CanvasLayer/KnowledgeList/ScrollContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
-columns = 3
+theme_override_constants/v_separation = 10
+columns = 4
 
-[node name="KnowledgeTree" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("graph")]
+[node name="KnowledgeTree" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("graph", "science_container", "industrial_container", "survival_container")]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -388,6 +429,9 @@ theme = ExtResource("1_junhf")
 script = ExtResource("14_dv0c8")
 graph = NodePath("GraphEdit")
 node_scene = ExtResource("15_tt867")
+science_container = NodePath("MarginContainer/VBoxContainer/ScienceContainer")
+industrial_container = NodePath("MarginContainer/VBoxContainer/IndustrialContainer")
+survival_container = NodePath("MarginContainer/VBoxContainer/SurvivalContainer")
 
 [node name="GraphEdit" type="GraphEdit" parent="CanvasLayer/KnowledgeTree"]
 layout_mode = 1
@@ -398,6 +442,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/port_hotzone_inner_extent = 0
 theme_override_constants/port_hotzone_outer_extent = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dccpp")
 show_grid = false
 snapping_enabled = false
 connection_lines_curvature = 0.8
@@ -412,6 +457,73 @@ show_grid_buttons = false
 show_minimap_button = false
 show_arrange_button = false
 script = ExtResource("16_jkwtb")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -60.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer"]
+layout_mode = 2
+
+[node name="ScienceContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ern41")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/ScienceContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/ScienceContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Science"
+
+[node name="IndustrialContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ern41")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/IndustrialContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/IndustrialContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Industrial"
+
+[node name="SurvivalContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ern41")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/SurvivalContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/SurvivalContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Survival"
 
 [node name="Buttons" type="MarginContainer" parent="CanvasLayer"]
 process_mode = 3
@@ -438,7 +550,7 @@ stretch_mode = 5
 script = ExtResource("18_u8qd7")
 control = NodePath("../../../KnowledgeTree")
 
-[node name="NextDecade" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("start_text")]
+[node name="NextDecade" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label")]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -449,7 +561,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_junhf")
 script = ExtResource("13_0i4d2")
-start_text = NodePath("Background2/CenterContainer/Label")
+label = NodePath("Background2/CenterContainer/Label")
+open_ease = 2
 
 [node name="Background2" type="ColorRect" parent="CanvasLayer/NextDecade"]
 layout_mode = 1
@@ -461,6 +574,14 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 0.556863)
 
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/NextDecade/Background2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/NextDecade/Background2"]
 layout_mode = 1
 anchors_preset = 15
@@ -469,9 +590,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/NextDecade/Background2/CenterContainer"]
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/NextDecade/Background2/CenterContainer"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+bbcode_enabled = true
 text = "A decade has passed"
+fit_content = true
+script = ExtResource("4_6np1i")
 
 [node name="Intro" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label")]
 process_mode = 3
@@ -523,11 +648,49 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Label" type="Label" parent="CanvasLayer/Intro/MarginContainer/PanelContainer/MarginContainer"]
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/Intro/MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
 text = "With this vast repository comes a solemn responsibility—to wield the power to restore or withhold, to guide or condemn. For she alone decides whether humanity will rise from its destruction, armed with the insights of its past, or continue blindly towards demise."
-autowrap_mode = 3
+fit_content = true
 script = ExtResource("4_6np1i")
+
+[node name="Gameover" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("restart_button")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("16_chpge")
+restart_button = NodePath("CenterContainer/Button")
+
+[node name="Background2" type="ColorRect" parent="CanvasLayer/Gameover"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Gameover"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Gameover/CenterContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_y7dv0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_53myu")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_ly4ia")
+theme_override_styles/focus = SubResource("StyleBoxFlat_53myu")
+text = "Restart"
 
 [node name="ColorRect" type="NinePatchRect" parent="."]
 anchors_preset = 8

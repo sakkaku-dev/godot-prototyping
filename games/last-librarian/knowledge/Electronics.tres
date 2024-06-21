@@ -13,3 +13,4 @@ description = ""
 chance_of_discovery = 0.2
 next_knowledge = Array[ExtResource("1_5rhjt")]([ExtResource("1_xulg6"), ExtResource("2_jf6lf"), ExtResource("3_vblps"), ExtResource("4_v1b8l")])
 type = 1
+chance = 30

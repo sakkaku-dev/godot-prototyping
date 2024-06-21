@@ -8,6 +8,7 @@
 script = ExtResource("1_xot7c")
 name = "Craftmanship"
 description = ""
-chance_of_discovery = 0.4
+chance_of_discovery = 0.5
 next_knowledge = Array[ExtResource("1_xot7c")]([ExtResource("1_5khys"), ExtResource("2_get4o")])
 type = 0
+chance = 50

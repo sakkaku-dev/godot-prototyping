@@ -1,5 +1,5 @@
 class_name AutoTypedLabel
-extends Label
+extends RichTextLabel
 
 @export var type_text_time := .02
 

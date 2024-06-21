@@ -9,6 +9,7 @@ signal select_knowledge(knowledge)
 const FOLDER = "res://games/last-librarian/knowledge/"
 
 var tw: Tween
+var map = {}
 
 func _ready():
 	for file in DirAccess.get_files_at(FOLDER):
@@ -17,6 +18,7 @@ func _ready():
 		var knowledge = load(FOLDER + file)
 		var node = item_scene.instantiate()
 		node.res = knowledge
+		map[node.res] = node
 		node.pressed.connect(func(): select_knowledge.emit(knowledge))
 		container.add_child(node)
 		
@@ -25,6 +27,9 @@ func _ready():
 		interactable.enabled = false
 	)
 	hide()
+
+func unlocked(res: KnowledgeResource):
+	map[res].unlock()
 
 func _unhandled_input(event):
 	if not visible or (tw and tw.is_running()):
