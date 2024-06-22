@@ -17,8 +17,10 @@ func _ready():
 	var groups = {}
 	
 	var set_panel = false
+	
+	print("Loading knowledges from %s" % FOLDER)
 	for file in DirAccess.get_files_at(FOLDER):
-		if not file.ends_with(".tres"): continue
+		if not file.contains(".tres"): continue
 		
 		var knowledge = load(FOLDER + file) as KnowledgeResource
 		var node = node_scene.instantiate()
@@ -35,6 +37,7 @@ func _ready():
 		if not knowledge.chance in groups:
 			groups[knowledge.chance] = []
 		groups[knowledge.chance].append(knowledge.name)
+	
 	for x in groups.keys():
 		print(x, " - ", groups[x])
 	
@@ -43,7 +46,7 @@ func _ready():
 			if k in nodes:
 				graph.connect_node(node.name, 0, nodes[k].name, 0)
 	
-	await get_tree().create_timer(0.1).timeout
+	await get_tree().create_timer(0.5).timeout
 	graph.arrange_nodes()
 
 func set_panel_color(panel: PanelContainer, color: Color):

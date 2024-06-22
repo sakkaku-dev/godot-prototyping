@@ -20,16 +20,28 @@ func _ready():
 	
 	set_node_color(_get_node_color())
 	node_selected.connect(func(): 
-		set_slot_color_right(0, selected_connection_color)
+		highlight()
 		for n in get_next_nodes():
-			n.set_slot_color_left(0, selected_connection_color)
+			n.highlight()
+		for n in get_prev_nodes():
+			n.highlight()
 	)
 	node_deselected.connect(func():
-		set_slot_color_right(0, connection_color)
+		unhighlight()
 		for n in get_next_nodes():
-			n.set_slot_color_left(0, connection_color)
+			n.unhighlight()
+		for n in get_prev_nodes():
+			n.unhighlight()
 	)
-	
+
+func highlight():
+	set_slot_color_right(0, selected_connection_color)
+	set_slot_color_left(0, selected_connection_color)
+
+func unhighlight():
+	set_slot_color_right(0, connection_color)
+	set_slot_color_left(0, connection_color)
+
 func _get_node_color():
 	match res.type:
 		KnowledgeResource.Type.SCIENCE: return science_node_color
@@ -49,7 +61,7 @@ func set_node_color(c: Color):
 	add_theme_stylebox_override("panel", style)
 	
 	var style_selected = get_theme_stylebox("panel_selected").duplicate()
-	var s = c.lightened(0.2)
+	var s = c.lightened(0.4)
 	style_selected.bg_color = s
 	add_theme_stylebox_override("panel_selected", style_selected)
 

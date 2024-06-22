@@ -1189,5 +1189,5 @@ libraries = {
 [node name="BGM" type="AudioStreamPlayer" parent="."]
 process_mode = 3
 stream = ExtResource("36_img50")
-volume_db = -20.0
+volume_db = -30.0
 pitch_scale = 0.8

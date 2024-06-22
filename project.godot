@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="godot-prototype"
+run/main_scene="res://games/last-librarian/last_librarian.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -20,6 +21,10 @@ window/size/viewport_width=640
 window/size/viewport_height=360
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
+
+[editor]
+
+export/convert_text_resources_to_binary=false
 
 [gui]
 

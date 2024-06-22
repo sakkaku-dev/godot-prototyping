@@ -11,4 +11,4 @@ name = "The Laws of Physics"
 description = ""
 next_knowledge = Array[ExtResource("1_aqm3h")]([ExtResource("1_c876d"), ExtResource("2_ebf33"), ExtResource("3_keko3")])
 type = 1
-chance = 20
+chance = 30

@@ -49,7 +49,7 @@ func _ready():
 	intro.open_with_text(INTRO_TEXT)
 	intro.finished.connect(func():
 		var tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
-		tw.tween_property(bgm, "volume_db", -20, 2.0).from(-40)
+		tw.tween_property(bgm, "volume_db", -30, 2.0).from(-40)
 		bgm.play()
 		intro.close()
 	)
