@@ -1,6 +1,9 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bovprf1pj4ssc"]
+[gd_resource type="Theme" load_steps=7 format=3 uid="uid://bovprf1pj4ssc"]
 
 [ext_resource type="FontFile" uid="uid://bj34cg7kdu2xu" path="res://MintsodaLimeGreen13X16Regular-4n30l.ttf" id="1_4ie4q"]
+[ext_resource type="StyleBox" uid="uid://desllngfyfb0b" path="res://games/last-librarian/button_hover.tres" id="1_4y2ek"]
+[ext_resource type="StyleBox" uid="uid://bm7ffcwuna287" path="res://games/last-librarian/button_normal.tres" id="2_yxhkv"]
+[ext_resource type="StyleBox" uid="uid://c240pokuswfyy" path="res://games/last-librarian/button_pressed.tres" id="3_gho3b"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rmw8d"]
 
@@ -9,6 +12,10 @@
 [resource]
 default_font = ExtResource("1_4ie4q")
 default_font_size = 10
+Button/styles/focus = ExtResource("1_4y2ek")
+Button/styles/hover = ExtResource("1_4y2ek")
+Button/styles/normal = ExtResource("2_yxhkv")
+Button/styles/pressed = ExtResource("3_gho3b")
 HScrollBar/styles/scroll = SubResource("StyleBoxEmpty_rmw8d")
 RichTextLabel/constants/line_separation = 5
 VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_uinp0")

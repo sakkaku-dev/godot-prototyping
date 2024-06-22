@@ -28,8 +28,10 @@ enum Prophecy {
 @onready var knowledge_list = $CanvasLayer/KnowledgeList
 @onready var next_decade = $CanvasLayer/NextDecade
 @onready var knowledge_tree = $CanvasLayer/KnowledgeTree
-@onready var gate = $Gate
+@onready var confirm_knowledge = $CanvasLayer/ConfirmKnowledge
 @onready var gameover = $CanvasLayer/Gameover
+
+@onready var gate = $Gate
 @onready var bgm = $BGM
 
 @onready var prophecy = Prophecy.values().pick_random()
@@ -58,7 +60,11 @@ func _ready():
 		knowledge_list.close()
 	)
 	
-	gate.interacted.connect(func(_a): _give_knowledge(selected_knowledge))
+	gate.interacted.connect(func(_a): confirm_knowledge.open(selected_knowledge))
+	confirm_knowledge.confirm.connect(func(): 
+		confirm_knowledge.close()
+		_give_knowledge(selected_knowledge)
+	)
 
 func _give_knowledge(knowledge: KnowledgeResource):
 	if knowledge:

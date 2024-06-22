@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://bjdf4gupfyd8q"]
+[gd_scene load_steps=61 format=3 uid="uid://bjdf4gupfyd8q"]
 
 [ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
 [ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://cqspdwhullcr8" path="res://games/last-librarian/assets/Pillar_Top_000.png" id="17_xikh7"]
 [ext_resource type="Script" path="res://games/last-librarian/ToggleButton.gd" id="18_u8qd7"]
 [ext_resource type="Texture2D" uid="uid://dxwb305cgnbwo" path="res://games/last-librarian/assets/Bookshelf_Bot.png" id="21_3a31a"]
+[ext_resource type="Script" path="res://games/last-librarian/ConfirmKnowledge.gd" id="22_njnjj"]
 [ext_resource type="Texture2D" uid="uid://eppoexa6yxoc" path="res://games/last-librarian/assets/Bookshelf_Mid.png" id="22_x7mlp"]
 [ext_resource type="Texture2D" uid="uid://bh1n0pqxpjb8d" path="res://games/last-librarian/assets/Bookshelf_Top.png" id="23_qatxn"]
 [ext_resource type="Texture2D" uid="uid://28yq0lgqkass" path="res://games/last-librarian/assets/Gate.png" id="28_1h017"]
@@ -52,39 +53,6 @@ texture = ExtResource("11_jk4nm")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ycy"]
 bg_color = Color(0.08103, 0.0693, 0.09, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7dv0"]
-bg_color = Color(0.25098, 0.152941, 0.317647, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53myu"]
-bg_color = Color(0.478431, 0.211765, 0.482353, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ly4ia"]
-bg_color = Color(0.141176, 0.0823529, 0.152941, 1)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_40afa"]
 shader = ExtResource("8_rj5ox")
@@ -875,11 +843,68 @@ grow_vertical = 2
 
 [node name="Button" type="Button" parent="CanvasLayer/Gameover/CenterContainer"]
 layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_y7dv0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_53myu")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_ly4ia")
-theme_override_styles/focus = SubResource("StyleBoxFlat_53myu")
 text = "Restart"
+
+[node name="ConfirmKnowledge" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "confirm_btn", "cancal_btn")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("22_njnjj")
+label = NodePath("CenterContainer/VBoxContainer/Label")
+confirm_btn = NodePath("CenterContainer/VBoxContainer/HBoxContainer/Confirm")
+cancal_btn = NodePath("CenterContainer/VBoxContainer/HBoxContainer/Cancel")
+
+[node name="Background3" type="ColorRect" parent="CanvasLayer/ConfirmKnowledge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.572549)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/ConfirmKnowledge"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/ConfirmKnowledge/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/ConfirmKnowledge/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+bbcode_enabled = true
+text = "asdasdasdas"
+fit_content = true
+autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/ConfirmKnowledge/CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="Confirm" type="Button" parent="CanvasLayer/ConfirmKnowledge/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Confirm"
+
+[node name="Control" type="Control" parent="CanvasLayer/ConfirmKnowledge/CenterContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+
+[node name="Cancel" type="Button" parent="CanvasLayer/ConfirmKnowledge/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Cancel"
 
 [node name="ColorRect" type="NinePatchRect" parent="."]
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
