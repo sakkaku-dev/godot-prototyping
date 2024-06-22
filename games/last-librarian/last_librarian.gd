@@ -21,6 +21,7 @@ enum Prophecy {
 
 @export var max_loop := 8
 @export var selected_knowledge_label: Label
+@export var knowledge_tree_btn: BaseButton
 
 @onready var intro = $CanvasLayer/Intro
 @onready var prophecy_ui = $CanvasLayer/ProphecyUI
@@ -29,6 +30,7 @@ enum Prophecy {
 @onready var knowledge_tree = $CanvasLayer/KnowledgeTree
 @onready var gate = $Gate
 @onready var gameover = $CanvasLayer/Gameover
+@onready var bgm = $BGM
 
 @onready var prophecy = Prophecy.values().pick_random()
 
@@ -38,11 +40,17 @@ var selected_knowledge: KnowledgeResource:
 		selected_knowledge_label.text = selected_knowledge.name if selected_knowledge else ""
 
 var loop = 0
+var button_tw: Tween
 
 func _ready():
 	self.selected_knowledge = null
 	intro.open_with_text(INTRO_TEXT)
-	intro.finished.connect(func(): intro.close())
+	intro.finished.connect(func():
+		var tw = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
+		tw.tween_property(bgm, "volume_db", -20, 2.0).from(-40)
+		bgm.play()
+		intro.close()
+	)
 
 	knowledge_list.select_knowledge.connect(func(res):
 		print("Selected knowledge %s" % (res.name if res else null))
@@ -81,6 +89,11 @@ func _get_auto_discovered_knowledge():
 	print("Auto discovered: %s" % [discovered_knowledge])
 	return discovered_knowledge
 
+func _move_button():
+	button_tw = TweenCreator.create(knowledge_tree_btn, button_tw).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
+	button_tw.tween_property(knowledge_tree_btn, "position", Vector2.LEFT * 5, 0.5)
+	#button_tw.tween_property(knowledge_tree_btn, "position", Vector2.ZERO, 0.5)
+
 func _process_decade(res: KnowledgeResource):
 	get_viewport().gui_release_focus()
 	
@@ -93,6 +106,7 @@ func _process_decade(res: KnowledgeResource):
 	var days_left = max_loop - loop
 	var msg = []
 	if res:
+		#_move_button()
 		msg.append('You have given humanity the knowledge of %s' % res.get_name_colored())
 	
 	var is_end = loop >= max_loop

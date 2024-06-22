@@ -5,6 +5,8 @@ signal select_knowledge(knowledge)
 @export var container: Control
 @export var item_scene: PackedScene
 @export var interactable: Interactable
+@export var open_sound: AudioStreamPlayer
+@export var close_sound: AudioStreamPlayer
 
 const FOLDER = "res://games/last-librarian/knowledge/"
 
@@ -40,12 +42,14 @@ func _unhandled_input(event):
 		close()
 
 func open():
+	open_sound.play()
 	get_tree().paused = true
 	tw = TweenCreator.create(self, tw)
 	tw.tween_property(self, "modulate", Color.WHITE, 0.5).from(Color.TRANSPARENT)
 	show()
 
 func close():
+	close_sound.play()
 	get_tree().paused = false
 	tw = TweenCreator.create(self, tw)
 	tw.tween_property(self, "modulate", Color.TRANSPARENT, 0.5)

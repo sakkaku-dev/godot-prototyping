@@ -1,23 +1,27 @@
-[gd_scene load_steps=58 format=3 uid="uid://bjdf4gupfyd8q"]
+[gd_scene load_steps=63 format=3 uid="uid://bjdf4gupfyd8q"]
 
 [ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
 [ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
 [ext_resource type="Script" path="res://games/last-librarian/Intro.gd" id="3_hsfiw"]
 [ext_resource type="Script" path="res://games/last-librarian/AutoTypedLabel.gd" id="4_6np1i"]
+[ext_resource type="AudioStream" uid="uid://d064ioy5d3npl" path="res://games/last-librarian/sounds/石の壁がスライドする.mp3" id="4_ygg4q"]
 [ext_resource type="Script" path="res://games/last-librarian/Prophecy.gd" id="5_otm47"]
 [ext_resource type="Texture2D" uid="uid://d3stqobnvht46" path="res://games/last-librarian/assets/ProphecyPanel_000.png" id="6_ewqxm"]
 [ext_resource type="Texture2D" uid="uid://d2l7rihaifpts" path="res://games/last-librarian/assets/Tiles_000.png" id="6_mefp2"]
 [ext_resource type="Script" path="res://games/last-librarian/KnowledgeList.gd" id="7_34uwo"]
 [ext_resource type="Texture2D" uid="uid://blpu1xtgjp6ol" path="res://games/last-librarian/assets/BG_000.png" id="7_42xfc"]
+[ext_resource type="AudioStream" uid="uid://ba0gfs7ox3icw" path="res://games/last-librarian/sounds/ページをめくる1.mp3" id="7_njg8c"]
 [ext_resource type="Script" path="res://games/last-librarian/LibrarianPlayer.gd" id="7_yfgsx"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="8_rj5ox"]
 [ext_resource type="PackedScene" uid="uid://b5acumrpv21l8" path="res://games/last-librarian/knowledge_item.tscn" id="8_u6b41"]
+[ext_resource type="AudioStream" uid="uid://bt21druk55f2" path="res://games/last-librarian/sounds/本を閉じる2.mp3" id="8_wjhqd"]
 [ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="9_68f3b"]
 [ext_resource type="Texture2D" uid="uid://bxu841abxjw8" path="res://games/last-librarian/assets/Prophecy_000.png" id="9_erwli"]
 [ext_resource type="Script" path="res://util/Hand.gd" id="9_ms87v"]
 [ext_resource type="Script" path="res://util/Interactable.gd" id="10_ndd6a"]
 [ext_resource type="Texture2D" uid="uid://v7irvp4vls57" path="res://games/last-librarian/assets/ScrollBg.png" id="10_toaf8"]
 [ext_resource type="Texture2D" uid="uid://b4xdye7sbqier" path="res://games/last-librarian/assets/BookUI.png" id="11_jk4nm"]
+[ext_resource type="AudioStream" uid="uid://ckhbo5n2the51" path="res://games/last-librarian/sounds/紙を広げる1.mp3" id="12_7ymhd"]
 [ext_resource type="Texture2D" uid="uid://xyjlnmlu8dbj" path="res://games/last-librarian/assets/ScrollIcon.png" id="12_78a41"]
 [ext_resource type="Script" path="res://games/last-librarian/NextDecade.gd" id="13_0i4d2"]
 [ext_resource type="Script" path="res://games/last-librarian/KnowledgeTree.gd" id="14_dv0c8"]
@@ -35,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://detlt40w6wnjn" path="res://games/last-librarian/assets/Shiori.png" id="29_0lyvo"]
 [ext_resource type="Texture2D" uid="uid://biilegcqt4s52" path="res://games/last-librarian/assets/MainBookShelf.png" id="29_cepsv"]
 [ext_resource type="Texture2D" uid="uid://db5y1oden8o4s" path="res://games/last-librarian/assets/Tiles.png" id="29_ijbvw"]
+[ext_resource type="AudioStream" uid="uid://dibtaajqnq56x" path="res://games/last-librarian/sounds/怨嗟ノイズ.mp3" id="36_img50"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lciab"]
 
@@ -384,13 +389,14 @@ _data = {
 "walk": SubResource("Animation_bq0cy")
 }
 
-[node name="LastLibrarian" type="Node2D" node_paths=PackedStringArray("selected_knowledge_label")]
+[node name="LastLibrarian" type="Node2D" node_paths=PackedStringArray("selected_knowledge_label", "knowledge_tree_btn")]
 script = ExtResource("1_j7d3a")
-selected_knowledge_label = NodePath("CanvasLayer/Buttons2/SelectedKnowledge")
+selected_knowledge_label = NodePath("CanvasLayer/Buttons/VBoxContainer/SelectedKnowledge")
+knowledge_tree_btn = NodePath("CanvasLayer/Buttons/VBoxContainer/ToggleButton")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ProphecyUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "hint_label", "interactable", "game")]
+[node name="ProphecyUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "hint_label", "interactable", "game", "open_sound")]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -405,6 +411,11 @@ label = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label")
 hint_label = NodePath("PanelContainer/MarginContainer/HBoxContainer/Label3")
 interactable = NodePath("../../TileMap/Prophecy")
 game = NodePath("../..")
+open_sound = NodePath("OpenSound2")
+
+[node name="OpenSound2" type="AudioStreamPlayer" parent="CanvasLayer/ProphecyUI"]
+stream = ExtResource("4_ygg4q")
+volume_db = -5.0
 
 [node name="Background2" type="ColorRect" parent="CanvasLayer/ProphecyUI"]
 layout_mode = 1
@@ -480,7 +491,7 @@ text = "Only the chosen, armed with forgotten powers, will stand as the last hop
 horizontal_alignment = 3
 autowrap_mode = 3
 
-[node name="KnowledgeList" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("container", "interactable")]
+[node name="KnowledgeList" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("container", "interactable", "open_sound", "close_sound")]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -494,6 +505,17 @@ script = ExtResource("7_34uwo")
 container = NodePath("ScrollContainer/PanelContainer/MarginContainer/VBoxContainer")
 item_scene = ExtResource("8_u6b41")
 interactable = NodePath("../../Bookshelf")
+open_sound = NodePath("OpenSound")
+close_sound = NodePath("CloseSound")
+
+[node name="OpenSound" type="AudioStreamPlayer" parent="CanvasLayer/KnowledgeList"]
+stream = ExtResource("7_njg8c")
+pitch_scale = 1.5
+
+[node name="CloseSound" type="AudioStreamPlayer" parent="CanvasLayer/KnowledgeList"]
+stream = ExtResource("8_wjhqd")
+volume_db = -5.0
+pitch_scale = 1.5
 
 [node name="Background2" type="ColorRect" parent="CanvasLayer/KnowledgeList"]
 layout_mode = 1
@@ -604,9 +626,9 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -70.0
-offset_top = -75.0
+offset_top = -63.0
 offset_right = -12.0
-offset_bottom = -15.0
+offset_bottom = -12.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/margin_left = 5
@@ -630,7 +652,7 @@ theme_override_constants/margin_bottom = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/ScienceContainer/MarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Science"
 
 [node name="IndustrialContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
@@ -646,7 +668,7 @@ theme_override_constants/margin_bottom = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/IndustrialContainer/MarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Industrial"
 
 [node name="SurvivalContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
@@ -662,41 +684,20 @@ theme_override_constants/margin_bottom = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/SurvivalContainer/MarginContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 8
+theme_override_font_sizes/font_size = 6
 text = "Survival"
 
-[node name="Buttons2" type="MarginContainer" parent="CanvasLayer"]
+[node name="Buttons" type="MarginContainer" parent="CanvasLayer"]
 process_mode = 3
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -91.0
-offset_top = -30.0
+offset_left = -121.0
+offset_top = -40.0
 grow_horizontal = 0
 grow_vertical = 0
-theme = ExtResource("1_junhf")
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="SelectedKnowledge" type="Label" parent="CanvasLayer/Buttons2"]
-layout_mode = 2
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 8
-text = "__KNOWLEDGE__"
-
-[node name="Buttons" type="MarginContainer" parent="CanvasLayer"]
-process_mode = 3
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 40.0
-grow_horizontal = 0
 theme = ExtResource("1_junhf")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -706,8 +707,18 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Buttons"]
 layout_mode = 2
 theme_override_constants/separation = 10
+alignment = 2
 
-[node name="ToggleButton" type="TextureButton" parent="CanvasLayer/Buttons/VBoxContainer" node_paths=PackedStringArray("control")]
+[node name="SelectedKnowledge" type="Label" parent="CanvasLayer/Buttons/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 8
+text = "__KNOWLEDGE__"
+horizontal_alignment = 2
+
+[node name="ToggleButton" type="TextureButton" parent="CanvasLayer/Buttons/VBoxContainer" node_paths=PackedStringArray("control", "open_sound", "close_sound")]
+process_mode = 3
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 texture_normal = ExtResource("12_78a41")
@@ -715,6 +726,17 @@ ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("18_u8qd7")
 control = NodePath("../../../KnowledgeTree")
+open_sound = NodePath("OpenSound")
+close_sound = NodePath("CloseSound")
+
+[node name="OpenSound" type="AudioStreamPlayer" parent="CanvasLayer/Buttons/VBoxContainer/ToggleButton"]
+stream = ExtResource("12_7ymhd")
+volume_db = -5.0
+pitch_scale = 1.5
+
+[node name="CloseSound" type="AudioStreamPlayer" parent="CanvasLayer/Buttons/VBoxContainer/ToggleButton"]
+stream = ExtResource("12_7ymhd")
+volume_db = -5.0
 
 [node name="NextDecade" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label")]
 process_mode = 3
@@ -1138,3 +1160,9 @@ shape = SubResource("CircleShape2D_2e457")
 libraries = {
 "": SubResource("AnimationLibrary_2hkqh")
 }
+
+[node name="BGM" type="AudioStreamPlayer" parent="."]
+process_mode = 3
+stream = ExtResource("36_img50")
+volume_db = -20.0
+pitch_scale = 0.8

@@ -1,6 +1,8 @@
 extends TextureButton
 
 @export var control: Control
+@export var open_sound: AudioStreamPlayer
+@export var close_sound: AudioStreamPlayer
 
 var tw: Tween
 
@@ -18,8 +20,10 @@ func _ready():
 			return
 	
 		if on:
+			open_sound.play()
 			control.open()
 		else:
+			close_sound.play()
 			control.close()
 	)
 

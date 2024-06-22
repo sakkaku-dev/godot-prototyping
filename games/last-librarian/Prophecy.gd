@@ -16,6 +16,7 @@ const HINT = {
 @export var hint_label: Label
 @export var interactable: Interactable
 @export var game: LastLibrarian
+@export var open_sound: AudioStreamPlayer
 
 var tw: Tween
 
@@ -36,6 +37,7 @@ func show_prophecy(prophecy: LastLibrarian.Prophecy):
 	label.text = PROPHECIES[prophecy]
 	hint_label.text = HINT[prophecy]
 	
+	open_sound.play()
 	tw = TweenCreator.create(self, tw).set_ease(Tween.EASE_IN_OUT)
 	tw.tween_property(self, "modulate", Color.WHITE, 0.5).from(Color.TRANSPARENT)
 	show()
