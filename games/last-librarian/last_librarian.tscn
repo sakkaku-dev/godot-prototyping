@@ -384,8 +384,9 @@ _data = {
 "walk": SubResource("Animation_bq0cy")
 }
 
-[node name="LastLibrarian" type="Node2D"]
+[node name="LastLibrarian" type="Node2D" node_paths=PackedStringArray("selected_knowledge_label")]
 script = ExtResource("1_j7d3a")
+selected_knowledge_label = NodePath("CanvasLayer/Buttons2/SelectedKnowledge")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -602,9 +603,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -65.0
+offset_left = -70.0
 offset_top = -75.0
-offset_right = -7.0
+offset_right = -12.0
 offset_bottom = -15.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -664,6 +665,30 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Survival"
 
+[node name="Buttons2" type="MarginContainer" parent="CanvasLayer"]
+process_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -91.0
+offset_top = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+theme = ExtResource("1_junhf")
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SelectedKnowledge" type="Label" parent="CanvasLayer/Buttons2"]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 8
+text = "__KNOWLEDGE__"
+
 [node name="Buttons" type="MarginContainer" parent="CanvasLayer"]
 process_mode = 3
 anchors_preset = 1
@@ -672,13 +697,15 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 40.0
 grow_horizontal = 0
+theme = ExtResource("1_junhf")
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Buttons"]
+[node name="VBoxContainer" type="HBoxContainer" parent="CanvasLayer/Buttons"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="ToggleButton" type="TextureButton" parent="CanvasLayer/Buttons/VBoxContainer" node_paths=PackedStringArray("control")]
 custom_minimum_size = Vector2(20, 20)

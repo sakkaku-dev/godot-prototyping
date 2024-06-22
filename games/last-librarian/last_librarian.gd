@@ -20,6 +20,7 @@ enum Prophecy {
 }
 
 @export var max_loop := 8
+@export var selected_knowledge_label: Label
 
 @onready var intro = $CanvasLayer/Intro
 @onready var prophecy_ui = $CanvasLayer/ProphecyUI
@@ -31,16 +32,21 @@ enum Prophecy {
 
 @onready var prophecy = Prophecy.values().pick_random()
 
-var selected_knowledge: KnowledgeResource
+var selected_knowledge: KnowledgeResource:
+	set(v):
+		selected_knowledge = v
+		selected_knowledge_label.text = selected_knowledge.name if selected_knowledge else ""
+
 var loop = 0
 
 func _ready():
+	self.selected_knowledge = null
 	intro.open_with_text(INTRO_TEXT)
 	intro.finished.connect(func(): intro.close())
 
 	knowledge_list.select_knowledge.connect(func(res):
 		print("Selected knowledge %s" % (res.name if res else null))
-		selected_knowledge = res
+		self.selected_knowledge = res
 		knowledge_list.close()
 	)
 	
@@ -57,7 +63,7 @@ func _give_knowledge(knowledge: KnowledgeResource):
 	else:
 		print("Continue without any knowledge")
 	
-	selected_knowledge = null
+	self.selected_knowledge = null
 	_process_decade(knowledge)
 
 func _unlocked_knowledge(res: KnowledgeResource):

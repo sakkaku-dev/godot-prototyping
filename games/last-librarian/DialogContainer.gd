@@ -41,12 +41,15 @@ func update_text(text: Array):
 	all_text = text
 	_show_next()
 
+func is_transitioning():
+	return tw and tw.is_running()
+
 func _unhandled_input(event):
-	if visible and event.is_action_pressed("continue"):
+	if visible and event.is_action_pressed("continue") and not is_transitioning():
 		_continue()
 
 func _gui_input(event):
-	if visible and event.is_action_pressed("continue"):
+	if visible and event.is_action_pressed("continue") and not is_transitioning():
 		_continue()
 
 func _continue():
