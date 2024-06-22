@@ -26,7 +26,7 @@ enum Prophecy {
 @onready var knowledge_list = $CanvasLayer/KnowledgeList
 @onready var next_decade = $CanvasLayer/NextDecade
 @onready var knowledge_tree = $CanvasLayer/KnowledgeTree
-@onready var gate = $TileMap/Gate
+@onready var gate = $Gate
 @onready var gameover = $CanvasLayer/Gameover
 
 @onready var prophecy = Prophecy.values().pick_random()
@@ -85,7 +85,10 @@ func _process_decade(res: KnowledgeResource):
 	loop += 1
 	
 	var days_left = max_loop - loop
-	var msg = ['You have given humanity the knowledge of %s' % res.get_name_colored()]
+	var msg = []
+	if res:
+		msg.append('You have given humanity the knowledge of %s' % res.get_name_colored())
+	
 	var is_end = loop >= max_loop
 	if is_end:
 		msg.append('The last decade has passed and the prophesied day has arrived.')
