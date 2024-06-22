@@ -8,7 +8,6 @@
 script = ExtResource("1_rue31")
 name = "Industrialization"
 description = ""
-chance_of_discovery = 0.3
 next_knowledge = Array[ExtResource("1_rue31")]([ExtResource("1_6p4q7"), ExtResource("2_cobpg")])
 type = 0
 chance = 20

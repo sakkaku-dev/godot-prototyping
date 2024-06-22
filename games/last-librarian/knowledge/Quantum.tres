@@ -7,6 +7,6 @@
 script = ExtResource("1_owha1")
 name = "Quantum Mechanics"
 description = ""
-chance_of_discovery = 0.4
 next_knowledge = Array[ExtResource("1_owha1")]([ExtResource("1_ln0wb")])
 type = 1
+chance = 5

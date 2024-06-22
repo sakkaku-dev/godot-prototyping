@@ -82,11 +82,15 @@ func _get_auto_discovered_knowledge():
 	var discovered_knowledge = []
 	var available = knowledge_tree.get_all_possible_auto_discovery()
 	
+	var unfinished = knowledge_tree.get_unfinished_knowledge_path().filter(func(x): return not x.is_unlocked()).map(func(x): return x.res)
+	print(unfinished.map(func(x): return x.name))
+	
 	for n in available:
-		if randf() < n.res.get_chance_of_discovery():
+		var multiplier = 1 + unfinished.count(n.res) / 2.
+		if randf() < n.res.get_chance_of_discovery() * multiplier:
 			discovered_knowledge.append(n.res)
 
-	print("Auto discovered: %s" % [discovered_knowledge])
+	print("Auto discovered: %s" % [discovered_knowledge.map(func(x): return x.name)])
 	return discovered_knowledge
 
 func _move_button():

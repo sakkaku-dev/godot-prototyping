@@ -7,7 +7,6 @@
 script = ExtResource("1_luvdl")
 name = "Solar Energy"
 description = ""
-chance_of_discovery = 0.4
 next_knowledge = Array[ExtResource("1_luvdl")]([ExtResource("1_5h023")])
 type = 1
-chance = 10
+chance = 20

@@ -7,7 +7,6 @@
 script = ExtResource("1_ltqt5")
 name = "Genetic Engineering"
 description = ""
-chance_of_discovery = 0.1
 next_knowledge = Array[ExtResource("1_ltqt5")]([ExtResource("1_1gn7y")])
 type = 2
 chance = 5

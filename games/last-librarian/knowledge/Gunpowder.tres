@@ -7,7 +7,6 @@
 script = ExtResource("1_xc1fo")
 name = "Gun Powder"
 description = ""
-chance_of_discovery = 0.2
 next_knowledge = Array[ExtResource("1_xc1fo")]([ExtResource("1_ocpd8")])
 type = 0
 chance = 20

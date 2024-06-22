@@ -7,7 +7,6 @@
 script = ExtResource("1_4sr74")
 name = "Explosive"
 description = ""
-chance_of_discovery = 0.2
 next_knowledge = Array[ExtResource("1_4sr74")]([ExtResource("1_dvu03")])
 type = 0
-chance = 20
+chance = 30

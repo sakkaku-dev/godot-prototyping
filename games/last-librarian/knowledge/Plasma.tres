@@ -7,6 +7,6 @@
 script = ExtResource("1_0kutf")
 name = "Plasma Physics"
 description = ""
-chance_of_discovery = 0.4
 next_knowledge = Array[ExtResource("1_0kutf")]([ExtResource("1_5d0wb")])
 type = 1
+chance = 5

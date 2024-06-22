@@ -7,7 +7,6 @@
 script = ExtResource("1_yyya6")
 name = "Gene Editing"
 description = ""
-chance_of_discovery = 0.4
 next_knowledge = Array[ExtResource("1_yyya6")]([ExtResource("1_6aj25")])
 type = 2
 chance = 10

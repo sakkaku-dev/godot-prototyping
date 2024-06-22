@@ -6,6 +6,6 @@
 script = ExtResource("1_467wn")
 name = "Energy Shield"
 description = ""
-chance_of_discovery = 0.2
 next_knowledge = Array[ExtResource("1_467wn")]([])
 type = 0
+chance = 10

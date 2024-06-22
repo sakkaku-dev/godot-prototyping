@@ -14,11 +14,13 @@ var tw: Tween
 var nodes = {}
 
 func _ready():
+	var groups = {}
+	
 	var set_panel = false
 	for file in DirAccess.get_files_at(FOLDER):
 		if not file.ends_with(".tres"): continue
 		
-		var knowledge = load(FOLDER + file)
+		var knowledge = load(FOLDER + file) as KnowledgeResource
 		var node = node_scene.instantiate()
 		node.res = knowledge
 		graph.add_child(node)
@@ -29,7 +31,13 @@ func _ready():
 			set_panel_color(industrial_container, node.military_node_color)
 			set_panel_color(survival_container, node.medicine_node_color)
 			set_panel = true
-		
+			
+		if not knowledge.chance in groups:
+			groups[knowledge.chance] = []
+		groups[knowledge.chance].append(knowledge.name)
+	for x in groups.keys():
+		print(x, " - ", groups[x])
+	
 	for node in graph.get_children():
 		for k in node.res.next_knowledge:
 			if k in nodes:
@@ -68,17 +76,22 @@ func unlocked(knowledge: KnowledgeResource):
 func get_node_for(knowledge: KnowledgeResource):
 	return graph.find_child_by_name(knowledge.name)
 
-func get_all_finished_knowledge():
+func get_unfinished_knowledge_path():
 	var result = []
-	
-	var start = []
 	for n in graph.get_children():
-		if n.is_unlocked() and n.get_prev_nodes().is_empty():
-			start.append(n)
-			
-		var required_nodes = n.get_prev_nodes()
-		if required_nodes.is_empty() or required_nodes.filter(func(x): return x.is_unlocked()).size() > 0:
-			result.append(n)
+		if n.is_unlocked() and not is_fully_unlocked(n):
+			print("Find path for %s" % n.res.name)
+			result.append_array(_get_all_prev_node(n))
+	
+	return result
+
+func _get_all_prev_node(n: KnowledgeNode):
+	var result = []
+	result.append(n)
+		
+	for x in n.get_prev_nodes():
+		for node in _get_all_prev_node(x):
+			result.append(node)
 	
 	return result
 

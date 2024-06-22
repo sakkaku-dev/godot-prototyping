@@ -7,7 +7,6 @@
 script = ExtResource("1_f4wky")
 name = "Radar"
 description = ""
-chance_of_discovery = 0.4
 next_knowledge = Array[ExtResource("1_f4wky")]([ExtResource("1_lgy5u")])
 type = 0
-chance = 20
+chance = 30

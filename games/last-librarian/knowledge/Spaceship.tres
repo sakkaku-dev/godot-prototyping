@@ -6,6 +6,6 @@
 script = ExtResource("1_4l4io")
 name = "Spaceship"
 description = ""
-chance_of_discovery = 0.4
 next_knowledge = Array[ExtResource("1_4l4io")]([])
 type = 1
+chance = 5
