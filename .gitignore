@@ -9,3 +9,4 @@ assets/**/STL format/
 assets/**/OBJ format/
 assets/**/Source/
 _sprites/
+build
