@@ -142,14 +142,15 @@ func _process_decade(res: KnowledgeResource):
 		var ending_msg = []
 		ending_msg.append(ending.desc_text)
 
-		if knowledge_tree.is_knowledge_unlocked(ending.required_knowledge):
+		var won = knowledge_tree.is_knowledge_unlocked(ending.required_knowledge)
+		if won:
 			ending_msg.append(ending.win_text)
 		else:
 			ending_msg.append(ending.lose_text)
 		
-		next_decade.set_bg_image(ending.background_image)
+		#next_decade.set_bg_image(ending.background_image)
 		next_decade.update_text(ending_msg)
 		await next_decade.finished
-		gameover.open()
+		gameover.open(won)
 	else:
 		next_decade.close()

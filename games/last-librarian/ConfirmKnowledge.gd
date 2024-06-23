@@ -9,8 +9,14 @@ signal confirm()
 var tw: Tween
 
 func _ready():
-	confirm_btn.pressed.connect(func(): confirm.emit())
-	cancal_btn.pressed.connect(func(): close())
+	confirm_btn.pressed.connect(func():
+		if tw and tw.is_running(): return
+		confirm.emit()
+	)
+	cancal_btn.pressed.connect(func():
+		if tw and tw.is_running(): return
+		close()
+	)
 	
 	hide()
 	modulate = Color.TRANSPARENT

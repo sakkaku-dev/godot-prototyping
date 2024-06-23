@@ -26,6 +26,7 @@ func _ready():
 		var node = node_scene.instantiate()
 		node.res = knowledge
 		graph.add_child(node)
+		node.set_owner(get_tree().get_edited_scene_root())
 		nodes[knowledge] = node
 		
 		if not set_panel:
@@ -38,8 +39,8 @@ func _ready():
 			groups[knowledge.chance] = []
 		groups[knowledge.chance].append(knowledge.name)
 	
-	for x in groups.keys():
-		print(x, " - ", groups[x])
+	#for x in groups.keys():
+		#print(x, " - ", groups[x])
 	
 	for node in graph.get_children():
 		for k in node.res.next_knowledge:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://bjdf4gupfyd8q"]
+[gd_scene load_steps=63 format=3 uid="uid://bjdf4gupfyd8q"]
 
 [ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
 [ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
@@ -49,7 +49,14 @@ texture = ExtResource("11_jk4nm")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vq0rc"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ern41"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ntlfw"]
+bg_color = Color(0.174991, 0.000252578, 0.277921, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q2a5f"]
+bg_color = Color(0.27, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_byvso"]
+bg_color = Color(0.0784798, 0.240386, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ycy"]
 bg_color = Color(0.08103, 0.0693, 0.09, 1)
@@ -320,6 +327,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_3mayb"]
 resource_name = "idle"
+length = 0.6
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -327,10 +336,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_bq0cy"]
@@ -347,7 +356,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [1, 2, 3, 4]
+"values": [2, 3, 4, 5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_2hkqh"]
@@ -570,12 +579,12 @@ grow_vertical = 2
 theme_override_constants/port_hotzone_inner_extent = 0
 theme_override_constants/port_hotzone_outer_extent = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vq0rc")
-scroll_offset = Vector2(-46, -40)
+scroll_offset = Vector2(-122.833, -79.1667)
 show_grid = false
 snapping_enabled = false
 connection_lines_curvature = 0.8
 connection_lines_thickness = 0.5
-zoom = 0.3
+zoom = 0.232568
 zoom_min = 0.2
 zoom_max = 0.4
 minimap_enabled = false
@@ -609,7 +618,7 @@ layout_mode = 2
 
 [node name="ScienceContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ern41")
+theme_override_styles/panel = SubResource("StyleBoxFlat_ntlfw")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/ScienceContainer"]
 layout_mode = 2
@@ -625,7 +634,7 @@ text = "Science"
 
 [node name="IndustrialContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ern41")
+theme_override_styles/panel = SubResource("StyleBoxFlat_q2a5f")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/IndustrialContainer"]
 layout_mode = 2
@@ -641,7 +650,7 @@ text = "Industrial"
 
 [node name="SurvivalContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ern41")
+theme_override_styles/panel = SubResource("StyleBoxFlat_byvso")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree/MarginContainer/VBoxContainer/SurvivalContainer"]
 layout_mode = 2
@@ -794,6 +803,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Intro/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_o0ycy")
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Intro/MarginContainer/PanelContainer"]
@@ -806,11 +816,12 @@ theme_override_constants/margin_bottom = 10
 
 [node name="Label" type="RichTextLabel" parent="CanvasLayer/Intro/MarginContainer/PanelContainer/MarginContainer"]
 layout_mode = 2
+mouse_filter = 2
 text = "With this vast repository comes a solemn responsibility—to wield the power to restore or withhold, to guide or condemn. For she alone decides whether humanity will rise from its destruction, armed with the insights of its past, or continue blindly towards demise."
 fit_content = true
 script = ExtResource("4_6np1i")
 
-[node name="Gameover" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("restart_button")]
+[node name="Gameover" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("restart_button", "label")]
 process_mode = 3
 visible = false
 layout_mode = 3
@@ -821,7 +832,8 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("1_junhf")
 script = ExtResource("16_chpge")
-restart_button = NodePath("CenterContainer/Button")
+restart_button = NodePath("CenterContainer/VBoxContainer/Button")
+label = NodePath("CenterContainer/VBoxContainer/Label")
 
 [node name="Background2" type="ColorRect" parent="CanvasLayer/Gameover"]
 layout_mode = 1
@@ -841,12 +853,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="CanvasLayer/Gameover/CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Gameover/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "You won"
+
+[node name="Button" type="Button" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
 text = "Restart"
 
 [node name="ConfirmKnowledge" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "confirm_btn", "cancal_btn")]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -907,6 +928,7 @@ layout_mode = 2
 text = "Cancel"
 
 [node name="ColorRect" type="NinePatchRect" parent="."]
+visible = false
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
 anchors_preset = 8
 anchor_left = 0.5
@@ -1097,6 +1119,7 @@ texture = ExtResource("23_qatxn")
 offset = Vector2(-0.5, 0)
 
 [node name="Bookshelf" type="Area2D" parent="."]
+visible = false
 position = Vector2(83, 101)
 collision_layer = 32
 collision_mask = 0
@@ -1117,6 +1140,7 @@ interactable = NodePath("..")
 node = NodePath("../Sprite2D")
 
 [node name="Gate" type="Area2D" parent="."]
+visible = false
 position = Vector2(-259, 101)
 script = ExtResource("10_ndd6a")
 
@@ -1134,6 +1158,7 @@ interactable = NodePath("..")
 node = NodePath("../Sprite2D")
 
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 position = Vector2(-8, 0)
 tile_set = SubResource("TileSet_itgd1")
 format = 2
@@ -1158,16 +1183,17 @@ interactable = NodePath("..")
 node = NodePath("../Sprite2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 
 [node name="Player" type="CharacterBody2D" parent="."]
-position = Vector2(-31, 111)
+position = Vector2(-90, 121)
 collision_layer = 2
 floor_snap_length = 10.0
 script = ExtResource("7_yfgsx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("29_0lyvo")
-hframes = 5
+hframes = 6
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2(0.5, 8.5)

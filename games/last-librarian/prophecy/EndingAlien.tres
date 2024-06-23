@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="ProphecyEnding" load_steps=3 format=3 uid="uid://ccism02k7tdne"]
+[gd_resource type="Resource" script_class="ProphecyEnding" load_steps=4 format=3 uid="uid://ccism02k7tdne"]
 
+[ext_resource type="Texture2D" uid="uid://cl7cebgn4u6xk" path="res://games/last-librarian/assets/Ending_Alien.png" id="1_k8jrt"]
 [ext_resource type="Script" path="res://games/last-librarian/prophecy/ProphecyEnding.gd" id="1_ms0d6"]
 [ext_resource type="Resource" uid="uid://256o6dnbkv1l" path="res://games/last-librarian/knowledge/EnergyShield.tres" id="1_yfs7r"]
 
@@ -10,3 +11,4 @@ required_knowledge = ExtResource("1_yfs7r")
 desc_text = "The aliens have arrived"
 lose_text = "The aliens has conquered earth"
 win_text = "Humanity has defeated the aliens"
+background_image = ExtResource("1_k8jrt")

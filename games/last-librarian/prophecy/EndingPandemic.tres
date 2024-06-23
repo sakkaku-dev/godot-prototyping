@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="ProphecyEnding" load_steps=3 format=3 uid="uid://b2mix4jkj7rup"]
+[gd_resource type="Resource" script_class="ProphecyEnding" load_steps=4 format=3 uid="uid://b2mix4jkj7rup"]
 
 [ext_resource type="Script" path="res://games/last-librarian/prophecy/ProphecyEnding.gd" id="1_1pmt0"]
 [ext_resource type="Resource" uid="uid://dkwrijnuwv1m6" path="res://games/last-librarian/knowledge/Nanobots.tres" id="1_6lk6o"]
+[ext_resource type="Texture2D" uid="uid://10l6rergnpl6" path="res://games/last-librarian/assets/Ending_Pandemic.png" id="1_bqhuv"]
 
 [resource]
 script = ExtResource("1_1pmt0")
@@ -10,3 +11,4 @@ required_knowledge = ExtResource("1_6lk6o")
 desc_text = "The pandemic has reached global magnitude"
 lose_text = "Humanity has failed to find a cure"
 win_text = "Humanity has found a cure"
+background_image = ExtResource("1_bqhuv")

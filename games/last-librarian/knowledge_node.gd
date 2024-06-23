@@ -14,25 +14,26 @@ var res: KnowledgeResource
 @onready var graph: GraphEdit = get_parent()
 
 func _ready():
-	label.text = res.name
-	label.hide()
-	name = res.name
-	
-	set_node_color(_get_node_color())
-	node_selected.connect(func(): 
-		highlight()
-		for n in get_next_nodes():
-			n.highlight()
-		for n in get_prev_nodes():
-			n.highlight()
-	)
-	node_deselected.connect(func():
-		unhighlight()
-		for n in get_next_nodes():
-			n.unhighlight()
-		for n in get_prev_nodes():
-			n.unhighlight()
-	)
+	if res:
+		label.text = res.name
+		label.hide()
+		name = res.name
+		
+		set_node_color(_get_node_color())
+		node_selected.connect(func(): 
+			highlight()
+			for n in get_next_nodes():
+				n.highlight()
+			for n in get_prev_nodes():
+				n.highlight()
+		)
+		node_deselected.connect(func():
+			unhighlight()
+			for n in get_next_nodes():
+				n.unhighlight()
+			for n in get_prev_nodes():
+				n.unhighlight()
+		)
 
 func highlight():
 	set_slot_color_right(0, selected_connection_color)
