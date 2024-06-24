@@ -30,6 +30,7 @@ enum Prophecy {
 @onready var knowledge_tree = $CanvasLayer/KnowledgeTree
 @onready var confirm_knowledge = $CanvasLayer/ConfirmKnowledge
 @onready var gameover = $CanvasLayer/Gameover
+@onready var outro = $CanvasLayer/Outro
 
 @onready var gate = $Gate
 @onready var bgm = $BGM
@@ -99,11 +100,6 @@ func _get_auto_discovered_knowledge():
 	print("Auto discovered: %s" % [discovered_knowledge.map(func(x): return x.name)])
 	return discovered_knowledge
 
-func _move_button():
-	button_tw = TweenCreator.create(knowledge_tree_btn, button_tw).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN_OUT)
-	button_tw.tween_property(knowledge_tree_btn, "position", Vector2.LEFT * 5, 0.5)
-	#button_tw.tween_property(knowledge_tree_btn, "position", Vector2.ZERO, 0.5)
-
 func _process_decade(res: KnowledgeResource):
 	get_viewport().gui_release_focus()
 	
@@ -116,7 +112,6 @@ func _process_decade(res: KnowledgeResource):
 	var days_left = max_loop - loop
 	var msg = []
 	if res:
-		#_move_button()
 		msg.append('You have given humanity the knowledge of %s' % res.get_name_colored())
 	
 	var is_end = loop >= max_loop
@@ -147,10 +142,12 @@ func _process_decade(res: KnowledgeResource):
 			ending_msg.append(ending.win_text)
 		else:
 			ending_msg.append(ending.lose_text)
-		
+			
+			
+		outro.open_with_text(ending_msg)
 		#next_decade.set_bg_image(ending.background_image)
-		next_decade.update_text(ending_msg)
-		await next_decade.finished
+		#next_decade.update_text(ending_msg)
+		await outro.finished
 		gameover.open(won)
 	else:
 		next_decade.close()

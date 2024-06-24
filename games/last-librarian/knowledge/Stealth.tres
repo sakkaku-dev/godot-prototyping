@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_s5x5k")
 name = "Stealth Technology"
-description = ""
+description = "Detect and damp various forms of signals, enhancing stealth and operational effectiveness"
 next_knowledge = Array[ExtResource("1_s5x5k")]([ExtResource("1_cf68i")])
 type = 0
 chance = 10

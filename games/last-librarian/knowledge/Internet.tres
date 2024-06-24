@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_pvv16")
 name = "Internet"
-description = ""
+description = "Enabling wide range communication and global interaction"
 next_knowledge = Array[ExtResource("1_pvv16")]([ExtResource("1_o1fgd")])
 type = 1
 chance = 20

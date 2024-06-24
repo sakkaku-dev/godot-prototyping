@@ -10,6 +10,8 @@ const FOLDER = "res://games/last-librarian/knowledge/"
 @export var industrial_container: PanelContainer
 @export var survival_container: PanelContainer
 
+@export var details: KnowledgeDetail
+
 var tw: Tween
 var nodes = {}
 
@@ -25,6 +27,8 @@ func _ready():
 		var knowledge = load(FOLDER + file) as KnowledgeResource
 		var node = node_scene.instantiate()
 		node.res = knowledge
+		node.node_selected.connect(func(): details.show_for(knowledge, get_panel_color(node)))
+		node.node_deselected.connect(func(): details.hide())
 		graph.add_child(node)
 		node.set_owner(get_tree().get_edited_scene_root())
 		nodes[knowledge] = node
@@ -49,6 +53,13 @@ func _ready():
 	
 	await get_tree().create_timer(0.5).timeout
 	graph.arrange_nodes()
+
+func get_panel_color(node: KnowledgeNode) -> Color:
+	match node.res.type:
+		KnowledgeResource.Type.SCIENCE: return node.science_node_color
+		KnowledgeResource.Type.INDUSTRIAL: return node.military_node_color
+		KnowledgeResource.Type.SURVIVAL: return node.medicine_node_color
+	return Color.BLACK
 
 func set_panel_color(panel: PanelContainer, color: Color):
 	var style = panel.get_theme_stylebox("panel").duplicate()

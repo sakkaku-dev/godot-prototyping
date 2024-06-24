@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_oq3mt")
 name = "Fusion Energy"
-description = ""
+description = "Harness the energy from nuclear fusion, gain access to clean and abundant energy source"
 next_knowledge = Array[ExtResource("1_oq3mt")]([ExtResource("1_fx7yt")])
 type = 0
 chance = 10

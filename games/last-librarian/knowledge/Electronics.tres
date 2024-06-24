@@ -9,7 +9,7 @@
 [resource]
 script = ExtResource("1_5rhjt")
 name = "Electronics"
-description = ""
+description = "Understanding the basics in creating electronic devices"
 next_knowledge = Array[ExtResource("1_5rhjt")]([ExtResource("1_xulg6"), ExtResource("2_jf6lf"), ExtResource("3_vblps"), ExtResource("4_v1b8l")])
 type = 1
 chance = 30

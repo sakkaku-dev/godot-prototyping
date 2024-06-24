@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_4l4io")
 name = "Spaceship"
-description = ""
+description = "Survive and travel in the extraterrestrial environment"
 next_knowledge = Array[ExtResource("1_4l4io")]([])
 type = 1
 chance = 5

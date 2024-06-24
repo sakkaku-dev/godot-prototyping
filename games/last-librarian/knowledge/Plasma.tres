@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_0kutf")
 name = "Plasma Physics"
-description = ""
+description = "Understanding of plasma, a cornerstone for advanced tools and weaponry"
 next_knowledge = Array[ExtResource("1_0kutf")]([ExtResource("1_5d0wb")])
 type = 1
 chance = 5

@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_f4wky")
 name = "Radar"
-description = ""
+description = "Basic detection using radar, providing critical information for navigation, surveillance, and military operations"
 next_knowledge = Array[ExtResource("1_f4wky")]([ExtResource("1_lgy5u")])
 type = 0
 chance = 30

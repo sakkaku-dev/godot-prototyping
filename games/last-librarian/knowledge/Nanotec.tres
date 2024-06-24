@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_f1xnl")
 name = "Nano Technology"
-description = ""
+description = "Enabling the creation of materials, devices, and systems at nanoscale"
 next_knowledge = Array[ExtResource("1_f1xnl")]([ExtResource("1_xe8aw")])
 type = 2
 chance = 10

@@ -7,7 +7,7 @@
 [resource]
 script = ExtResource("1_drbr7")
 name = "Artificial Intelligence"
-description = ""
+description = "Creation of autonomous devices"
 next_knowledge = Array[ExtResource("1_drbr7")]([ExtResource("1_761h4"), ExtResource("2_iapuc")])
 type = 1
 chance = 10

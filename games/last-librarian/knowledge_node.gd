@@ -20,7 +20,7 @@ func _ready():
 		name = res.name
 		
 		set_node_color(_get_node_color())
-		node_selected.connect(func(): 
+		node_selected.connect(func():
 			highlight()
 			for n in get_next_nodes():
 				n.highlight()

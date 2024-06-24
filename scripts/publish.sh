@@ -31,7 +31,6 @@ itch_release() {
 
 VERSION_REGEX='^v[0-9]+\.[0-9]+\.[0-9]+(-rc[0-9]+)?$'
 if [[ $VERSION =~ $VERSION_REGEX ]]; then
-    sh ./scripts/prepare-build.sh $VERSION
     build_channels
     itch_release
 else

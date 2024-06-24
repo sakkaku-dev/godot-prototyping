@@ -12,7 +12,7 @@ func _ready():
 	modulate = Color.TRANSPARENT
 
 func open(won: bool):
-	label.text = "Humanity has survived" if won else "Humanity has gone extinct"
+	label.text = "Humanity has survived" if won else "Humanity has perished"
 	show()
 	tw = create_tween().set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tw.tween_property(self, "modulate", Color.WHITE, 1.0)

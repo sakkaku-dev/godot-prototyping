@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_cd4k6")
 name = "Nanomedicine"
-description = ""
+description = "Creation of nano devices in the medical field"
 next_knowledge = Array[ExtResource("1_cd4k6")]([ExtResource("1_kgh1r")])
 type = 2
 chance = 10

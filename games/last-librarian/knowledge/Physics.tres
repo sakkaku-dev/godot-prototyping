@@ -8,7 +8,7 @@
 [resource]
 script = ExtResource("1_aqm3h")
 name = "The Laws of Physics"
-description = ""
+description = "Understanding of general physics, the building stone for all scientific knowledge"
 next_knowledge = Array[ExtResource("1_aqm3h")]([ExtResource("1_c876d"), ExtResource("2_ebf33"), ExtResource("3_keko3")])
 type = 1
 chance = 30

@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_luvdl")
 name = "Solar Energy"
-description = ""
+description = "Harness the power from the sun's radiation and converted into usable forms of energy"
 next_knowledge = Array[ExtResource("1_luvdl")]([ExtResource("1_5h023")])
 type = 1
 chance = 20

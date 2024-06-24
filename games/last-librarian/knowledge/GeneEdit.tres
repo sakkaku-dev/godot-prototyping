@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_yyya6")
 name = "Gene Editing"
-description = ""
+description = "Understanding of genetic editing to gain immunity to diseases"
 next_knowledge = Array[ExtResource("1_yyya6")]([ExtResource("1_6aj25")])
 type = 2
 chance = 10

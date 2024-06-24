@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://bjdf4gupfyd8q"]
+[gd_scene load_steps=66 format=3 uid="uid://bjdf4gupfyd8q"]
 
 [ext_resource type="Script" path="res://games/last-librarian/last_librarian.gd" id="1_j7d3a"]
 [ext_resource type="Theme" uid="uid://bovprf1pj4ssc" path="res://games/last-librarian/theme.tres" id="1_junhf"]
@@ -25,6 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://xyjlnmlu8dbj" path="res://games/last-librarian/assets/ScrollIcon.png" id="12_78a41"]
 [ext_resource type="Script" path="res://games/last-librarian/NextDecade.gd" id="13_0i4d2"]
 [ext_resource type="Script" path="res://games/last-librarian/KnowledgeTree.gd" id="14_dv0c8"]
+[ext_resource type="Script" path="res://games/last-librarian/KnowledgeDetail.gd" id="15_pqxy7"]
 [ext_resource type="PackedScene" uid="uid://ch55kv4gban7j" path="res://games/last-librarian/knowledge_node.tscn" id="15_tt867"]
 [ext_resource type="Texture2D" uid="uid://bbgfgtoyrckox" path="res://games/last-librarian/assets/Pillar_Bot_000.png" id="15_umrbr"]
 [ext_resource type="Script" path="res://games/last-librarian/Gameover.gd" id="16_chpge"]
@@ -33,6 +34,7 @@
 [ext_resource type="Texture2D" uid="uid://cqspdwhullcr8" path="res://games/last-librarian/assets/Pillar_Top_000.png" id="17_xikh7"]
 [ext_resource type="Script" path="res://games/last-librarian/ToggleButton.gd" id="18_u8qd7"]
 [ext_resource type="Texture2D" uid="uid://dxwb305cgnbwo" path="res://games/last-librarian/assets/Bookshelf_Bot.png" id="21_3a31a"]
+[ext_resource type="Script" path="res://games/last-librarian/DialogContainer.gd" id="21_ybv0a"]
 [ext_resource type="Script" path="res://games/last-librarian/ConfirmKnowledge.gd" id="22_njnjj"]
 [ext_resource type="Texture2D" uid="uid://eppoexa6yxoc" path="res://games/last-librarian/assets/Bookshelf_Mid.png" id="22_x7mlp"]
 [ext_resource type="Texture2D" uid="uid://bh1n0pqxpjb8d" path="res://games/last-librarian/assets/Bookshelf_Top.png" id="23_qatxn"]
@@ -49,14 +51,33 @@ texture = ExtResource("11_jk4nm")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vq0rc"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bhtil"]
+bg_color = Color(0.226487, 0.167632, 0.309573, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ntlfw"]
 bg_color = Color(0.174991, 0.000252578, 0.277921, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_q2a5f"]
 bg_color = Color(0.27, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_byvso"]
 bg_color = Color(0.0784798, 0.240386, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o0ycy"]
 bg_color = Color(0.08103, 0.0693, 0.09, 1)
@@ -534,7 +555,7 @@ layout_mode = 2
 theme_override_constants/v_separation = 10
 columns = 4
 
-[node name="KnowledgeTree" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("graph", "science_container", "industrial_container", "survival_container")]
+[node name="KnowledgeTree" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("graph", "science_container", "industrial_container", "survival_container", "details")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -553,6 +574,7 @@ node_scene = ExtResource("15_tt867")
 science_container = NodePath("MarginContainer/VBoxContainer/ScienceContainer")
 industrial_container = NodePath("MarginContainer/VBoxContainer/IndustrialContainer")
 survival_container = NodePath("MarginContainer/VBoxContainer/SurvivalContainer")
+details = NodePath("KnowledgeDetail")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/KnowledgeTree"]
 layout_mode = 1
@@ -594,6 +616,50 @@ show_grid_buttons = false
 show_minimap_button = false
 show_arrange_button = false
 script = ExtResource("16_jkwtb")
+
+[node name="KnowledgeDetail" type="MarginContainer" parent="CanvasLayer/KnowledgeTree" node_paths=PackedStringArray("title", "desc", "panel")]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 100.0
+grow_vertical = 0
+size_flags_horizontal = 0
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_bottom = 20
+script = ExtResource("15_pqxy7")
+title = NodePath("PanelContainer/MarginContainer/VBoxContainer/Label2")
+desc = NodePath("PanelContainer/MarginContainer/VBoxContainer/Label")
+panel = NodePath("PanelContainer")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/KnowledgeTree/KnowledgeDetail"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bhtil")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree/KnowledgeDetail/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/KnowledgeTree/KnowledgeDetail/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="CanvasLayer/KnowledgeTree/KnowledgeDetail/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 8
+autowrap_mode = 3
+
+[node name="Label" type="Label" parent="CanvasLayer/KnowledgeTree/KnowledgeDetail/PanelContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 6
+autowrap_mode = 3
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/KnowledgeTree"]
 layout_mode = 1
@@ -758,8 +824,67 @@ grow_vertical = 2
 [node name="Label" type="RichTextLabel" parent="CanvasLayer/NextDecade/Background2/CenterContainer"]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
+mouse_filter = 2
 bbcode_enabled = true
 text = "A decade has passed"
+fit_content = true
+script = ExtResource("4_6np1i")
+
+[node name="Outro" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label")]
+process_mode = 3
+visible = false
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_junhf")
+script = ExtResource("21_ybv0a")
+label = NodePath("MarginContainer/PanelContainer/MarginContainer/Label")
+
+[node name="Background" type="ColorRect" parent="CanvasLayer/Outro"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Outro"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -105.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Outro/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_o0ycy")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Outro/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="RichTextLabel" parent="CanvasLayer/Outro/MarginContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+text = "With this vast repository comes a solemn responsibility—to wield the power to restore or withhold, to guide or condemn. For she alone decides whether humanity will rise from its destruction, armed with the insights of its past, or continue blindly towards demise."
 fit_content = true
 script = ExtResource("4_6np1i")
 
@@ -823,7 +948,6 @@ script = ExtResource("4_6np1i")
 
 [node name="Gameover" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("restart_button", "label")]
 process_mode = 3
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -863,6 +987,7 @@ text = "You won"
 
 [node name="Button" type="Button" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 8
 text = "Restart"
 
 [node name="ConfirmKnowledge" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("label", "confirm_btn", "cancal_btn")]
@@ -928,7 +1053,6 @@ layout_mode = 2
 text = "Cancel"
 
 [node name="ColorRect" type="NinePatchRect" parent="."]
-visible = false
 modulate = Color(0.804743, 0.804743, 0.804743, 1)
 anchors_preset = 8
 anchor_left = 0.5
@@ -1119,7 +1243,6 @@ texture = ExtResource("23_qatxn")
 offset = Vector2(-0.5, 0)
 
 [node name="Bookshelf" type="Area2D" parent="."]
-visible = false
 position = Vector2(83, 101)
 collision_layer = 32
 collision_mask = 0
@@ -1140,7 +1263,6 @@ interactable = NodePath("..")
 node = NodePath("../Sprite2D")
 
 [node name="Gate" type="Area2D" parent="."]
-visible = false
 position = Vector2(-259, 101)
 script = ExtResource("10_ndd6a")
 
@@ -1158,7 +1280,6 @@ interactable = NodePath("..")
 node = NodePath("../Sprite2D")
 
 [node name="TileMap" type="TileMap" parent="."]
-visible = false
 position = Vector2(-8, 0)
 tile_set = SubResource("TileSet_itgd1")
 format = 2
@@ -1183,7 +1304,6 @@ interactable = NodePath("..")
 node = NodePath("../Sprite2D")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-visible = false
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(-90, 121)

@@ -8,7 +8,7 @@
 script = ExtResource("1_1pmt0")
 prophecy = 2
 required_knowledge = ExtResource("1_6lk6o")
-desc_text = "The pandemic has reached global magnitude"
-lose_text = "Humanity has failed to find a cure"
-win_text = "Humanity has found a cure"
+desc_text = "In the quiet shadows of everyday life, a silent and deadly pandemic has stealthily swept across the globe, gripping nations in a veil of uncertainty and fear."
+lose_text = "Despite relentless efforts of the brightest minds worldwide, humanity's quest to find a cure for the pandemic ended in heartbreaking defeat, as the virus is spreading with relentless speed and severity"
+win_text = "Humanity turned to advanced medical treatments using nanobots to rescue them from the brink of devastation. They marked a turning point in the fight against the pandemic."
 background_image = ExtResource("1_bqhuv")
