@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_ckive")
-name = "Satellite"
+name = "Satellites"
 description = "Launch devices into space, orbiting the Earth to provide essential services and data"
 next_knowledge = Array[ExtResource("1_ckive")]([ExtResource("1_u56e0")])
 type = 1
