@@ -1,121 +1,23 @@
-[gd_scene load_steps=17 format=3 uid="uid://cv31vba8rma3m"]
+[gd_scene load_steps=12 format=3 uid="uid://cv31vba8rma3m"]
 
 [ext_resource type="Script" path="res://games/tako-runner/player/Player.gd" id="1_dx2uk"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="3_5ihay"]
 [ext_resource type="Script" path="res://games/tako-runner/player/KoyoriTimer.gd" id="4_dcyk2"]
-[ext_resource type="Texture2D" uid="uid://cjx3usqqavggr" path="res://assets/Ina_.png" id="4_f6lx2"]
 [ext_resource type="Script" path="res://games/tako-runner/player/JumpBuffer.gd" id="5_3jp4m"]
-[ext_resource type="Script" path="res://games/tako-runner/player/Swing.gd" id="5_vdiia"]
+[ext_resource type="Script" path="res://games/tako-runner/player/WallSlide.gd" id="6_bxkp2"]
 [ext_resource type="Script" path="res://games/tako-runner/player/Move.gd" id="7_m2sg5"]
 [ext_resource type="Script" path="res://games/tako-runner/player/Jump.gd" id="8_3trih"]
-[ext_resource type="Script" path="res://games/tako-runner/player/Stick.gd" id="9_7cjj8"]
-
-[sub_resource type="Animation" id="Animation_xbcky"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_37xjq"]
-resource_name = "idle"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-
-[sub_resource type="Animation" id="Animation_2ednf"]
-resource_name = "jump"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [10]
-}
-
-[sub_resource type="Animation" id="Animation_nygkb"]
-resource_name = "run"
-length = 0.8
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [2, 3, 4, 5, 6, 7, 8, 9]
-}
-
-[sub_resource type="Animation" id="Animation_gwipp"]
-resource_name = "stop"
-length = 0.4
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [11, 12, 13]
-}
+[ext_resource type="Script" path="res://games/tako-runner/player/WallJump.gd" id="8_4a1jx"]
+[ext_resource type="Script" path="res://games/tako-runner/player/Slide.gd" id="9_oip3g"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ayr58"]
-_data = {
-"RESET": SubResource("Animation_xbcky"),
-"idle": SubResource("Animation_37xjq"),
-"jump": SubResource("Animation_2ednf"),
-"run": SubResource("Animation_nygkb"),
-"stop": SubResource("Animation_gwipp")
-}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82u8f"]
-size = Vector2(10, 25)
+size = Vector2(10, 12.5)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("raycast", "ground_cast")]
+[node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_dx2uk")
-raycast = NodePath("CollisionShape2D/Tentacle")
-ground_cast = NodePath("GroundCast")
-
-[node name="Contact" type="Sprite2D" parent="."]
-top_level = true
-scale = Vector2(0.03125, 0.03125)
-texture = ExtResource("3_5ihay")
-
-[node name="PlayerInput" type="Node" parent="."]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -124,43 +26,54 @@ libraries = {
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -13)
+position = Vector2(0, -6.75)
 shape = SubResource("RectangleShape2D_82u8f")
 
-[node name="Tentacle" type="RayCast2D" parent="CollisionShape2D"]
-target_position = Vector2(0, 200)
+[node name="LeftWallCast" type="RayCast2D" parent="CollisionShape2D"]
+position = Vector2(0, 4.75)
+target_position = Vector2(-7, 0)
+
+[node name="RightWallCast" type="RayCast2D" parent="CollisionShape2D"]
+position = Vector2(0, 4.75)
+target_position = Vector2(7, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
-position = Vector2(0, -3)
-texture = ExtResource("4_f6lx2")
-hframes = 10
-vframes = 2
+position = Vector2(0, -0.25)
 
-[node name="GroundCast" type="RayCast2D" parent="."]
-target_position = Vector2(0, 20)
+[node name="Sprite2D2" type="Sprite2D" parent="CollisionShape2D/Sprite2D"]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_5ihay")
 
 [node name="KoyoriTimer" type="Timer" parent="." node_paths=PackedStringArray("player")]
 wait_time = 0.15
 one_shot = true
 script = ExtResource("4_dcyk2")
 player = NodePath("..")
+allow_wall_jump = true
 
 [node name="JumpBuffer" type="Timer" parent="." node_paths=PackedStringArray("player")]
 wait_time = 0.1
 one_shot = true
 script = ExtResource("5_3jp4m")
 player = NodePath("..")
+allow_wall_jump = true
 
 [node name="States" type="Node" parent="."]
-
-[node name="Swing" type="Node" parent="States"]
-script = ExtResource("5_vdiia")
 
 [node name="Move" type="Node" parent="States"]
 script = ExtResource("7_m2sg5")
 
+[node name="WallSlide" type="Node" parent="States"]
+script = ExtResource("6_bxkp2")
+
+[node name="WallJump" type="Node" parent="States"]
+script = ExtResource("8_4a1jx")
+jump_force = 500
+
 [node name="Jump" type="Node" parent="States"]
 script = ExtResource("8_3trih")
 
-[node name="Stick" type="Node" parent="States"]
-script = ExtResource("9_7cjj8")
+[node name="Slide" type="Node" parent="States"]
+script = ExtResource("9_oip3g")
+slide_speed = 500
+slide_threshold = 50.0

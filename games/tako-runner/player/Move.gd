@@ -1,18 +1,28 @@
 extends State
 
 @export var speed := 300
-@export var accel := 800
-@onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
+@export var sprint_speed := 500
+@export var accel := 1200
+
+var sprinting := false
 
 func process(p: Player, delta: float):
 	var motion_x = p.get_motion().x
-	
-	if p.is_on_floor():
-		p.animation_player.play("run" if motion_x != 0 or p.velocity.length() > 0 else "idle")
-	else:
-		p.animation_player.play("jump")
 	if motion_x:
 		p.flip(motion_x < 0)
 
-	p.velocity.x = move_toward(p.velocity.x, motion_x * speed, accel * delta)
-	p.velocity += gravity
+	var s = sprint_speed if sprinting else speed
+	p.velocity.x = move_toward(p.velocity.x, motion_x * s, accel * delta)
+	p.velocity += p.gravity
+	
+	if not p.is_on_floor() and p.is_moving_against_wall():
+		p.state = Player.WALL_SLIDE
+
+func handle(ev: InputEvent):
+	if player.is_on_floor():
+		if ev.is_action_pressed("jump"):
+			player.state = Player.JUMP
+		elif ev.is_action_pressed("slide"):
+			player.state = Player.SLIDE
+		elif ev.is_action("sprint"):
+			sprinting = ev.is_pressed()
