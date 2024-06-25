@@ -65,10 +65,11 @@ script = ExtResource("7_m2sg5")
 
 [node name="WallSlide" type="Node" parent="States"]
 script = ExtResource("6_bxkp2")
+gravity_multiplier = 0.3
+slide_terminal_velocity = 20
 
 [node name="WallJump" type="Node" parent="States"]
 script = ExtResource("8_4a1jx")
-jump_force = 500
 
 [node name="Jump" type="Node" parent="States"]
 script = ExtResource("8_3trih")

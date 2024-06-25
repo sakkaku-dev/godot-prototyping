@@ -19,10 +19,11 @@ func process(p: Player, delta: float):
 		p.state = Player.WALL_SLIDE
 
 func handle(ev: InputEvent):
-	if player.is_on_floor():
-		if ev.is_action_pressed("jump"):
-			player.state = Player.JUMP
-		elif ev.is_action_pressed("slide"):
-			player.state = Player.SLIDE
-		elif ev.is_action("sprint"):
-			sprinting = ev.is_pressed()
+	if ev.is_action_pressed("jump") and player.is_on_floor():
+		player.state = Player.JUMP
+	
+	if ev.is_action_pressed("slide") and player.is_on_floor():
+		player.state = Player.SLIDE
+
+	if ev.is_action("sprint"):
+		sprinting = ev.is_pressed() and player.is_on_floor()

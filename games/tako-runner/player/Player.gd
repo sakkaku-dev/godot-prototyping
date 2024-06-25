@@ -47,6 +47,9 @@ func _get_state(s = state):
 func _physics_process(delta):
 	_get_state().process(self, delta)
 	move_and_slide()
+	
+	#if is_on_floor() or is_on_wall():
+		#reset_jumps()
 
 func get_motion():
 	return Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -75,3 +78,9 @@ func get_wall_collision():
 func is_moving_against_wall():
 	var wall_n = get_wall_collision()
 	return is_on_wall() and wall_n and sign(get_motion().x) == sign(wall_n.x)
+
+#func can_jump():
+	#return current_jumps > 0
+#
+#func reset_jumps():
+	#current_jumps = jump_count
