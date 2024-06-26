@@ -1,7 +1,7 @@
 extends State
 
 @export var speed := 300
-@export var sprint_speed := 500
+@export var sprint_speed := 400
 @export var accel := 1200
 
 var sprinting := false
