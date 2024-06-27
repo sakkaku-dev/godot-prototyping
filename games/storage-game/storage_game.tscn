@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="2_1h8it"]
 [ext_resource type="Script" path="res://games/storage-game/Player3D.gd" id="2_5l40k"]
-[ext_resource type="MeshLibrary" uid="uid://d0exidcaivo58" path="res://games/storage-game/storage.tres" id="2_1352v"]
+[ext_resource type="MeshLibrary" uid="uid://njjso41g2757" path="res://games/storage-game/storage.tres" id="2_1352v"]
 [ext_resource type="PackedScene" uid="uid://ctgqify6i2hce" path="res://assets/Conveyor Kit/Models/GLB format/arrow.glb" id="2_m5847"]
 [ext_resource type="Script" path="res://games/storage-game/PlacementArrow.gd" id="2_vf6n8"]
 [ext_resource type="PackedScene" uid="uid://co8w5dnjcctyl" path="res://games/storage-game/package.tscn" id="3_asni3"]

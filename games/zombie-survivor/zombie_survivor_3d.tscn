@@ -1,0 +1,78 @@
+[gd_scene load_steps=14 format=3 uid="uid://cybhys3rop57c"]
+
+[ext_resource type="Script" path="res://games/zombie-survivor/zombie_survivor_3d.gd" id="1_fcavv"]
+[ext_resource type="Texture2D" uid="uid://yu3c04bf2nxw" path="res://assets/Prototype Textures/PNG/Dark/texture_08.png" id="2_6r6jf"]
+[ext_resource type="Script" path="res://games/zombie-survivor/Player3D.gd" id="5_0gwfm"]
+[ext_resource type="PackedScene" uid="uid://bpvcd70bekmc5" path="res://games/zombie-survivor/wall_3d.tscn" id="7_eonb7"]
+[ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="7_oml85"]
+[ext_resource type="Script" path="res://games/zombie-survivor/Spawner3D.gd" id="7_x6rb5"]
+[ext_resource type="PackedScene" uid="uid://dn15p4yuum2ur" path="res://games/zombie-survivor/zombie_3d.tscn" id="8_swktu"]
+[ext_resource type="Script" path="res://games/zombie-survivor/DataGridMap.gd" id="9_36lir"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_478ky"]
+vertices = PackedVector3Array(-39.5, 0.5, -39.5, -39.5, 0.5, 39.5, 39.5, 0.5, 39.5, 39.5, 0.5, -39.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_autu0"]
+albedo_texture = ExtResource("2_6r6jf")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wd6am"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_85amy"]
+size = Vector3(0.5, 0.2, 0.5)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_84qxp"]
+
+[node name="ZombieSurvivor3D" type="Node3D"]
+script = ExtResource("1_fcavv")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_478ky")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = SubResource("StandardMaterial3D_autu0")
+use_collision = true
+size = Vector3(80, 1, 80)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 12.4975, 10.4205)
+
+[node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3684, 0)
+script = ExtResource("5_0gwfm")
+grid = NodePath("../GridMap")
+wall_scene = ExtResource("7_eonb7")
+
+[node name="Pivot" type="Node3D" parent="Player3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player3D/Pivot"]
+mesh = SubResource("CapsuleMesh_wd6am")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Player3D/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.307, -0.348)
+mesh = SubResource("BoxMesh_85amy")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D"]
+shape = SubResource("CapsuleShape3D_84qxp")
+
+[node name="Gravity3D" type="Node" parent="Player3D"]
+script = ExtResource("7_oml85")
+
+[node name="GridMap" type="GridMap" parent="." node_paths=PackedStringArray("root")]
+script = ExtResource("9_36lir")
+root = NodePath("../NavigationRegion3D")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.940845, -0.128065, -0.313703, 0.338836, 0.355596, 0.871058, 0, -0.925824, 0.377954, -3.34531, 9.27583, 15.8165)
+
+[node name="Spawner3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.3823, 0, 0)
+script = ExtResource("7_x6rb5")
+scene = ExtResource("8_swktu")
+
+[node name="SpawnTimer" type="Timer" parent="."]
+autostart = true

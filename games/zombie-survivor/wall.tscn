@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://dypkrb5jpkfdp"]
+
+[ext_resource type="Script" path="res://games/zombie-survivor/wall.gd" id="1_kbm1s"]
+[ext_resource type="Texture2D" uid="uid://cgrwgbu5drc77" path="res://assets/Tiny Dungeon/Tiles/tile_0061.png" id="1_s1ul2"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="2_7uqbo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lpfaj"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4da4i"]
+
+[node name="Wall" type="StaticBody2D"]
+collision_mask = 0
+script = ExtResource("1_kbm1s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lpfaj")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("1_s1ul2")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_7uqbo")
+max_health = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("RectangleShape2D_4da4i")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 10.0
+vertices = PackedVector2Array(-10, -10, -10, 10, 10, 10, 10, -10)

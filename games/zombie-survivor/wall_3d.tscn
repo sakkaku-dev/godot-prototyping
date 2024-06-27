@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpvcd70bekmc5"]
+
+[ext_resource type="Texture2D" uid="uid://clm4x5hge3ve2" path="res://assets/Prototype Textures/PNG/Light/texture_04.png" id="1_s37ft"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tfjef"]
+albedo_texture = ExtResource("1_s37ft")
+
+[node name="Wall3D" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_tfjef")
+use_collision = true
+size = Vector3(1.8, 1.5, 1.8)
+
+[node name="NavigationObstacle3D" type="NavigationObstacle3D" parent="."]
+use_3d_avoidance = true

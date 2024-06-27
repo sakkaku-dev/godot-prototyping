@@ -63,12 +63,15 @@ size = Vector2(32, 21)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w5ti7"]
 shader = ExtResource("7_hveeg")
+shader_parameter/thickness = null
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
 shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 0
-shader_parameter/inside = true
-shader_parameter/add_margins = false
-shader_parameter/enable = true
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k21n1"]
 size = Vector2(42, 50)
@@ -78,23 +81,29 @@ size = Vector2(42, 34)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vu6i8"]
 shader = ExtResource("7_hveeg")
+shader_parameter/thickness = null
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
 shader_parameter/outline_color = Color(1, 0, 0, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 0
-shader_parameter/inside = false
-shader_parameter/add_margins = true
-shader_parameter/enable = true
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w15g2"]
 shader = ExtResource("7_hveeg")
+shader_parameter/thickness = null
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
 shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 0
-shader_parameter/inside = true
-shader_parameter/add_margins = false
-shader_parameter/enable = true
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
 size = Vector2(14, 14)
