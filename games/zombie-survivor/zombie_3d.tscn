@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://games/zombie-survivor/zombie_3d.gd" id="1_hb348"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mux16"]
+radius = 0.442631
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7rwfx"]
 
@@ -18,7 +19,7 @@ mesh = SubResource("CapsuleMesh_7rwfx")
 skeleton = NodePath("../..")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
-path_postprocessing = 1
 avoidance_enabled = true
+radius = 1.0
 avoidance_layers = 0
 debug_enabled = true

@@ -1,7 +1,7 @@
 class_name DataGridMap
 extends GridMap
 
-@export var root: Node3D
+@export var root: NavigationRegion3D
 
 var data = {}
 
@@ -13,6 +13,9 @@ func place(pos: Vector3i, obj: Node3D):
 	data[pos] = obj
 	root.add_child(obj)
 	obj.global_position = map_to_local(pos)
+	
+	await get_tree().create_timer(0.1).timeout
+	root.bake_navigation_mesh()
 
 func remove(pos: Vector3i):
 	if not pos in data:
