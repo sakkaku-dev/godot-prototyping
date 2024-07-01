@@ -9,7 +9,7 @@ func process(p: Player, delta: float):
 		return
 		
 	if p.is_moving_against_wall():
-		p.state = Player.WALL_RUN if p.velocity.y < 0 else Player.WALL_SLIDE
+		# p.state = Player.WALL_RUN if p.velocity.y < 0 else Player.WALL_SLIDE
 		return
 	
 	var motion_x = p.get_motion().x
