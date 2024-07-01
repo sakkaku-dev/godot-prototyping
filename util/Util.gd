@@ -18,3 +18,14 @@ static func tilemap_layer_rect(tile_map: TileMap, layer, source = null) -> Rect2
 		max_coord.y = max(max_coord.y, c.y)
 	
 	return Rect2i(min_coord, max_coord - min_coord)
+
+static func pick_random(arr: Array, count: int):
+	if len(arr) <= count:
+		var x = arr.duplicate()
+		x.shuffle()
+		return x;
+	
+	var result = []
+	for i in count:
+		result.append(arr.pick_random())
+	return result

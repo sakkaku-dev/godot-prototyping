@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://bkq6prefpbjqs"]
 
 [ext_resource type="PackedScene" uid="uid://cv31vba8rma3m" path="res://games/tako-runner/player/player.tscn" id="1_2wxlv"]
-[ext_resource type="Texture2D" uid="uid://d1bfr5stt2dms" path="res://assets/Tiles.png" id="2_dnup0"]
-[ext_resource type="Texture2D" uid="uid://q3gax5wx7h3o" path="res://assets/BG_Back.png" id="3_gxdba"]
-[ext_resource type="Texture2D" uid="uid://bojv50cnplrw3" path="res://assets/BG_Mid.png" id="4_2luvx"]
-[ext_resource type="Texture2D" uid="uid://ixxp6xydvemx" path="res://assets/BG_Front.png" id="5_fh4f0"]
+[ext_resource type="Texture2D" uid="uid://d1bfr5stt2dms" path="res://games/tako-runner/assets/Tiles.png" id="2_dnup0"]
+[ext_resource type="Texture2D" uid="uid://q3gax5wx7h3o" path="res://games/tako-runner/assets/BG_Back.png" id="3_gxdba"]
+[ext_resource type="Texture2D" uid="uid://bojv50cnplrw3" path="res://games/tako-runner/assets/BG_Mid.png" id="4_2luvx"]
+[ext_resource type="Texture2D" uid="uid://ixxp6xydvemx" path="res://games/tako-runner/assets/BG_Front.png" id="5_fh4f0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u1an0"]
 texture = ExtResource("2_dnup0")

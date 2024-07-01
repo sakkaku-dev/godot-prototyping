@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bfcbfgsgksr0y"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/fish.gd" id="1_iqruu"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_q5p0o"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="3_4w3v6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ffyak"]
+radius = 14.0357
+
+[node name="Fish" type="CharacterBody2D" node_paths=PackedStringArray("idle_timer")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_iqruu")
+idle_timer = NodePath("IdleTimer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.15625, 0.15625)
+texture = ExtResource("1_q5p0o")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ffyak")
+
+[node name="IdleTimer" type="Timer" parent="."]
+autostart = true
+script = ExtResource("3_4w3v6")
+min_time = 1.0
+max_time = 3.0

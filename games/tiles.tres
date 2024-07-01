@@ -1,6 +1,6 @@
 [gd_resource type="TileSet" load_steps=6 format=3 uid="uid://wrhgubw6a0s1"]
 
-[ext_resource type="Texture2D" uid="uid://2y5b2fnnmt7c" path="res://assets/Prototype_Tiles_32_000.png" id="1_ps5q1"]
+[ext_resource type="Texture2D" uid="uid://2y5b2fnnmt7c" path="res://games/tako-runner/assets/Prototype_Tiles_32_000.png" id="1_ps5q1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_v80p7"]
 vertices = PackedVector2Array(16, 16, -16, 16, -16, -16, 16, -16)

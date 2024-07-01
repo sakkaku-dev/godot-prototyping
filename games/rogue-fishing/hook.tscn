@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://dblsuk8ttmpel"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/hook.gd" id="1_a5n7i"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_fduv4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ne8c4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2liyq"]
+radius = 15.0
+
+[node name="Hook" type="CharacterBody2D" node_paths=PackedStringArray("line", "hook_area")]
+collision_layer = 2
+script = ExtResource("1_a5n7i")
+line = NodePath("Line2D")
+hook_area = NodePath("HookArea")
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 1.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ne8c4")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+scale = Vector2(0.140625, 0.140625)
+texture = ExtResource("1_fduv4")
+
+[node name="HookArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HookArea"]
+shape = SubResource("CircleShape2D_2liyq")
