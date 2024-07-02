@@ -2,9 +2,9 @@ class_name Fish
 extends CharacterBody2D
 
 @export var speed := 40
+@export var body: Node2D
 
 @export_category("Wander")
-@export var max_wander_distance := 200
 @export var min_wander_distance := 100
 @export var idle_timer: Timer
 
@@ -25,17 +25,23 @@ func _physics_process(_delta):
 		return
 	
 	var dir = global_position.direction_to(target)
+	if body:
+		body.scale.x = sign(dir.x)
 	velocity = dir * speed
 	move_and_slide()
 
 func _get_valid_wander_target():
 	var pos = _random_target()
-	#while not move_area.has_point(pos):
-		#pos = _random_target()
+	# while global_position.distance_to(pos) < min_wander_distance:
+	# 	pos = _random_target()
 	
-	print(pos)
 	return pos
 
 func _random_target():
-	var dir = Vector2.RIGHT.rotated(randf_range(-PI/6, PI/6)) * (-1 if randf() >= 0.5 else 1)
-	return global_position + dir * randf_range(min_wander_distance, max_wander_distance)
+	var rect = move_area
+	var x = randi_range(rect.position.x, rect.position.x+rect.size.x)
+	var y = randi_range(rect.position.y, rect.position.y+rect.size.y)
+	return Vector2(x,y) 
+
+	# var dir = Vector2.RIGHT.rotated(randf_range(-PI/6, PI/6)) * (-1 if randf() >= 0.5 else 1)
+	# return global_position + dir * randf_range(min_wander_distance, max_wander_distance)

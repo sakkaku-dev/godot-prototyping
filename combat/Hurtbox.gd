@@ -1,6 +1,7 @@
 class_name Hurtbox
 extends Area2D
 
+signal hit()
 signal died()
 signal health_changed(hp)
 signal max_health_changed(max)
@@ -20,7 +21,12 @@ signal max_health_changed(max)
 
 func damage(dmg: int):
 	self.health -= dmg
+	hit.emit()
 
 func add_max_health(v):
 	max_health += v
 	health += v
+
+func update_max_health(v):
+	self.max_health = v
+	self.health = v

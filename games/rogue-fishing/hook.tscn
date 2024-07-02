@@ -1,18 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://dblsuk8ttmpel"]
+[gd_scene load_steps=7 format=3 uid="uid://dblsuk8ttmpel"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/hook.gd" id="1_a5n7i"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_fduv4"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="3_iw6sw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ne8c4"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2liyq"]
 radius = 15.0
 
-[node name="Hook" type="CharacterBody2D" node_paths=PackedStringArray("line", "hook_area")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_f7y4r"]
+radius = 11.0454
+
+[node name="Hook" type="CharacterBody2D" node_paths=PackedStringArray("line", "hook_area", "hurtbox")]
 collision_layer = 2
 script = ExtResource("1_a5n7i")
 line = NodePath("Line2D")
 hook_area = NodePath("HookArea")
+sprite = NodePath("CollisionShape2D/Sprite2D")
+hurtbox = NodePath("Hurtbox")
 
 [node name="Line2D" type="Line2D" parent="."]
 width = 1.0
@@ -30,3 +36,11 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HookArea"]
 shape = SubResource("CircleShape2D_2liyq")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("3_iw6sw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_f7y4r")

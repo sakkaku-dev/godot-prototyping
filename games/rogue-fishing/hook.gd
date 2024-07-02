@@ -3,14 +3,13 @@ extends CharacterBody2D
 
 signal caught()
 
-@export var speed := 100
-@export var accel := 300
-@export var max_capacity := 1
-@export var terminal_velocity_y := 200
+@export var hook_res: HookResource
 
 @export_category("Nodes")
 @export var line: Line2D
 @export var hook_area: Area2D
+@export var sprite: Sprite2D
+@export var hurtbox: Hurtbox
 
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
 
@@ -18,7 +17,14 @@ var has_hooked := false
 var capacity := 0
 
 func _ready():
+	if not hook_res:
+		hook_res = HookResource.new()
+	else:
+		sprite.texture = hook_res.hook_sprite
+		hurtbox.update_max_health(hook_res.durability)
+
 	hook_area.body_entered.connect(_on_hooked)
+	hurtbox.hit.connect(func(): ) # TODO: play effect
 
 func _on_hooked(body: Fish):
 	if body == null or _is_max_capacity(): return
@@ -27,23 +33,23 @@ func _on_hooked(body: Fish):
 	has_hooked = true
 
 func _is_max_capacity():
-	return capacity >= max_capacity
+	return capacity >= hook_res.max_capacity
 
 func _process(_delta):
-	line.points = [to_local(Vector2.ZERO), Vector2.ZERO];
+	line.points = [-global_position, Vector2.ZERO];
 
 func _physics_process(delta: float):
 	var motion = _get_motion()
-	var target_speed = speed if motion else 0
-	velocity.x = move_toward(velocity.x, motion * target_speed, accel * delta)
+	var target_speed = hook_res.move_speed if motion else 0
+	velocity.x = move_toward(velocity.x, motion * target_speed, hook_res.accel * delta)
 
 	if has_hooked or _is_max_capacity():
 		velocity -= gravity
 	else:
 		velocity += gravity
 	
-	if abs(velocity.y) > terminal_velocity_y:
-		velocity.y = terminal_velocity_y * sign(velocity.y)
+	if abs(velocity.y) > hook_res.max_fall_speed:
+		velocity.y = hook_res.max_fall_speed * sign(velocity.y)
 
 	move_and_slide()
 
