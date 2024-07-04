@@ -1,0 +1,17 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://dvijjrwsydk68"]
+
+[ext_resource type="Shader" path="res://games/arena3d/grass.gdshader" id="1_c4bh1"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7t6ie"]
+frequency = 0.0276
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bxssi"]
+noise = SubResource("FastNoiseLite_7t6ie")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_c4bh1")
+shader_parameter/color = Color(0, 0.53, 0, 1)
+shader_parameter/color2 = Color(0.3358, 0.73, 0.3358, 1)
+shader_parameter/noiseScale = 20.0
+shader_parameter/noise = SubResource("NoiseTexture2D_bxssi")
