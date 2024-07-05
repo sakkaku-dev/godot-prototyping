@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfcbfgsgksr0y"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/fish/fish.gd" id="1_daq0q"]
+[ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/yellowfin_tuna.tres" id="2_qoe56"]
+[ext_resource type="Texture2D" uid="uid://oeit2ntv0qnv" path="res://assets/Fish Pack/PNG/Default size/fishTile_076.png" id="3_8k4qu"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="4_vjfvg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_giu0b"]
+size = Vector2(54, 34)
+
+[node name="Fish" type="CharacterBody2D" node_paths=PackedStringArray("body")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_daq0q")
+body = NodePath("Sprite2D")
+fish = ExtResource("2_qoe56")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-20, 0)
+texture = ExtResource("3_8k4qu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-19, 0)
+shape = SubResource("RectangleShape2D_giu0b")
+
+[node name="IdleTimer" type="Timer" parent="."]
+autostart = true
+script = ExtResource("4_vjfvg")
+min_time = 1.0
+max_time = 3.0

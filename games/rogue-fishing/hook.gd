@@ -15,6 +15,7 @@ signal caught()
 
 var has_hooked := false
 var capacity := 0
+var can_move_up := false
 
 func _ready():
 	if not hook_res:
@@ -48,8 +49,7 @@ func _physics_process(delta: float):
 	else:
 		velocity += gravity
 	
-	if abs(velocity.y) > hook_res.max_fall_speed:
-		velocity.y = hook_res.max_fall_speed * sign(velocity.y)
+	velocity.y = clamp(velocity.y, -hook_res.max_pull_speed, hook_res.max_fall_speed)
 
 	move_and_slide()
 
@@ -58,7 +58,7 @@ func remove():
 	queue_free()
 
 func _unhandled_input(event):
-	if event.is_action_pressed("action"):
+	if event.is_action_pressed("action") and can_move_up:
 		has_hooked = not has_hooked
 		get_viewport().set_input_as_handled()
 

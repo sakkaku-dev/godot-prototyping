@@ -17,7 +17,6 @@ collision_layer = 2
 script = ExtResource("1_a5n7i")
 line = NodePath("Line2D")
 hook_area = NodePath("HookArea")
-sprite = NodePath("CollisionShape2D/Sprite2D")
 hurtbox = NodePath("Hurtbox")
 
 [node name="Line2D" type="Line2D" parent="."]

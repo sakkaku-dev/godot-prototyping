@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="MapResource" load_steps=4 format=3 uid="uid://bwqubyoysoipp"]
 
-[ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/yellowfin_tuna.tres" id="1_ftxjr"]
 [ext_resource type="Script" path="res://games/rogue-fishing/map/map_resource.gd" id="2_q8q1i"]
 [ext_resource type="PackedScene" uid="uid://cob6c13c1x4vi" path="res://games/rogue-fishing/map/open_sea/open_sea_01.tscn" id="3_fand4"]
+[ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/yellowfin_tuna.tres" id="5_qoab4"]
 
 [resource]
 script = ExtResource("2_q8q1i")
 name = "Open Sea"
 sections = Array[PackedScene]([ExtResource("3_fand4")])
-fishes = Array[Resource("res://games/rogue-fishing/fish/fish_resource.gd")]([ExtResource("1_ftxjr")])
+fishes = Array[Resource("res://games/rogue-fishing/fish/fish_resource.gd")]([ExtResource("5_qoab4"), ExtResource("5_qoab4"), ExtResource("5_qoab4"), ExtResource("5_qoab4"), ExtResource("5_qoab4")])

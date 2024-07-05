@@ -13,7 +13,7 @@ extends Node2D
 @export var map_root: Node2D
 
 @onready var map_areas: Array[MapResource] = Util.pick_random(all_map_areas, num_of_areas)
-@onready var phantom_camera_2d = $PhantomCamera2D
+@onready var camera_2d = $Camera2D
 
 var fishes: Array[FishResource] = []
 var previous_map: MapTileArea
@@ -30,24 +30,25 @@ func _ready():
 	map_create_point.screen_entered.connect(_add_next_map_section)
 	map_create_point.global_position = map_root.global_position + generate_offset
 
+func _process(delta):
+	camera_2d.global_position.y = hook.global_position.y if hook else player_body.global_position.y
+
 func _unhandled_input(event):
 	if event.is_action_pressed("action") and hook == null:
 		hook = hook_scene.instantiate()
 		hook.global_position = player_body.global_position
 		hook.caught.connect(func():
-			phantom_camera_2d.follow_target = player_body
 			hook = null
 			collect_area.set_deferred("monioring", false)
 		)
 		get_tree().current_scene.add_child(hook)
-		phantom_camera_2d.follow_target = hook
 		await get_tree().create_timer(1.0).timeout
 		collect_area.monitoring = true
+		hook.can_move_up = true
 
 func _add_next_map_section():
 	var map_res = _get_map_area_for(map_create_point.global_position - generate_offset + Vector2.DOWN * 5)
 	var tile = map_res.sections.pick_random().instantiate() as MapTileArea
-	tile.fishes = map_res.fishes.duplicate()
 	
 	map_root.add_child(tile)
 	tile.global_position = previous_map.get_last_position() if previous_map else map_root.global_position

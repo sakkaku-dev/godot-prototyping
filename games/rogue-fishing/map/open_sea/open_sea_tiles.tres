@@ -1,6 +1,15 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://crd4lhnp8dclr"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://crd4lhnp8dclr"]
 
 [ext_resource type="Texture2D" uid="uid://b7vd6egm831w0" path="res://assets/Pixel Platformer Blocks/Tilemap/sand_packed.png" id="1_4ih6m"]
+[ext_resource type="Texture2D" uid="uid://b81a67mpq3h1w" path="res://games/rogue-fishing/assets/BlackWall.png" id="1_tbpee"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_upmfm"]
+texture = ExtResource("1_tbpee")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gxxlh"]
 texture = ExtResource("1_4ih6m")
@@ -277,5 +286,7 @@ texture_region_size = Vector2i(18, 18)
 8:8/0/physics_layer_0/angular_velocity = 0.0
 
 [resource]
+tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/1 = SubResource("TileSetAtlasSource_gxxlh")
+sources/0 = SubResource("TileSetAtlasSource_upmfm")
