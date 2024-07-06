@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://doq7mbag5wmjd"]
+
+[ext_resource type="Script" path="res://games/tako-runner/obstacles/stone_throw.gd" id="1_gnqm8"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_oyxxv"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="3_shf26"]
+[ext_resource type="Script" path="res://games/tako-runner/obstacles/KnockbackArea.gd" id="4_jaeaj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mwkka"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_e7ys7"]
+radius = 12.0416
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_emm4f"]
+radius = 11.0
+
+[node name="StoneThrow" type="StaticBody2D"]
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_gnqm8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.125, 0.125)
+texture = ExtResource("1_oyxxv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_mwkka")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("3_shf26")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_e7ys7")
+
+[node name="KnockbackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("4_jaeaj")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="KnockbackArea"]
+shape = SubResource("CircleShape2D_emm4f")

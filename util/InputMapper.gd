@@ -13,9 +13,15 @@ static func override_key_inputs(inputs: Dictionary):
 			value = [inputs[action]]
 
 		for k in value:
-			var ev = InputEventKey.new()
-			ev.keycode = k
-			InputMap.action_add_event(action, ev)
+			if k >= MOUSE_BUTTON_LEFT and k <= MOUSE_BUTTON_XBUTTON2:
+				InputMap.action_add_event(action, mouse(k))
+			else:
+				InputMap.action_add_event(action, key(k))
+
+static func mouse(k: int) -> InputEventMouseButton:
+	var ev = InputEventMouseButton.new()
+	ev.button_index = k
+	return ev
 
 static func key(k: int) -> InputEventKey:
 	var ev = InputEventKey.new()

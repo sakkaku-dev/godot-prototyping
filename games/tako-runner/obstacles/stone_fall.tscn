@@ -1,19 +1,57 @@
-[gd_scene load_steps=4 format=3 uid="uid://btfuq8jvyxrhw"]
+[gd_scene load_steps=7 format=3 uid="uid://btfuq8jvyxrhw"]
 
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_fqpb4"]
 [ext_resource type="Script" path="res://games/tako-runner/obstacles/stone_fall.gd" id="1_i1e6l"]
+[ext_resource type="Script" path="res://games/tako-runner/obstacles/KnockbackArea.gd" id="3_ao4q6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7vq4s"]
-size = Vector2(28, 29)
+size = Vector2(70, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uy8dv"]
+size = Vector2(76, 36)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w7g76"]
+radius = 35.0571
 
 [node name="StoneFall" type="StaticBody2D"]
+collision_mask = 0
 script = ExtResource("1_i1e6l")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -14.5)
+position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_7vq4s")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -15)
-scale = Vector2(0.234375, 0.234375)
+position = Vector2(0, -10)
+scale = Vector2(0.5625, 0.15625)
 texture = ExtResource("1_fqpb4")
+
+[node name="KnockbackArea" type="Area2D" parent="."]
+position = Vector2(0, -10)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_ao4q6")
+knockback = 500
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackArea"]
+position = Vector2(0, 6)
+shape = SubResource("RectangleShape2D_uy8dv")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="KnockbackArea"]
+position = Vector2(0, 16)
+shape = SubResource("CircleShape2D_w7g76")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+z_index = -5
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.0
+offset_top = -13.0
+offset_right = 36.0
+offset_bottom = 588.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.219608)

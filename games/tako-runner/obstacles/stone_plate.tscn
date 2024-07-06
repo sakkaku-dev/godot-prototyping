@@ -1,12 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwsvost58bvk4"]
+[gd_scene load_steps=6 format=3 uid="uid://bwsvost58bvk4"]
 
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_ascvn"]
 [ext_resource type="Script" path="res://games/tako-runner/obstacles/stone_plate.gd" id="1_rwyib"]
+[ext_resource type="Script" path="res://games/tako-runner/obstacles/KnockbackArea.gd" id="3_fq1w6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqln4"]
 size = Vector2(32, 119.5)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6clts"]
+size = Vector2(38, 126)
+
 [node name="StonePlate" type="StaticBody2D"]
+collision_mask = 0
 script = ExtResource("1_rwyib")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -17,3 +22,10 @@ texture = ExtResource("1_ascvn")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -61)
 shape = SubResource("RectangleShape2D_yqln4")
+
+[node name="KnockbackArea" type="Area2D" parent="."]
+position = Vector2(0, -61)
+script = ExtResource("3_fq1w6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackArea"]
+shape = SubResource("RectangleShape2D_6clts")

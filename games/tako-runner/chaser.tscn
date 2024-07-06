@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://6xa0aq2xvywv"]
+[gd_scene load_steps=18 format=3 uid="uid://6xa0aq2xvywv"]
 
 [ext_resource type="Script" path="res://games/tako-runner/chaser.gd" id="1_0u6yp"]
 [ext_resource type="PackedScene" uid="uid://cv31vba8rma3m" path="res://games/tako-runner/player/player.tscn" id="1_dksoj"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://btfuq8jvyxrhw" path="res://games/tako-runner/obstacles/stone_fall.tscn" id="6_1gg4n"]
 [ext_resource type="PackedScene" uid="uid://b5nmwbmlfemxv" path="res://games/tako-runner/obstacles/stone_pit.tscn" id="7_lm0jn"]
 [ext_resource type="PackedScene" uid="uid://bwsvost58bvk4" path="res://games/tako-runner/obstacles/stone_plate.tscn" id="7_yonij"]
+[ext_resource type="PackedScene" uid="uid://doq7mbag5wmjd" path="res://games/tako-runner/obstacles/stone_throw.tscn" id="9_lafyq"]
 [ext_resource type="Script" path="res://ui/CircleTimer.gd" id="10_63jlr"]
 [ext_resource type="Shader" path="res://shaders/timer.gdshader" id="10_nq7yg"]
 
@@ -349,15 +350,20 @@ sources/2 = SubResource("TileSetAtlasSource_s38wr")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ifjx"]
 size = Vector2(428, 217)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_abhvg"]
+radius = 40.1995
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_toxjb"]
 shader = ExtResource("10_nq7yg")
 shader_parameter/mix_color = Color(1, 1, 1, 1)
 shader_parameter/mix_amount = 1.0
 shader_parameter/fill = 0.0
 
-[node name="Chaser" type="Node2D" node_paths=PackedStringArray("speed_label")]
+[node name="Chaser" type="Node2D" node_paths=PackedStringArray("speed_label", "distance_label", "game_over")]
 script = ExtResource("1_0u6yp")
 speed_label = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Speed")
+distance_label = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Dist")
+game_over = NodePath("CanvasLayer/Gameover")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -44)
@@ -381,6 +387,9 @@ script = ExtResource("3_rst8r")
 obstacles = Array[PackedScene]([ExtResource("7_lm0jn"), ExtResource("6_1gg4n"), ExtResource("7_yonij")])
 attack_area = NodePath("AttackArea")
 attack_timer = NodePath("AttackTimer")
+stone_plate = ExtResource("7_yonij")
+stone_throw = ExtResource("9_lafyq")
+stone_fall = ExtResource("6_1gg4n")
 
 [node name="Sprite2D" type="Sprite2D" parent="Bijou"]
 modulate = Color(1, 0, 0, 1)
@@ -388,6 +397,8 @@ scale = Vector2(0.09375, 0.09375)
 texture = ExtResource("3_1rg2d")
 
 [node name="AttackTimer" type="Timer" parent="Bijou"]
+wait_time = 3.0
+one_shot = true
 autostart = true
 
 [node name="AttackArea" type="Area2D" parent="Bijou"]
@@ -398,18 +409,27 @@ collision_mask = 2
 position = Vector2(-186, 6.5)
 shape = SubResource("RectangleShape2D_3ifjx")
 
+[node name="PlayerCloseDetection" type="Area2D" parent="Bijou"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bijou/PlayerCloseDetection"]
+shape = SubResource("CircleShape2D_abhvg")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer" node_paths=PackedStringArray("timer")]
 material = SubResource("ShaderMaterial_toxjb")
+custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
+size_flags_horizontal = 0
 texture = ExtResource("3_1rg2d")
 expand_mode = 3
 stretch_mode = 5
@@ -419,5 +439,48 @@ hide_on_stop = false
 
 [node name="Speed" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 layout_mode = 2
+
+[node name="Dist" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Gameover" type="Control" parent="CanvasLayer"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Gameover"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.658824)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Gameover"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Gameover/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Bijou has escaped"
+
+[node name="Restart" type="Button" parent="CanvasLayer/Gameover/CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[connection signal="pressed" from="CanvasLayer/Gameover/CenterContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
 
 [editable path="Player"]

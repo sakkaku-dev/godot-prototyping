@@ -1,22 +1,14 @@
 class_name Player
 extends CharacterBody2D
 
-enum {
-	MOVE,
-	JUMP,
-	WALL_JUMP,
-	WALL_SLIDE,
-	SLIDE,
-}
-
 @export var speed := 300
 @export var accel := 1200
 @export var deaccel := 800
 @export var jump_force := 300
 
 @export_category("Boost")
-@export var boost_speed := 600
-@export var boost_deaccel := 200
+@export var boost_speed := 1000
+@export var boost_deaccel := 1200
 @export var boost_jump := 500
 @export var boost_air_jump := 200
 
@@ -51,6 +43,7 @@ var boost_available := true:
 
 func _ready():
 	boost_timeout.timeout.connect(func(): boost_available = true)
+	animation_player.play("RESET")
 
 func _physics_process(delta):
 	if wall_dir:
@@ -104,14 +97,19 @@ func _unhandled_input(ev: InputEvent):
 			else:
 				velocity.y = -jump_force
 		elif boost_available:
-			var motion = get_motion()
-			velocity += (motion if motion else Vector2.UP) * boost_air_jump
+			velocity += Vector2.UP * boost_air_jump
 			self.boost_available = false
-	elif ev.is_action_pressed("boost") and boost_available:
+	elif is_on_floor() and ev.is_action_pressed("boost") and boost_available:
 		var motion = get_motion()
 		if motion.x != 0:
 			velocity.x = motion.x * boost_speed
 			self.boost_available = false
+	
+	if not "attack" in animation_player.current_animation:
+		if ev.is_action_pressed("attack"):
+			animation_player.play("attack")
+		elif ev.is_action_pressed("special_attack"):
+			animation_player.play("special_attack")
 
 func has_boost():
 	return abs(velocity.x) > speed

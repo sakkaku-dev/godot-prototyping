@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdrqpdwjoj7ma"]
+
+[ext_resource type="Script" path="res://games/tako-runner/obstacles/stone_plate_spawner.gd" id="1_h0opt"]
+
+[node name="StonePlateSpawner" type="Node2D"]
+script = ExtResource("1_h0opt")
