@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed := 280
+@export var speed := 250
 @export var obstacles: Array[PackedScene] = []
 @export var attack_area: Area2D
 @export var attack_timer: Timer

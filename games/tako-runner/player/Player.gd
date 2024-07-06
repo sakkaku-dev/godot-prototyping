@@ -9,58 +9,112 @@ enum {
 	SLIDE,
 }
 
+@export var speed := 300
+@export var accel := 1200
+@export var deaccel := 800
+@export var jump_force := 300
+
+@export_category("Boost")
+@export var boost_speed := 600
+@export var boost_deaccel := 200
+@export var boost_jump := 500
+@export var boost_air_jump := 200
+
+@export_category("Wall Slide")
+@export var gravity_multiplier := 0.2
+@export var slide_terminal_velocity := 10
+@export var leave_slide_threshold := 0.2
+@export var wall_jump_force := 400
+@export var wall_jump_angle := 70.0
+
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
-@onready var koyori_timer = $KoyoriTimer
-@onready var jump_buffer = $JumpBuffer
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $CollisionShape2D/Sprite2D
 @onready var right_wall_cast = $CollisionShape2D/RightWallCast
 @onready var left_wall_cast = $CollisionShape2D/LeftWallCast
+@onready var boost_timeout = $BoostTimeout
 
-@onready var states := {
-	MOVE: $States/Move,
-	JUMP: $States/Jump,
-	WALL_JUMP: $States/WallJump,
-	WALL_SLIDE: $States/WallSlide,
-	SLIDE: $States/Slide,
-}
+var wall_dir := Vector2.ZERO:
+	set(v):
+		wall_dir = v
+		if wall_dir:
+			flip(get_wall_normal().x < 0)
+			wall_leave_motion = 0
+			
+var wall_leave_motion := 0.0
 
-var state = MOVE:
-	set(s):
-		if state == s: return
-		_get_state().exit(self)
-		state = s
-		_get_state().enter(self)
-		
-		#match s:
-			#MOVE: print("MOVE")
-			#JUMP: print("JUMP")
-			#WALL_JUMP: print("WALL_JUMP")
-			#WALL_SLIDE: print("WALL_SLIDE")
+var boost_available := true:
+	set(v):
+		boost_available = v
+		if not boost_available:
+			boost_timeout.start()
 
-func _get_state(s = state):
-	return states[s]
-	
-#func _ready():
-	#jump_buffer.jump.connect(func(): self.state = JUMP)
+func _ready():
+	boost_timeout.timeout.connect(func(): boost_available = true)
 
 func _physics_process(delta):
-	_get_state().process(self, delta)
+	if wall_dir:
+		velocity += gravity * gravity_multiplier
+		if velocity.y >= slide_terminal_velocity:
+			velocity.y = slide_terminal_velocity
+			
+		if get_motion().x == wall_dir.x:
+			wall_leave_motion += delta
+		else:
+			wall_leave_motion = 0
+			
+		var moved_away_from_wall = wall_leave_motion >= leave_slide_threshold
+		if is_on_floor() or not get_wall_collision() or moved_away_from_wall:
+			wall_dir = Vector2.ZERO
+		
+	var motion_x = get_motion().x
+	if motion_x:
+		flip(motion_x < 0)
+
+	if motion_x == 0:
+		velocity.x = move_toward(velocity.x, 0, deaccel * delta)
+	if has_boost():
+		velocity.x = move_toward(velocity.x, motion_x * speed, boost_deaccel * delta)
+	else:
+		velocity.x = move_toward(velocity.x, motion_x * speed, accel * delta)
+	
+	velocity += gravity
+	
 	move_and_slide()
 	
-	#if is_on_floor() or is_on_wall():
-		#reset_jumps()
+	if not is_on_floor() and is_moving_against_wall() and not wall_dir:
+		self.wall_dir = get_wall_collision() * -1
 
 func get_motion():
 	return Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 func _unhandled_input(ev: InputEvent):
-	_get_state().handle(ev)
-	#if ev.is_action_pressed("jump"):
-		#if koyori_timer.can_jump():
-			#self.state = JUMP
-		#else:
-			#jump_buffer.buffer_jump()
+	if ev.is_action_pressed("jump"):
+		if wall_dir:
+			var wall_n = get_wall_collision() * -1
+			if wall_n:
+				wall_n = wall_n.rotated(deg_to_rad(wall_jump_angle) * -sign(wall_n.x))
+				velocity = wall_n * wall_jump_force
+				return
+		
+		if is_on_floor():
+			if Input.is_action_pressed("boost") and boost_available:
+				velocity.y = -boost_jump
+				self.boost_available = false
+			else:
+				velocity.y = -jump_force
+		elif boost_available:
+			var motion = get_motion()
+			velocity += (motion if motion else Vector2.UP) * boost_air_jump
+			self.boost_available = false
+	elif ev.is_action_pressed("boost") and boost_available:
+		var motion = get_motion()
+		if motion.x != 0:
+			velocity.x = motion.x * boost_speed
+			self.boost_available = false
+
+func has_boost():
+	return abs(velocity.x) > speed
 
 func flip(flipped: bool):
 	sprite_2d.scale.x = -1 if flipped else 1
@@ -78,9 +132,3 @@ func get_wall_collision():
 func is_moving_against_wall():
 	var wall_n = get_wall_collision()
 	return is_on_wall() and wall_n and sign(get_motion().x) == sign(wall_n.x)
-
-#func can_jump():
-	#return current_jumps > 0
-#
-#func reset_jumps():
-	#current_jumps = jump_count

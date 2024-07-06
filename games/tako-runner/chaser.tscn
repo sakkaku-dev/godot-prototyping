@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://6xa0aq2xvywv"]
+[gd_scene load_steps=16 format=3 uid="uid://6xa0aq2xvywv"]
 
 [ext_resource type="Script" path="res://games/tako-runner/chaser.gd" id="1_0u6yp"]
 [ext_resource type="PackedScene" uid="uid://cv31vba8rma3m" path="res://games/tako-runner/player/player.tscn" id="1_dksoj"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://btfuq8jvyxrhw" path="res://games/tako-runner/obstacles/stone_fall.tscn" id="6_1gg4n"]
 [ext_resource type="PackedScene" uid="uid://b5nmwbmlfemxv" path="res://games/tako-runner/obstacles/stone_pit.tscn" id="7_lm0jn"]
 [ext_resource type="PackedScene" uid="uid://bwsvost58bvk4" path="res://games/tako-runner/obstacles/stone_plate.tscn" id="7_yonij"]
+[ext_resource type="Script" path="res://ui/CircleTimer.gd" id="10_63jlr"]
+[ext_resource type="Shader" path="res://shaders/timer.gdshader" id="10_nq7yg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_s38wr"]
 texture = ExtResource("2_6j8hu")
@@ -347,13 +349,20 @@ sources/2 = SubResource("TileSetAtlasSource_s38wr")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3ifjx"]
 size = Vector2(428, 217)
 
-[node name="Chaser" type="Node2D"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_toxjb"]
+shader = ExtResource("10_nq7yg")
+shader_parameter/mix_color = Color(1, 1, 1, 1)
+shader_parameter/mix_amount = 1.0
+shader_parameter/fill = 0.0
+
+[node name="Chaser" type="Node2D" node_paths=PackedStringArray("speed_label")]
 script = ExtResource("1_0u6yp")
+speed_label = NodePath("CanvasLayer/MarginContainer/HBoxContainer/Speed")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -44)
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_dksoj")]
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, -44)
 
 [node name="TileMap" type="TileMap" parent="." groups=["map"]]
 tile_set = SubResource("TileSet_1rsij")
@@ -386,5 +395,29 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bijou/AttackArea"]
-position = Vector2(-100, 6.5)
+position = Vector2(-186, 6.5)
 shape = SubResource("RectangleShape2D_3ifjx")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MarginContainer/HBoxContainer" node_paths=PackedStringArray("timer")]
+material = SubResource("ShaderMaterial_toxjb")
+layout_mode = 2
+texture = ExtResource("3_1rg2d")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("10_63jlr")
+timer = NodePath("../../../../Player/BoostTimeout")
+hide_on_stop = false
+
+[node name="Speed" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[editable path="Player"]

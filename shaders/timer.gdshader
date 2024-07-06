@@ -2,7 +2,7 @@ shader_type canvas_item;
 
 uniform vec4 mix_color: source_color = vec4(1.0);
 uniform float mix_amount: hint_range(0.0, 1.0, 0.1) = 1.0;
-uniform float fill: hint_range(0.0, 1.0, 0.1) = 0.0;
+uniform float fill: hint_range(0.0, 1.0, 0.01) = 0.0;
 
 float remap(float i_min, float i_max, float o_min, float o_max, float val) {
 	float t = (val - i_min) / (i_max - i_min);
