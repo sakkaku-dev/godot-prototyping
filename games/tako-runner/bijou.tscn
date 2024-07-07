@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://bgo1hyua84yje"]
+
+[ext_resource type="Script" path="res://games/tako-runner/Bijou.gd" id="1_yj1ka"]
+[ext_resource type="PackedScene" uid="uid://b5nmwbmlfemxv" path="res://games/tako-runner/obstacles/stone_pit.tscn" id="2_swdkk"]
+[ext_resource type="PackedScene" uid="uid://btfuq8jvyxrhw" path="res://games/tako-runner/obstacles/stone_fall.tscn" id="3_f47we"]
+[ext_resource type="PackedScene" uid="uid://bwsvost58bvk4" path="res://games/tako-runner/obstacles/stone_plate.tscn" id="4_sjfuf"]
+[ext_resource type="PackedScene" uid="uid://doq7mbag5wmjd" path="res://games/tako-runner/obstacles/stone_throw.tscn" id="5_hjlmb"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="6_0oym3"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="7_wskfy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbhv5"]
+size = Vector2(12, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ifjx"]
+size = Vector2(428, 217)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_abhvg"]
+radius = 30.0167
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_16o3u"]
+radius = 12.0
+
+[node name="Bijou" type="CharacterBody2D" node_paths=PackedStringArray("attack_area", "attack_timer", "stone_throw_timer")]
+position = Vector2(231, -96)
+collision_layer = 0
+script = ExtResource("1_yj1ka")
+speed = 280
+obstacles = Array[PackedScene]([ExtResource("2_swdkk"), ExtResource("3_f47we"), ExtResource("4_sjfuf")])
+attack_area = NodePath("AttackArea")
+attack_timer = NodePath("AttackTimer")
+stone_plate = ExtResource("4_sjfuf")
+stone_throw = ExtResource("5_hjlmb")
+stone_throw_timer = NodePath("StoneThrowTimer")
+stone_fall = ExtResource("3_f47we")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_wbhv5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.09375, 0.09375)
+texture = ExtResource("6_0oym3")
+
+[node name="FallRecoverTime" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="StoneThrowTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-144, 36)
+shape = SubResource("RectangleShape2D_3ifjx")
+
+[node name="PlayerCloseDetection" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerCloseDetection"]
+shape = SubResource("CircleShape2D_abhvg")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("7_wskfy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_16o3u")

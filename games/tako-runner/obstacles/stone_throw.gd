@@ -1,6 +1,9 @@
+class_name StoneThrow
 extends StaticBody2D
 
 signal hit()
+
+const GROUP = "StoneThrow"
 
 @export var knockback := 200
 @export var rot_speed := 3.0
@@ -19,6 +22,7 @@ var has_hit := false
 var landed_floor := false
 
 func _ready():
+	add_to_group(GROUP)
 	_update_pos()
 	knockback_area.hit.connect(func():
 		has_hit = true

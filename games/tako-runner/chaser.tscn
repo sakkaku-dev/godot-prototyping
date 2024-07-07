@@ -1,15 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://6xa0aq2xvywv"]
+[gd_scene load_steps=12 format=3 uid="uid://6xa0aq2xvywv"]
 
 [ext_resource type="Script" path="res://games/tako-runner/chaser.gd" id="1_0u6yp"]
 [ext_resource type="PackedScene" uid="uid://cv31vba8rma3m" path="res://games/tako-runner/player/player.tscn" id="1_dksoj"]
 [ext_resource type="Texture2D" uid="uid://c3c6uhb83nifd" path="res://assets/Pixel Platformer Blocks/Tilemap/rock_packed.png" id="2_6j8hu"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="3_1rg2d"]
-[ext_resource type="Script" path="res://games/tako-runner/Bijou.gd" id="3_rst8r"]
 [ext_resource type="Script" path="res://games/tako-runner/InfiniteTileMap.gd" id="4_gjk8w"]
-[ext_resource type="PackedScene" uid="uid://btfuq8jvyxrhw" path="res://games/tako-runner/obstacles/stone_fall.tscn" id="6_1gg4n"]
-[ext_resource type="PackedScene" uid="uid://b5nmwbmlfemxv" path="res://games/tako-runner/obstacles/stone_pit.tscn" id="7_lm0jn"]
-[ext_resource type="PackedScene" uid="uid://bwsvost58bvk4" path="res://games/tako-runner/obstacles/stone_plate.tscn" id="7_yonij"]
-[ext_resource type="PackedScene" uid="uid://doq7mbag5wmjd" path="res://games/tako-runner/obstacles/stone_throw.tscn" id="9_lafyq"]
+[ext_resource type="PackedScene" uid="uid://bgo1hyua84yje" path="res://games/tako-runner/bijou.tscn" id="5_kb556"]
 [ext_resource type="Script" path="res://ui/CircleTimer.gd" id="10_63jlr"]
 [ext_resource type="Shader" path="res://shaders/timer.gdshader" id="10_nq7yg"]
 
@@ -347,12 +343,6 @@ physics_layer_0/collision_layer = 1
 physics_layer_0/collision_mask = 0
 sources/2 = SubResource("TileSetAtlasSource_s38wr")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3ifjx"]
-size = Vector2(428, 217)
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_abhvg"]
-radius = 40.1995
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_toxjb"]
 shader = ExtResource("10_nq7yg")
 shader_parameter/mix_color = Color(1, 1, 1, 1)
@@ -379,42 +369,8 @@ script = ExtResource("4_gjk8w")
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="TileMap"]
 position = Vector2(1305, 8)
 
-[node name="Bijou" type="CharacterBody2D" parent="." node_paths=PackedStringArray("attack_area", "attack_timer")]
-position = Vector2(231, -96)
-collision_layer = 0
-collision_mask = 0
-script = ExtResource("3_rst8r")
-obstacles = Array[PackedScene]([ExtResource("7_lm0jn"), ExtResource("6_1gg4n"), ExtResource("7_yonij")])
-attack_area = NodePath("AttackArea")
-attack_timer = NodePath("AttackTimer")
-stone_plate = ExtResource("7_yonij")
-stone_throw = ExtResource("9_lafyq")
-stone_fall = ExtResource("6_1gg4n")
-
-[node name="Sprite2D" type="Sprite2D" parent="Bijou"]
-modulate = Color(1, 0, 0, 1)
-scale = Vector2(0.09375, 0.09375)
-texture = ExtResource("3_1rg2d")
-
-[node name="AttackTimer" type="Timer" parent="Bijou"]
-wait_time = 3.0
-one_shot = true
-autostart = true
-
-[node name="AttackArea" type="Area2D" parent="Bijou"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bijou/AttackArea"]
-position = Vector2(-186, 6.5)
-shape = SubResource("RectangleShape2D_3ifjx")
-
-[node name="PlayerCloseDetection" type="Area2D" parent="Bijou"]
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bijou/PlayerCloseDetection"]
-shape = SubResource("CircleShape2D_abhvg")
+[node name="Bijou" parent="." instance=ExtResource("5_kb556")]
+position = Vector2(231, -107)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
