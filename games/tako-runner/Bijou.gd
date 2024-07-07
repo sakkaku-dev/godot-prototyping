@@ -22,7 +22,7 @@ enum State {
 @export_category("Stone Plate")
 @export var stone_plate: PackedScene
 @export var stone_plate_count := 3
-@export var spawn_time_diff := 0.5
+@export var spawn_time_diff := 0.7
 @export var spawn_distance_diff := 100
 
 @export_category("Stone Throw")
@@ -41,8 +41,21 @@ enum State {
 @onready var fall_recover_time = $FallRecoverTime
 @onready var hurtbox = $Hurtbox
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
+@onready var collision_shape_2d = $CollisionShape2D
 
-var state = State.MOVING
+var state = State.MOVING:
+	set(v):
+		state = v
+		velocity = Vector2.ZERO
+		
+		var is_moving = state == State.MOVING
+		hurtbox.set_deferred("monitorable", is_moving)
+		collision_shape_2d.set_deferred("disabled", is_moving)
+		
+		if is_moving:
+			_finish_attack()
+			_start_move()
+		
 var is_attacking := false
 var player: Player
 var tw: Tween
@@ -56,13 +69,10 @@ func _ready():
 		
 		_remove_throw_stones()
 		stone_throw_timer.stop()
-		
-		velocity = Vector2.ZERO
-		state = State.FALLING
+		self.state = State.FALLING
 	)
 	fall_recover_time.timeout.connect(func():
-		velocity = Vector2.ZERO
-		state = State.RECOVERING
+		self.state = State.RECOVERING
 	)
 	stone_throw_timer.timeout.connect(func(): _throw_stone())
 	
@@ -80,7 +90,7 @@ func _physics_process(delta: float):
 			var dir = original_pos_y - global_position.y
 			velocity.y += sign(dir) * recover_speed
 			if abs(global_position.y - original_pos_y) < 5:
-				state = State.MOVING
+				self.state = State.MOVING
 		State.MOVING: velocity = Vector2.RIGHT * speed
 	
 	if move_and_slide():
@@ -96,17 +106,16 @@ func _attack():
 	
 	print("Attack %s" % Attack.keys()[atk])
 	player = players[0]
-	var pos = Vector2(player.global_position.x, 0) + Vector2.RIGHT * attack_offset
-	
 	is_attacking = true
 	match atk:
-		Attack.STONE_PLATES: _spawn_stone_plates(pos)
+		Attack.STONE_PLATES: _spawn_stone_plates()
 		Attack.STONE_THROW: _spawn_stone_throw()
 		Attack.STONE_FALL: _spawn_stone_fall()
 	
-func _spawn_stone_plates(pos: Vector2):
+func _spawn_stone_plates():
 	for i in stone_plate_count:
-		spawn(pos + Vector2.RIGHT * spawn_distance_diff * i, stone_plate)
+		var pos = player.global_position.x + sign(player.velocity.x) * spawn_distance_diff
+		spawn(Vector2(pos, 0), stone_plate)
 		await get_tree().create_timer(spawn_time_diff).timeout
 		if state != State.MOVING:
 			break
@@ -134,7 +143,7 @@ func _spawn_stone_throw():
 	stone_throw_timer.start()
 
 func _throw_stone():
-	var stones = get_tree().get_nodes_in_group(StoneThrow.GROUP)
+	var stones = get_tree().get_nodes_in_group(StoneThrow.GROUP).filter(func(x): return not x.has_hit)
 	print("Stones %s" % [stones])
 	if stones.size() > 0:
 		stones[0].attack(player)

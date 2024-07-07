@@ -26,6 +26,7 @@ extends CharacterBody2D
 @onready var left_wall_cast = $CollisionShape2D/LeftWallCast
 @onready var boost_timeout = $BoostTimeout
 @onready var boost_double_tap_timeout = $BoostDoubleTapTimeout
+@onready var collision_shape_2d = $CollisionShape2D
 
 var wall_dir := Vector2.ZERO:
 	set(v):
@@ -122,7 +123,7 @@ func has_boost():
 	return abs(velocity.x) > speed
 
 func flip(flipped: bool):
-	sprite_2d.scale.x = -1 if flipped else 1
+	collision_shape_2d.scale.x = -1 if flipped else 1
 
 func get_face_dir():
 	return Vector2.LEFT if sprite_2d.scale.x < 0 else Vector2.RIGHT

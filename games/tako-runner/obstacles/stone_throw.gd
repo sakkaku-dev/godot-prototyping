@@ -19,7 +19,6 @@ var center_node: Node2D
 var alpha := 0.0
 var throw_dir: Vector2
 var has_hit := false
-var landed_floor := false
 
 func _ready():
 	add_to_group(GROUP)
@@ -35,8 +34,7 @@ func _ready():
 	visible_on_screen_notifier_2d.screen_exited.connect(func():
 		hit.emit()
 		await get_tree().create_timer(2.0).timeout
-		if not has_hit:
-			queue_free()
+		queue_free()
 	)
 
 func _physics_process(delta):
