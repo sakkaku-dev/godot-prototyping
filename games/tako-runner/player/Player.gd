@@ -8,7 +8,7 @@ extends CharacterBody2D
 
 @export_category("Boost")
 @export var boost_speed := 1000
-@export var boost_deaccel := 1200
+@export var boost_deaccel := 1500
 @export var boost_jump := 500
 @export var boost_air_jump := 200
 
@@ -25,6 +25,7 @@ extends CharacterBody2D
 @onready var right_wall_cast = $CollisionShape2D/RightWallCast
 @onready var left_wall_cast = $CollisionShape2D/LeftWallCast
 @onready var boost_timeout = $BoostTimeout
+@onready var boost_double_tap_timeout = $BoostDoubleTapTimeout
 
 var wall_dir := Vector2.ZERO:
 	set(v):
@@ -66,7 +67,7 @@ func _physics_process(delta):
 
 	if motion_x == 0:
 		velocity.x = move_toward(velocity.x, 0, deaccel * delta)
-	if has_boost():
+	elif has_boost():
 		velocity.x = move_toward(velocity.x, motion_x * speed, boost_deaccel * delta)
 	else:
 		velocity.x = move_toward(velocity.x, motion_x * speed, accel * delta)
@@ -97,19 +98,25 @@ func _unhandled_input(ev: InputEvent):
 			else:
 				velocity.y = -jump_force
 		elif boost_available:
-			velocity += Vector2.UP * boost_air_jump
+			var motion = get_motion()
+			var dir = Vector2.UP * boost_jump
+			if motion.x != 0:
+				dir = dir.rotated(deg_to_rad(45 if motion.x > 0 else - 45))
+			velocity.y = dir.y
+			velocity.x += dir.x
 			self.boost_available = false
 	elif is_on_floor() and ev.is_action_pressed("boost") and boost_available:
-		var motion = get_motion()
-		if motion.x != 0:
-			velocity.x = motion.x * boost_speed
-			self.boost_available = false
+		if not boost_double_tap_timeout.is_stopped():
+			var motion = get_motion()
+			if motion.x != 0:
+				velocity.x = motion.x * boost_speed
+				self.boost_available = false
+		else:
+			boost_double_tap_timeout.start()
 	
 	if not "attack" in animation_player.current_animation:
 		if ev.is_action_pressed("attack"):
 			animation_player.play("attack")
-		elif ev.is_action_pressed("special_attack"):
-			animation_player.play("special_attack")
 
 func has_boost():
 	return abs(velocity.x) > speed

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cv31vba8rma3m"]
+[gd_scene load_steps=11 format=3 uid="uid://cv31vba8rma3m"]
 
 [ext_resource type="Script" path="res://games/tako-runner/player/Player.gd" id="1_dx2uk"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="3_5ihay"]
@@ -15,18 +15,6 @@ tracks/0/path = NodePath("CollisionShape2D/AttackHit/CollisionShape2D:disabled")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape2D/SpecialHit/CollisionShape2D:disabled")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -49,37 +37,17 @@ tracks/0/keys = {
 "values": [false, true]
 }
 
-[sub_resource type="Animation" id="Animation_tqkss"]
-resource_name = "special_attack"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/SpecialHit/CollisionShape2D:disabled")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [false, true]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ayr58"]
 _data = {
 "RESET": SubResource("Animation_bcq1d"),
-"attack": SubResource("Animation_60bou"),
-"special_attack": SubResource("Animation_tqkss")
+"attack": SubResource("Animation_60bou")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82u8f"]
 size = Vector2(10, 12.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1t8u"]
-size = Vector2(18, 20)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsgoe"]
-size = Vector2(22, 20)
+size = Vector2(20, 22)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -96,7 +64,7 @@ position = Vector2(0, -6.75)
 shape = SubResource("RectangleShape2D_82u8f")
 
 [node name="AttackHit" type="Area2D" parent="CollisionShape2D"]
-position = Vector2(12, -6.25)
+position = Vector2(12, -0.25)
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("5_xdlvl")
@@ -105,21 +73,6 @@ damage = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D/AttackHit"]
 shape = SubResource("RectangleShape2D_u1t8u")
 disabled = true
-
-[node name="AttackTimeout" type="Timer" parent="CollisionShape2D/AttackHit"]
-
-[node name="SpecialHit" type="Area2D" parent="CollisionShape2D"]
-position = Vector2(6, -2.25)
-collision_layer = 0
-collision_mask = 16
-script = ExtResource("5_xdlvl")
-damage = 10
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionShape2D/SpecialHit"]
-shape = SubResource("RectangleShape2D_jsgoe")
-disabled = true
-
-[node name="AttackTimeout" type="Timer" parent="CollisionShape2D/SpecialHit"]
 
 [node name="LeftWallCast" type="RayCast2D" parent="CollisionShape2D"]
 position = Vector2(0, 4.75)
@@ -152,4 +105,8 @@ allow_wall_jump = true
 
 [node name="BoostTimeout" type="Timer" parent="."]
 wait_time = 1.5
+one_shot = true
+
+[node name="BoostDoubleTapTimeout" type="Timer" parent="."]
+wait_time = 0.5
 one_shot = true

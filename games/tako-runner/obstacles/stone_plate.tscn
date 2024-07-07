@@ -11,6 +11,7 @@ size = Vector2(32, 119.5)
 size = Vector2(38, 126)
 
 [node name="StonePlate" type="StaticBody2D"]
+z_index = -5
 collision_mask = 0
 script = ExtResource("1_rwyib")
 

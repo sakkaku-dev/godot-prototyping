@@ -28,6 +28,7 @@ enum Attack {
 @export var stone_fall: PackedScene
 @export var stone_fall_count := 2
 @export var stone_fall_spawn_time_diff := 3.0
+@export var stone_fall_spawn_offset := 400
 
 var is_attacking := false
 var player: Player
@@ -66,7 +67,7 @@ func _spawn_stone_plates(pos: Vector2):
 
 func _spawn_stone_fall():
 	for i in stone_fall_count:
-		spawn(Vector2(player.global_position.x, 0) + Vector2.RIGHT * attack_offset, stone_fall)
+		spawn(Vector2(player.global_position.x, 0) + Vector2.RIGHT * stone_fall_spawn_offset, stone_fall)
 		await get_tree().create_timer(stone_fall_spawn_time_diff).timeout
 	
 	_finish_attack()
@@ -77,6 +78,7 @@ func _spawn_stone_throw():
 		var node = stone_throw.instantiate()
 		node.center_node = self
 		stones.append(node)
+		node.hit.connect(func(): stones.erase(node))
 		get_tree().current_scene.call_deferred("add_child", node)
 		await get_tree().create_timer(throw_spawn_time_diff).timeout
 		

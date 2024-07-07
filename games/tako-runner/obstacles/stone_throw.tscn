@@ -36,8 +36,10 @@ shape = SubResource("CircleShape2D_e7ys7")
 
 [node name="KnockbackArea" type="Area2D" parent="."]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 3
 script = ExtResource("4_jaeaj")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="KnockbackArea"]
 shape = SubResource("CircleShape2D_emm4f")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

@@ -1,4 +1,4 @@
-extends Area2D
+extends StaticBody2D
 
 signal hit()
 
@@ -7,6 +7,7 @@ signal hit()
 @export var move_speed := 700
 @export var radius := 30
 
+@onready var visible_on_screen_notifier_2d = $VisibleOnScreenNotifier2D
 @onready var knockback_area = $KnockbackArea
 @onready var hurtbox = $Hurtbox
 @onready var gravity_v = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
@@ -15,15 +16,23 @@ var center_node: Node2D
 var alpha := 0.0
 var throw_dir: Vector2
 var has_hit := false
+var landed_floor := false
 
 func _ready():
 	_update_pos()
 	knockback_area.hit.connect(func():
 		has_hit = true
+		hit.emit()
 	)
 	hurtbox.hit.connect(func():
 		hit.emit()
 		queue_free()
+	)
+	visible_on_screen_notifier_2d.screen_exited.connect(func():
+		hit.emit()
+		await get_tree().create_timer(2.0).timeout
+		if not has_hit:
+			queue_free()
 	)
 
 func _physics_process(delta):
