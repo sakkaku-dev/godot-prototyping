@@ -1,7 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cv31vba8rma3m"]
+[gd_scene load_steps=15 format=3 uid="uid://cv31vba8rma3m"]
 
 [ext_resource type="Script" path="res://games/tako-runner/player/Player.gd" id="1_dx2uk"]
-[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="3_5ihay"]
+[ext_resource type="Texture2D" uid="uid://cf0dib5cce0m6" path="res://games/tako-runner/assets/Gigi.png" id="3_dx5vd"]
 [ext_resource type="Script" path="res://games/tako-runner/player/KoyoriTimer.gd" id="4_dcyk2"]
 [ext_resource type="Script" path="res://games/tako-runner/player/JumpBuffer.gd" id="5_3jp4m"]
 [ext_resource type="Script" path="res://combat/HitBox.gd" id="5_xdlvl"]
@@ -20,6 +20,69 @@ tracks/0/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_777t0"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p41e4"]
+resource_name = "run"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+
+[sub_resource type="Animation" id="Animation_18dmm"]
+resource_name = "air"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [11]
+}
 
 [sub_resource type="Animation" id="Animation_60bou"]
 resource_name = "attack"
@@ -36,18 +99,62 @@ tracks/0/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_gvf8l"]
+resource_name = "attack02"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/AttackHit/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [5, 6, 7]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ayr58"]
 _data = {
 "RESET": SubResource("Animation_bcq1d"),
-"attack": SubResource("Animation_60bou")
+"air": SubResource("Animation_18dmm"),
+"attack00": SubResource("Animation_60bou"),
+"attack01": SubResource("Animation_gvf8l"),
+"idle": SubResource("Animation_777t0"),
+"run": SubResource("Animation_p41e4")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82u8f"]
-size = Vector2(10, 12.5)
+size = Vector2(28.385, 43)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1t8u"]
-size = Vector2(20, 22)
+size = Vector2(30, 48)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -59,12 +166,20 @@ libraries = {
 }
 autoplay = "idle"
 
+[node name="LeftWallCast" type="RayCast2D" parent="."]
+position = Vector2(0, -2)
+target_position = Vector2(-7, 0)
+
+[node name="RightWallCast" type="RayCast2D" parent="."]
+position = Vector2(0, -2)
+target_position = Vector2(7, 0)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6.75)
 shape = SubResource("RectangleShape2D_82u8f")
 
 [node name="AttackHit" type="Area2D" parent="CollisionShape2D"]
-position = Vector2(12, -0.25)
+position = Vector2(15, -0.25)
 collision_layer = 0
 collision_mask = 16
 script = ExtResource("5_xdlvl")
@@ -74,20 +189,12 @@ damage = 2
 shape = SubResource("RectangleShape2D_u1t8u")
 disabled = true
 
-[node name="LeftWallCast" type="RayCast2D" parent="CollisionShape2D"]
-position = Vector2(0, 4.75)
-target_position = Vector2(-7, 0)
-
-[node name="RightWallCast" type="RayCast2D" parent="CollisionShape2D"]
-position = Vector2(0, 4.75)
-target_position = Vector2(7, 0)
-
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
-position = Vector2(0, -0.25)
-
-[node name="Sprite2D2" type="Sprite2D" parent="CollisionShape2D/Sprite2D"]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_5ihay")
+position = Vector2(0, -7.25)
+texture = ExtResource("3_dx5vd")
+flip_h = true
+hframes = 10
+vframes = 2
 
 [node name="KoyoriTimer" type="Timer" parent="." node_paths=PackedStringArray("player")]
 wait_time = 0.15
@@ -108,5 +215,9 @@ wait_time = 1.5
 one_shot = true
 
 [node name="BoostDoubleTapTimeout" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AttackCountReset" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true

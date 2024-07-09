@@ -1,7 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
-@export var speed := 300
+@export var speed := 280
 @export var accel := 1200
 @export var deaccel := 800
 @export var jump_force := 300
@@ -22,11 +22,16 @@ extends CharacterBody2D
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $CollisionShape2D/Sprite2D
-@onready var right_wall_cast = $CollisionShape2D/RightWallCast
-@onready var left_wall_cast = $CollisionShape2D/LeftWallCast
+@onready var right_wall_cast = $RightWallCast
+@onready var left_wall_cast = $LeftWallCast
 @onready var boost_timeout = $BoostTimeout
 @onready var boost_double_tap_timeout = $BoostDoubleTapTimeout
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var attack_count_reset = $AttackCountReset
+
+var attack_count := 0:
+	set(v):
+		attack_count = v % 2
 
 var wall_dir := Vector2.ZERO:
 	set(v):
@@ -44,6 +49,7 @@ var boost_available := true:
 			boost_timeout.start()
 
 func _ready():
+	attack_count_reset.timeout.connect(func(): attack_count = 0)
 	boost_timeout.timeout.connect(func(): boost_available = true)
 	animation_player.play("RESET")
 
@@ -76,6 +82,12 @@ func _physics_process(delta):
 	velocity += gravity
 	
 	move_and_slide()
+	
+	if not is_attacking() or not animation_player.is_playing():
+		if is_on_floor():
+			animation_player.play("run" if motion_x != 0 else "idle")
+		else:
+			animation_player.play("air")	
 	
 	if not is_on_floor() and is_moving_against_wall() and not wall_dir:
 		self.wall_dir = get_wall_collision() * -1
@@ -115,9 +127,14 @@ func _unhandled_input(ev: InputEvent):
 		else:
 			boost_double_tap_timeout.start()
 	
-	if not "attack" in animation_player.current_animation:
+	if not is_attacking():
 		if ev.is_action_pressed("attack"):
-			animation_player.play("attack")
+			animation_player.play("attack%02d" % [attack_count])
+			self.attack_count += 1
+			attack_count_reset.start()
+
+func is_attacking():
+	return "attack" in animation_player.current_animation
 
 func has_boost():
 	return abs(velocity.x) > speed

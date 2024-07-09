@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var min_rotation := 0
-@export var max_rotation := 30
+@export var max_rotation := 20
 @export var max_offset := 400
 @export var min_offset := 50
 @export var duration := 0.5

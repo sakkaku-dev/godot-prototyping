@@ -18,9 +18,9 @@ func _ready():
 		"move_down": [],
 		"move_left": [KEY_A],
 		"move_right": [KEY_D],
-		"jump": [KEY_SPACE],
-		"boost": [KEY_SHIFT],
-		"attack": [MOUSE_BUTTON_LEFT],
+		"jump": [KEY_W],
+		"boost": [KEY_S],
+		"attack": [KEY_SPACE],
 	})
 
 func _process(delta):
