@@ -33,3 +33,6 @@ script = ExtResource("3_fq1w6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KnockbackArea"]
 shape = SubResource("RectangleShape2D_6clts")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(-16, -120)

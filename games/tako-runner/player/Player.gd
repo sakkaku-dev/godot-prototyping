@@ -5,7 +5,8 @@ enum State {
 	MOVE,
 	DASH,
 	KNOCKBACK,
-	WALL_RUN,
+	WALL_CLIMB,
+	WALL_VAULT,
 	BACK_MOVE,
 }
 
@@ -24,10 +25,10 @@ enum State {
 @export var boost_deaccel := 1800
 @export var boost_air_jump := 400
 
-@export_category("Wall Run")
-@export var initial_wall_run_speed := 400
-@export var gravity_multiplier := 0.2
-@export var slide_terminal_velocity := -10
+@export_category("Wall")
+@export var initial_jump := 400
+@export var wall_climb_deaccel := 800
+@export var wall_vault_speed := 200
 
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
 @onready var animation_player = $AnimationPlayer
@@ -39,8 +40,15 @@ enum State {
 @onready var attack_count_reset = $AttackCountReset
 @onready var knockout_recover_timer = $KnockoutRecoverTimer
 @onready var dash_recovery = $DashRecovery
+@onready var top_cast = $TopCast
+@onready var bot_cast = $BotCast
+@onready var hang_position = $HangPosition
 
-var state = State.MOVE
+var climb_position: Vector2
+var state = State.MOVE:
+	set(v):
+		state = v
+		print(State.keys()[v])
 var has_double_jumped := false
 var attack_count := 0:
 	set(v):
@@ -53,10 +61,10 @@ var boost_available := true:
 			boost_timeout.start()
 
 func _ready():
-	dash_recovery.timeout.connect(func(): state = State.MOVE)
+	dash_recovery.timeout.connect(func(): self.state = State.MOVE)
 	attack_count_reset.timeout.connect(func(): attack_count = 0)
 	boost_timeout.timeout.connect(func(): boost_available = true)
-	knockout_recover_timer.timeout.connect(func(): state = State.MOVE)
+	knockout_recover_timer.timeout.connect(func(): self.state = State.MOVE)
 	animation_player.play("RESET")
 
 func _move_recovery(deaccel: float, timer: Timer):
@@ -73,26 +81,39 @@ func _physics_process(delta):
 			velocity.y += gravity.y
 	
 			if is_moving_against_wall():
-				velocity.y -= initial_wall_run_speed
-				state = State.WALL_RUN
+				var obj = get_last_slide_collision().get_collider()
+				if obj.has_method("get_climb_position"):
+					climb_position = obj.get_climb_position()
+					var dir = global_position.direction_to(climb_position)
+					if dir.dot(Vector2.UP) > 0.8:
+						velocity = dir * initial_jump
+					self.state = State.WALL_CLIMB
 		State.KNOCKBACK:
 			_move_recovery(knockback_deaccel * delta, knockout_recover_timer)
 		State.BACK_MOVE:
 			if velocity.length() <= 10 and not Input.is_action_pressed("move_left"):
-				state = State.MOVE
+				self.state = State.MOVE
 			
 			velocity.x = move_toward(velocity.x, 0, back_move_deaccel * delta)
 			velocity.y += gravity.y
 		State.DASH:
 			_move_recovery(boost_deaccel * delta, dash_recovery)
-		State.WALL_RUN:
-			velocity.y += gravity.y * gravity_multiplier
-			if velocity.y >= slide_terminal_velocity:
-				velocity.y = slide_terminal_velocity
-
-			var wall_dir = get_wall_collision()
-			if not wall_dir:
-				state = State.MOVE
+		State.WALL_CLIMB:
+			var diff = climb_position - hang_position.global_position
+			if diff.length() < 2:
+				velocity = Vector2.ZERO
+				global_position = climb_position - hang_position.position
+				self.state = State.WALL_VAULT
+			else:
+				velocity = velocity.move_toward(Vector2.ZERO, wall_climb_deaccel * delta)
+				if not velocity:
+					self.state = State.WALL_VAULT
+		State.WALL_VAULT:
+			if bot_cast.is_colliding():
+				velocity = Vector2.UP * wall_vault_speed
+			else:
+				velocity = Vector2.RIGHT * wall_vault_speed
+				self.state = State.MOVE
 
 	move_and_slide()
 	if is_on_floor():
@@ -106,7 +127,7 @@ func _physics_process(delta):
 
 func hit_knockback(knockback: Vector2):
 	velocity = knockback.normalized() * knockback_force
-	state = State.KNOCKBACK
+	self.state = State.KNOCKBACK
 
 func _move(delta):
 	var motion_x = get_motion().x
@@ -127,7 +148,7 @@ func _unhandled_input(ev: InputEvent):
 	
 	if is_on_floor() and ev.is_action_pressed("move_left"):
 		velocity = Vector2.LEFT * back_move_force
-		state = State.BACK_MOVE
+		self.state = State.BACK_MOVE
 		return
 
 	if ev.is_action_pressed("jump"):
@@ -156,7 +177,7 @@ func _unhandled_input(ev: InputEvent):
 		# if not boost_double_tap_timeout.is_stopped():
 		# if motion.x != 0:
 		velocity.x = get_motion().x * boost_speed
-		state = State.DASH
+		self.state = State.DASH
 		self.boost_available = false
 		# else:
 		# 	boost_double_tap_timeout.start()

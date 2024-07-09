@@ -10,6 +10,7 @@ extends Node2D
 
 @onready var target_pos: Vector2 = global_position
 @onready var knockback_area = $KnockbackArea
+@onready var marker_2d = $Marker2D
 
 var tw: Tween
 
@@ -31,3 +32,6 @@ func _spawn():
 	await tw.finished
 	
 	knockback_area.enabled = false
+
+func get_climb_position():
+	return marker_2d.global_position

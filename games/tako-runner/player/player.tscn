@@ -160,6 +160,9 @@ size = Vector2(30, 48)
 collision_layer = 2
 script = ExtResource("1_dx2uk")
 
+[node name="HangPosition" type="Marker2D" parent="."]
+position = Vector2(14, -29)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ayr58")
@@ -169,6 +172,14 @@ autoplay = "idle"
 [node name="LeftWallCast" type="RayCast2D" parent="."]
 position = Vector2(0, -2)
 target_position = Vector2(-15, 0)
+
+[node name="TopCast" type="RayCast2D" parent="."]
+position = Vector2(0, -24)
+target_position = Vector2(20, 0)
+
+[node name="BotCast" type="RayCast2D" parent="."]
+position = Vector2(0, 16)
+target_position = Vector2(20, 0)
 
 [node name="RightWallCast" type="RayCast2D" parent="."]
 position = Vector2(0, -2)
@@ -215,7 +226,7 @@ wait_time = 1.5
 one_shot = true
 
 [node name="DashRecovery" type="Timer" parent="."]
-wait_time = 0.2
+wait_time = 0.05
 one_shot = true
 
 [node name="AttackCountReset" type="Timer" parent="."]
