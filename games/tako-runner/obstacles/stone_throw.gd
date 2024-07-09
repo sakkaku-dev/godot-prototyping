@@ -5,7 +5,6 @@ signal hit()
 
 const GROUP = "StoneThrow"
 
-@export var knockback := 200
 @export var rot_speed := 3.0
 @export var move_speed := 700
 @export var radius := 30

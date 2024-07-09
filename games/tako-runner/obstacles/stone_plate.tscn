@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwsvost58bvk4"]
+[gd_scene load_steps=7 format=3 uid="uid://bwsvost58bvk4"]
 
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_ascvn"]
 [ext_resource type="Script" path="res://games/tako-runner/obstacles/stone_plate.gd" id="1_rwyib"]
+[ext_resource type="PackedScene" uid="uid://lnow4blyba0k" path="res://games/tako-runner/obstacles/warning.tscn" id="2_owr5t"]
 [ext_resource type="Script" path="res://games/tako-runner/obstacles/KnockbackArea.gd" id="3_fq1w6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yqln4"]
@@ -14,6 +15,8 @@ size = Vector2(38, 126)
 z_index = -5
 collision_mask = 0
 script = ExtResource("1_rwyib")
+max_rotation = 0
+warning_scene = ExtResource("2_owr5t")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -60)

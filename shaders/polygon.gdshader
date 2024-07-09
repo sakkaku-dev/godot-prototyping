@@ -61,5 +61,5 @@ void fragment()
 	color = 1.0 - color;
 	
 	//COLOR = vec4(color, alpha);
-	COLOR.a = alpha;
+	COLOR.a *= alpha;
 }

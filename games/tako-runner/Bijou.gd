@@ -12,7 +12,7 @@ enum State {
 	MOVING,
 }
 
-@export var speed := 250
+@export var speed := 380
 @export var recover_speed := 30
 @export var obstacles: Array[PackedScene] = []
 @export var attack_area: Area2D
@@ -23,7 +23,7 @@ enum State {
 @export var stone_plate: PackedScene
 @export var stone_plate_count := 3
 @export var spawn_time_diff := 0.7
-@export var spawn_distance_diff := 100
+@export var spawn_distance_diff := 600
 
 @export_category("Stone Throw")
 @export var stone_throw: PackedScene
@@ -35,7 +35,7 @@ enum State {
 @export var stone_fall: PackedScene
 @export var stone_fall_count := 2
 @export var stone_fall_spawn_time_diff := 3.0
-@export var stone_fall_spawn_offset := 350
+@export var stone_fall_spawn_offset := 500
 
 @onready var original_pos_y = position.y
 @onready var fall_recover_time = $FallRecoverTime
@@ -98,7 +98,7 @@ func _physics_process(delta: float):
 			fall_recover_time.start()
 	
 func _attack():
-	var atk = Attack.values().pick_random()
+	var atk = Attack.STONE_PLATES #Attack.values().pick_random()
 	
 	var players = attack_area.get_overlapping_bodies()
 	if players.is_empty() or is_attacking:

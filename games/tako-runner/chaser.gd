@@ -17,9 +17,9 @@ func _ready():
 		"move_up": [],
 		"move_down": [],
 		"move_left": [KEY_A],
-		"move_right": [KEY_D],
+		"move_right": [],
 		"jump": [KEY_W],
-		"boost": [KEY_S],
+		"boost": [KEY_D],
 		"attack": [KEY_SPACE],
 	})
 

@@ -33,40 +33,6 @@ tracks/1/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_777t0"]
-resource_name = "idle"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
-[sub_resource type="Animation" id="Animation_p41e4"]
-resource_name = "run"
-length = 0.4
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [1, 2, 3, 4]
-}
-
 [sub_resource type="Animation" id="Animation_18dmm"]
 resource_name = "air"
 length = 0.2
@@ -140,6 +106,40 @@ tracks/1/keys = {
 "values": [5, 6, 7]
 }
 
+[sub_resource type="Animation" id="Animation_777t0"]
+resource_name = "idle"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_p41e4"]
+resource_name = "run"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ayr58"]
 _data = {
 "RESET": SubResource("Animation_bcq1d"),
@@ -168,11 +168,11 @@ autoplay = "idle"
 
 [node name="LeftWallCast" type="RayCast2D" parent="."]
 position = Vector2(0, -2)
-target_position = Vector2(-7, 0)
+target_position = Vector2(-15, 0)
 
 [node name="RightWallCast" type="RayCast2D" parent="."]
 position = Vector2(0, -2)
-target_position = Vector2(7, 0)
+target_position = Vector2(15, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -6.75)
@@ -214,10 +214,14 @@ allow_wall_jump = true
 wait_time = 1.5
 one_shot = true
 
-[node name="BoostDoubleTapTimeout" type="Timer" parent="."]
-wait_time = 0.5
+[node name="DashRecovery" type="Timer" parent="."]
+wait_time = 0.2
 one_shot = true
 
 [node name="AttackCountReset" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="KnockoutRecoverTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true

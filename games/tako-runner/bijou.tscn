@@ -24,7 +24,6 @@ radius = 12.0
 position = Vector2(231, -96)
 collision_layer = 0
 script = ExtResource("1_yj1ka")
-speed = 280
 obstacles = Array[PackedScene]([ExtResource("2_swdkk"), ExtResource("3_f47we"), ExtResource("4_sjfuf")])
 attack_area = NodePath("AttackArea")
 attack_timer = NodePath("AttackTimer")
@@ -46,7 +45,7 @@ wait_time = 3.0
 one_shot = true
 
 [node name="AttackTimer" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 2.0
 one_shot = true
 autostart = true
 

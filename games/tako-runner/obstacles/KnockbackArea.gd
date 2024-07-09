@@ -13,7 +13,7 @@ func _ready():
 		
 		if a is Player:
 			var dir = _get_push_dir(a)
-			a.velocity = dir * knockback
+			a.hit_knockback(dir * knockback)
 			# TODO: break stone
 			print("Hit player")
 		
