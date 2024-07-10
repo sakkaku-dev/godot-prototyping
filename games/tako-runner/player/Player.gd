@@ -10,6 +10,8 @@ enum State {
 	BACK_MOVE,
 }
 
+const GROUP = "Player"
+
 @export var speed := 400
 @export var accel := 500
 @export var deaccel := 800
@@ -61,6 +63,7 @@ var boost_available := true:
 			boost_timeout.start()
 
 func _ready():
+	add_to_group(GROUP)
 	dash_recovery.timeout.connect(func(): self.state = State.MOVE)
 	attack_count_reset.timeout.connect(func(): attack_count = 0)
 	boost_timeout.timeout.connect(func(): boost_available = true)

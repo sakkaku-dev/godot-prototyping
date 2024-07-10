@@ -42,6 +42,7 @@ enum State {
 @onready var hurtbox = $Hurtbox
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var attack_pos = $AttackPos
 
 var state = State.MOVING:
 	set(v):
@@ -57,7 +58,6 @@ var state = State.MOVING:
 			_start_move()
 		
 var is_attacking := false
-var player: Player
 var tw: Tween
 
 func _ready():
@@ -96,35 +96,42 @@ func _physics_process(delta: float):
 	if move_and_slide():
 		if state == State.FALLING and fall_recover_time.is_stopped():
 			fall_recover_time.start()
-	
-func _attack():
-	var atk = Attack.STONE_PLATES #Attack.values().pick_random()
-	
+
+func _get_attack_target():
 	var players = attack_area.get_overlapping_bodies()
-	if players.is_empty() or is_attacking:
-		return
+	if players.is_empty():
+		return attack_pos
+	return players[0]
+
+func _attack():
+	if is_attacking: return
+	var atk = Attack.values().pick_random()
+	while atk == Attack.STONE_THROW and attack_area.get_overlapping_bodies().is_empty():
+		atk = Attack.values().pick_random()
 	
 	print("Attack %s" % Attack.keys()[atk])
-	player = players[0]
+	
+	var target = _get_attack_target()
 	is_attacking = true
 	match atk:
-		Attack.STONE_PLATES: _spawn_stone_plates()
+		Attack.STONE_PLATES: _spawn_stone_plates(target)
+		Attack.STONE_FALL: _spawn_stone_fall(target)
 		Attack.STONE_THROW: _spawn_stone_throw()
-		Attack.STONE_FALL: _spawn_stone_fall()
 	
-func _spawn_stone_plates():
+func _spawn_stone_plates(target: Node2D):
 	for i in stone_plate_count:
-		var pos = player.global_position.x + sign(player.velocity.x) * spawn_distance_diff
-		spawn(Vector2(pos, 0), stone_plate)
+		var pos = Vector2(target.global_position.x, 0) + Vector2.RIGHT * spawn_distance_diff
+		spawn(pos, stone_plate)
 		await get_tree().create_timer(spawn_time_diff).timeout
 		if state != State.MOVING:
 			break
 	
 	_finish_attack()
 
-func _spawn_stone_fall():
+func _spawn_stone_fall(target: Node2D):
 	for i in stone_fall_count:
-		spawn(Vector2(player.global_position.x, 0) + Vector2.RIGHT * stone_fall_spawn_offset, stone_fall)
+		var pos = Vector2(target.global_position.x, 0) + Vector2.RIGHT * stone_fall_spawn_offset
+		spawn(pos, stone_fall)
 		await get_tree().create_timer(stone_fall_spawn_time_diff).timeout
 		if state != State.MOVING:
 			break
@@ -146,7 +153,7 @@ func _throw_stone():
 	var stones = get_tree().get_nodes_in_group(StoneThrow.GROUP).filter(func(x): return not x.has_hit)
 	print("Stones %s" % [stones])
 	if stones.size() > 0:
-		stones[0].attack(player)
+		stones[0].attack()
 		stone_throw_timer.start()
 	else:
 		_finish_attack()

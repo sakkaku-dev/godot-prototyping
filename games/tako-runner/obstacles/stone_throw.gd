@@ -51,6 +51,7 @@ func _physics_process(delta):
 func _update_pos():
 	global_position = center_node.global_position + Vector2(cos(alpha), sin(alpha) * 0.5) * radius
 
-func attack(player: CharacterBody2D):
+func attack():
+	var player = get_tree().get_first_node_in_group(Player.GROUP)
 	var target = player.global_position + (Vector2.RIGHT * 50) if player.velocity else Vector2.ZERO
 	throw_dir = global_position.direction_to(target)

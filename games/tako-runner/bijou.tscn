@@ -74,3 +74,6 @@ script = ExtResource("7_wskfy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_16o3u")
+
+[node name="AttackPos" type="Marker2D" parent="."]
+position = Vector2(-350, 95)
