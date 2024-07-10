@@ -35,16 +35,19 @@ const GROUP = "Player"
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $CollisionShape2D/Sprite2D
-@onready var right_wall_cast = $RightWallCast
-@onready var left_wall_cast = $LeftWallCast
-@onready var boost_timeout = $BoostTimeout
 @onready var collision_shape_2d = $CollisionShape2D
+@onready var hang_position = $HangPosition
+
+@onready var boost_timeout = $BoostTimeout
 @onready var attack_count_reset = $AttackCountReset
 @onready var knockout_recover_timer = $KnockoutRecoverTimer
 @onready var dash_recovery = $DashRecovery
+
 @onready var top_cast = $TopCast
 @onready var bot_cast = $BotCast
-@onready var hang_position = $HangPosition
+@onready var right_wall_cast = $RightWallCast
+@onready var left_wall_cast = $LeftWallCast
+@onready var jump_over_cast = $JumpOverCast
 
 var climb_position: Vector2
 var state = State.MOVE:

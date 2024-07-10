@@ -21,8 +21,7 @@ enum State {
 
 @export_category("Stone Plate")
 @export var stone_plate: PackedScene
-@export var stone_plate_count := 3
-@export var spawn_time_diff := 0.7
+@export var spawn_time_diff := 0.5
 @export var spawn_distance_diff := 600
 
 @export_category("Stone Throw")
@@ -33,8 +32,7 @@ enum State {
 
 @export_category("Stone Fall")
 @export var stone_fall: PackedScene
-@export var stone_fall_count := 2
-@export var stone_fall_spawn_time_diff := 3.0
+@export var stone_fall_spawn_time_diff := 0.5
 @export var stone_fall_spawn_offset := 500
 
 @onready var original_pos_y = position.y
@@ -44,6 +42,7 @@ enum State {
 @onready var collision_shape_2d = $CollisionShape2D
 @onready var attack_pos = $AttackPos
 
+var attacks := []
 var state = State.MOVING:
 	set(v):
 		state = v
@@ -103,38 +102,40 @@ func _get_attack_target():
 		return attack_pos
 	return players[0]
 
+func _is_player_close():
+	return attack_area.has_overlapping_bodies()
+
 func _attack():
-	if is_attacking: return
-	var atk = Attack.values().pick_random()
-	while atk == Attack.STONE_THROW and attack_area.get_overlapping_bodies().is_empty():
-		atk = Attack.values().pick_random()
+	if state != State.MOVING: return
 	
-	print("Attack %s" % Attack.keys()[atk])
+	if _is_player_close():
+		if _throw_stone():
+			return 
+			
+		_spawn_stone_throw()
+	
+	
+	if attacks.is_empty():
+		var atk = [Attack.STONE_PLATES, Attack.STONE_FALL].pick_random()
+		attacks.append(atk)
+	
+	var current_attack = attacks.pop_front()
+	print("Attack %s from %s" % [Attack.keys()[current_attack], attacks])
 	
 	var target = _get_attack_target()
-	is_attacking = true
-	match atk:
+	match current_attack:
 		Attack.STONE_PLATES: _spawn_stone_plates(target)
 		Attack.STONE_FALL: _spawn_stone_fall(target)
 		Attack.STONE_THROW: _spawn_stone_throw()
 	
 func _spawn_stone_plates(target: Node2D):
-	for i in stone_plate_count:
-		var pos = Vector2(target.global_position.x, 0) + Vector2.RIGHT * spawn_distance_diff
-		spawn(pos, stone_plate)
-		await get_tree().create_timer(spawn_time_diff).timeout
-		if state != State.MOVING:
-			break
-	
+	var pos = Vector2(target.global_position.x, 0) + Vector2.RIGHT * spawn_distance_diff
+	spawn(pos, stone_plate)
 	_finish_attack()
 
 func _spawn_stone_fall(target: Node2D):
-	for i in stone_fall_count:
-		var pos = Vector2(target.global_position.x, 0) + Vector2.RIGHT * stone_fall_spawn_offset
-		spawn(pos, stone_fall)
-		await get_tree().create_timer(stone_fall_spawn_time_diff).timeout
-		if state != State.MOVING:
-			break
+	var pos = Vector2(target.global_position.x, 0) + Vector2.RIGHT * stone_fall_spawn_offset
+	spawn(pos, stone_fall)
 	
 	_finish_attack()
 
@@ -144,26 +145,24 @@ func _spawn_stone_throw():
 		node.center_node = self
 		get_tree().current_scene.call_deferred("add_child", node)
 		await get_tree().create_timer(throw_spawn_time_diff).timeout
-		if state != State.MOVING:
-			break
-		
-	stone_throw_timer.start()
+
+func _get_throwing_stones():
+	return get_tree().get_nodes_in_group(StoneThrow.GROUP).filter(func(x): return not x.has_hit)
 
 func _throw_stone():
-	var stones = get_tree().get_nodes_in_group(StoneThrow.GROUP).filter(func(x): return not x.has_hit)
-	print("Stones %s" % [stones])
+	var stones = _get_throwing_stones()
 	if stones.size() > 0:
 		stones[0].attack()
-		stone_throw_timer.start()
-	else:
 		_finish_attack()
+		return true
+	
+	return false
 
 func _remove_throw_stones():
 	for stone in get_tree().get_nodes_in_group(StoneThrow.GROUP):
 		stone.queue_free()
 
 func _finish_attack():
-	is_attacking = false
 	attack_timer.start()
 
 func spawn(pos: Vector2, scene: PackedScene):
