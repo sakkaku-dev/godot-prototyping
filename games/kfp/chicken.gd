@@ -14,6 +14,8 @@ signal working_changed()
 const DOOR_LAYER = 7
 
 @export var max_active_orders := 5
+@export var chicken_tex: Texture2D
+@export var chicken_uniform: Texture2D
 
 @onready var move_collide = $MoveCollide
 @onready var idle_timer = $IdleTimer
@@ -22,6 +24,7 @@ const DOOR_LAYER = 7
 @onready var hand = $Hand
 @onready var item_icon = $ItemIcon
 @onready var worker_icon = $WorkerIcon
+@onready var sprite_2d = $Sprite2D
 
 @onready var customer_manager := _customer_manager()
 
@@ -51,6 +54,7 @@ var worker := false:
 	set(v):
 		worker = v
 		global_position = _get_new_spawn()
+		sprite_2d.texture = chicken_uniform if worker else chicken_tex
 		
 		if not worker:
 			self.work = null

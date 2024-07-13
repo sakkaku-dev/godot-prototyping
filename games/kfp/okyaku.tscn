@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="7_tyjf7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yw621"]
-size = Vector2(12, 4)
+size = Vector2(8, 3)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_bfdpf"]
 radius = 8.06226
@@ -26,7 +26,6 @@ wait_emote = ExtResource("4_466gg")
 [node name="NavigationMove2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
 path_desired_distance = 10.0
 target_desired_distance = 5.0
-path_postprocessing = 1
 debug_enabled = true
 script = ExtResource("2_w1kk5")
 enemy = NodePath("..")
@@ -38,7 +37,7 @@ hframes = 4
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
+position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_yw621")
 
 [node name="PeopleDetection" type="Area2D" parent="." node_paths=PackedStringArray("customer")]

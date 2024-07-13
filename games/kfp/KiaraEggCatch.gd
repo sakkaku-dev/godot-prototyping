@@ -10,13 +10,15 @@ signal eggs_collected(eggs)
 @export var max_break := 3
 
 @onready var nest = $Nest
+@onready var egg = $Egg
 
 var motion := 0.0
 var collected := 0
 
-# Does not work inside a SubViewport, check manually
-#func _ready():
+func _ready():
+	# Does not work inside a SubViewport, check manually
 	#area_entered.connect(func(a): _on_area_entered(a))
+	egg.hide()
 
 func _on_area_entered(a: Egg):
 	if a.egg:
@@ -26,7 +28,7 @@ func _on_area_entered(a: Egg):
 		collected = max(0, collected - broken)
 	
 	eggs_collected.emit(collected)
-	nest.frame = 2 if collected > 0 else 3
+	egg.visible = collected > 0
 	a.queue_free()
 
 func get_size():

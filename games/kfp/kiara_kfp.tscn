@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://games/kfp/kiara_kfp.gd" id="1_1v3ap"]
 [ext_resource type="Script" path="res://move/TopDownMove2D.gd" id="1_m1dp1"]
-[ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="2_juiiw"]
 [ext_resource type="Script" path="res://util/Hand.gd" id="3_gkyel"]
+[ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="3_ysa7s"]
 [ext_resource type="Texture2D" uid="uid://cu0epvl3838uu" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_cloud.png" id="5_x21na"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l6dh6"]
@@ -22,9 +22,7 @@ speed = 100
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -8)
-texture = ExtResource("2_juiiw")
-hframes = 4
-vframes = 4
+texture = ExtResource("3_ysa7s")
 
 [node name="Item" type="Sprite2D" parent="."]
 position = Vector2(0, -22)

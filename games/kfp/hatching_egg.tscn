@@ -4,19 +4,22 @@
 [ext_resource type="Script" path="res://games/kfp/hatching_egg.gd" id="1_nqla5"]
 [ext_resource type="Script" path="res://util/Interactable.gd" id="2_7iatk"]
 [ext_resource type="PackedScene" uid="uid://crptynk08r8c" path="res://games/kfp/hatch_egg_game.tscn" id="2_cgyx4"]
-[ext_resource type="Texture2D" uid="uid://bwdmcu6eck5ew" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Egg_And_Nest.png" id="3_uiwc1"]
 [ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="4_jih0r"]
+[ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="5_86qp2"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="5_fwjoi"]
 [ext_resource type="Script" path="res://util/Countdown.gd" id="5_iir25"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8mbk1"]
 shader = ExtResource("1_aeyre")
+shader_parameter/thickness = null
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
 shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/width = 1.0
-shader_parameter/pattern = 0
-shader_parameter/inside = false
-shader_parameter/add_margins = false
-shader_parameter/enable = true
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d0l07"]
 size = Vector2(18, 18)
@@ -34,8 +37,7 @@ node = NodePath("../Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_8mbk1")
-texture = ExtResource("3_uiwc1")
-hframes = 4
+texture = ExtResource("5_86qp2")
 
 [node name="Interactable" type="Area2D" parent="."]
 script = ExtResource("2_7iatk")

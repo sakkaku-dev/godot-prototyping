@@ -1,7 +1,7 @@
 extends Node2D
 
-const GROUND_LAYER = 0
-const GROUND_SOURCE = 3
+const GROUND_LAYER = 2
+const GROUND_SOURCE = 6
 
 @export var cursor: SnappedCursor
 @export var chicken_manager: ChickenManager
@@ -42,6 +42,7 @@ func _place_hatching_egg():
 	
 	var coord = cursor.get_map_position()
 	var rect = Util.tilemap_layer_rect(cursor.tile_map, GROUND_LAYER, GROUND_SOURCE) as Rect2i
+	print(rect)
 	rect = rect.grow_side(SIDE_LEFT, -1).grow_side(SIDE_TOP, -1)
 	
 	if not rect.has_point(coord):

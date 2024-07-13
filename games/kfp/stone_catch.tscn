@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://di1iovxvl574g"]
 
 [ext_resource type="Script" path="res://games/kfp/egg_catch.gd" id="1_ahsb8"]
-[ext_resource type="Texture2D" uid="uid://cqasiwkferewg" path="res://assets/Sprout Lands - Sprites - Basic pack/Objects/Egg_item.png" id="1_ldt42"]
 [ext_resource type="Script" path="res://util/FreeOnExitTimeout.gd" id="2_q8vpb"]
+[ext_resource type="Texture2D" uid="uid://bbf03jl28ayhj" path="res://games/kfp/assets/Stone.png" id="3_xnrps"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_twcwc"]
 size = Vector2(12, 14)
@@ -17,8 +17,7 @@ egg = false
 script = ExtResource("2_q8vpb")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 0, 0, 1)
-texture = ExtResource("1_ldt42")
+texture = ExtResource("3_xnrps")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_twcwc")

@@ -35,6 +35,19 @@ static func get_object(x: Node) -> KFP:
 	return x.get_tree().get_first_node_in_group(GROUP)
 
 func _ready():
+	InputMapper.override_key_inputs({
+		"move_left": [KEY_A],
+		"move_right": [KEY_D],
+		"move_up": [KEY_W],
+		"move_down": [KEY_S],
+		"interact": [KEY_SPACE],
+		"action": [KEY_SPACE],
+		"cancel": [KEY_ESCAPE],
+		"slot_1": [KEY_1],
+		"slot_2": [KEY_2],
+		"rotate": [KEY_R],
+	})
+	
 	add_to_group(GROUP)
 	farm_enter.body_entered.connect(func(_x):
 		fit_camera.update(farm_source)

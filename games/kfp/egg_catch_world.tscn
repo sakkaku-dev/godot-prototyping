@@ -1,14 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://cgwjkb3536q2y"]
+[gd_scene load_steps=12 format=3 uid="uid://cgwjkb3536q2y"]
 
 [ext_resource type="Script" path="res://games/kfp/EggCatchWorld.gd" id="1_gasg6"]
 [ext_resource type="PackedScene" uid="uid://di1iovxvl574g" path="res://games/kfp/stone_catch.tscn" id="2_801pe"]
 [ext_resource type="PackedScene" uid="uid://d6cseoobua0r" path="res://games/kfp/egg_catch.tscn" id="2_h4tvd"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="3_5vmqi"]
 [ext_resource type="Script" path="res://games/kfp/KiaraEggCatch.gd" id="4_sls7o"]
-[ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="5_hab1s"]
 [ext_resource type="Script" path="res://util/Countdown.gd" id="6_63h3t"]
-[ext_resource type="Texture2D" uid="uid://bwdmcu6eck5ew" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Egg_And_Nest.png" id="6_gdjyu"]
+[ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="6_iuaub"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="6_yc4rt"]
+[ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="7_dbwfe"]
+[ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="8_0wndh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8hujs"]
 size = Vector2(16, 18)
@@ -34,15 +35,15 @@ script = ExtResource("4_sls7o")
 
 [node name="Sprite2D3" type="Sprite2D" parent="KiaraEggCatch"]
 position = Vector2(0, -8)
-texture = ExtResource("5_hab1s")
-hframes = 4
-vframes = 4
+texture = ExtResource("6_iuaub")
 
 [node name="Nest" type="Sprite2D" parent="KiaraEggCatch"]
 position = Vector2(0, -18)
-texture = ExtResource("6_gdjyu")
-hframes = 4
-frame = 3
+texture = ExtResource("7_dbwfe")
+
+[node name="Egg" type="Sprite2D" parent="KiaraEggCatch"]
+position = Vector2(0, -18)
+texture = ExtResource("8_0wndh")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KiaraEggCatch"]
 position = Vector2(0, -8)

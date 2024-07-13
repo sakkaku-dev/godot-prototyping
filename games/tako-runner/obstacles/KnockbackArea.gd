@@ -29,3 +29,4 @@ func _process(delta):
 		for b in get_overlapping_bodies():
 			var dir = _get_push_dir(b)
 			b.velocity = sign(dir.x) * knockback * delta
+	
