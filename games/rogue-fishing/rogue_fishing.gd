@@ -23,25 +23,37 @@ func _ready():
 	InputMapper.override_key_inputs({
 		"move_left": KEY_A,
 		"move_right": KEY_D,
+		"move_up": KEY_W,
+		"move_down": KEY_S,
 		"action": KEY_SPACE,
 	})
 
 	collect_area.caught_fish.connect(func(fish): fishes.append(fish))
 	map_create_point.screen_entered.connect(_add_next_map_section)
 	map_create_point.global_position = map_root.global_position + generate_offset
+	
+	_reset_camera_pos()
 
-func _process(delta):
-	camera_2d.global_position.y = hook.global_position.y if hook else player_body.global_position.y
+func _reset_camera_pos():
+	camera_2d.move_dir = Vector2.ZERO
+	camera_2d.global_position = player_body.global_position
 
 func _unhandled_input(event):
 	if event.is_action_pressed("action") and hook == null:
+		camera_2d.move_dir = Vector2.DOWN
+		#camera_2d.velocity = Vector2.DOWN * 500
+		
 		hook = hook_scene.instantiate()
 		hook.global_position = player_body.global_position
+		hook.start_reel.connect(func():
+			camera_2d.move_dir = Vector2.UP
+		)
 		hook.caught.connect(func():
 			hook = null
 			collect_area.set_deferred("monioring", false)
+			_reset_camera_pos()
 		)
-		get_tree().current_scene.add_child(hook)
+		camera_2d.add_child(hook)
 		await get_tree().create_timer(1.0).timeout
 		collect_area.monitoring = true
 		hook.can_move_up = true

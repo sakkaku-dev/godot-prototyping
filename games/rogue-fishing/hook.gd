@@ -2,6 +2,7 @@ class_name Hook
 extends CharacterBody2D
 
 signal caught()
+signal start_reel()
 
 @export var hook_res: HookResource
 
@@ -32,6 +33,7 @@ func _on_hooked(body: Fish):
 	body.hook = self
 	capacity += 1
 	has_hooked = true
+	start_reel.emit()
 
 func _is_max_capacity():
 	return capacity >= hook_res.max_capacity
@@ -42,16 +44,16 @@ func _process(_delta):
 func _physics_process(delta: float):
 	var motion = _get_motion()
 	var target_speed = hook_res.move_speed if motion else 0
-	velocity.x = move_toward(velocity.x, motion * target_speed, hook_res.accel * delta)
+	velocity.x = move_toward(velocity.x, motion.x * target_speed, hook_res.accel * delta)
+	velocity.y = move_toward(velocity.y, motion.y * target_speed, hook_res.accel * delta)
 
-	if has_hooked or _is_max_capacity():
-		velocity -= gravity
-	else:
-		velocity += gravity
-	
-	velocity.y = clamp(velocity.y, -hook_res.max_pull_speed, hook_res.max_fall_speed)
+	# velocity.y = clamp(velocity.y, -hook_res.max_pull_speed, hook_res.max_fall_speed)
 
-	move_and_slide()
+	if move_and_slide():
+		var collision = get_last_slide_collision()
+		var n = collision.get_normal()
+		if n.dot(Vector2.UP) > 0.7:
+			start_reel.emit()
 
 func remove():
 	caught.emit()
@@ -63,4 +65,4 @@ func _unhandled_input(event):
 		get_viewport().set_input_as_handled()
 
 func _get_motion():
-	return Input.get_axis("move_left", "move_right")
+	return Input.get_vector("move_left", "move_right", "move_up", "move_down")

@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://cu31aqohjpq05"]
+[gd_scene load_steps=9 format=3 uid="uid://cu31aqohjpq05"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/rogue_fishing.gd" id="1_p7jwf"]
 [ext_resource type="PackedScene" uid="uid://dblsuk8ttmpel" path="res://games/rogue-fishing/hook.tscn" id="2_mv63l"]
 [ext_resource type="Resource" uid="uid://bwqubyoysoipp" path="res://games/rogue-fishing/map/open_sea/open_sea.tres" id="3_73rqx"]
 [ext_resource type="Script" path="res://games/rogue-fishing/collect_area.gd" id="4_kmksl"]
 [ext_resource type="TileSet" uid="uid://crd4lhnp8dclr" path="res://games/rogue-fishing/map/open_sea/open_sea_tiles.tres" id="4_stlfw"]
+[ext_resource type="Script" path="res://games/rogue-fishing/WaterCamera.gd" id="5_vlli1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf4f1"]
 size = Vector2(170, 62)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_daf88"]
+size = Vector2(734, 20)
 
 [node name="RogueFishing" type="Node2D" node_paths=PackedStringArray("player_body", "collect_area", "map_create_point", "map_root")]
 script = ExtResource("1_p7jwf")
@@ -39,11 +43,32 @@ shape = SubResource("RectangleShape2D_vf4f1")
 position = Vector2(0, 80)
 limit_left = -320
 limit_right = 320
+position_smoothing_enabled = true
+script = ExtResource("5_vlli1")
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Camera2D"]
-remote_path = NodePath("../../Walls")
+[node name="StaticBody2D" type="StaticBody2D" parent="Camera2D"]
+position = Vector2(0, -7)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
+position = Vector2(0, -182)
+shape = SubResource("RectangleShape2D_daf88")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
+position = Vector2(0, 179)
+shape = SubResource("RectangleShape2D_daf88")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
+position = Vector2(-320, 99)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_daf88")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
+position = Vector2(320, 99)
+rotation = 1.5708
+shape = SubResource("RectangleShape2D_daf88")
 
 [node name="Walls" type="Node2D" parent="."]
+visible = false
 position = Vector2(0, 80)
 
 [node name="TileMap" type="TileMap" parent="Walls"]
