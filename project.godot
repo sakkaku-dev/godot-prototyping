@@ -105,6 +105,7 @@ debug={
 2d_physics/layer_4="player_hurtbox"
 3d_physics/layer_4="package"
 2d_physics/layer_5="enemy_hurtbox"
+3d_physics/layer_5="objects"
 2d_physics/layer_6="interactable"
 2d_physics/layer_7="door"
 2d_physics/layer_8="effect_zone"
@@ -120,3 +121,4 @@ debug={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0

@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://dhgjwhk605568"]
+
+[ext_resource type="PackedScene" uid="uid://dtk7u7xvr1t22" path="res://games/shadow-puzzle/assets/alchemy.gltf" id="1_71s46"]
+[ext_resource type="Script" path="res://games/shadow-puzzle/hold_item.gd" id="1_x264c"]
+[ext_resource type="PackedScene" uid="uid://bfk21odobw8uv" path="res://games/shadow-puzzle/impact_effect.tscn" id="2_pmvjy"]
+[ext_resource type="Script" path="res://games/shadow-puzzle/Item.gd" id="3_kvxrf"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rke6k"]
+size = Vector3(0.140625, 0.87915, 0.132568)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ud3nw"]
+radius = 0.430012
+
+[node name="HoldItem" type="CharacterBody3D"]
+collision_layer = 16
+collision_mask = 17
+script = ExtResource("1_x264c")
+impact_scene = ExtResource("2_pmvjy")
+
+[node name="alchemy" parent="." instance=ExtResource("1_71s46")]
+visible = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_rke6k")
+
+[node name="Item" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+monitorable = false
+script = ExtResource("3_kvxrf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Item"]
+shape = SubResource("SphereShape3D_ud3nw")

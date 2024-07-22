@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=3 uid="uid://bfk21odobw8uv"]
+
+[ext_resource type="Script" path="res://games/shadow-puzzle/impact_effect.gd" id="1_h6lxj"]
+
+[sub_resource type="Curve" id="Curve_y73wo"]
+max_value = 3.0
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1.21978), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_0xiiq"]
+curve = SubResource("Curve_y73wo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1v0yr"]
+direction = Vector3(0, 1, 0)
+spread = 50.0
+initial_velocity_min = 3.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, 0, 0)
+damping_min = 10.0
+damping_max = 20.0
+scale_min = 0.1
+scale_max = 0.1
+scale_over_velocity_curve = SubResource("CurveTexture_0xiiq")
+
+[sub_resource type="SphereMesh" id="SphereMesh_twosy"]
+
+[node name="ImpactEffect" type="GPUParticles3D"]
+emitting = false
+amount = 16
+one_shot = true
+explosiveness = 1.0
+visibility_aabb = AABB(-0.570069, -0.511013, -0.561032, 1.14014, 1.02203, 1.12206)
+process_material = SubResource("ParticleProcessMaterial_1v0yr")
+draw_pass_1 = SubResource("SphereMesh_twosy")
+script = ExtResource("1_h6lxj")
