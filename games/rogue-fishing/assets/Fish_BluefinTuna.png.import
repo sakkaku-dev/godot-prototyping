@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b81a67mpq3h1w"
-path="res://.godot/imported/BlackWall.png-6de2d040229ab35dbcddcd0e1d18e4ef.ctex"
+uid="uid://woa5ntdj4g04"
+path="res://.godot/imported/Fish_BluefinTuna.png-1c75c7f6505b28a97211aa6f60c17d12.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/rogue-fishing/assets/BlackWall.png"
-dest_files=["res://.godot/imported/BlackWall.png-6de2d040229ab35dbcddcd0e1d18e4ef.ctex"]
+source_file="res://games/rogue-fishing/assets/Fish_BluefinTuna.png"
+dest_files=["res://.godot/imported/Fish_BluefinTuna.png-1c75c7f6505b28a97211aa6f60c17d12.ctex"]
 
 [params]
 

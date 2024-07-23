@@ -1,26 +1,27 @@
-[gd_scene load_steps=9 format=3 uid="uid://cu31aqohjpq05"]
+[gd_scene load_steps=13 format=3 uid="uid://cu31aqohjpq05"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/rogue_fishing.gd" id="1_p7jwf"]
 [ext_resource type="PackedScene" uid="uid://dblsuk8ttmpel" path="res://games/rogue-fishing/hook.tscn" id="2_mv63l"]
-[ext_resource type="Resource" uid="uid://bwqubyoysoipp" path="res://games/rogue-fishing/map/open_sea/open_sea.tres" id="3_73rqx"]
+[ext_resource type="Texture2D" uid="uid://cvc3n6yrnn5r1" path="res://games/rogue-fishing/assets/Ocean_OpenOcean.png" id="3_1mry2"]
 [ext_resource type="Script" path="res://games/rogue-fishing/collect_area.gd" id="4_kmksl"]
 [ext_resource type="TileSet" uid="uid://crd4lhnp8dclr" path="res://games/rogue-fishing/map/open_sea/open_sea_tiles.tres" id="4_stlfw"]
 [ext_resource type="Script" path="res://games/rogue-fishing/WaterCamera.gd" id="5_vlli1"]
+[ext_resource type="Script" path="res://games/rogue-fishing/map/FishSpawner.gd" id="7_n0snb"]
+[ext_resource type="PackedScene" uid="uid://csq3xwvmr0ki6" path="res://games/rogue-fishing/fish/mackerel.tscn" id="8_mhqr7"]
+[ext_resource type="PackedScene" uid="uid://bfcbfgsgksr0y" path="res://games/rogue-fishing/fish/fish.tscn" id="8_t2hda"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="9_d5jbh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf4f1"]
 size = Vector2(170, 62)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_daf88"]
-size = Vector2(734, 20)
+size = Vector2(352, 20)
 
-[node name="RogueFishing" type="Node2D" node_paths=PackedStringArray("player_body", "collect_area", "map_create_point", "map_root")]
+[node name="RogueFishing" type="Node2D" node_paths=PackedStringArray("player_body", "collect_area")]
 script = ExtResource("1_p7jwf")
 hook_scene = ExtResource("2_mv63l")
 player_body = NodePath("PlayerStart")
 collect_area = NodePath("CollectArea")
-all_map_areas = Array[Resource("res://games/rogue-fishing/map/map_resource.gd")]([ExtResource("3_73rqx")])
-map_create_point = NodePath("MapCreatePoint")
-map_root = NodePath("MapRoot")
 
 [node name="MapRoot" type="Node2D" parent="."]
 position = Vector2(0, 625)
@@ -30,55 +31,153 @@ position = Vector2(0, 341)
 
 [node name="PlayerStart" type="Node2D" parent="."]
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
+motion_mirroring = Vector2(0, 720)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("3_1mry2")
+
 [node name="CollectArea" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 6
-monitoring = false
 script = ExtResource("4_kmksl")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
 shape = SubResource("RectangleShape2D_vf4f1")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Walls" type="Node2D" parent="."]
 position = Vector2(0, 80)
+
+[node name="TileMap2" type="TileMap" parent="Walls"]
+position = Vector2(0, -180)
+tile_set = ExtResource("4_stlfw")
+format = 2
+
+[node name="FishSpawner" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
+position = Vector2(-389, 729)
+target_position = Vector2(172, 82)
+script = ExtResource("7_n0snb")
+timer = NodePath("Timer")
+offset_y = Vector2(-100, 100)
+root = NodePath("..")
+scene = ExtResource("8_t2hda")
+
+[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner"]
+position = Vector2(378, -16)
+scale = Vector2(1, 47.9)
+
+[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+max_time = 2.0
+enter_notifier = NodePath("../ScreenNotifier")
+
+[node name="FishSpawner4" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
+position = Vector2(311, 1099)
+target_position = Vector2(-180, -3)
+script = ExtResource("7_n0snb")
+timer = NodePath("../FishSpawner/Timer")
+offset_y = Vector2(-100, 100)
+root = NodePath("..")
+scene = ExtResource("8_t2hda")
+
+[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner4"]
+position = Vector2(-319, -16)
+scale = Vector2(1, 42.6)
+
+[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner4" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+max_time = 2.0
+enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
+
+[node name="FishSpawner2" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
+position = Vector2(304, 729)
+target_position = Vector2(-138, -90)
+script = ExtResource("7_n0snb")
+timer = NodePath("../FishSpawner/Timer")
+offset_y = Vector2(-200, 200)
+root = NodePath("..")
+scene = ExtResource("8_mhqr7")
+
+[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner2"]
+position = Vector2(-305, -16)
+scale = Vector2(0.6, 43.7)
+
+[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner2" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+min_time = 0.2
+enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
+
+[node name="FishSpawner3" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
+position = Vector2(304, 1257)
+target_position = Vector2(-159, 39)
+script = ExtResource("7_n0snb")
+timer = NodePath("../FishSpawner/Timer")
+offset_y = Vector2(-200, 200)
+root = NodePath("..")
+scene = ExtResource("8_mhqr7")
+
+[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner3"]
+position = Vector2(-314, -16)
+scale = Vector2(1, 52.8)
+
+[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner3" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+min_time = 0.2
+enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
+
+[node name="FishSpawner5" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
+position = Vector2(-275, 1370)
+target_position = Vector2(176, 29)
+script = ExtResource("7_n0snb")
+timer = NodePath("../FishSpawner/Timer")
+offset_y = Vector2(-200, 200)
+root = NodePath("..")
+scene = ExtResource("8_mhqr7")
+
+[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner5"]
+position = Vector2(267, -16)
+scale = Vector2(1, 52.8)
+
+[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner5" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+min_time = 0.2
+enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -1)
 limit_left = -320
 limit_right = 320
 position_smoothing_enabled = true
 script = ExtResource("5_vlli1")
+down_speed = 40
+up_speed = 80
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Camera2D"]
 position = Vector2(0, -7)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(0, -182)
+position = Vector2(0, -88)
 shape = SubResource("RectangleShape2D_daf88")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(0, 179)
+position = Vector2(0, 99)
 shape = SubResource("RectangleShape2D_daf88")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(-320, 99)
+position = Vector2(-164, 18)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_daf88")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(320, 99)
+position = Vector2(166, 32)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_daf88")
-
-[node name="Walls" type="Node2D" parent="."]
-visible = false
-position = Vector2(0, 80)
-
-[node name="TileMap" type="TileMap" parent="Walls"]
-position = Vector2(0, -180)
-tile_set = ExtResource("4_stlfw")
-format = 2
-layer_0/tile_data = PackedInt32Array(65522, 0, 0, 131058, 0, 0, 196594, 0, 0, 262130, 0, 0, 327666, 0, 0, 393202, 0, 0, 458738, 0, 0, 524274, 0, 0, 589810, 0, 0, 655346, 0, 0, 720882, 0, 0, 786418, 0, 0, 851954, 0, 0, 917490, 0, 0, 983026, 0, 0, 1048562, 0, 0, 1114098, 0, 0, 1179634, 0, 0, 1245170, 0, 0, 1310706, 0, 0, 1376242, 0, 0, 1441778, 0, 0, 1507314, 0, 0, 1572850, 0, 0, 1638386, 0, 0, 1703922, 0, 0, 1769458, 0, 0, 1834994, 0, 0, 1900530, 0, 0, 1966066, 0, 0, 2031602, 0, 0, 2097138, 0, 0, 2162674, 0, 0, 2228210, 0, 0, 2293746, 0, 0, 2359282, 0, 0, 2424818, 0, 0, 2490354, 0, 0, 2555890, 0, 0, 2621426, 0, 0, 2686962, 0, 0, 2752498, 0, 0, 2818034, 0, 0, 2883570, 0, 0, 2949106, 0, 0, 3014642, 0, 0, 3080178, 0, 0, 3145714, 0, 0, 3211250, 0, 0, 3276786, 0, 0, 3342322, 0, 0, 3407858, 0, 0, 3473394, 0, 0, 3538930, 0, 0, 3604466, 0, 0, 3670002, 0, 0, 3735538, 0, 0, 3801074, 0, 0, 3866610, 0, 0, 3932146, 0, 0, 3997682, 0, 0, 4063218, 0, 0, 4128754, 0, 0, 4194290, 0, 0, 4259826, 0, 0, 4325362, 0, 0, 65523, 0, 0, 131059, 0, 0, 196595, 0, 0, 262131, 0, 0, 327667, 0, 0, 393203, 0, 0, 458739, 0, 0, 524275, 0, 0, 589811, 0, 0, 655347, 0, 0, 720883, 0, 0, 786419, 0, 0, 851955, 0, 0, 917491, 0, 0, 983027, 0, 0, 1048563, 0, 0, 1114099, 0, 0, 1179635, 0, 0, 1245171, 0, 0, 1310707, 0, 0, 1376243, 0, 0, 1441779, 0, 0, 1507315, 0, 0, 1572851, 0, 0, 1638387, 0, 0, 1703923, 0, 0, 1769459, 0, 0, 1834995, 0, 0, 1900531, 0, 0, 1966067, 0, 0, 2031603, 0, 0, 2097139, 0, 0, 2162675, 0, 0, 2228211, 0, 0, 2293747, 0, 0, 2359283, 0, 0, 2424819, 0, 0, 2490355, 0, 0, 2555891, 0, 0, 2621427, 0, 0, 2686963, 0, 0, 2752499, 0, 0, 2818035, 0, 0, 2883571, 0, 0, 2949107, 0, 0, 3014643, 0, 0, 3080179, 0, 0, 3145715, 0, 0, 3211251, 0, 0, 3276787, 0, 0, 3342323, 0, 0, 3407859, 0, 0, 3473395, 0, 0, 3538931, 0, 0, 3604467, 0, 0, 3670003, 0, 0, 3735539, 0, 0, 3801075, 0, 0, 3866611, 0, 0, 3932147, 0, 0, 3997683, 0, 0, 4063219, 0, 0, 4128755, 0, 0, 4194291, 0, 0, 4259827, 0, 0, 4325363, 0, 0, 65524, 0, 0, 131060, 0, 0, 196596, 0, 0, 262132, 0, 0, 327668, 0, 0, 393204, 0, 0, 458740, 0, 0, 524276, 0, 0, 589812, 0, 0, 655348, 0, 0, 720884, 0, 0, 786420, 0, 0, 851956, 0, 0, 917492, 0, 0, 983028, 0, 0, 1048564, 0, 0, 1114100, 0, 0, 1179636, 0, 0, 1245172, 0, 0, 1310708, 0, 0, 1376244, 0, 0, 1441780, 0, 0, 1507316, 0, 0, 1572852, 0, 0, 1638388, 0, 0, 1703924, 0, 0, 1769460, 0, 0, 1834996, 0, 0, 1900532, 0, 0, 1966068, 0, 0, 2031604, 0, 0, 2097140, 0, 0, 2162676, 0, 0, 2228212, 0, 0, 2293748, 0, 0, 2359284, 0, 0, 2424820, 0, 0, 2490356, 0, 0, 2555892, 0, 0, 2621428, 0, 0, 2686964, 0, 0, 2752500, 0, 0, 2818036, 0, 0, 2883572, 0, 0, 2949108, 0, 0, 3014644, 0, 0, 3080180, 0, 0, 3145716, 0, 0, 3211252, 0, 0, 3276788, 0, 0, 3342324, 0, 0, 3407860, 0, 0, 3473396, 0, 0, 3538932, 0, 0, 3604468, 0, 0, 3670004, 0, 0, 3735540, 0, 0, 3801076, 0, 0, 3866612, 0, 0, 3932148, 0, 0, 3997684, 0, 0, 4063220, 0, 0, 4128756, 0, 0, 4194292, 0, 0, 4259828, 0, 0, 4325364, 0, 0, 65525, 0, 0, 131061, 0, 0, 196597, 0, 0, 262133, 0, 0, 327669, 0, 0, 393205, 0, 0, 458741, 0, 0, 524277, 0, 0, 589813, 0, 0, 655349, 0, 0, 720885, 0, 0, 786421, 0, 0, 851957, 0, 0, 917493, 0, 0, 983029, 0, 0, 1048565, 0, 0, 1114101, 0, 0, 1179637, 0, 0, 1245173, 0, 0, 1310709, 0, 0, 1376245, 0, 0, 1441781, 0, 0, 1507317, 0, 0, 1572853, 0, 0, 1638389, 0, 0, 1703925, 0, 0, 1769461, 0, 0, 1834997, 0, 0, 1900533, 0, 0, 1966069, 0, 0, 2031605, 0, 0, 2097141, 0, 0, 2162677, 0, 0, 2228213, 0, 0, 2293749, 0, 0, 2359285, 0, 0, 2424821, 0, 0, 2490357, 0, 0, 2555893, 0, 0, 2621429, 0, 0, 2686965, 0, 0, 2752501, 0, 0, 2818037, 0, 0, 2883573, 0, 0, 2949109, 0, 0, 3014645, 0, 0, 3080181, 0, 0, 3145717, 0, 0, 3211253, 0, 0, 3276789, 0, 0, 3342325, 0, 0, 3407861, 0, 0, 3473397, 0, 0, 3538933, 0, 0, 3604469, 0, 0, 3670005, 0, 0, 3735541, 0, 0, 3801077, 0, 0, 3866613, 0, 0, 3932149, 0, 0, 3997685, 0, 0, 4063221, 0, 0, 4128757, 0, 0, 4194293, 0, 0, 4259829, 0, 0, 4325365, 0, 0)
-
-[node name="TileMap2" type="TileMap" parent="Walls/TileMap"]
-scale = Vector2(-1, 1)
-tile_set = ExtResource("4_stlfw")
-format = 2
-layer_0/tile_data = PackedInt32Array(65522, 0, 0, 131058, 0, 0, 196594, 0, 0, 262130, 0, 0, 327666, 0, 0, 393202, 0, 0, 458738, 0, 0, 524274, 0, 0, 589810, 0, 0, 655346, 0, 0, 720882, 0, 0, 786418, 0, 0, 851954, 0, 0, 917490, 0, 0, 983026, 0, 0, 1048562, 0, 0, 1114098, 0, 0, 1179634, 0, 0, 1245170, 0, 0, 1310706, 0, 0, 1376242, 0, 0, 1441778, 0, 0, 1507314, 0, 0, 1572850, 0, 0, 1638386, 0, 0, 1703922, 0, 0, 1769458, 0, 0, 1834994, 0, 0, 1900530, 0, 0, 1966066, 0, 0, 2031602, 0, 0, 2097138, 0, 0, 2162674, 0, 0, 2228210, 0, 0, 2293746, 0, 0, 2359282, 0, 0, 2424818, 0, 0, 2490354, 0, 0, 2555890, 0, 0, 2621426, 0, 0, 2686962, 0, 0, 2752498, 0, 0, 2818034, 0, 0, 2883570, 0, 0, 2949106, 0, 0, 3014642, 0, 0, 3080178, 0, 0, 3145714, 0, 0, 3211250, 0, 0, 3276786, 0, 0, 3342322, 0, 0, 3407858, 0, 0, 3473394, 0, 0, 3538930, 0, 0, 3604466, 0, 0, 3670002, 0, 0, 3735538, 0, 0, 3801074, 0, 0, 3866610, 0, 0, 3932146, 0, 0, 3997682, 0, 0, 4063218, 0, 0, 4128754, 0, 0, 4194290, 0, 0, 4259826, 0, 0, 4325362, 0, 0, 65523, 0, 0, 131059, 0, 0, 196595, 0, 0, 262131, 0, 0, 327667, 0, 0, 393203, 0, 0, 458739, 0, 0, 524275, 0, 0, 589811, 0, 0, 655347, 0, 0, 720883, 0, 0, 786419, 0, 0, 851955, 0, 0, 917491, 0, 0, 983027, 0, 0, 1048563, 0, 0, 1114099, 0, 0, 1179635, 0, 0, 1245171, 0, 0, 1310707, 0, 0, 1376243, 0, 0, 1441779, 0, 0, 1507315, 0, 0, 1572851, 0, 0, 1638387, 0, 0, 1703923, 0, 0, 1769459, 0, 0, 1834995, 0, 0, 1900531, 0, 0, 1966067, 0, 0, 2031603, 0, 0, 2097139, 0, 0, 2162675, 0, 0, 2228211, 0, 0, 2293747, 0, 0, 2359283, 0, 0, 2424819, 0, 0, 2490355, 0, 0, 2555891, 0, 0, 2621427, 0, 0, 2686963, 0, 0, 2752499, 0, 0, 2818035, 0, 0, 2883571, 0, 0, 2949107, 0, 0, 3014643, 0, 0, 3080179, 0, 0, 3145715, 0, 0, 3211251, 0, 0, 3276787, 0, 0, 3342323, 0, 0, 3407859, 0, 0, 3473395, 0, 0, 3538931, 0, 0, 3604467, 0, 0, 3670003, 0, 0, 3735539, 0, 0, 3801075, 0, 0, 3866611, 0, 0, 3932147, 0, 0, 3997683, 0, 0, 4063219, 0, 0, 4128755, 0, 0, 4194291, 0, 0, 4259827, 0, 0, 4325363, 0, 0, 65524, 0, 0, 131060, 0, 0, 196596, 0, 0, 262132, 0, 0, 327668, 0, 0, 393204, 0, 0, 458740, 0, 0, 524276, 0, 0, 589812, 0, 0, 655348, 0, 0, 720884, 0, 0, 786420, 0, 0, 851956, 0, 0, 917492, 0, 0, 983028, 0, 0, 1048564, 0, 0, 1114100, 0, 0, 1179636, 0, 0, 1245172, 0, 0, 1310708, 0, 0, 1376244, 0, 0, 1441780, 0, 0, 1507316, 0, 0, 1572852, 0, 0, 1638388, 0, 0, 1703924, 0, 0, 1769460, 0, 0, 1834996, 0, 0, 1900532, 0, 0, 1966068, 0, 0, 2031604, 0, 0, 2097140, 0, 0, 2162676, 0, 0, 2228212, 0, 0, 2293748, 0, 0, 2359284, 0, 0, 2424820, 0, 0, 2490356, 0, 0, 2555892, 0, 0, 2621428, 0, 0, 2686964, 0, 0, 2752500, 0, 0, 2818036, 0, 0, 2883572, 0, 0, 2949108, 0, 0, 3014644, 0, 0, 3080180, 0, 0, 3145716, 0, 0, 3211252, 0, 0, 3276788, 0, 0, 3342324, 0, 0, 3407860, 0, 0, 3473396, 0, 0, 3538932, 0, 0, 3604468, 0, 0, 3670004, 0, 0, 3735540, 0, 0, 3801076, 0, 0, 3866612, 0, 0, 3932148, 0, 0, 3997684, 0, 0, 4063220, 0, 0, 4128756, 0, 0, 4194292, 0, 0, 4259828, 0, 0, 4325364, 0, 0, 65525, 0, 0, 131061, 0, 0, 196597, 0, 0, 262133, 0, 0, 327669, 0, 0, 393205, 0, 0, 458741, 0, 0, 524277, 0, 0, 589813, 0, 0, 655349, 0, 0, 720885, 0, 0, 786421, 0, 0, 851957, 0, 0, 917493, 0, 0, 983029, 0, 0, 1048565, 0, 0, 1114101, 0, 0, 1179637, 0, 0, 1245173, 0, 0, 1310709, 0, 0, 1376245, 0, 0, 1441781, 0, 0, 1507317, 0, 0, 1572853, 0, 0, 1638389, 0, 0, 1703925, 0, 0, 1769461, 0, 0, 1834997, 0, 0, 1900533, 0, 0, 1966069, 0, 0, 2031605, 0, 0, 2097141, 0, 0, 2162677, 0, 0, 2228213, 0, 0, 2293749, 0, 0, 2359285, 0, 0, 2424821, 0, 0, 2490357, 0, 0, 2555893, 0, 0, 2621429, 0, 0, 2686965, 0, 0, 2752501, 0, 0, 2818037, 0, 0, 2883573, 0, 0, 2949109, 0, 0, 3014645, 0, 0, 3080181, 0, 0, 3145717, 0, 0, 3211253, 0, 0, 3276789, 0, 0, 3342325, 0, 0, 3407861, 0, 0, 3473397, 0, 0, 3538933, 0, 0, 3604469, 0, 0, 3670005, 0, 0, 3735541, 0, 0, 3801077, 0, 0, 3866613, 0, 0, 3932149, 0, 0, 3997685, 0, 0, 4063221, 0, 0, 4128757, 0, 0, 4194293, 0, 0, 4259829, 0, 0, 4325365, 0, 0)

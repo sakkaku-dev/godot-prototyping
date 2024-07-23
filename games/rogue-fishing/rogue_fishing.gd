@@ -4,15 +4,6 @@ extends Node2D
 @export var player_body: Node2D
 @export var collect_area: CollectArea
 
-@export_category("Map Areas")
-@export var single_area_size := 1000
-@export var num_of_areas := 8
-@export var generate_offset := Vector2(0, -200)
-@export var all_map_areas: Array[MapResource] = []
-@export var map_create_point: VisibleOnScreenNotifier2D
-@export var map_root: Node2D
-
-@onready var map_areas: Array[MapResource] = Util.pick_random(all_map_areas, num_of_areas)
 @onready var camera_2d = $Camera2D
 
 var fishes: Array[FishResource] = []
@@ -29,50 +20,23 @@ func _ready():
 	})
 
 	collect_area.caught_fish.connect(func(fish): fishes.append(fish))
-	map_create_point.screen_entered.connect(_add_next_map_section)
-	map_create_point.global_position = map_root.global_position + generate_offset
-	
 	_reset_camera_pos()
 
 func _reset_camera_pos():
 	camera_2d.move_dir = Vector2.ZERO
-	camera_2d.global_position = player_body.global_position
+	camera_2d.global_position = player_body.global_position + Vector2.DOWN * 50
 
 func _unhandled_input(event):
 	if event.is_action_pressed("action") and hook == null:
 		camera_2d.move_dir = Vector2.DOWN
-		#camera_2d.velocity = Vector2.DOWN * 500
 		
 		hook = hook_scene.instantiate()
-		hook.global_position = player_body.global_position
 		hook.start_reel.connect(func():
 			camera_2d.move_dir = Vector2.UP
 		)
 		hook.caught.connect(func():
 			hook = null
-			collect_area.set_deferred("monioring", false)
 			_reset_camera_pos()
 		)
 		camera_2d.add_child(hook)
-		await get_tree().create_timer(1.0).timeout
-		collect_area.monitoring = true
-		hook.can_move_up = true
-
-func _add_next_map_section():
-	var map_res = _get_map_area_for(map_create_point.global_position - generate_offset + Vector2.DOWN * 5)
-	var tile = map_res.sections.pick_random().instantiate() as MapTileArea
-	
-	map_root.add_child(tile)
-	tile.global_position = previous_map.get_last_position() if previous_map else map_root.global_position
-	map_create_point.global_position = tile.get_last_position() + generate_offset
-	
-	previous_map = tile
-
-	
-func _get_map_area_for(current_pos: Vector2) -> MapResource:
-	var pos = current_pos - map_root.global_position
-	var idx = floor(pos.y / single_area_size)
-	if idx >= 0 and idx < len(map_areas):
-		return map_areas[idx]
-
-	return map_areas[len(map_areas) - 1]
+		hook.global_position = player_body.global_position

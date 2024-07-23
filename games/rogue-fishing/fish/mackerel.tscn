@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://csq3xwvmr0ki6"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/fish/fish.gd" id="1_n2fxm"]
+[ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/stripped_bass.tres" id="2_jpusr"]
+[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="3_u8lfm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gpu4a"]
+size = Vector2(26, 14)
+
+[node name="Mackerel" type="CharacterBody2D" node_paths=PackedStringArray("body")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_n2fxm")
+move_dir = Vector2(100, 0)
+body = NodePath("Sprite2D")
+fish = ExtResource("2_jpusr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-11, 0)
+texture = ExtResource("3_u8lfm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-11, 0)
+shape = SubResource("RectangleShape2D_gpu4a")

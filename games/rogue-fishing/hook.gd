@@ -32,6 +32,9 @@ func _on_hooked(body: Fish):
 	if body == null or _is_max_capacity(): return
 	body.hook = self
 	capacity += 1
+	_start_ascend()
+
+func _start_ascend():
 	has_hooked = true
 	start_reel.emit()
 
@@ -39,7 +42,7 @@ func _is_max_capacity():
 	return capacity >= hook_res.max_capacity
 
 func _process(_delta):
-	line.points = [-global_position, Vector2.ZERO];
+	line.points = [-global_position, Vector2(0, -9)]
 
 func _physics_process(delta: float):
 	var motion = _get_motion()
@@ -53,16 +56,16 @@ func _physics_process(delta: float):
 		var collision = get_last_slide_collision()
 		var n = collision.get_normal()
 		if n.dot(Vector2.UP) > 0.7:
-			start_reel.emit()
+			_start_ascend()
 
 func remove():
 	caught.emit()
 	queue_free()
 
-func _unhandled_input(event):
-	if event.is_action_pressed("action") and can_move_up:
-		has_hooked = not has_hooked
-		get_viewport().set_input_as_handled()
+#func _unhandled_input(event):
+	#if event.is_action_pressed("action") and can_move_up:
+		#has_hooked = not has_hooked
+		#get_viewport().set_input_as_handled()
 
 func _get_motion():
 	return Input.get_vector("move_left", "move_right", "move_up", "move_down")

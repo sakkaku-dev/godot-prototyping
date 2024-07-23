@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dhw6eex4770ys"
-path="res://.godot/imported/Ground.png-b9426ba8b16fa67d7f282a4c7096a8b6.ctex"
+uid="uid://cvc3n6yrnn5r1"
+path="res://.godot/imported/Ocean_OpenOcean.png-680f2729279637ff99cfc01ff2b91544.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/rogue-fishing/assets/Ground.png"
-dest_files=["res://.godot/imported/Ground.png-b9426ba8b16fa67d7f282a4c7096a8b6.ctex"]
+source_file="res://games/rogue-fishing/assets/Ocean_OpenOcean.png"
+dest_files=["res://.godot/imported/Ocean_OpenOcean.png-680f2729279637ff99cfc01ff2b91544.ctex"]
 
 [params]
 
