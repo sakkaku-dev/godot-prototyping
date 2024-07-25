@@ -16,8 +16,11 @@ func _on_body_exited(body: Node2D):
 func _on_body_entered(body: Node2D):
 	if body is Hook:
 		if awaiting_hook:
-			body.remove()
 			awaiting_hook = false
-	elif body is Fish:
-		caught_fish.emit(body.fish)
-		body.queue_free()
+			
+			var fish = []
+			for f in body.fish:
+				fish.append(f.fish)
+				f.queue_free()
+			caught_fish.emit(fish)
+			body.remove()

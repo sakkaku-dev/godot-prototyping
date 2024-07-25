@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://dh0s4rhhipnc7"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/DeepwaterGame.gd" id="1_ptnfa"]
+[ext_resource type="Resource" uid="uid://dyobwulgtaac7" path="res://games/rogue-fishing/upgrades/DefaultHook.tres" id="2_wr6y8"]
+
+[node name="DeepwaterGame" type="Node"]
+script = ExtResource("1_ptnfa")
+unlocked_hooks = Array[Resource("res://games/rogue-fishing/upgrades/hook_resource.gd")]([ExtResource("2_wr6y8")])

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu1m31o7knokp"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/ui/CaughtFishRow.gd" id="1_udtwp"]
+[ext_resource type="Texture2D" uid="uid://odae081f8thr" path="res://assets/Fish Pack/PNG/Default size/fishTile_073.png" id="2_uqc37"]
+
+[node name="CaughtFishRow" type="HBoxContainer"]
+script = ExtResource("1_udtwp")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 2
+texture = ExtResource("2_uqc37")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SellBtn" type="Button" parent="."]
+layout_mode = 2
+toggle_mode = true
+text = "Sell"

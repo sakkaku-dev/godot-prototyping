@@ -12,11 +12,13 @@ signal start_reel()
 @export var sprite: Sprite2D
 @export var hurtbox: Hurtbox
 
+
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
 
 var has_hooked := false
 var capacity := 0
 var can_move_up := false
+var fish = []
 
 func _ready():
 	if not hook_res:
@@ -29,17 +31,15 @@ func _ready():
 	hurtbox.hit.connect(func(): ) # TODO: play effect
 
 func _on_hooked(body: Fish):
-	if body == null or _is_max_capacity(): return
+	if body == null or body.hook or body in fish: return
 	body.hook = self
-	capacity += 1
+	fish.append(body)
 	_start_ascend()
 
 func _start_ascend():
+	if not has_hooked:
+		start_reel.emit()
 	has_hooked = true
-	start_reel.emit()
-
-func _is_max_capacity():
-	return capacity >= hook_res.max_capacity
 
 func _process(_delta):
 	line.points = [-global_position, Vector2(0, -9)]

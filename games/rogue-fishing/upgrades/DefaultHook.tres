@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HookResource" load_steps=3 format=3 uid="uid://dyobwulgtaac7"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/upgrades/hook_resource.gd" id="1_g8gr6"]
+[ext_resource type="Texture2D" uid="uid://b8sui6681oq87" path="res://games/rogue-fishing/assets/Hook_Base.png" id="1_x3h37"]
+
+[resource]
+script = ExtResource("1_g8gr6")
+hook_sprite = ExtResource("1_x3h37")
+move_speed = 80
+accel = 120
+max_capacity = 2
+durability = 1
+price = 10
+name = "Cool Upgrade"
+text = "Improves something"
+sprite = ExtResource("1_x3h37")

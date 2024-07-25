@@ -1,56 +1,187 @@
-[gd_scene load_steps=13 format=3 uid="uid://cu31aqohjpq05"]
+[gd_scene load_steps=35 format=3 uid="uid://cu31aqohjpq05"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/rogue_fishing.gd" id="1_p7jwf"]
 [ext_resource type="PackedScene" uid="uid://dblsuk8ttmpel" path="res://games/rogue-fishing/hook.tscn" id="2_mv63l"]
-[ext_resource type="Texture2D" uid="uid://cvc3n6yrnn5r1" path="res://games/rogue-fishing/assets/Ocean_OpenOcean.png" id="3_1mry2"]
+[ext_resource type="Texture2D" uid="uid://b7gcqasuectdr" path="res://games/rogue-fishing/assets/Ocean_Cloud.png" id="3_mj0pu"]
+[ext_resource type="Texture2D" uid="uid://dp3mt27yl68v3" path="res://games/rogue-fishing/assets/Ocean_Cloud02.png" id="3_qmbit"]
+[ext_resource type="Texture2D" uid="uid://b5kydtkup5wdf" path="res://games/rogue-fishing/assets/Hills_MoreBack.png" id="3_s8l4o"]
+[ext_resource type="Texture2D" uid="uid://bvnp15fsik7i" path="res://games/rogue-fishing/assets/Ocean_Boat.png" id="4_jo5cy"]
 [ext_resource type="Script" path="res://games/rogue-fishing/collect_area.gd" id="4_kmksl"]
+[ext_resource type="Texture2D" uid="uid://njrvat4gedsp" path="res://games/rogue-fishing/assets/Hills_Back.png" id="4_ohp45"]
 [ext_resource type="TileSet" uid="uid://crd4lhnp8dclr" path="res://games/rogue-fishing/map/open_sea/open_sea_tiles.tres" id="4_stlfw"]
+[ext_resource type="Texture2D" uid="uid://70odwhone5s3" path="res://games/rogue-fishing/assets/Hills_Mid.png" id="5_1ag1b"]
+[ext_resource type="Script" path="res://games/rogue-fishing/ParallaxMove.gd" id="5_ha67q"]
+[ext_resource type="Script" path="res://games/rogue-fishing/ParallaxMoveBG.gd" id="5_hmf7g"]
 [ext_resource type="Script" path="res://games/rogue-fishing/WaterCamera.gd" id="5_vlli1"]
+[ext_resource type="Texture2D" uid="uid://hxj8d28dfw8m" path="res://games/rogue-fishing/assets/Hills_Front.png" id="6_g8wpy"]
 [ext_resource type="Script" path="res://games/rogue-fishing/map/FishSpawner.gd" id="7_n0snb"]
 [ext_resource type="PackedScene" uid="uid://csq3xwvmr0ki6" path="res://games/rogue-fishing/fish/mackerel.tscn" id="8_mhqr7"]
 [ext_resource type="PackedScene" uid="uid://bfcbfgsgksr0y" path="res://games/rogue-fishing/fish/fish.tscn" id="8_t2hda"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="9_d5jbh"]
+[ext_resource type="PackedScene" uid="uid://bu1m31o7knokp" path="res://games/rogue-fishing/ui/caught_fish_row.tscn" id="11_636il"]
+[ext_resource type="Script" path="res://games/rogue-fishing/ui/CaughtFishDialog.gd" id="11_hoyay"]
+[ext_resource type="Script" path="res://games/rogue-fishing/DarkenMarker.gd" id="13_hhq7w"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="13_yr34r"]
+[ext_resource type="Theme" uid="uid://dt444g01qbkbf" path="res://games/rogue-fishing/theme.tres" id="16_k01s1"]
+[ext_resource type="Script" path="res://games/rogue-fishing/GameMenu.gd" id="18_tmmkp"]
+[ext_resource type="PackedScene" uid="uid://dkaw16gp8utmo" path="res://games/rogue-fishing/ui/hook_upgrade_button.tscn" id="21_ywgrn"]
+[ext_resource type="Script" path="res://games/rogue-fishing/ui/Shop.gd" id="25_73n2m"]
+[ext_resource type="Resource" uid="uid://dyobwulgtaac7" path="res://games/rogue-fishing/upgrades/DefaultHook.tres" id="26_gqbmc"]
+
+[sub_resource type="Gradient" id="Gradient_igbk4"]
+colors = PackedColorArray(0.211765, 0.772549, 0.956863, 1, 0.2, 0.533333, 0.870588, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_51ich"]
+gradient = SubResource("Gradient_igbk4")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_ev1ys"]
+offsets = PackedFloat32Array(0, 0.01, 0.03, 0.08, 0.18, 0.23, 0.4, 0.45, 1)
+colors = PackedColorArray(0.427451, 0.917647, 0.839216, 1, 0.211765, 0.772549, 0.956863, 1, 0.211765, 0.772549, 0.956863, 1, 0.2, 0.533333, 0.870588, 1, 0.2, 0.533333, 0.870588, 1, 0.219608, 0.34902, 0.701961, 1, 0.219608, 0.34902, 0.701961, 1, 0.243137, 0.231373, 0.396078, 1, 0.243137, 0.231373, 0.396078, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ia76a"]
+gradient = SubResource("Gradient_ev1ys")
+fill_to = Vector2(0, 1)
+
+[sub_resource type="Gradient" id="Gradient_7v7hj"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.690196)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q08du"]
+gradient = SubResource("Gradient_7v7hj")
+fill_to = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf4f1"]
 size = Vector2(170, 62)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_daf88"]
-size = Vector2(352, 20)
-
-[node name="RogueFishing" type="Node2D" node_paths=PackedStringArray("player_body", "collect_area")]
+[node name="RogueFishing" type="Node2D" node_paths=PackedStringArray("player_body", "collect_area", "camera_2d", "caught_fish_dialog", "money_label")]
 script = ExtResource("1_p7jwf")
 hook_scene = ExtResource("2_mv63l")
 player_body = NodePath("PlayerStart")
-collect_area = NodePath("CollectArea")
-
-[node name="MapRoot" type="Node2D" parent="."]
-position = Vector2(0, 625)
-
-[node name="MapCreatePoint" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0, 341)
-
-[node name="PlayerStart" type="Node2D" parent="."]
+collect_area = NodePath("PlayerStart/CollectArea")
+camera_2d = NodePath("Camera2D")
+caught_fish_dialog = NodePath("CanvasLayer2/Control/CaughtFishDialog")
+money_label = NodePath("CanvasLayer2/Control/GameMenu/VBoxContainer/HBoxContainer/Money")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="CanvasLayer"]
+[node name="Ocean" type="ParallaxBackground" parent="CanvasLayer"]
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/ParallaxBackground"]
-motion_mirroring = Vector2(0, 720)
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/Ocean"]
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/ParallaxBackground/ParallaxLayer"]
-texture = ExtResource("3_1mry2")
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+position = Vector2(0, -11200)
 
-[node name="CollectArea" type="Area2D" parent="."]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Ocean/ParallaxLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4990.0
+offset_right = 4990.0
+offset_bottom = 27822.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.172549, 0.117647, 0.192157, 1)
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer"]
+position = Vector2(0, -101.375)
+scale = Vector2(135.094, 3.17578)
+texture = SubResource("GradientTexture2D_51ich")
+
+[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer"]
+position = Vector2(0, 13823.5)
+scale = Vector2(135.125, 431.984)
+texture = SubResource("GradientTexture2D_ia76a")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+motion_scale = Vector2(1, 0.1)
+motion_mirroring = Vector2(402, 0)
+
+[node name="Sprite2D5" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer3"]
+position = Vector2(0, -301)
+scale = Vector2(6.28125, 12.4375)
+texture = SubResource("GradientTexture2D_q08du")
+
+[node name="Sprite2D4" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer3"]
+texture = ExtResource("3_s8l4o")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+motion_scale = Vector2(1, 0.15)
+motion_mirroring = Vector2(402, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer4"]
+texture = ExtResource("4_ohp45")
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+motion_scale = Vector2(1, 0.2)
+motion_mirroring = Vector2(402, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer5"]
+texture = ExtResource("5_1ag1b")
+
+[node name="ParallaxLayer6" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+motion_scale = Vector2(1, 0.25)
+motion_mirroring = Vector2(402, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer6"]
+texture = ExtResource("6_g8wpy")
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Ocean/ParallaxLayer6"]
+offset_left = -200.0
+offset_top = 92.0
+offset_right = 202.0
+offset_bottom = 1544.0
+color = Color(0.243137, 0.231373, 0.396078, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Clouds" type="ParallaxBackground" parent="CanvasLayer"]
+script = ExtResource("5_hmf7g")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="CanvasLayer/Clouds"]
+position = Vector2(0, -11200)
+motion_mirroring = Vector2(500, 0)
+script = ExtResource("5_ha67q")
+speed = Vector2(2, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Clouds/ParallaxLayer2"]
+modulate = Color(1, 1, 1, 0.627451)
+position = Vector2(-53, -35)
+texture = ExtResource("3_qmbit")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/Clouds"]
+position = Vector2(0, -11200)
+motion_mirroring = Vector2(500, 0)
+script = ExtResource("5_ha67q")
+speed = Vector2(5, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Clouds/ParallaxLayer"]
+position = Vector2(0, -37)
+texture = ExtResource("3_mj0pu")
+
+[node name="PlayerStart" type="Node2D" parent="."]
+position = Vector2(0, -11201)
+
+[node name="CollectArea" type="Area2D" parent="PlayerStart"]
 collision_layer = 0
 collision_mask = 6
 script = ExtResource("4_kmksl")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerStart/CollectArea"]
 shape = SubResource("RectangleShape2D_vf4f1")
 
+[node name="Sprite2D" type="Sprite2D" parent="PlayerStart"]
+position = Vector2(-27, 0)
+texture = ExtResource("4_jo5cy")
+
+[node name="DarkenMarker" type="Marker2D" parent="." node_paths=PackedStringArray("player", "canvas_mod")]
+position = Vector2(0, 1106)
+script = ExtResource("13_hhq7w")
+player = NodePath("../Camera2D")
+canvas_mod = NodePath("../CanvasLayer/Ocean/CanvasModulate")
+
 [node name="Walls" type="Node2D" parent="."]
-position = Vector2(0, 80)
+position = Vector2(0, -11121)
 
 [node name="TileMap2" type="TileMap" parent="Walls"]
 position = Vector2(0, -180)
@@ -153,31 +284,143 @@ min_time = 0.2
 enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -1)
+position = Vector2(0, -11202)
 limit_left = -320
 limit_right = 320
 position_smoothing_enabled = true
 script = ExtResource("5_vlli1")
-down_speed = 40
+down_speed = 200
 up_speed = 80
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Camera2D"]
-position = Vector2(0, -7)
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(0, -88)
-shape = SubResource("RectangleShape2D_daf88")
+[node name="Control" type="Control" parent="CanvasLayer2"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("16_k01s1")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(0, 99)
-shape = SubResource("RectangleShape2D_daf88")
+[node name="CaughtFishDialog" type="CenterContainer" parent="CanvasLayer2/Control" node_paths=PackedStringArray("container", "aquarium_container", "done_btn")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_hoyay")
+row_scene = ExtResource("11_636il")
+container = NodePath("HBoxContainer/MarginContainer/TabContainer/Caught Fish/VBoxContainer")
+aquarium_container = NodePath("HBoxContainer/MarginContainer/TabContainer/Aquarium/VBoxContainer")
+done_btn = NodePath("HBoxContainer/Done")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(-164, 18)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_daf88")
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer2/Control/CaughtFishDialog"]
+layout_mode = 2
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Camera2D/StaticBody2D"]
-position = Vector2(166, 32)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_daf88")
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control/CaughtFishDialog/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TabContainer" type="TabContainer" parent="CanvasLayer2/Control/CaughtFishDialog/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Caught Fish" type="ScrollContainer" parent="CanvasLayer2/Control/CaughtFishDialog/HBoxContainer/MarginContainer/TabContainer"]
+custom_minimum_size = Vector2(200, 120)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/CaughtFishDialog/HBoxContainer/MarginContainer/TabContainer/Caught Fish"]
+layout_mode = 2
+
+[node name="Aquarium" type="ScrollContainer" parent="CanvasLayer2/Control/CaughtFishDialog/HBoxContainer/MarginContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 120)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/CaughtFishDialog/HBoxContainer/MarginContainer/TabContainer/Aquarium"]
+layout_mode = 2
+
+[node name="Done" type="Button" parent="CanvasLayer2/Control/CaughtFishDialog/HBoxContainer"]
+layout_mode = 2
+text = "Done"
+
+[node name="Shop" type="CenterContainer" parent="CanvasLayer2/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("25_73n2m")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer2/Control/Shop"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer2/Control/Shop/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer2/Control/Shop/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
+columns = 5
+
+[node name="HookUpgradeButton" parent="CanvasLayer2/Control/Shop/PanelContainer/MarginContainer/GridContainer" instance=ExtResource("21_ywgrn")]
+layout_mode = 2
+res = ExtResource("26_gqbmc")
+
+[node name="GameMenu" type="MarginContainer" parent="CanvasLayer2/Control" node_paths=PackedStringArray("money", "fish_count", "shop_btn", "aquarium_btn")]
+layout_mode = 1
+offset_right = 17.0
+offset_bottom = 12.0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+script = ExtResource("18_tmmkp")
+money = NodePath("VBoxContainer/HBoxContainer/Money")
+fish_count = NodePath("VBoxContainer/HBoxContainer2/FishCount")
+shop_btn = NodePath("VBoxContainer/HBoxContainer/ShopBtn")
+aquarium_btn = NodePath("VBoxContainer/HBoxContainer2/AquariumBtn")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer2/Control/GameMenu"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer2/Control/GameMenu/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="ShopBtn" type="TextureButton" parent="CanvasLayer2/Control/GameMenu/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+size_flags_horizontal = 0
+texture_normal = ExtResource("13_yr34r")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Money" type="Label" parent="CanvasLayer2/Control/GameMenu/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer2/Control/GameMenu/VBoxContainer"]
+layout_mode = 2
+
+[node name="AquariumBtn" type="TextureButton" parent="CanvasLayer2/Control/GameMenu/VBoxContainer/HBoxContainer2"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 2
+texture_normal = ExtResource("13_yr34r")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="FishCount" type="Label" parent="CanvasLayer2/Control/GameMenu/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "0/10"

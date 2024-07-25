@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkaw16gp8utmo"]
+
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_6q34m"]
+[ext_resource type="Script" path="res://games/rogue-fishing/ui/HookUpgradeButton.gd" id="2_vj15p"]
+
+[node name="HookUpgradeButton" type="TextureButton" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(24, 24)
+texture_normal = ExtResource("1_6q34m")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("2_vj15p")
+label = NodePath("Label")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -12.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "00"

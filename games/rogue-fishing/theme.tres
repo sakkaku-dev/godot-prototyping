@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://dt444g01qbkbf"]
+
+[resource]
+default_font_size = 8
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 2

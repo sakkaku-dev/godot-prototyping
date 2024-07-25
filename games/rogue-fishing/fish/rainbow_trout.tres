@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://b6i5hxrm58pw1"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_c2tkm"]
-[ext_resource type="Texture2D" uid="uid://bpdmmbt8pfmrs" path="res://assets/Fish Pack/PNG/Default size/fishTile_101.png" id="2_k5yb7"]
+[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_4nuhx"]
 
 [resource]
 script = ExtResource("1_c2tkm")
 name = "Rainbow Trout"
-sprite = ExtResource("2_k5yb7")
-spawn_chance = 0.0
+sprite = ExtResource("2_4nuhx")
+price = 1

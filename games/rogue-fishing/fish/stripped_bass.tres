@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://b6i5hxrm58pw1"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_c2tkm"]
-[ext_resource type="Texture2D" uid="uid://3watfpqh6j6y" path="res://assets/Fish Pack/PNG/Default size/fishTile_096.png" id="2_g3unc"]
+[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_umn4d"]
 
 [resource]
 script = ExtResource("1_c2tkm")
 name = "Stripped Bass"
-sprite = ExtResource("2_g3unc")
-spawn_chance = 0.0
+sprite = ExtResource("2_umn4d")
+price = 1
