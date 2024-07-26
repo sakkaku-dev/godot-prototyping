@@ -12,13 +12,13 @@ signal start_reel()
 @export var sprite: Sprite2D
 @export var hurtbox: Hurtbox
 
-
 @onready var gravity = ProjectSettings.get("physics/2d/default_gravity_vector") * ProjectSettings.get("physics/2d/default_gravity")
 
 var has_hooked := false
 var capacity := 0
 var can_move_up := false
 var fish = []
+var start_pos := Vector2.ZERO
 
 func _ready():
 	if not hook_res:
@@ -41,8 +41,12 @@ func _start_ascend():
 		start_reel.emit()
 	has_hooked = true
 
+func set_start_position(pos):
+	global_position = pos
+	start_pos = pos
+
 func _process(_delta):
-	line.points = [-global_position, Vector2(0, -9)]
+	line.points = [to_local(global_position - start_pos), Vector2(0, -9)]
 
 func _physics_process(delta: float):
 	var motion = _get_motion()
@@ -53,10 +57,11 @@ func _physics_process(delta: float):
 	# velocity.y = clamp(velocity.y, -hook_res.max_pull_speed, hook_res.max_fall_speed)
 
 	if move_and_slide():
-		var collision = get_last_slide_collision()
-		var n = collision.get_normal()
-		if n.dot(Vector2.UP) > 0.7:
-			_start_ascend()
+		pass
+		#var collision = get_last_slide_collision()
+		#var n = collision.get_normal()
+		#if n.dot(Vector2.UP) > 0.7:
+			#_start_ascend()
 
 func remove():
 	caught.emit()

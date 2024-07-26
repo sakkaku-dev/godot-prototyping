@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d30v2t1ijuowj"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/aquarium_fish.gd" id="1_go7n2"]
-[ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/blue_gill.tres" id="2_f3gnm"]
+[ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/stripped_bass.tres" id="2_f3gnm"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="3_pdnqe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uttwh"]

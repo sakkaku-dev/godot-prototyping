@@ -1,11 +1,5 @@
 extends Marker2D
 
-@export var player: Node2D
-@export var canvas_mod: CanvasModulate
-
-@export var from_color := Color.WHITE
-@export var to_color := Color.BLACK
-@export var max_pos := Vector2(0, 500)
 
 func _process(delta):
 	var player_pos = to_local(player.global_position)

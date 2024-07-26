@@ -43,4 +43,4 @@ func _unhandled_input(event):
 			_reset_camera_pos()
 		)
 		camera_2d.add_child(hook)
-		hook.global_position = player_body.global_position
+		hook.set_start_position(player_body.global_position)

@@ -3,7 +3,10 @@ extends Area2D
 
 signal caught_fish(fish)
 
-var awaiting_hook  = false
+var awaiting_hook = false:
+	set(v):
+		awaiting_hook = v
+		print("Awaiting: %s" % awaiting_hook)
 
 func _ready():
 	body_entered.connect(_on_body_entered)
@@ -11,7 +14,8 @@ func _ready():
 	
 func _on_body_exited(body: Node2D):
 	if body is Hook:
-		awaiting_hook = true
+		if not body.is_queued_for_deletion():
+			awaiting_hook = true
 
 func _on_body_entered(body: Node2D):
 	if body is Hook:

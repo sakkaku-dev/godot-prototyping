@@ -15,13 +15,13 @@
 [ext_resource type="Script" path="res://games/rogue-fishing/WaterCamera.gd" id="5_vlli1"]
 [ext_resource type="Texture2D" uid="uid://hxj8d28dfw8m" path="res://games/rogue-fishing/assets/Hills_Front.png" id="6_g8wpy"]
 [ext_resource type="Script" path="res://games/rogue-fishing/map/FishSpawner.gd" id="7_n0snb"]
-[ext_resource type="PackedScene" uid="uid://csq3xwvmr0ki6" path="res://games/rogue-fishing/fish/mackerel.tscn" id="8_mhqr7"]
 [ext_resource type="PackedScene" uid="uid://bfcbfgsgksr0y" path="res://games/rogue-fishing/fish/fish.tscn" id="8_t2hda"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="9_d5jbh"]
 [ext_resource type="PackedScene" uid="uid://bu1m31o7knokp" path="res://games/rogue-fishing/ui/caught_fish_row.tscn" id="11_636il"]
 [ext_resource type="Script" path="res://games/rogue-fishing/ui/CaughtFishDialog.gd" id="11_hoyay"]
-[ext_resource type="Script" path="res://games/rogue-fishing/DarkenMarker.gd" id="13_hhq7w"]
+[ext_resource type="Script" path="res://games/rogue-fishing/OceanBG.gd" id="12_yrpmo"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="13_yr34r"]
+[ext_resource type="Script" path="res://games/rogue-fishing/WallsFollow.gd" id="14_hl154"]
 [ext_resource type="Theme" uid="uid://dt444g01qbkbf" path="res://games/rogue-fishing/theme.tres" id="16_k01s1"]
 [ext_resource type="Script" path="res://games/rogue-fishing/GameMenu.gd" id="18_tmmkp"]
 [ext_resource type="PackedScene" uid="uid://dkaw16gp8utmo" path="res://games/rogue-fishing/ui/hook_upgrade_button.tscn" id="21_ywgrn"]
@@ -35,12 +35,11 @@ colors = PackedColorArray(0.211765, 0.772549, 0.956863, 1, 0.2, 0.533333, 0.8705
 gradient = SubResource("Gradient_igbk4")
 fill_to = Vector2(0, 1)
 
-[sub_resource type="Gradient" id="Gradient_ev1ys"]
-offsets = PackedFloat32Array(0, 0.01, 0.03, 0.08, 0.18, 0.23, 0.4, 0.45, 1)
-colors = PackedColorArray(0.427451, 0.917647, 0.839216, 1, 0.211765, 0.772549, 0.956863, 1, 0.211765, 0.772549, 0.956863, 1, 0.2, 0.533333, 0.870588, 1, 0.2, 0.533333, 0.870588, 1, 0.219608, 0.34902, 0.701961, 1, 0.219608, 0.34902, 0.701961, 1, 0.243137, 0.231373, 0.396078, 1, 0.243137, 0.231373, 0.396078, 1)
+[sub_resource type="Gradient" id="Gradient_rj173"]
+colors = PackedColorArray(0.211765, 0.772549, 0.956863, 1, 0.211765, 0.772549, 0.956863, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ia76a"]
-gradient = SubResource("Gradient_ev1ys")
+gradient = SubResource("Gradient_rj173")
 fill_to = Vector2(0, 1)
 
 [sub_resource type="Gradient" id="Gradient_7v7hj"]
@@ -51,7 +50,7 @@ gradient = SubResource("Gradient_7v7hj")
 fill_to = Vector2(0, 1)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf4f1"]
-size = Vector2(170, 62)
+size = Vector2(306, 62)
 
 [node name="RogueFishing" type="Node2D" node_paths=PackedStringArray("player_body", "collect_area", "camera_2d", "caught_fish_dialog", "money_label")]
 script = ExtResource("1_p7jwf")
@@ -66,12 +65,11 @@ money_label = NodePath("CanvasLayer2/Control/GameMenu/VBoxContainer/HBoxContaine
 
 [node name="Ocean" type="ParallaxBackground" parent="CanvasLayer"]
 
-[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer/Ocean"]
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+[node name="OceanBG" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
 position = Vector2(0, -11200)
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Ocean/ParallaxLayer"]
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Ocean/OceanBG"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -84,17 +82,18 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.172549, 0.117647, 0.192157, 1)
 
-[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer"]
+[node name="Sprite2D2" type="Sprite2D" parent="CanvasLayer/Ocean/OceanBG"]
 position = Vector2(0, -101.375)
 scale = Vector2(135.094, 3.17578)
 texture = SubResource("GradientTexture2D_51ich")
 
-[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer/Ocean/ParallaxLayer"]
-position = Vector2(0, 13823.5)
-scale = Vector2(135.125, 431.984)
+[node name="Sprite2D3" type="Sprite2D" parent="CanvasLayer/Ocean/OceanBG"]
+position = Vector2(0, 603.006)
+scale = Vector2(30.125, 18.8436)
 texture = SubResource("GradientTexture2D_ia76a")
 
 [node name="ParallaxLayer3" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+visible = false
 motion_scale = Vector2(1, 0.1)
 motion_mirroring = Vector2(402, 0)
 
@@ -107,6 +106,7 @@ texture = SubResource("GradientTexture2D_q08du")
 texture = ExtResource("3_s8l4o")
 
 [node name="ParallaxLayer4" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+visible = false
 motion_scale = Vector2(1, 0.15)
 motion_mirroring = Vector2(402, 0)
 
@@ -114,6 +114,7 @@ motion_mirroring = Vector2(402, 0)
 texture = ExtResource("4_ohp45")
 
 [node name="ParallaxLayer5" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+visible = false
 motion_scale = Vector2(1, 0.2)
 motion_mirroring = Vector2(402, 0)
 
@@ -121,6 +122,7 @@ motion_mirroring = Vector2(402, 0)
 texture = ExtResource("5_1ag1b")
 
 [node name="ParallaxLayer6" type="ParallaxLayer" parent="CanvasLayer/Ocean"]
+visible = false
 motion_scale = Vector2(1, 0.25)
 motion_mirroring = Vector2(402, 0)
 
@@ -159,6 +161,42 @@ speed = Vector2(5, 0)
 position = Vector2(0, -37)
 texture = ExtResource("3_mj0pu")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -11202)
+limit_left = -320
+limit_right = 320
+script = ExtResource("5_vlli1")
+down_speed = 50
+up_speed = 100
+
+[node name="OceanBG" type="ColorRect" parent="Camera2D" node_paths=PackedStringArray("canvas_mod")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -220.0
+offset_top = 481.0
+offset_right = 220.0
+offset_bottom = 751.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("12_yrpmo")
+colors = PackedColorArray(0.211765, 0.772549, 0.956863, 1, 0.2, 0.533333, 0.870588, 1, 0.219608, 0.34902, 0.701961, 1, 0.243137, 0.231373, 0.396078, 1)
+limits = Array[int]([300, 1500, 3000, 5000])
+canvas_mod = NodePath("../../CanvasModulate")
+
+[node name="WallsFollow" type="TileMap" parent="Camera2D"]
+z_index = 10
+position = Vector2(0, -172)
+tile_set = ExtResource("4_stlfw")
+format = 2
+layer_0/tile_data = PackedInt32Array(524276, 2, 0, 589812, 2, 0, 655348, 2, 0, 720884, 2, 0, 786420, 2, 0, 851956, 2, 0, 917492, 2, 0, 983028, 2, 0, 1048564, 2, 0, 1114100, 2, 0, 1179636, 2, 0, 1245172, 2, 0, 1310708, 2, 0, 1376244, 2, 0, 1441780, 2, 0, 1507316, 2, 0, 1572852, 2, 0, 1638388, 2, 0, 1703924, 2, 0, 1769460, 2, 0, 1834996, 2, 0, 1900532, 2, 0, 1966068, 2, 0, 2031604, 2, 0, 2097140, 2, 0, 2162676, 2, 0, 2228212, 2, 0, 2293748, 2, 0, 2359284, 2, 0, 2424820, 2, 0, 2490356, 2, 0, 2555892, 2, 0, 2621428, 2, 0, 2686964, 2, 0, 2752500, 2, 0, 2818036, 2, 0, 2883572, 2, 0, 2949108, 2, 0, 3014644, 2, 0, 3080180, 2, 0, 3145716, 2, 0, 3211252, 2, 0, 3276788, 2, 0, 3342324, 2, 0, 524277, 2, 0, 589813, 2, 0, 655349, 2, 0, 720885, 2, 0, 786421, 2, 0, 851957, 2, 0, 917493, 2, 0, 983029, 2, 0, 1048565, 2, 0, 1114101, 2, 0, 1179637, 2, 0, 1245173, 2, 0, 1310709, 2, 0, 1376245, 2, 0, 1441781, 2, 0, 1507317, 2, 0, 1572853, 2, 0, 1638389, 2, 0, 1703925, 2, 0, 1769461, 2, 0, 1834997, 2, 0, 1900533, 2, 0, 1966069, 2, 0, 2031605, 2, 0, 2097141, 2, 0, 2162677, 2, 0, 2228213, 2, 0, 2293749, 2, 0, 2359285, 2, 0, 2424821, 2, 0, 2490357, 2, 0, 2555893, 2, 0, 2621429, 2, 0, 2686965, 2, 0, 2752501, 2, 0, 2818037, 2, 0, 2883573, 2, 0, 2949109, 2, 0, 3014645, 2, 0, 3080181, 2, 0, 3145717, 2, 0, 3211253, 2, 0, 3276789, 2, 0, 3342325, 2, 0, 524278, 2, 0, 589814, 2, 0, 655350, 2, 0, 720886, 2, 0, 786422, 2, 0, 851958, 2, 0, 917494, 2, 0, 983030, 2, 0, 1048566, 2, 0, 1114102, 2, 0, 1179638, 2, 0, 1245174, 2, 0, 1310710, 2, 0, 1376246, 2, 0, 1441782, 2, 0, 1507318, 2, 0, 1572854, 2, 0, 1638390, 2, 0, 1703926, 2, 0, 1769462, 2, 0, 1834998, 2, 0, 1900534, 2, 0, 1966070, 2, 0, 2031606, 2, 0, 2097142, 2, 0, 2162678, 2, 0, 2228214, 2, 0, 2293750, 2, 0, 2359286, 2, 0, 2424822, 2, 0, 2490358, 2, 0, 2555894, 2, 0, 2621430, 2, 0, 2686966, 2, 0, 2752502, 2, 0, 2818038, 2, 0, 2883574, 2, 0, 2949110, 2, 0, 3014646, 2, 0, 3080182, 2, 0, 3145718, 2, 0, 3211254, 2, 0, 3276790, 2, 0, 3342326, 2, 0, 458761, 2, 0, 524297, 2, 0, 589833, 2, 0, 655369, 2, 0, 720905, 2, 0, 786441, 2, 0, 851977, 2, 0, 917513, 2, 0, 983049, 2, 0, 1048585, 2, 0, 1114121, 2, 0, 1179657, 2, 0, 1245193, 2, 0, 1310729, 2, 0, 1376265, 2, 0, 1441801, 2, 0, 1507337, 2, 0, 1572873, 2, 0, 1638409, 2, 0, 1703945, 2, 0, 1769481, 2, 0, 1835017, 2, 0, 1900553, 2, 0, 1966089, 2, 0, 2031625, 2, 0, 2097161, 2, 0, 2162697, 2, 0, 2228233, 2, 0, 2293769, 2, 0, 2359305, 2, 0, 2424841, 2, 0, 2490377, 2, 0, 2555913, 2, 0, 2621449, 2, 0, 2686985, 2, 0, 2752521, 2, 0, 2818057, 2, 0, 2883593, 2, 0, 2949129, 2, 0, 3014665, 2, 0, 3080201, 2, 0, 3145737, 2, 0, 3211273, 2, 0, 3276809, 2, 0, 458762, 2, 0, 524298, 2, 0, 589834, 2, 0, 655370, 2, 0, 720906, 2, 0, 786442, 2, 0, 851978, 2, 0, 917514, 2, 0, 983050, 2, 0, 1048586, 2, 0, 1114122, 2, 0, 1179658, 2, 0, 1245194, 2, 0, 1310730, 2, 0, 1376266, 2, 0, 1441802, 2, 0, 1507338, 2, 0, 1572874, 2, 0, 1638410, 2, 0, 1703946, 2, 0, 1769482, 2, 0, 1835018, 2, 0, 1900554, 2, 0, 1966090, 2, 0, 2031626, 2, 0, 2097162, 2, 0, 2162698, 2, 0, 2228234, 2, 0, 2293770, 2, 0, 2359306, 2, 0, 2424842, 2, 0, 2490378, 2, 0, 2555914, 2, 0, 2621450, 2, 0, 2686986, 2, 0, 2752522, 2, 0, 2818058, 2, 0, 2883594, 2, 0, 2949130, 2, 0, 3014666, 2, 0, 3080202, 2, 0, 3145738, 2, 0, 3211274, 2, 0, 3276810, 2, 0, 458763, 2, 0, 524299, 2, 0, 589835, 2, 0, 655371, 2, 0, 720907, 2, 0, 786443, 2, 0, 851979, 2, 0, 917515, 2, 0, 983051, 2, 0, 1048587, 2, 0, 1114123, 2, 0, 1179659, 2, 0, 1245195, 2, 0, 1310731, 2, 0, 1376267, 2, 0, 1441803, 2, 0, 1507339, 2, 0, 1572875, 2, 0, 1638411, 2, 0, 1703947, 2, 0, 1769483, 2, 0, 1835019, 2, 0, 1900555, 2, 0, 1966091, 2, 0, 2031627, 2, 0, 2097163, 2, 0, 2162699, 2, 0, 2228235, 2, 0, 2293771, 2, 0, 2359307, 2, 0, 2424843, 2, 0, 2490379, 2, 0, 2555915, 2, 0, 2621451, 2, 0, 2686987, 2, 0, 2752523, 2, 0, 2818059, 2, 0, 2883595, 2, 0, 2949131, 2, 0, 3014667, 2, 0, 3080203, 2, 0, 3145739, 2, 0, 3211275, 2, 0, 3276811, 2, 0, 262132, 2, 0, 327668, 2, 0, 393204, 2, 0, 458740, 2, 0, 262133, 2, 0, 327669, 2, 0, 393205, 2, 0, 458741, 2, 0, 262134, 2, 0, 327670, 2, 0, 393206, 2, 0, 458742, 2, 0, 196617, 2, 0, 262153, 2, 0, 327689, 2, 0, 393225, 2, 0, 196618, 2, 0, 262154, 2, 0, 327690, 2, 0, 393226, 2, 0, 196619, 2, 0, 262155, 2, 0, 327691, 2, 0, 393227, 2, 0)
+script = ExtResource("14_hl154")
+
 [node name="PlayerStart" type="Node2D" parent="."]
 position = Vector2(0, -11201)
 
@@ -174,123 +212,144 @@ shape = SubResource("RectangleShape2D_vf4f1")
 position = Vector2(-27, 0)
 texture = ExtResource("4_jo5cy")
 
-[node name="DarkenMarker" type="Marker2D" parent="." node_paths=PackedStringArray("player", "canvas_mod")]
-position = Vector2(0, 1106)
-script = ExtResource("13_hhq7w")
-player = NodePath("../Camera2D")
-canvas_mod = NodePath("../CanvasLayer/Ocean/CanvasModulate")
+[node name="Map" type="Node2D" parent="."]
+position = Vector2(0, -11201)
 
-[node name="Walls" type="Node2D" parent="."]
-position = Vector2(0, -11121)
-
-[node name="TileMap2" type="TileMap" parent="Walls"]
-position = Vector2(0, -180)
+[node name="WallsFollow2" type="TileMap" parent="Map"]
+z_index = 10
+position = Vector2(0, -173)
 tile_set = ExtResource("4_stlfw")
 format = 2
+layer_0/tile_data = PackedInt32Array(4784127, 2, 0, 4849663, 2, 0, 4915199, 2, 0, 4980735, 2, 0, 4718592, 2, 0, 4784128, 2, 0, 4849664, 2, 0, 4915200, 2, 0, 4915197, 2, 0, 4980733, 2, 0, 5046269, 2, 0, 5111805, 2, 0, 5177341, 2, 0, 5242877, 2, 0, 5308413, 2, 0, 5373949, 2, 0, 4915198, 2, 0, 4980734, 2, 0, 5046270, 2, 0, 5111806, 2, 0, 5177342, 2, 0, 5242878, 2, 0, 5308414, 2, 0, 5373950, 2, 0, 5046271, 2, 0, 5111807, 2, 0, 5177343, 2, 0, 5242879, 2, 0, 5308415, 2, 0, 5373951, 2, 0, 4980736, 2, 0, 5046272, 2, 0, 5111808, 2, 0, 5177344, 2, 0, 5242880, 2, 0, 5308416, 2, 0, 4849665, 2, 0, 4915201, 2, 0, 4980737, 2, 0, 5046273, 2, 0, 5111809, 2, 0, 5177345, 2, 0, 5242881, 2, 0, 5308417, 2, 0, 4849666, 2, 0, 4915202, 2, 0, 4980738, 2, 0, 5046274, 2, 0, 5111810, 2, 0, 5177346, 2, 0, 5242882, 2, 0, 5308418, 2, 0, 5111803, 2, 0, 5177339, 2, 0, 5242875, 2, 0, 5308411, 2, 0, 5373947, 2, 0, 5111804, 2, 0, 5177340, 2, 0, 5242876, 2, 0, 5308412, 2, 0, 5373948, 2, 0, 5046275, 2, 0, 5111811, 2, 0, 5177347, 2, 0, 5242883, 2, 0, 5308419, 2, 0, 5046276, 2, 0, 5111812, 2, 0, 5177348, 2, 0, 5242884, 2, 0, 5308420, 2, 0)
+script = ExtResource("14_hl154")
 
-[node name="FishSpawner" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
-position = Vector2(-389, 729)
-target_position = Vector2(172, 82)
+[node name="FishSpawner" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 1371)
 script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
 timer = NodePath("Timer")
+angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-root = NodePath("..")
-scene = ExtResource("8_t2hda")
 
-[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner"]
-position = Vector2(378, -16)
-scale = Vector2(1, 47.9)
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner"]
+position = Vector2(235, 0)
+scale = Vector2(4.6, 41)
 
-[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner" node_paths=PackedStringArray("enter_notifier")]
+[node name="Timer" type="Timer" parent="Map/FishSpawner"]
 autostart = true
 script = ExtResource("9_d5jbh")
-max_time = 2.0
-enter_notifier = NodePath("../ScreenNotifier")
 
-[node name="FishSpawner4" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
-position = Vector2(311, 1099)
-target_position = Vector2(-180, -3)
+[node name="FishSpawner2" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 993)
 script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
 timer = NodePath("../FishSpawner/Timer")
+angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-root = NodePath("..")
+
+[node name="Timer" type="Timer" parent="Map/FishSpawner2"]
+autostart = true
+script = ExtResource("9_d5jbh")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner2"]
+position = Vector2(235, 0)
+scale = Vector2(4.6, 41)
+
+[node name="FishSpawner3" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 2076)
+script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-
-[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner4"]
-position = Vector2(-319, -16)
-scale = Vector2(1, 42.6)
-
-[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner4" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-max_time = 2.0
-enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
-
-[node name="FishSpawner2" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
-position = Vector2(304, 729)
-target_position = Vector2(-138, -90)
-script = ExtResource("7_n0snb")
 timer = NodePath("../FishSpawner/Timer")
-offset_y = Vector2(-200, 200)
-root = NodePath("..")
-scene = ExtResource("8_mhqr7")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
 
-[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner2"]
-position = Vector2(-305, -16)
-scale = Vector2(0.6, 43.7)
-
-[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner2" node_paths=PackedStringArray("enter_notifier")]
+[node name="Timer" type="Timer" parent="Map/FishSpawner3"]
 autostart = true
 script = ExtResource("9_d5jbh")
-min_time = 0.2
-enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
 
-[node name="FishSpawner3" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
-position = Vector2(304, 1257)
-target_position = Vector2(-159, 39)
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner3"]
+position = Vector2(235, 0)
+scale = Vector2(4.6, 41)
+
+[node name="FishSpawner4" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 1698)
 script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
 timer = NodePath("../FishSpawner/Timer")
-offset_y = Vector2(-200, 200)
-root = NodePath("..")
-scene = ExtResource("8_mhqr7")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
 
-[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner3"]
-position = Vector2(-314, -16)
-scale = Vector2(1, 52.8)
-
-[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner3" node_paths=PackedStringArray("enter_notifier")]
+[node name="Timer" type="Timer" parent="Map/FishSpawner4"]
 autostart = true
 script = ExtResource("9_d5jbh")
-min_time = 0.2
-enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
 
-[node name="FishSpawner5" type="RayCast2D" parent="Walls/TileMap2" node_paths=PackedStringArray("timer", "root")]
-position = Vector2(-275, 1370)
-target_position = Vector2(176, 29)
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner4"]
+position = Vector2(235, 0)
+scale = Vector2(4.6, 41)
+
+[node name="FishSpawner5" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 1371)
 script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
 timer = NodePath("../FishSpawner/Timer")
-offset_y = Vector2(-200, 200)
-root = NodePath("..")
-scene = ExtResource("8_mhqr7")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
 
-[node name="ScreenNotifier" type="VisibleOnScreenNotifier2D" parent="Walls/TileMap2/FishSpawner5"]
-position = Vector2(267, -16)
-scale = Vector2(1, 52.8)
-
-[node name="Timer" type="Timer" parent="Walls/TileMap2/FishSpawner5" node_paths=PackedStringArray("enter_notifier")]
+[node name="Timer" type="Timer" parent="Map/FishSpawner5"]
 autostart = true
 script = ExtResource("9_d5jbh")
-min_time = 0.2
-enter_notifier = NodePath("../../FishSpawner/ScreenNotifier")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -11202)
-limit_left = -320
-limit_right = 320
-position_smoothing_enabled = true
-script = ExtResource("5_vlli1")
-down_speed = 200
-up_speed = 80
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner5"]
+position = Vector2(-259, 0)
+scale = Vector2(4.6, 41)
+
+[node name="FishSpawner6" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 993)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../FishSpawner/Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+
+[node name="Timer" type="Timer" parent="Map/FishSpawner6"]
+autostart = true
+script = ExtResource("9_d5jbh")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner6"]
+position = Vector2(-259, 0)
+scale = Vector2(4.6, 41)
+
+[node name="FishSpawner7" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 2076)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../FishSpawner/Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+
+[node name="Timer" type="Timer" parent="Map/FishSpawner7"]
+autostart = true
+script = ExtResource("9_d5jbh")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner7"]
+position = Vector2(-259, 0)
+scale = Vector2(4.6, 41)
+
+[node name="FishSpawner8" type="Node2D" parent="Map" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 1698)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../FishSpawner/Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+
+[node name="Timer" type="Timer" parent="Map/FishSpawner8"]
+autostart = true
+script = ExtResource("9_d5jbh")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/FishSpawner8"]
+position = Vector2(-259, 0)
+scale = Vector2(4.6, 41)
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 

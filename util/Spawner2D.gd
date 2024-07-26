@@ -1,5 +1,5 @@
 class_name Spawner2D
-extends RayCast2D
+extends Node2D
 
 @export var root: Node2D
 @export var scene: PackedScene
@@ -12,7 +12,7 @@ func spawn():
 func _create():
 	var eff = scene.instantiate()
 	eff.global_position = global_position + offset_dir
-	eff.global_rotation = target_position.angle()
+	eff.global_rotation = global_rotation
 	
 	var parent = root if root else get_tree().current_scene
 	parent.add_child(eff)
