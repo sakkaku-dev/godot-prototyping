@@ -20,6 +20,7 @@ func _process(delta):
 	var player_y = global_position.y - start.y
 	var target_color = get_interpolated_color(player_y)
 	color = target_color
+	print(color)
 	
 	if player_y > start_darken_y:
 		var p = (player_y - start_darken_y) / darken_transition_y

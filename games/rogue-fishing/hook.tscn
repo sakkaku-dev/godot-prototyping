@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dblsuk8ttmpel"]
+[gd_scene load_steps=8 format=3 uid="uid://dblsuk8ttmpel"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/hook.gd" id="1_a5n7i"]
 [ext_resource type="Texture2D" uid="uid://b8sui6681oq87" path="res://games/rogue-fishing/assets/Hook_Base.png" id="2_yxxfi"]
 [ext_resource type="Script" path="res://combat/Hurtbox.gd" id="3_iw6sw"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="4_13a2c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ne8c4"]
 radius = 7.0
@@ -35,6 +36,7 @@ texture = ExtResource("2_yxxfi")
 position = Vector2(0, -2)
 collision_layer = 0
 collision_mask = 4
+monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HookArea"]
 shape = SubResource("CircleShape2D_2liyq")
@@ -48,3 +50,7 @@ script = ExtResource("3_iw6sw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 shape = SubResource("CircleShape2D_f7y4r")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+texture = ExtResource("4_13a2c")
+texture_scale = 0.5

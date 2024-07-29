@@ -6,6 +6,10 @@ signal start_reel()
 
 @export var hook_res: HookResource
 
+@export_category("Movement")
+@export var descend_speed := 60
+@export var ascend_speed := 80
+
 @export_category("Nodes")
 @export var line: Line2D
 @export var hook_area: Area2D
@@ -19,8 +23,11 @@ var capacity := 0
 var can_move_up := false
 var fish = []
 var start_pos := Vector2.ZERO
+var move_dir := Vector2.ZERO
 
 func _ready():
+	hide()
+	
 	if not hook_res:
 		hook_res = HookResource.new()
 	else:
@@ -38,7 +45,7 @@ func _on_hooked(body: Fish):
 
 func _start_ascend():
 	if not has_hooked:
-		start_reel.emit()
+		move_dir = Vector2.UP
 	has_hooked = true
 
 func set_start_position(pos):
@@ -49,23 +56,31 @@ func _process(_delta):
 	line.points = [to_local(global_position - start_pos), Vector2(0, -9)]
 
 func _physics_process(delta: float):
+	if not move_dir or not visible: return
+	
+	var y_speed = move_dir * (descend_speed if move_dir.y > 0 else ascend_speed)
+	
 	var motion = _get_motion()
-	var target_speed = hook_res.move_speed if motion else 0
-	velocity.x = move_toward(velocity.x, motion.x * target_speed, hook_res.accel * delta)
-	velocity.y = move_toward(velocity.y, motion.y * target_speed, hook_res.accel * delta)
-
+	velocity.x = motion.x * hook_res.move_speed
+	velocity.y = y_speed.y
+	
 	# velocity.y = clamp(velocity.y, -hook_res.max_pull_speed, hook_res.max_fall_speed)
 
 	if move_and_slide():
-		pass
-		#var collision = get_last_slide_collision()
-		#var n = collision.get_normal()
-		#if n.dot(Vector2.UP) > 0.7:
-			#_start_ascend()
+		var collision = get_last_slide_collision()
+		var n = collision.get_normal()
+		if n.dot(Vector2.UP) > 0.7:
+			_start_ascend()
+
+func start_move(pos):
+	global_position = pos
+	move_dir = Vector2.DOWN
+	show()
 
 func remove():
 	caught.emit()
-	queue_free()
+	move_dir = Vector2.ZERO
+	hide()
 
 #func _unhandled_input(event):
 	#if event.is_action_pressed("action") and can_move_up:
