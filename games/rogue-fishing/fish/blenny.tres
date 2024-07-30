@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://c7aixr6x4xfaf"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_cflr1"]
+[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_oxhyr"]
+
+[resource]
+script = ExtResource("1_cflr1")
+name = "Blenny"
+sprite = ExtResource("2_oxhyr")
+price = 5

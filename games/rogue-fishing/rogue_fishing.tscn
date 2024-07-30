@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cu31aqohjpq05"]
+[gd_scene load_steps=40 format=3 uid="uid://cu31aqohjpq05"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/rogue_fishing.gd" id="1_p7jwf"]
 [ext_resource type="PackedScene" uid="uid://dblsuk8ttmpel" path="res://games/rogue-fishing/hook.tscn" id="2_mv63l"]
@@ -24,8 +24,11 @@
 [ext_resource type="Script" path="res://games/rogue-fishing/WallsFollow.gd" id="14_hl154"]
 [ext_resource type="Theme" uid="uid://dt444g01qbkbf" path="res://games/rogue-fishing/theme.tres" id="16_k01s1"]
 [ext_resource type="Script" path="res://games/rogue-fishing/GameMenu.gd" id="18_tmmkp"]
+[ext_resource type="Resource" uid="uid://bpg7o7jbxkrm0" path="res://games/rogue-fishing/fish/group/OpenOcean001.tres" id="19_wsrp2"]
 [ext_resource type="Script" path="res://games/rogue-fishing/RemoveFish.gd" id="20_cd6ik"]
+[ext_resource type="Resource" uid="uid://dtsb7neyj26xb" path="res://games/rogue-fishing/fish/group/RockyCaves001.tres" id="21_leuq3"]
 [ext_resource type="PackedScene" uid="uid://dkaw16gp8utmo" path="res://games/rogue-fishing/ui/hook_upgrade_button.tscn" id="21_ywgrn"]
+[ext_resource type="Resource" uid="uid://cdf4wjekhoul5" path="res://games/rogue-fishing/fish/group/Deepwaters001.tres" id="22_002nu"]
 [ext_resource type="Script" path="res://games/rogue-fishing/ui/Shop.gd" id="25_73n2m"]
 [ext_resource type="Resource" uid="uid://dyobwulgtaac7" path="res://games/rogue-fishing/upgrades/DefaultHook.tres" id="26_gqbmc"]
 
@@ -175,7 +178,7 @@ limit_right = 320
 script = ExtResource("5_vlli1")
 hook = NodePath("../Hook")
 
-[node name="OceanBG" type="ColorRect" parent="Camera2D" node_paths=PackedStringArray("canvas_mod")]
+[node name="OceanBG" type="ColorRect" parent="Camera2D" node_paths=PackedStringArray("canvas_mod", "player")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -190,12 +193,15 @@ grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("12_yrpmo")
 colors = PackedColorArray(0.211765, 0.772549, 0.956863, 1, 0.2, 0.533333, 0.870588, 1, 0.219608, 0.34902, 0.701961, 1, 0.243137, 0.231373, 0.396078, 1)
-limits = Array[int]([300, 1300, 2600, 4500])
+limits = Array[int]([300, 1000, 2000, 4000])
 canvas_mod = NodePath("../../CanvasModulate")
 start_darken_y = 4500
+darken_transition_y = 800
+player = NodePath("../../PlayerStart")
 
-[node name="Hook" parent="." instance=ExtResource("2_mv63l")]
+[node name="Hook" parent="." node_paths=PackedStringArray("player_root") instance=ExtResource("2_mv63l")]
 position = Vector2(0, -11202)
+player_root = NodePath("../PlayerStart")
 
 [node name="PlayerStart" type="Node2D" parent="."]
 position = Vector2(0, -11201)
@@ -226,427 +232,510 @@ script = ExtResource("14_hl154")
 [node name="OpenOcean" type="Node2D" parent="Map"]
 position = Vector2(0, 10755)
 
-[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="Map/OpenOcean"]
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenNotifier2D" parent="Map/OpenOcean"]
 position = Vector2(1, -9277)
 scale = Vector2(4.6, 110.6)
-enable_node_path = NodePath("../FishSpawner")
+
+[node name="Timer" type="Timer" parent="Map/OpenOcean" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+enter_notifier = NodePath("../VisibleOnScreenEnabler2D")
 
 [node name="FishSpawner" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, -9830)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner2" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, -10208)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner2" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner3" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, -9125)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner3" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner4" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, -9503)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner4" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner13" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, -8312)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner13" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner14" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, -8690)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner14" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner5" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(261, -9830)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner5" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner6" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(261, -10208)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner6" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner7" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(261, -9125)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner7" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner8" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(261, -9503)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner8" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner9" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(261, -8319)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner9" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="FishSpawner10" type="Node2D" parent="Map/OpenOcean" node_paths=PackedStringArray("timer")]
 position = Vector2(261, -8697)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/OpenOcean/FishSpawner10" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D")
+region_res = ExtResource("19_wsrp2")
 
 [node name="RockyCaves" type="Node2D" parent="Map"]
+
+[node name="VisibleOnScreenEnabler2D2" type="VisibleOnScreenNotifier2D" parent="Map/RockyCaves"]
+position = Vector2(1, 3933)
+scale = Vector2(4.6, 125.95)
+
+[node name="Timer" type="Timer" parent="Map/RockyCaves" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+min_time = 1.0
+max_time = 1.5
+debug = true
+enter_notifier = NodePath("../VisibleOnScreenEnabler2D2")
 
 [node name="FishSpawner15" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, 3437)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner15" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+[node name="FishSpawner21" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 3208)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner20" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 3691)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner19" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, 2961)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner19" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner16" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
-position = Vector2(-234, 4002)
+position = Vector2(-234, 3953)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner16" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+[node name="FishSpawner22" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 4186)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner23" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 4406)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner17" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, 4628)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner17" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+[node name="FishSpawner24" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 4810)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner25" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 5043)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner18" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(-234, 5192)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(-30, 30)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner18" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner11" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(261, 3198)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner11" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+[node name="FishSpawner26" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 2968)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner27" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 3353)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner28" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 3538)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner29" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 3900)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner30" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 4081)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner31" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 4470)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner32" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 4700)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
+
+[node name="FishSpawner33" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 5130)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner12" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(261, 3723)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner12" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner13" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(261, 4257)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner13" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
+region_res = ExtResource("21_leuq3")
 
 [node name="FishSpawner14" type="Node2D" parent="Map/RockyCaves" node_paths=PackedStringArray("timer")]
 position = Vector2(261, 4940)
 script = ExtResource("7_n0snb")
 scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
+timer = NodePath("../Timer")
 angle = Vector2(150, 210)
 offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/RockyCaves/FishSpawner14" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D2")
-
-[node name="VisibleOnScreenEnabler2D2" type="VisibleOnScreenEnabler2D" parent="Map/RockyCaves"]
-position = Vector2(1, 3933)
-scale = Vector2(4.6, 125.95)
-enable_node_path = NodePath("../../OpenOcean/FishSpawner")
+region_res = ExtResource("21_leuq3")
 
 [node name="Deepwater" type="Node2D" parent="Map"]
-
-[node name="FishSpawner20" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(-234, 6022)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(-30, 30)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner20" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner29" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(-234, 6256)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(-30, 30)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner29" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner25" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(-234, 6513)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(-30, 30)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner25" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner26" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(-234, 6818)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(-30, 30)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner26" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner27" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(-234, 7162)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(-30, 30)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner27" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner21" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(261, 5993)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(150, 210)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner21" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner22" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(261, 6268)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(150, 210)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner22" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner28" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(261, 6626)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(150, 210)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner28" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner23" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(261, 6937)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(150, 210)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner23" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
-
-[node name="FishSpawner24" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
-position = Vector2(261, 7208)
-script = ExtResource("7_n0snb")
-scene = ExtResource("8_t2hda")
-timer = NodePath("../../OpenOcean/FishSpawner/Timer")
-angle = Vector2(150, 210)
-offset_y = Vector2(-100, 100)
-
-[node name="Timer" type="Timer" parent="Map/Deepwater/FishSpawner24" node_paths=PackedStringArray("enter_notifier")]
-autostart = true
-script = ExtResource("9_d5jbh")
-enter_notifier = NodePath("../../VisibleOnScreenEnabler2D3")
 
 [node name="VisibleOnScreenEnabler2D3" type="VisibleOnScreenEnabler2D" parent="Map/Deepwater"]
 position = Vector2(1, 6408.25)
 scale = Vector2(4.6, 106.775)
 enable_node_path = NodePath("../../OpenOcean/FishSpawner")
+
+[node name="Timer" type="Timer" parent="Map/Deepwater" node_paths=PackedStringArray("enter_notifier")]
+autostart = true
+script = ExtResource("9_d5jbh")
+min_time = 1.0
+max_time = 2.0
+enter_notifier = NodePath("../VisibleOnScreenEnabler2D3")
+
+[node name="FishSpawner20" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 5942)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner30" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 6106)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner31" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 6980)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner32" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 6641)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner29" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 6283)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner25" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 6452)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner26" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 6818)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner27" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(-234, 7162)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(-30, 30)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner21" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 5924)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner33" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 6088)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner34" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 6458)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner35" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 6786)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner36" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 7080)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner22" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 6268)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner28" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 6626)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner23" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 6937)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
+
+[node name="FishSpawner24" type="Node2D" parent="Map/Deepwater" node_paths=PackedStringArray("timer")]
+position = Vector2(261, 7208)
+script = ExtResource("7_n0snb")
+scene = ExtResource("8_t2hda")
+timer = NodePath("../Timer")
+angle = Vector2(150, 210)
+offset_y = Vector2(-100, 100)
+region_res = ExtResource("22_002nu")
 
 [node name="RemoveFish" type="Area2D" parent="Map"]
 collision_layer = 0
@@ -662,7 +751,7 @@ position = Vector2(431, 3943)
 shape = SubResource("RectangleShape2D_ckoxw")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="Map/RemoveFish"]
-position = Vector2(11, 120)
+position = Vector2(11, -197)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_ckoxw")
 

@@ -5,6 +5,6 @@
 
 [resource]
 script = ExtResource("1_7hf5h")
-name = "Yellowfin Tuna"
+name = "Mackerel"
 sprite = ExtResource("2_1x8uh")
-price = 1
+price = 3

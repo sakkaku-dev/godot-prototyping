@@ -11,7 +11,8 @@ extends ColorRect
 @export var start_darken_y := 5000
 @export var darken_transition_y := 1000
 
-@onready var start := global_position
+@export var player: Node2D
+@onready var start := player.global_position
 
 func _ready():
 	position = -size/2
@@ -20,7 +21,6 @@ func _process(delta):
 	var player_y = global_position.y - start.y
 	var target_color = get_interpolated_color(player_y)
 	color = target_color
-	print(color)
 	
 	if player_y > start_darken_y:
 		var p = (player_y - start_darken_y) / darken_transition_y

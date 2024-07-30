@@ -5,6 +5,7 @@ signal caught()
 signal start_reel()
 
 @export var hook_res: HookResource
+@export var player_root: Node2D
 
 @export_category("Movement")
 @export var descend_speed := 60
@@ -48,12 +49,8 @@ func _start_ascend():
 		move_dir = Vector2.UP
 	has_hooked = true
 
-func set_start_position(pos):
-	global_position = pos
-	start_pos = pos
-
 func _process(_delta):
-	line.points = [to_local(global_position - start_pos), Vector2(0, -9)]
+	line.points = [to_local(player_root.global_position), Vector2(0, -9)]
 
 func _physics_process(delta: float):
 	if not move_dir or not visible: return

@@ -3,6 +3,7 @@ extends Timer
 
 @export var min_time := 0.5
 @export var max_time := 1.0
+@export var debug := false
 
 @export var enter_notifier: VisibleOnScreenNotifier2D
 
@@ -14,8 +15,14 @@ func _ready():
 	autostart = false
 	
 	if enter_notifier:
-		enter_notifier.screen_entered.connect(func(): start(0.0))
-		enter_notifier.screen_exited.connect(func(): stop())
+		enter_notifier.screen_entered.connect(func():
+			if debug: print("Enter")
+			start(0.0)
+		)
+		enter_notifier.screen_exited.connect(func():
+			if debug: print("Exited")
+			stop()
+		)
 	
 	if not is_oneshot:
 		timeout.connect(func(): random_start())
@@ -24,4 +31,5 @@ func _ready():
 		random_start()
 
 func random_start():
-	start(randf_range(min_time, max_time))
+	var time = randf_range(min_time, max_time)
+	start(time)

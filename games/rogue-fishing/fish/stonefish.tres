@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://ckdsnpf447v2w"]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_a2flf"]
+[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_gv1h0"]
+
+[resource]
+script = ExtResource("1_a2flf")
+name = "Stonefish"
+sprite = ExtResource("2_gv1h0")
+price = 10

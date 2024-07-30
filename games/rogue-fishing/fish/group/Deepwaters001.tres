@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="RegionResource" load_steps=5 format=3 uid="uid://cdf4wjekhoul5"]
+
+[ext_resource type="Resource" uid="uid://bdoc7y8rts27n" path="res://games/rogue-fishing/fish/anglerfish.tres" id="1_wny1o"]
+[ext_resource type="Resource" uid="uid://vxmk6mkfw1ce" path="res://games/rogue-fishing/fish/dragonfish.tres" id="2_66so2"]
+[ext_resource type="Resource" uid="uid://ftklyp1mdqsj" path="res://games/rogue-fishing/fish/viperfish.tres" id="3_0mh2v"]
+[ext_resource type="Script" path="res://games/rogue-fishing/fish/group/RegionResource.gd" id="5_eingg"]
+
+[resource]
+script = ExtResource("5_eingg")
+fish = Array[Resource("res://games/rogue-fishing/fish/fish_resource.gd")]([ExtResource("1_wny1o"), ExtResource("2_66so2"), ExtResource("3_0mh2v")])

@@ -4,5 +4,5 @@ extends TextureButton
 @export var label: Label
 
 func _ready():
-	texture_normal = res.sprite
+	texture_normal = res.icon
 	label.text = "%s" % res.price

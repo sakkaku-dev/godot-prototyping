@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_yk0d4"]
+[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_1ttbd"]
+
+[resource]
+script = ExtResource("1_yk0d4")
+name = "Cardinal Fish"
+sprite = ExtResource("2_1ttbd")
+price = 5

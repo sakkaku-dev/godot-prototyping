@@ -1,9 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dblsuk8ttmpel"]
+[gd_scene load_steps=9 format=3 uid="uid://dblsuk8ttmpel"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/hook.gd" id="1_a5n7i"]
 [ext_resource type="Texture2D" uid="uid://b8sui6681oq87" path="res://games/rogue-fishing/assets/Hook_Base.png" id="2_yxxfi"]
 [ext_resource type="Script" path="res://combat/Hurtbox.gd" id="3_iw6sw"]
-[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="4_13a2c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ne8c4"]
 radius = 7.0
@@ -13,6 +12,14 @@ radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_f7y4r"]
 radius = 8.0
+
+[sub_resource type="Gradient" id="Gradient_2ssuf"]
+offsets = PackedFloat32Array(0, 0.496599, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_f3orn"]
+gradient = SubResource("Gradient_2ssuf")
+fill_to = Vector2(0, 1)
 
 [node name="Hook" type="CharacterBody2D" node_paths=PackedStringArray("line", "hook_area", "sprite", "hurtbox")]
 collision_layer = 2
@@ -36,7 +43,6 @@ texture = ExtResource("2_yxxfi")
 position = Vector2(0, -2)
 collision_layer = 0
 collision_mask = 4
-monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HookArea"]
 shape = SubResource("CircleShape2D_2liyq")
@@ -52,5 +58,7 @@ script = ExtResource("3_iw6sw")
 shape = SubResource("CircleShape2D_f7y4r")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-texture = ExtResource("4_13a2c")
+scale = Vector2(3.3125, 3.125)
+blend_mode = 2
+texture = SubResource("GradientTexture2D_f3orn")
 texture_scale = 0.5

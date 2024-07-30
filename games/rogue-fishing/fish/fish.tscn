@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfcbfgsgksr0y"]
+[gd_scene load_steps=4 format=3 uid="uid://bfcbfgsgksr0y"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish.gd" id="1_daq0q"]
-[ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/stripped_bass.tres" id="2_nam11"]
 [ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="3_4aa5a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_giu0b"]
-size = Vector2(27, 15)
+size = Vector2(25, 11)
 
 [node name="Fish" type="CharacterBody2D" node_paths=PackedStringArray("body")]
 collision_layer = 4
@@ -13,14 +12,13 @@ collision_mask = 0
 script = ExtResource("1_daq0q")
 move_dir = Vector2(60, 0)
 body = NodePath("Sprite2D")
-fish = ExtResource("2_nam11")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-11, 0)
 texture = ExtResource("3_4aa5a")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-10.5, 0.5)
+position = Vector2(-9.5, 0.5)
 shape = SubResource("RectangleShape2D_giu0b")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
