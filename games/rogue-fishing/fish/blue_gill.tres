@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://ddgkjfumlkytk"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_c2tkm"]
-[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_bmlkr"]
+[ext_resource type="Texture2D" uid="uid://civelhywaybcg" path="res://games/rogue-fishing/assets/pixel ocean/peixinhos1.png" id="2_0hb8s"]
 
 [resource]
 script = ExtResource("1_c2tkm")
 name = "Blue Gill"
-sprite = ExtResource("2_bmlkr")
+sprite = ExtResource("2_0hb8s")
 price = 1
+speed = 50
+behaviour = 0

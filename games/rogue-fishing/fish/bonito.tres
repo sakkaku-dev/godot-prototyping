@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://b00cu2kls0wbl"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_gw4or"]
-[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_becje"]
+[ext_resource type="Texture2D" uid="uid://civelhywaybcg" path="res://games/rogue-fishing/assets/pixel ocean/peixinhos1.png" id="2_051lh"]
 
 [resource]
 script = ExtResource("1_gw4or")
 name = "Bonito"
-sprite = ExtResource("2_becje")
+sprite = ExtResource("2_051lh")
 price = 1
+speed = 50
+behaviour = 0

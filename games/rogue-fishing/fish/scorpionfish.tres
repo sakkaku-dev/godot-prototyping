@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://cd4jjj4u0frd7"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_cwcxv"]
-[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_2dywg"]
+[ext_resource type="Texture2D" uid="uid://1eh72gj5tgbx" path="res://games/rogue-fishing/assets/pixel ocean/peixinhos4.png" id="2_sup5s"]
 
 [resource]
 script = ExtResource("1_cwcxv")
 name = "Scorpionfish"
-sprite = ExtResource("2_2dywg")
+sprite = ExtResource("2_sup5s")
 price = 10
+speed = 10
+behaviour = 1

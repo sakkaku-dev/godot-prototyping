@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="RegionResource" load_steps=6 format=3 uid="uid://bpg7o7jbxkrm0"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/group/RegionResource.gd" id="1_7akk0"]
-[ext_resource type="Resource" path="res://games/rogue-fishing/fish/blue_gill.tres" id="1_bwqh4"]
-[ext_resource type="Resource" path="res://games/rogue-fishing/fish/bonito.tres" id="2_s7x48"]
-[ext_resource type="Resource" path="res://games/rogue-fishing/fish/goldfish.tres" id="3_dhk1l"]
+[ext_resource type="Resource" uid="uid://ddgkjfumlkytk" path="res://games/rogue-fishing/fish/blue_gill.tres" id="1_bwqh4"]
+[ext_resource type="Resource" uid="uid://b00cu2kls0wbl" path="res://games/rogue-fishing/fish/bonito.tres" id="2_s7x48"]
+[ext_resource type="Resource" uid="uid://bkt3fgp00n3f8" path="res://games/rogue-fishing/fish/goldfish.tres" id="3_dhk1l"]
 [ext_resource type="Resource" uid="uid://b6i5hxrm58pw1" path="res://games/rogue-fishing/fish/mackerel.tres" id="4_p8pai"]
 
 [resource]

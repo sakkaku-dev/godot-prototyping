@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bv65pule4x773"]
+
+[ext_resource type="PackedScene" uid="uid://bfcbfgsgksr0y" path="res://games/rogue-fishing/fish/fish.tscn" id="1_10s6r"]
+[ext_resource type="Script" path="res://games/rogue-fishing/fish/attack_fish.gd" id="2_ijg3t"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jly5s"]
+radius = 35.1141
+
+[node name="AttackFish" instance=ExtResource("1_10s6r")]
+script = ExtResource("2_ijg3t")
+attack_speed = 120
+
+[node name="AttackArea" type="Area2D" parent="." index="3"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" index="0"]
+shape = SubResource("CircleShape2D_jly5s")
+
+[node name="ChargeTimer" type="Timer" parent="." index="4"]
+one_shot = true

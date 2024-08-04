@@ -1,10 +1,12 @@
-[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3]
+[gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://bkt3fgp00n3f8"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_rkf6g"]
-[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_mcqh7"]
+[ext_resource type="Texture2D" uid="uid://ctr74ffhwpeo2" path="res://games/rogue-fishing/assets/pixel ocean/peixinhos3.png" id="2_ytndo"]
 
 [resource]
 script = ExtResource("1_rkf6g")
 name = "Goldfish"
-sprite = ExtResource("2_mcqh7")
+sprite = ExtResource("2_ytndo")
 price = 1
+speed = 50
+behaviour = 0

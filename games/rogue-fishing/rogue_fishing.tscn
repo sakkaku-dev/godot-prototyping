@@ -1,11 +1,10 @@
-[gd_scene load_steps=40 format=3 uid="uid://cu31aqohjpq05"]
+[gd_scene load_steps=41 format=3 uid="uid://cu31aqohjpq05"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/rogue_fishing.gd" id="1_p7jwf"]
 [ext_resource type="PackedScene" uid="uid://dblsuk8ttmpel" path="res://games/rogue-fishing/hook.tscn" id="2_mv63l"]
 [ext_resource type="Texture2D" uid="uid://b7gcqasuectdr" path="res://games/rogue-fishing/assets/Ocean_Cloud.png" id="3_mj0pu"]
 [ext_resource type="Texture2D" uid="uid://dp3mt27yl68v3" path="res://games/rogue-fishing/assets/Ocean_Cloud02.png" id="3_qmbit"]
 [ext_resource type="Texture2D" uid="uid://b5kydtkup5wdf" path="res://games/rogue-fishing/assets/Hills_MoreBack.png" id="3_s8l4o"]
-[ext_resource type="Texture2D" uid="uid://bvnp15fsik7i" path="res://games/rogue-fishing/assets/Ocean_Boat.png" id="4_jo5cy"]
 [ext_resource type="Script" path="res://games/rogue-fishing/collect_area.gd" id="4_kmksl"]
 [ext_resource type="Texture2D" uid="uid://njrvat4gedsp" path="res://games/rogue-fishing/assets/Hills_Back.png" id="4_ohp45"]
 [ext_resource type="TileSet" uid="uid://crd4lhnp8dclr" path="res://games/rogue-fishing/map/open_sea/open_sea_tiles.tres" id="4_stlfw"]
@@ -21,7 +20,9 @@
 [ext_resource type="Script" path="res://games/rogue-fishing/ui/CaughtFishDialog.gd" id="11_hoyay"]
 [ext_resource type="Script" path="res://games/rogue-fishing/OceanBG.gd" id="12_yrpmo"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="13_yr34r"]
+[ext_resource type="Texture2D" uid="uid://nuwdtete8ocs" path="res://games/rogue-fishing/assets/fisher/3 Objects/Boat.png" id="14_3cy0q"]
 [ext_resource type="Script" path="res://games/rogue-fishing/WallsFollow.gd" id="14_hl154"]
+[ext_resource type="Texture2D" uid="uid://di84rwdpq730a" path="res://games/rogue-fishing/assets/fisher/1 Fisherman/Fisherman_fish.png" id="14_k4lmx"]
 [ext_resource type="Theme" uid="uid://dt444g01qbkbf" path="res://games/rogue-fishing/theme.tres" id="16_k01s1"]
 [ext_resource type="Script" path="res://games/rogue-fishing/GameMenu.gd" id="18_tmmkp"]
 [ext_resource type="Resource" uid="uid://bpg7o7jbxkrm0" path="res://games/rogue-fishing/fish/group/OpenOcean001.tres" id="19_wsrp2"]
@@ -214,9 +215,14 @@ script = ExtResource("4_kmksl")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerStart/CollectArea"]
 shape = SubResource("RectangleShape2D_vf4f1")
 
-[node name="Sprite2D" type="Sprite2D" parent="PlayerStart"]
-position = Vector2(-27, 0)
-texture = ExtResource("4_jo5cy")
+[node name="Sprite2D2" type="Sprite2D" parent="PlayerStart"]
+position = Vector2(-18, -13)
+texture = ExtResource("14_k4lmx")
+hframes = 4
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerStart/Sprite2D2"]
+position = Vector2(-19, 16)
+texture = ExtResource("14_3cy0q")
 
 [node name="Map" type="Node2D" parent="."]
 position = Vector2(0, -11201)

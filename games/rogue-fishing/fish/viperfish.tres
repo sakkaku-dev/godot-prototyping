@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://ftklyp1mdqsj"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_5vlbf"]
-[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_nhh03"]
+[ext_resource type="Texture2D" uid="uid://cb8tqoduem0fw" path="res://games/rogue-fishing/assets/pixel ocean/peixinhos7.png" id="2_b86gj"]
 
 [resource]
 script = ExtResource("1_5vlbf")
 name = "Viperfish"
-sprite = ExtResource("2_nhh03")
+sprite = ExtResource("2_b86gj")
 price = 25
+speed = 30
+behaviour = 2

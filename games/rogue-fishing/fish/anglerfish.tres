@@ -1,10 +1,12 @@
 [gd_resource type="Resource" script_class="FishResource" load_steps=3 format=3 uid="uid://bdoc7y8rts27n"]
 
 [ext_resource type="Script" path="res://games/rogue-fishing/fish/fish_resource.gd" id="1_h3sol"]
-[ext_resource type="Texture2D" uid="uid://woa5ntdj4g04" path="res://games/rogue-fishing/assets/Fish_BluefinTuna.png" id="2_j7o3v"]
+[ext_resource type="Texture2D" uid="uid://dmcv157aoa67q" path="res://games/rogue-fishing/assets/pixel ocean/peixinhos6.png" id="2_hscw5"]
 
 [resource]
 script = ExtResource("1_h3sol")
 name = "Anglerfish"
-sprite = ExtResource("2_j7o3v")
+sprite = ExtResource("2_hscw5")
 price = 20
+speed = 20
+behaviour = 0
