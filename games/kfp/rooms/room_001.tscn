@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://xtxs4jv066qp"]
+
+[ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_m328i"]
+[ext_resource type="PackedScene" uid="uid://dyub3loq2lf2p" path="res://games/kfp/work/order_desk.tscn" id="2_e4cjf"]
+[ext_resource type="PackedScene" uid="uid://cnx7xvoy0ju87" path="res://games/kfp/work/cutting_board.tscn" id="4_sym6f"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_mfly1"]
+vertices = PackedVector2Array(59, 163, -60, 162, -61, -14, 59, -14)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-66, -19, 64, -19, 65, 169, -65, 167)])
+parsed_collision_mask = 4294967041
+source_geometry_mode = 1
+source_geometry_group_name = &"navigation"
+agent_radius = 5.0
+
+[node name="Room001" type="TileMap"]
+tile_set = ExtResource("1_m328i")
+format = 2
+layer_0/name = "Floor"
+layer_0/tile_data = PackedInt32Array(-131072, 9, 0, -65536, 9, 0, 0, 9, 0, 65536, 9, 0, 131072, 9, 0, -131071, 9, 0, -65535, 9, 0, 1, 9, 0, 65537, 9, 0, 131073, 9, 0, -131070, 9, 0, -65534, 9, 0, 2, 9, 0, 65538, 9, 0, 131074, 9, 0, -131069, 9, 0, -65533, 9, 0, 3, 9, 0, 65539, 9, 0, 131075, 9, 0, -131068, 131080, 1, -65532, 131080, 1, 4, 131080, 1, 65540, 131080, 1, 131076, 131080, 1, -65541, 8, 1, -5, 8, 1, 65531, 8, 1, 131067, 8, 1, 196603, 8, 1, -65540, 9, 0, -4, 9, 0, 65532, 9, 0, 131068, 9, 0, 196604, 9, 0, -65539, 9, 0, -3, 9, 0, 65533, 9, 0, 131069, 9, 0, 196605, 9, 0, -65538, 9, 0, -2, 9, 0, 65534, 9, 0, 131070, 9, 0, 196606, 9, 0, -65537, 9, 0, -1, 9, 0, 65535, 9, 0, 131071, 9, 0, 196607, 9, 0, 262139, 8, 2, 262140, 65544, 2, 262142, 65544, 2, 262143, 65544, 2, 196608, 65544, 2, 196609, 65544, 2, 196610, 65544, 2, 196611, 65544, 2, 196612, 131080, 2, -327685, 8, 0, -262149, 8, 1, -196613, 8, 1, -131077, 8, 1, -327684, 65544, 0, -262148, 65544, 1, -196612, 9, 0, -131076, 9, 0, -327683, 65544, 0, -262147, 65544, 1, -196611, 9, 0, -131075, 9, 0, -327682, 65544, 0, -262146, 65544, 1, -196610, 9, 0, -131074, 9, 0, -327681, 65544, 0, -262145, 65544, 1, -196609, 9, 0, -131073, 9, 0, -393216, 65544, 0, -327680, 65544, 1, -262144, 9, 0, -196608, 9, 0, -393215, 65544, 0, -327679, 65544, 1, -262143, 9, 0, -196607, 9, 0, -393214, 65544, 0, -327678, 65544, 1, -262142, 9, 0, -196606, 9, 0, -393213, 65544, 0, -327677, 65544, 1, -262141, 9, 0, -196605, 9, 0, -393212, 131080, 0, -327676, 131080, 1, -262140, 131080, 1, -196604, 131080, 1, 262141, 9, 0)
+layer_1/name = "Interior"
+layer_1/tile_data = PackedInt32Array(-65540, 65544, 2, -65539, 65544, 2, -65538, 65544, 2, -65537, 65544, 2, -131072, 65544, 2, -131071, 65544, 2, -131070, 65544, 2, -131069, 65544, 2)
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_mfly1")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="OrderDesk" parent="." instance=ExtResource("2_e4cjf")]
+position = Vector2(-40, -33)
+
+[node name="Marker2D" type="Marker2D" parent="." groups=["spawn"]]
+position = Vector2(-38, 228)
+
+[node name="CuttingBoard" parent="." instance=ExtResource("4_sym6f")]
+position = Vector2(-25, -64)

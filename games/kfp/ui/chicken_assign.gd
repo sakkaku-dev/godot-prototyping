@@ -1,0 +1,14 @@
+extends TextureButton
+
+@export var res: ChickenResource
+@onready var color_rect = $ColorRect
+
+func _ready():
+	KfpManager.chicken_assigned.connect(func(_i): _update())
+
+func _update():
+	disabled = res in KfpManager.assigned_chickens
+	modulate = Color.DIM_GRAY if disabled else Color.WHITE
+
+func _process(delta):
+	color_rect.visible = KfpManager.assigning_chicken == res

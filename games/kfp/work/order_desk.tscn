@@ -1,0 +1,97 @@
+[gd_scene load_steps=14 format=3 uid="uid://dyub3loq2lf2p"]
+
+[ext_resource type="Script" path="res://games/kfp/work/OrderDesk.gd" id="1_w6pbh"]
+[ext_resource type="Texture2D" uid="uid://bpw5rahwqmly3" path="res://games/kfp/assets/OrderDesk.png" id="2_ewccv"]
+[ext_resource type="Script" path="res://games/kfp/work/CustomerQueue.gd" id="3_23oqf"]
+[ext_resource type="Script" path="res://games/kfp/work/WorkTimer.gd" id="3_j8dgj"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_bv30s"]
+[ext_resource type="Script" path="res://util/Interactable.gd" id="5_ifptg"]
+[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="6_8p145"]
+[ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="7_hjp30"]
+[ext_resource type="Texture2D" uid="uid://ct4d8em47rm3r" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_exclamation.png" id="8_xr36u"]
+[ext_resource type="Texture2D" uid="uid://32y5pqpdsxgr" path="res://games/kfp/assets/Chicken_Uniform.png" id="10_5h8an"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
+size = Vector2(20, 24)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w15g2"]
+shader = ExtResource("4_bv30s")
+shader_parameter/thickness = 0.0
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
+size = Vector2(14, 14)
+
+[node name="OrderDesk" type="Node2D" node_paths=PackedStringArray("customer_queue", "icon", "work_timer", "interact", "chicken_sprite", "mouse_control")]
+z_index = 10
+script = ExtResource("1_w6pbh")
+customer_queue = NodePath("CustomerQueue")
+icon = NodePath("Sprite2D/Emote")
+work_timer = NodePath("WorkTimer")
+interact = NodePath("Sprite2D/Interactable")
+chicken_sprite = NodePath("Chicken")
+mouse_control = NodePath("Control")
+
+[node name="Chicken" type="Sprite2D" parent="."]
+position = Vector2(0, -5)
+texture = ExtResource("10_5h8an")
+
+[node name="WorkTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+script = ExtResource("3_j8dgj")
+
+[node name="CustomerQueue" type="Area2D" parent="."]
+position = Vector2(0, 15)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_23oqf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CustomerQueue"]
+shape = SubResource("RectangleShape2D_ibnlu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_w15g2")
+texture = ExtResource("2_ewccv")
+
+[node name="Interactable" type="Area2D" parent="Sprite2D"]
+position = Vector2(0, 1)
+script = ExtResource("5_ifptg")
+
+[node name="OutlineInteractable" type="Node" parent="Sprite2D/Interactable" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("6_8p145")
+interactable = NodePath("..")
+node = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Interactable"]
+shape = SubResource("RectangleShape2D_iake3")
+
+[node name="Emote" parent="Sprite2D" instance=ExtResource("7_hjp30")]
+
+[node name="Emote" parent="Sprite2D/Emote" index="0" node_paths=PackedStringArray("timer")]
+texture = ExtResource("8_xr36u")
+timer = NodePath("../../../WorkTimer")
+hide_on_stop = false
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -14.0
+offset_right = 14.0
+offset_bottom = 14.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[editable path="Sprite2D/Emote"]

@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://ca4cw8s8sfift"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/chicken_assign.gd" id="1_5rwww"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="1_hypfb"]
+
+[node name="ChickenAssign" type="TextureButton"]
+custom_minimum_size = Vector2(0, 12)
+script = ExtResource("1_5rwww")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 1, 1, 0.188235)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_hypfb")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "Chicken 000"

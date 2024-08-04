@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://d6cseoobua0r"]
+
+[ext_resource type="Script" path="res://games/kfp/old/egg_catch.gd" id="1_mgyky"]
+[ext_resource type="Texture2D" uid="uid://bormlewkja157" path="res://games/kfp/assets/EggLarge.png" id="3_flom3"]
+[ext_resource type="Script" path="res://util/FreeOnExitTimeout.gd" id="3_hu8by"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w6mao"]
+size = Vector2(16, 16)
+
+[node name="EggCatch" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_mgyky")
+
+[node name="FreeOnExitTimeout" type="VisibleOnScreenNotifier2D" parent="."]
+script = ExtResource("3_hu8by")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_flom3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_w6mao")

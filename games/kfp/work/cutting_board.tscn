@@ -1,0 +1,79 @@
+[gd_scene load_steps=12 format=3 uid="uid://cnx7xvoy0ju87"]
+
+[ext_resource type="Script" path="res://games/kfp/work/CuttingBoard.gd" id="1_r812e"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_lurcp"]
+[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="3_hbjw8"]
+[ext_resource type="Texture2D" uid="uid://bysesiwcefw71" path="res://games/kfp/assets/CuttingBoard.png" id="3_jsd6h"]
+[ext_resource type="Script" path="res://util/Interactable.gd" id="4_jpfwn"]
+[ext_resource type="Script" path="res://games/kfp/work/WorkTimer.gd" id="5_2v16j"]
+[ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="6_io6hj"]
+[ext_resource type="Texture2D" uid="uid://bjxshgofahyo6" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_circle.png" id="7_4wx3o"]
+[ext_resource type="Texture2D" uid="uid://32y5pqpdsxgr" path="res://games/kfp/assets/Chicken_Uniform.png" id="9_w0a81"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w15g2"]
+shader = ExtResource("2_lurcp")
+shader_parameter/thickness = null
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
+size = Vector2(18, 20)
+
+[node name="CuttingBoard" type="Node2D" node_paths=PackedStringArray("work_timer", "interact", "chicken_sprite", "mouse_control")]
+script = ExtResource("1_r812e")
+work_timer = NodePath("Sprite2D2/WorkTimer")
+interact = NodePath("Sprite2D2/Interactable")
+chicken_sprite = NodePath("Sprite2D")
+mouse_control = NodePath("Control")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_w15g2")
+texture = ExtResource("3_jsd6h")
+
+[node name="OutlineInteractable" type="Node" parent="Sprite2D2" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("3_hbjw8")
+interactable = NodePath("../Interactable")
+node = NodePath("..")
+
+[node name="Interactable" type="Area2D" parent="Sprite2D2"]
+script = ExtResource("4_jpfwn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D2/Interactable"]
+shape = SubResource("RectangleShape2D_iake3")
+
+[node name="WorkTimer" type="Timer" parent="Sprite2D2"]
+wait_time = 3.0
+one_shot = true
+script = ExtResource("5_2v16j")
+
+[node name="Emote2" parent="Sprite2D2" instance=ExtResource("6_io6hj")]
+
+[node name="Emote" parent="Sprite2D2/Emote2" index="0" node_paths=PackedStringArray("timer")]
+texture = ExtResource("7_4wx3o")
+timer = NodePath("../../WorkTimer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 6)
+texture = ExtResource("9_w0a81")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[editable path="Sprite2D2/Emote2"]

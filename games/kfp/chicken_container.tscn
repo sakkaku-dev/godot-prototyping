@@ -5,8 +5,8 @@
 [ext_resource type="Script" path="res://effects/EffectRunner.gd" id="3_6l718"]
 [ext_resource type="Script" path="res://effects/OverlayEffect.gd" id="4_fe4qw"]
 [ext_resource type="Script" path="res://effects/PositionEffect.gd" id="5_l7wfk"]
-[ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/blue_icon_button.tscn" id="6_vukbc"]
-[ext_resource type="Texture2D" uid="uid://con1wbq2fmcvr" path="res://assets/UI Base Pack/PNG/grey_crossWhite.png" id="7_tof8m"]
+[ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/old/blue_icon_button.tscn" id="6_vukbc"]
+[ext_resource type="Texture2D" uid="uid://y3yecmt1oo5u" path="res://assets/UI Base Pack/PNG/grey_crossWhite.png" id="7_tof8m"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r1g3n"]
 bg_color = Color(0.690196, 0.690196, 0.690196, 1)

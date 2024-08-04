@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://ci4iyqc760nsx"]
+
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_gc7m4"]
+[ext_resource type="Script" path="res://games/kfp/work/order_item.gd" id="2_28jmf"]
+[ext_resource type="Shader" path="res://shaders/circle.gdshader" id="3_601ao"]
+[ext_resource type="Script" path="res://ui/CircleTimer.gd" id="4_o056x"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jiv48"]
+shader = ExtResource("3_601ao")
+shader_parameter/radius = 1.0
+shader_parameter/fill = 1.0
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+
+[node name="OrderItem" type="TextureRect" node_paths=PackedStringArray("label", "timer_rect")]
+custom_minimum_size = Vector2(30, 0)
+offset_right = 30.0
+offset_bottom = 30.0
+texture = ExtResource("1_gc7m4")
+expand_mode = 4
+stretch_mode = 5
+script = ExtResource("2_28jmf")
+label = NodePath("MarginContainer/Label")
+timer_rect = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_jiv48")
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+script = ExtResource("4_o056x")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -13.5
+offset_top = -13.0
+offset_right = 13.5
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = -15
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "0001"
+horizontal_alignment = 1

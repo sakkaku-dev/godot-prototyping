@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://sout08yq6hm3"]
+
+[ext_resource type="Script" path="res://games/kfp/chicken/chicken.gd" id="1_b7dkh"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="2_p5k63"]
+[ext_resource type="Texture2D" uid="uid://32y5pqpdsxgr" path="res://games/kfp/assets/Chicken_Uniform.png" id="3_10ded"]
+[ext_resource type="Script" path="res://move/RandomMoveCollide.gd" id="3_y3fg4"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="4_3k465"]
+[ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="5_1h3x4"]
+[ext_resource type="Script" path="res://util/Hand.gd" id="6_q4vur"]
+[ext_resource type="Texture2D" uid="uid://yvhfoviu67um" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_cloud.png" id="7_eblq6"]
+[ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="8_24jar"]
+[ext_resource type="Texture2D" uid="uid://bjvp64rvhox56" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_star.png" id="9_v4vfp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gc8n8"]
+size = Vector2(10, 4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qucij"]
+size = Vector2(14, 14)
+
+[node name="Chicken" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 65
+script = ExtResource("1_b7dkh")
+chicken_tex = ExtResource("2_p5k63")
+chicken_uniform = ExtResource("3_10ded")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -6)
+texture = ExtResource("2_p5k63")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2)
+shape = SubResource("RectangleShape2D_gc8n8")
+
+[node name="NavigationMove2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+avoidance_enabled = true
+avoidance_layers = 0
+debug_enabled = true
+script = ExtResource("5_1h3x4")
+speed = 50
+enemy = NodePath("..")
+
+[node name="MoveCollide" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("3_y3fg4")
+sprite = NodePath("../Sprite2D")
+
+[node name="IdleTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+script = ExtResource("4_3k465")
+min_time = 1.0
+max_time = 4.0
+
+[node name="WanderTimer" type="Timer" parent="."]
+one_shot = true
+script = ExtResource("4_3k465")
+min_time = 1.0
+max_time = 2.0
+
+[node name="Hand" type="Area2D" parent="."]
+visible = false
+script = ExtResource("6_q4vur")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hand"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_qucij")
+
+[node name="ItemIcon" parent="." instance=ExtResource("8_24jar")]
+visible = false
+position = Vector2(0, -3)
+
+[node name="Emote" parent="ItemIcon" index="0"]
+texture = ExtResource("7_eblq6")
+
+[node name="WorkerIcon" parent="." instance=ExtResource("8_24jar")]
+visible = false
+position = Vector2(0, -3)
+
+[node name="Emote" parent="WorkerIcon" index="0"]
+texture = ExtResource("9_v4vfp")
+
+[node name="KeepRotation" parent="WorkerIcon" index="1" node_paths=PackedStringArray("node")]
+node = NodePath("../../ItemIcon")
+
+[editable path="ItemIcon"]
+[editable path="WorkerIcon"]

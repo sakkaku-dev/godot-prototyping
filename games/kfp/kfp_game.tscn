@@ -1,0 +1,87 @@
+[gd_scene load_steps=8 format=3 uid="uid://cpxqtds32bdin"]
+
+[ext_resource type="Script" path="res://games/kfp/kfp_game.gd" id="1_bjgne"]
+[ext_resource type="PackedScene" uid="uid://xtxs4jv066qp" path="res://games/kfp/rooms/room_001.tscn" id="1_qqs23"]
+[ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/okyaku.tscn" id="2_8nnux"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="3_olrns"]
+[ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="5_yxcle"]
+[ext_resource type="Script" path="res://games/kfp/ui/AssignChicken.gd" id="6_8wori"]
+[ext_resource type="PackedScene" uid="uid://ca4cw8s8sfift" path="res://games/kfp/ui/chicken_assign.tscn" id="7_qvq8i"]
+
+[node name="KfpGame" type="Node2D"]
+script = ExtResource("1_bjgne")
+customer_scene = ExtResource("2_8nnux")
+
+[node name="Room001" parent="." instance=ExtResource("1_qqs23")]
+
+[node name="CustomerTimer" type="Timer" parent="."]
+script = ExtResource("3_olrns")
+min_time = 1.0
+max_time = 2.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("5_yxcle")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 48.0
+offset_bottom = 31.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+
+[node name="FarmButton" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Farm"
+
+[node name="AssignButton" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Assign"
+
+[node name="StartButton" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start"
+
+[node name="AssignChicken" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("container", "toggle_button")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = -99.0
+offset_bottom = 99.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("6_8wori")
+scene = ExtResource("7_qvq8i")
+container = NodePath("MarginContainer/ScrollContainer/VBoxContainer")
+toggle_button = NodePath("../MarginContainer/VBoxContainer/AssignButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/AssignChicken"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/AssignChicken/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/AssignChicken/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/FarmButton" to="." method="_on_farm_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="assign_chicken" from="CanvasLayer/Control/AssignChicken" to="." method="_on_assign_chicken_assign_chicken"]

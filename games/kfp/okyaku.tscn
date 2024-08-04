@@ -1,11 +1,11 @@
 [gd_scene load_steps=11 format=3 uid="uid://c2ro12l6f7xuu"]
 
 [ext_resource type="Script" path="res://games/kfp/okyaku.gd" id="1_8xdq1"]
-[ext_resource type="Texture2D" uid="uid://dckid2033x5jp" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="1_ev7tt"]
-[ext_resource type="Texture2D" uid="uid://cshuohq2flgmw" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceHappy.png" id="2_drute"]
+[ext_resource type="Texture2D" uid="uid://dvurvh6atip8l" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceHappy.png" id="2_drute"]
 [ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="2_w1kk5"]
-[ext_resource type="Texture2D" uid="uid://plfk4nyc85vu" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceAngry.png" id="3_0xuox"]
-[ext_resource type="Texture2D" uid="uid://bgojr8jilldeh" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_dots3.png" id="4_466gg"]
+[ext_resource type="Texture2D" uid="uid://hw8dl0ltqt0t" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceAngry.png" id="3_0xuox"]
+[ext_resource type="Texture2D" uid="uid://dwrgh3orljchb" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_dots3.png" id="4_466gg"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="6_wpaxm"]
 [ext_resource type="Script" path="res://games/kfp/PeopleDetection.gd" id="7_hbjd8"]
 [ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="7_tyjf7"]
 
@@ -31,10 +31,8 @@ script = ExtResource("2_w1kk5")
 enemy = NodePath("..")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -8)
-texture = ExtResource("1_ev7tt")
-hframes = 4
-vframes = 4
+position = Vector2(0, -6)
+texture = ExtResource("6_wpaxm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1.5)
@@ -59,7 +57,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Emote" parent="." instance=ExtResource("7_tyjf7")]
-position = Vector2(0, -6)
+position = Vector2(0, -5)
 
 [node name="Emote" parent="Emote" index="0" node_paths=PackedStringArray("timer")]
 timer = NodePath("../../FoodWaitTime")

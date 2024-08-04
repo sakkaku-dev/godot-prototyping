@@ -1,0 +1,103 @@
+[gd_scene load_steps=12 format=3 uid="uid://cgwjkb3536q2y"]
+
+[ext_resource type="Script" path="res://games/kfp/old/EggCatchWorld.gd" id="1_gasg6"]
+[ext_resource type="PackedScene" uid="uid://di1iovxvl574g" path="res://games/kfp/old/stone_catch.tscn" id="2_801pe"]
+[ext_resource type="PackedScene" uid="uid://d6cseoobua0r" path="res://games/kfp/old/egg_catch.tscn" id="2_h4tvd"]
+[ext_resource type="Script" path="res://util/RandomTimer.gd" id="3_5vmqi"]
+[ext_resource type="Script" path="res://games/kfp/old/KiaraEggCatch.gd" id="4_sls7o"]
+[ext_resource type="Script" path="res://util/Countdown.gd" id="6_63h3t"]
+[ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="6_iuaub"]
+[ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="6_yc4rt"]
+[ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="7_dbwfe"]
+[ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="8_0wndh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8hujs"]
+size = Vector2(16, 18)
+
+[node name="EggCatchWorld" type="Node2D" node_paths=PackedStringArray("timer", "count_label", "countdown")]
+script = ExtResource("1_gasg6")
+timer = NodePath("RandomTimer")
+count_label = NodePath("CanvasLayer/Control/MarginContainer2/EggCount")
+countdown = NodePath("CanvasLayer/Control/MarginContainer/Countdown/Timer")
+stone_scene = ExtResource("2_801pe")
+egg_scene = ExtResource("2_h4tvd")
+
+[node name="RandomTimer" type="Timer" parent="."]
+autostart = true
+script = ExtResource("3_5vmqi")
+max_time = 2.0
+
+[node name="KiaraEggCatch" type="Area2D" parent="."]
+position = Vector2(9, 93)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("4_sls7o")
+
+[node name="Sprite2D3" type="Sprite2D" parent="KiaraEggCatch"]
+position = Vector2(0, -8)
+texture = ExtResource("6_iuaub")
+
+[node name="Nest" type="Sprite2D" parent="KiaraEggCatch"]
+position = Vector2(0, -18)
+texture = ExtResource("7_dbwfe")
+
+[node name="Egg" type="Sprite2D" parent="KiaraEggCatch"]
+position = Vector2(0, -18)
+texture = ExtResource("8_0wndh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KiaraEggCatch"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_8hujs")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("6_yc4rt")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -0.5
+offset_right = 0.5
+offset_bottom = 16.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="Countdown" type="Label" parent="CanvasLayer/Control/MarginContainer" node_paths=PackedStringArray("timer")]
+layout_mode = 2
+script = ExtResource("6_63h3t")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="CanvasLayer/Control/MarginContainer/Countdown"]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -1.0
+offset_bottom = 13.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="EggCount" type="Label" parent="CanvasLayer/Control/MarginContainer2"]
+layout_mode = 2
