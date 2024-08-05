@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/kfp/old/kfp.gd" id="1_81nka"]
 [ext_resource type="PackedScene" uid="uid://sout08yq6hm3" path="res://games/kfp/chicken/chicken.tscn" id="2_4ve5m"]
-[ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/old/hatching_egg.tscn" id="2_58haw"]
+[ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="2_58haw"]
 [ext_resource type="Script" path="res://games/kfp/ChickenManager.gd" id="5_4jv6d"]
 [ext_resource type="PackedScene" uid="uid://de1lpqtwceoex" path="res://games/kfp/kiara_kfp.tscn" id="5_eane1"]
 [ext_resource type="Script" path="res://util/Interactable.gd" id="6_5onm5"]

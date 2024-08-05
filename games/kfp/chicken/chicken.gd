@@ -8,12 +8,14 @@ enum {
 	WORKING,
 }
 
+signal clicked_chicken()
 signal died()
 signal working_changed()
 
 const DOOR_LAYER = 7
 
 @export var res: ChickenResource
+@export var selectable: Selectable
 
 @export_category("Old")
 @export var max_active_orders := 5
@@ -77,6 +79,8 @@ func _ready():
 		move_collide.random_direction()
 		idle_timer.random_start()
 	)
+	
+	selectable.clicked.connect(func(): clicked_chicken.emit())
 	
 	#customer_manager.changed.connect(func(open):
 		#if not worker or not open: return

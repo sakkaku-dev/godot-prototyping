@@ -1,16 +1,15 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2oneau5o6uvo"]
+[gd_scene load_steps=10 format=3 uid="uid://b2oneau5o6uvo"]
 
-[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="1_aeyre"]
-[ext_resource type="Script" path="res://games/kfp/old/hatching_egg.gd" id="1_nqla5"]
-[ext_resource type="Script" path="res://util/Interactable.gd" id="2_7iatk"]
-[ext_resource type="PackedScene" uid="uid://crptynk08r8c" path="res://games/kfp/old/hatch_egg_game.tscn" id="2_cgyx4"]
-[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="4_jih0r"]
-[ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="5_86qp2"]
-[ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="5_fwjoi"]
-[ext_resource type="Script" path="res://util/Countdown.gd" id="5_iir25"]
+[ext_resource type="Script" path="res://games/kfp/chicken/hatching_egg.gd" id="1_5glup"]
+[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="3_e2u0h"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_rn3ep"]
+[ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="5_tud2g"]
+[ext_resource type="Script" path="res://util/Interactable.gd" id="6_gljn5"]
+[ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="7_nd5av"]
+[ext_resource type="Script" path="res://util/Countdown.gd" id="8_fct82"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8mbk1"]
-shader = ExtResource("1_aeyre")
+shader = ExtResource("4_rn3ep")
 shader_parameter/thickness = null
 shader_parameter/ring_count = 4
 shader_parameter/ring_offset = null
@@ -24,29 +23,27 @@ shader_parameter/max_or_add = false
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_d0l07"]
 size = Vector2(18, 18)
 
-[node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("timer", "interactable")]
-script = ExtResource("1_nqla5")
+[node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("timer")]
+script = ExtResource("1_5glup")
 timer = NodePath("HatchingTimer")
-interactable = NodePath("Interactable")
-game_scene = ExtResource("2_cgyx4")
 
 [node name="OutlineInteractable" type="Node" parent="." node_paths=PackedStringArray("interactable", "node")]
-script = ExtResource("4_jih0r")
+script = ExtResource("3_e2u0h")
 interactable = NodePath("../Interactable")
 node = NodePath("../Sprite2D")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_8mbk1")
-texture = ExtResource("5_86qp2")
+texture = ExtResource("5_tud2g")
 
 [node name="Interactable" type="Area2D" parent="."]
-script = ExtResource("2_7iatk")
+script = ExtResource("6_gljn5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
 shape = SubResource("RectangleShape2D_d0l07")
 
 [node name="HatchingTimer" type="Timer" parent="."]
-wait_time = 4.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
@@ -69,11 +66,11 @@ theme_override_constants/margin_bottom = 5
 [node name="Countdown" type="Label" parent="MarginContainer" node_paths=PackedStringArray("timer")]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = ExtResource("5_fwjoi")
+theme = ExtResource("7_nd5av")
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 6
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("5_iir25")
+script = ExtResource("8_fct82")
 timer = NodePath("../../HatchingTimer")

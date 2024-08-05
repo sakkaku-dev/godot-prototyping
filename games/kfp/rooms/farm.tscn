@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=12 format=3 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
 [ext_resource type="PackedScene" uid="uid://sout08yq6hm3" path="res://games/kfp/chicken/chicken.tscn" id="2_r7346"]
+[ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="4_2dbax"]
 [ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="4_qjkfk"]
+[ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/old/blue_icon_button.tscn" id="5_tyw0h"]
+[ext_resource type="Script" path="res://games/kfp/ui/EggAction.gd" id="6_fdcvi"]
+[ext_resource type="Texture2D" uid="uid://2is22vrwv0lb" path="res://games/kfp/assets/Egg.png" id="6_rpig0"]
+[ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="8_ym6am"]
+
+[sub_resource type="InputEventAction" id="InputEventAction_10tbd"]
+action = &"slot_1"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_8s8m5"]
+events = [SubResource("InputEventAction_10tbd")]
 
 [node name="Farm" type="Node2D"]
 script = ExtResource("1_q8j44")
@@ -21,13 +33,19 @@ layer_2/tile_data = PackedInt32Array(-524280, 7, 65539, -524281, 7, 1, -524282, 
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
+[node name="EggPlaceholder" type="Sprite2D" parent="."]
+texture = ExtResource("4_2dbax")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("4_qjkfk")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
@@ -42,6 +60,62 @@ text = "Restaurant"
 [node name="EggPack" type="Button" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 text = "Buy Egg Pack"
+
+[node name="FarmUI" type="Control" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FarmActions" type="MarginContainer" parent="CanvasLayer/Control/FarmUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -16.0
+offset_bottom = 36.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/FarmUI/FarmActions"]
+layout_mode = 2
+
+[node name="EggAction" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer" node_paths=PackedStringArray("label", "egg_placeholder", "tile_map") instance=ExtResource("5_tyw0h")]
+layout_mode = 2
+shortcut = SubResource("Shortcut_8s8m5")
+script = ExtResource("6_fdcvi")
+label = NodePath("Label2")
+egg_placeholder = NodePath("../../../../../../EggPlaceholder")
+tile_map = NodePath("../../../../../../TileMap")
+egg_scene = ExtResource("8_ym6am")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer/EggAction"]
+position = Vector2(8, 8)
+texture = ExtResource("6_rpig0")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer/EggAction"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -2.5
+offset_top = -8.0
+offset_right = 2.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Restaurant" to="." method="_on_restaurant_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EggPack" to="." method="_on_egg_pack_pressed"]
