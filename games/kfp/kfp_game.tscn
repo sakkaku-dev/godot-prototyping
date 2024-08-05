@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cpxqtds32bdin"]
+[gd_scene load_steps=21 format=3 uid="uid://cpxqtds32bdin"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp_game.gd" id="1_bjgne"]
 [ext_resource type="PackedScene" uid="uid://xtxs4jv066qp" path="res://games/kfp/rooms/room_001.tscn" id="1_qqs23"]
@@ -9,8 +9,17 @@
 [ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/old/blue_icon_button.tscn" id="6_t2tdg"]
 [ext_resource type="Texture2D" uid="uid://c613d4rqfts01" path="res://assets/UI Base Pack/PNG/grey_sliderLeft.png" id="7_anu5j"]
 [ext_resource type="PackedScene" uid="uid://ca4cw8s8sfift" path="res://games/kfp/ui/chicken_assign.tscn" id="7_qvq8i"]
-[ext_resource type="Texture2D" uid="uid://bjrd1dfgo7akm" path="res://games/kfp/assets/Chicken.png" id="8_ik76d"]
 [ext_resource type="Texture2D" uid="uid://dhmld67j8piv5" path="res://assets/UI Base Pack/PNG/red_circle.png" id="8_qdh7c"]
+[ext_resource type="Texture2D" uid="uid://32y5pqpdsxgr" path="res://games/kfp/assets/Chicken_Uniform.png" id="8_rmuic"]
+[ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="9_13tox"]
+[ext_resource type="Texture2D" uid="uid://bysesiwcefw71" path="res://games/kfp/assets/CuttingBoard.png" id="9_twvmj"]
+[ext_resource type="Script" path="res://games/kfp/ui/room_item_layout.gd" id="13_8fgoh"]
+[ext_resource type="Texture2D" uid="uid://nclu8bvmo17y" path="res://assets/UI Base Pack/PNG/yellow_cross.png" id="13_mfx7w"]
+[ext_resource type="PackedScene" uid="uid://7og3dn0uj0sr" path="res://games/kfp/ui/room_item_tile.tscn" id="13_myd8q"]
+[ext_resource type="Texture2D" uid="uid://jjvrc13u3fm6" path="res://games/kfp/assets/Tiles_Floor.png" id="16_aq4yn"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vdtqk"]
+blend_mode = 1
 
 [sub_resource type="InputEventAction" id="InputEventAction_10tbd"]
 action = &"slot_1"
@@ -24,6 +33,11 @@ script = ExtResource("1_bjgne")
 customer_scene = ExtResource("2_8nnux")
 
 [node name="Room001" parent="." instance=ExtResource("1_qqs23")]
+
+[node name="Placeholder" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.560784)
+material = SubResource("CanvasItemMaterial_vdtqk")
+texture = ExtResource("16_aq4yn")
 
 [node name="CustomerTimer" type="Timer" parent="."]
 script = ExtResource("3_olrns")
@@ -51,43 +65,106 @@ theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="FarmButton" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("6_t2tdg")]
+[node name="FarmButton" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" instance=ExtResource("6_t2tdg")]
 layout_mode = 2
 size_flags_horizontal = 0
 shortcut = SubResource("Shortcut_g2m6n")
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/FarmButton"]
-position = Vector2(8, 8)
-scale = Vector2(0.193548, 0.193548)
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/FarmButton"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("7_anu5j")
+expand_mode = 4
+stretch_mode = 5
 
-[node name="Assign" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("6_t2tdg")]
+[node name="Assign" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" node_paths=PackedStringArray("node") instance=ExtResource("6_t2tdg")]
+layout_mode = 2
+size_flags_horizontal = 0
+shortcut = SubResource("Shortcut_g2m6n")
+script = ExtResource("9_13tox")
+node = NodePath("../../../AssignChicken")
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/Assign"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -8.0
+offset_right = 5.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_rmuic")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="EditRoom" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" node_paths=PackedStringArray("node") instance=ExtResource("6_t2tdg")]
+layout_mode = 2
+size_flags_horizontal = 0
+shortcut = SubResource("Shortcut_g2m6n")
+script = ExtResource("9_13tox")
+node = NodePath("../../../RoomItemLayout")
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/EditRoom"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -8.0
+offset_right = 5.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_twvmj")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="StartButton" parent="CanvasLayer/Control/MarginContainer/HBoxContainer" instance=ExtResource("6_t2tdg")]
 layout_mode = 2
 size_flags_horizontal = 0
 shortcut = SubResource("Shortcut_g2m6n")
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/Assign"]
-position = Vector2(8, 8)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("8_ik76d")
-
-[node name="StartButton" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("6_t2tdg")]
-layout_mode = 2
-size_flags_horizontal = 0
-shortcut = SubResource("Shortcut_g2m6n")
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/StartButton"]
-position = Vector2(8, 8)
-scale = Vector2(0.193548, 0.193548)
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Control/MarginContainer/HBoxContainer/StartButton"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -8.0
+offset_right = 5.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("8_qdh7c")
+expand_mode = 4
+stretch_mode = 5
 
-[node name="AssignChicken" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("container", "toggle_button")]
+[node name="AssignChicken" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("container")]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -98,23 +175,107 @@ offset_bottom = 99.0
 grow_vertical = 2
 script = ExtResource("6_8wori")
 scene = ExtResource("7_qvq8i")
-container = NodePath("MarginContainer/ScrollContainer/VBoxContainer")
-toggle_button = NodePath("../MarginContainer/VBoxContainer/HBoxContainer/Assign")
+container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer")
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/AssignChicken"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/AssignChicken"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/AssignChicken/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/AssignChicken/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Assign Worker"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/AssignChicken/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/AssignChicken/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RoomItemLayout" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("item_button_container", "placeholder", "room")]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -99.0
+offset_right = 76.0
+offset_bottom = 99.0
+grow_vertical = 2
+script = ExtResource("13_8fgoh")
+item_button_container = NodePath("VBoxContainer/ScrollContainer/VBoxContainer")
+placeholder = NodePath("../../../Placeholder")
+room = NodePath("../../../Room001")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/RoomItemLayout"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Edit Restaurant"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="RoomItemTile" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("13_myd8q")]
+layout_mode = 2
+item_id = 2
+placement = 1
+
+[node name="RoomItemTile2" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("13_myd8q")]
+layout_mode = 2
+item_id = 1
+
+[node name="TextureRect" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/ScrollContainer/VBoxContainer/RoomItemTile2/MarginContainer/HBoxContainer" index="0"]
+texture = ExtResource("9_twvmj")
+
+[node name="Label" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/ScrollContainer/VBoxContainer/RoomItemTile2/MarginContainer/HBoxContainer" index="1"]
+text = "CuttingBoard"
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 3
 theme_override_constants/margin_top = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/AssignChicken/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="BlueIconButton" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/MarginContainer/HBoxContainer" instance=ExtResource("6_t2tdg")]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/AssignChicken/MarginContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/RoomItemLayout/VBoxContainer/MarginContainer/HBoxContainer/BlueIconButton"]
+custom_minimum_size = Vector2(10, 10)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("13_mfx7w")
+expand_mode = 3
+stretch_mode = 5
 
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/FarmButton" to="." method="_on_farm_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/HBoxContainer/FarmButton" to="." method="_on_farm_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="assign_chicken" from="CanvasLayer/Control/AssignChicken" to="." method="_on_assign_chicken_assign_chicken"]
+
+[editable path="CanvasLayer/Control/RoomItemLayout/VBoxContainer/ScrollContainer/VBoxContainer/RoomItemTile2"]

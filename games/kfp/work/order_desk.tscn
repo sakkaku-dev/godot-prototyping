@@ -11,9 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://ct4d8em47rm3r" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_exclamation.png" id="8_xr36u"]
 [ext_resource type="Texture2D" uid="uid://32y5pqpdsxgr" path="res://games/kfp/assets/Chicken_Uniform.png" id="10_5h8an"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
-size = Vector2(20, 24)
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w15g2"]
 shader = ExtResource("4_bv30s")
 shader_parameter/thickness = 0.0
@@ -26,40 +23,44 @@ shader_parameter/square_border = true
 shader_parameter/offset = null
 shader_parameter/max_or_add = false
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
+size = Vector2(20, 24)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
 size = Vector2(14, 14)
 
 [node name="OrderDesk" type="Node2D" node_paths=PackedStringArray("customer_queue", "icon", "work_timer", "interact", "chicken_sprite", "mouse_control")]
 z_index = 10
 script = ExtResource("1_w6pbh")
-customer_queue = NodePath("CustomerQueue")
+customer_queue = NodePath("Sprite2D/CustomerQueue")
 icon = NodePath("Sprite2D/Emote")
 work_timer = NodePath("WorkTimer")
 interact = NodePath("Sprite2D/Interactable")
 chicken_sprite = NodePath("Chicken")
 mouse_control = NodePath("Control")
 
-[node name="Chicken" type="Sprite2D" parent="."]
-position = Vector2(0, -5)
-texture = ExtResource("10_5h8an")
-
 [node name="WorkTimer" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 script = ExtResource("3_j8dgj")
 
-[node name="CustomerQueue" type="Area2D" parent="."]
+[node name="Chicken" type="Sprite2D" parent="."]
+position = Vector2(0, -15)
+texture = ExtResource("10_5h8an")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_w15g2")
+position = Vector2(0, -10)
+texture = ExtResource("2_ewccv")
+
+[node name="CustomerQueue" type="Area2D" parent="Sprite2D"]
 position = Vector2(0, 15)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("3_23oqf")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CustomerQueue"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/CustomerQueue"]
 shape = SubResource("RectangleShape2D_ibnlu")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_w15g2")
-texture = ExtResource("2_ewccv")
 
 [node name="Interactable" type="Area2D" parent="Sprite2D"]
 position = Vector2(0, 1)

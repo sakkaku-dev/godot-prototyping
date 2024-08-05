@@ -34,6 +34,7 @@ mouse_control = NodePath("Control")
 
 [node name="Sprite2D2" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_w15g2")
+position = Vector2(0, -7)
 texture = ExtResource("3_jsd6h")
 
 [node name="OutlineInteractable" type="Node" parent="Sprite2D2" node_paths=PackedStringArray("interactable", "node")]
@@ -59,7 +60,8 @@ texture = ExtResource("7_4wx3o")
 timer = NodePath("../../WorkTimer")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 6)
+visible = false
+position = Vector2(0, -1)
 texture = ExtResource("9_w0a81")
 
 [node name="Control" type="Control" parent="."]

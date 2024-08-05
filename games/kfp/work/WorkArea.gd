@@ -49,6 +49,9 @@ func _ready():
 			KfpManager.add_assigned_chicken()
 	)
 
+func _process(delta: float) -> void:
+	mouse_control.mouse_filter = Control.MOUSE_FILTER_STOP if KfpManager.assigning_chicken else Control.MOUSE_FILTER_IGNORE
+
 func do_action(_h: Hand):
 	pass
 
