@@ -92,6 +92,11 @@ func _ready():
 		#else:
 		self.state = MOVE
 	)
+	
+	KfpManager.chicken_removed.connect(func(chicken):
+		if chicken == res:
+			queue_free()
+	)
 
 #func _start_work_day():
 	#self.state = SEARCH_WORK

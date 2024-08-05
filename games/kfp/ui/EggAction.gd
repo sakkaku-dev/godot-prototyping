@@ -15,7 +15,7 @@ func _ready():
 	_update()
 	
 	self.placing_eggs = false
-	pressed.connect(func(): self.placing_eggs = true)
+	toggled.connect(func(on): self.placing_eggs = on)
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):

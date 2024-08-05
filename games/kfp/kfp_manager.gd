@@ -1,16 +1,30 @@
 extends Node
 
+signal eggs_changed()
+signal chicken_supply_changed()
+
+signal chicken_removed(res)
 signal chicken_added(res, pos)
 signal chicken_assigned(c)
+
 signal order_received(id)
 signal order_finished(id)
-signal eggs_changed()
 
 enum Traits {
 	LAZY,
 	DILIGENT,
+	PERFECTIONIST,
+	SLOPPY,
+	CHARMING,
+	NERVOUS,
+	TEAM_PLAYER,
 }
 
+var chicken_supply := 0:
+	set(v):
+		chicken_supply = v
+		chicken_supply_changed.emit()
+		
 var eggs := 0:
 	set(v):
 		eggs = v
@@ -23,6 +37,15 @@ var assigning_chicken: ChickenResource
 var order_id := 0
 var open_orders := []
 var finished_orders := []
+
+func butcher_chicken(res: ChickenResource):
+	if not res in chickens:
+		print("Chicken does not exist or already has been butchered")
+		return
+	
+	chickens.erase(res)
+	chicken_removed.emit(res)
+	self.chicken_supply += randi_range(2, 5)
 
 func add_random_chicken(pos = Vector2.ZERO):
 	var res = ChickenResource.new()

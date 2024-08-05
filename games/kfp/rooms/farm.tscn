@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=17 format=3 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
@@ -8,7 +8,12 @@
 [ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/old/blue_icon_button.tscn" id="5_tyw0h"]
 [ext_resource type="Script" path="res://games/kfp/ui/EggAction.gd" id="6_fdcvi"]
 [ext_resource type="Texture2D" uid="uid://2is22vrwv0lb" path="res://games/kfp/assets/Egg.png" id="6_rpig0"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="7_qyd5v"]
 [ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="8_ym6am"]
+[ext_resource type="Texture2D" uid="uid://cpok2jaoducvh" path="res://games/kfp/assets/ChickenMeat.png" id="10_70xvc"]
+[ext_resource type="Script" path="res://games/kfp/ui/ChickenDetails.gd" id="10_hnqaw"]
+[ext_resource type="Texture2D" uid="uid://dpq1fwmxukves" path="res://assets/UI Base Pack/PNG/grey_tickGrey.png" id="10_x7h85"]
+[ext_resource type="Script" path="res://games/kfp/ui/meat_count.gd" id="11_te1dw"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_10tbd"]
 action = &"slot_1"
@@ -17,9 +22,10 @@ pressed = true
 [sub_resource type="Shortcut" id="Shortcut_8s8m5"]
 events = [SubResource("InputEventAction_10tbd")]
 
-[node name="Farm" type="Node2D"]
+[node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details")]
 script = ExtResource("1_q8j44")
 chicken_scene = ExtResource("2_r7346")
+chicken_details = NodePath("CanvasLayer/Control/ChickenDetails")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_a3vyp")
@@ -61,45 +67,25 @@ text = "Restaurant"
 layout_mode = 2
 text = "Buy Egg Pack"
 
-[node name="FarmUI" type="Control" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="FarmActions" type="MarginContainer" parent="CanvasLayer/Control/FarmUI"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -16.0
-offset_bottom = 36.0
-grow_horizontal = 0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/FarmUI/FarmActions"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
 
-[node name="EggAction" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer" node_paths=PackedStringArray("label", "egg_placeholder", "tile_map") instance=ExtResource("5_tyw0h")]
+[node name="EggAction" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("label", "egg_placeholder", "tile_map") instance=ExtResource("5_tyw0h")]
 layout_mode = 2
+size_flags_horizontal = 0
+toggle_mode = true
 shortcut = SubResource("Shortcut_8s8m5")
 script = ExtResource("6_fdcvi")
 label = NodePath("Label2")
-egg_placeholder = NodePath("../../../../../../EggPlaceholder")
-tile_map = NodePath("../../../../../../TileMap")
+egg_placeholder = NodePath("../../../../../EggPlaceholder")
+tile_map = NodePath("../../../../../TileMap")
 egg_scene = ExtResource("8_ym6am")
 
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer/EggAction"]
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/EggAction"]
 position = Vector2(8, 8)
 texture = ExtResource("6_rpig0")
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer/EggAction"]
+[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/EggAction"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -116,6 +102,85 @@ theme_override_font_sizes/font_size = 8
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Meat" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("label") instance=ExtResource("5_tyw0h")]
+layout_mode = 2
+size_flags_horizontal = 0
+disabled = true
+shortcut = SubResource("Shortcut_8s8m5")
+texture_normal = ExtResource("10_x7h85")
+script = ExtResource("11_te1dw")
+label = NodePath("Label2")
+
+[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Meat"]
+position = Vector2(8, 7)
+scale = Vector2(0.625, 0.625)
+texture = ExtResource("10_70xvc")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/Meat"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -2.5
+offset_top = -8.0
+offset_right = 2.5
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ChickenDetails" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("name_label", "traits_label", "butcher_button")]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -77.0
+offset_bottom = 77.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("10_hnqaw")
+name_label = NodePath("MarginContainer/VBoxContainer/Name")
+traits_label = NodePath("MarginContainer/VBoxContainer/Traits")
+butcher_button = NodePath("MarginContainer/VBoxContainer/Button")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/ChickenDetails"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/ChickenDetails/MarginContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Chicken 000"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+texture = ExtResource("7_qyd5v")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Traits" type="Label" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Butcher"
 
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/Restaurant" to="." method="_on_restaurant_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/VBoxContainer/EggPack" to="." method="_on_egg_pack_pressed"]

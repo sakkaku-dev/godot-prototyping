@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dexy72aki71ak"]
 
-[ext_resource type="Texture2D" uid="uid://dqi0tr2t1jv0r" path="res://assets/UI Base Pack/PNG/blue_button09.png" id="1_jdc25"]
-[ext_resource type="Texture2D" uid="uid://dfnwy6bmyk4a2" path="res://assets/UI Base Pack/PNG/blue_button08.png" id="2_awhkl"]
-[ext_resource type="Texture2D" uid="uid://chep1hsv5psip" path="res://assets/UI Base Pack/PNG/yellow_button08.png" id="3_ko1sn"]
+[ext_resource type="Texture2D" uid="uid://501hg7c7utaa" path="res://assets/UI Base Pack/PNG/blue_button09.png" id="1_jdc25"]
+[ext_resource type="Texture2D" uid="uid://ciii4t3sty5hx" path="res://assets/UI Base Pack/PNG/blue_button12.png" id="3_3ey74"]
+[ext_resource type="Texture2D" uid="uid://bpffqt1stl5bq" path="res://assets/UI Base Pack/PNG/yellow_button08.png" id="3_ko1sn"]
 
 [sub_resource type="InputEventAction" id="InputEventAction_40kp6"]
 action = &"slot_2"
@@ -15,7 +15,7 @@ events = [SubResource("InputEventAction_40kp6")]
 custom_minimum_size = Vector2(16, 16)
 shortcut = SubResource("Shortcut_02pi8")
 texture_normal = ExtResource("1_jdc25")
-texture_pressed = ExtResource("2_awhkl")
-texture_hover = ExtResource("3_ko1sn")
+texture_pressed = ExtResource("3_ko1sn")
+texture_hover = ExtResource("3_3ey74")
 ignore_texture_size = true
 stretch_mode = 5
