@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://games/kfp/emote_root.gd" id="1_11hyw"]
 [ext_resource type="Shader" path="res://shaders/timer.gdshader" id="1_atnsa"]
-[ext_resource type="Texture2D" uid="uid://bgojr8jilldeh" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_dots3.png" id="2_ocjm1"]
+[ext_resource type="Texture2D" uid="uid://dwrgh3orljchb" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_dots3.png" id="2_ocjm1"]
 [ext_resource type="Script" path="res://ui/CircleTimer.gd" id="3_swy21"]
 [ext_resource type="Script" path="res://games/kfp/KeepRotation.gd" id="4_chf5k"]
 
@@ -13,6 +13,7 @@ shader_parameter/mix_amount = 0.6
 shader_parameter/fill = 0.2
 
 [node name="EmoteRoot" type="Node2D"]
+z_index = 5
 script = ExtResource("1_11hyw")
 
 [node name="Emote" type="Sprite2D" parent="."]
