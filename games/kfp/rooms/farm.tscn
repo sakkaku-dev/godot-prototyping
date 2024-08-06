@@ -1,27 +1,21 @@
-[gd_scene load_steps=18 format=3 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=17 format=3 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
 [ext_resource type="PackedScene" uid="uid://sout08yq6hm3" path="res://games/kfp/chicken/chicken.tscn" id="2_r7346"]
 [ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="4_2dbax"]
 [ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="4_qjkfk"]
-[ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/old/blue_icon_button.tscn" id="5_tyw0h"]
 [ext_resource type="Script" path="res://games/kfp/ui/EggAction.gd" id="6_fdcvi"]
-[ext_resource type="Texture2D" uid="uid://2is22vrwv0lb" path="res://games/kfp/assets/Egg.png" id="6_rpig0"]
 [ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="7_qyd5v"]
 [ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="8_ym6am"]
-[ext_resource type="Texture2D" uid="uid://c613d4rqfts01" path="res://assets/UI Base Pack/PNG/grey_sliderLeft.png" id="9_hsoup"]
 [ext_resource type="Texture2D" uid="uid://cpok2jaoducvh" path="res://games/kfp/assets/ChickenMeat.png" id="10_70xvc"]
 [ext_resource type="Script" path="res://games/kfp/ui/ChickenDetails.gd" id="10_hnqaw"]
-[ext_resource type="Texture2D" uid="uid://dpq1fwmxukves" path="res://assets/UI Base Pack/PNG/grey_tickGrey.png" id="10_x7h85"]
 [ext_resource type="Script" path="res://games/kfp/ui/meat_count.gd" id="11_te1dw"]
-
-[sub_resource type="InputEventAction" id="InputEventAction_10tbd"]
-action = &"slot_1"
-pressed = true
-
-[sub_resource type="Shortcut" id="Shortcut_8s8m5"]
-events = [SubResource("InputEventAction_10tbd")]
+[ext_resource type="PackedScene" uid="uid://cg0w84jqjxbvx" path="res://games/kfp/ui/shop_item.tscn" id="17_bx6d6"]
+[ext_resource type="Resource" uid="uid://bq7dbi1y0m4wi" path="res://games/kfp/ui/shop/shop_farm_egg.tres" id="18_4iatc"]
+[ext_resource type="Texture2D" uid="uid://bormlewkja157" path="res://games/kfp/assets/EggLarge.png" id="20_4nu6w"]
+[ext_resource type="Script" path="res://games/kfp/ui/money_label.gd" id="20_w7bhv"]
+[ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="21_o0cx3"]
 
 [node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details")]
 script = ExtResource("1_q8j44")
@@ -54,100 +48,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("4_qjkfk")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/MarginContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Restaurant" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer" instance=ExtResource("5_tyw0h")]
-layout_mode = 2
-size_flags_horizontal = 0
-shortcut = SubResource("Shortcut_8s8m5")
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/Restaurant"]
-position = Vector2(8, 8)
-scale = Vector2(0.193548, 0.193548)
-texture = ExtResource("9_hsoup")
-
-[node name="EggAction" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("label", "egg_placeholder", "tile_map") instance=ExtResource("5_tyw0h")]
-layout_mode = 2
-size_flags_horizontal = 0
-toggle_mode = true
-shortcut = SubResource("Shortcut_8s8m5")
-script = ExtResource("6_fdcvi")
-label = NodePath("Label2")
-egg_placeholder = NodePath("../../../../../../EggPlaceholder")
-tile_map = NodePath("../../../../../../TileMap")
-egg_scene = ExtResource("8_ym6am")
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/EggAction"]
-position = Vector2(8, 8)
-texture = ExtResource("6_rpig0")
-
-[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/EggAction"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -2.5
-offset_top = -8.0
-offset_right = 2.5
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 8
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Meat" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer" node_paths=PackedStringArray("label") instance=ExtResource("5_tyw0h")]
-layout_mode = 2
-size_flags_horizontal = 0
-disabled = true
-shortcut = SubResource("Shortcut_8s8m5")
-texture_normal = ExtResource("10_x7h85")
-script = ExtResource("11_te1dw")
-label = NodePath("Label2")
-
-[node name="Sprite2D" type="Sprite2D" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/Meat"]
-position = Vector2(8, 7)
-scale = Vector2(0.625, 0.625)
-texture = ExtResource("10_70xvc")
-
-[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/Meat"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -2.5
-offset_top = -8.0
-offset_right = 2.5
-offset_bottom = 4.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 8
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="EggPack" type="Button" parent="CanvasLayer/Control/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Buy Egg Pack"
 
 [node name="ChickenDetails" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("name_label", "traits_label", "butcher_button")]
 layout_mode = 1
@@ -196,5 +96,137 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "Butcher"
 
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/HBoxContainer/Restaurant" to="." method="_on_restaurant_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer/VBoxContainer/EggPack" to="." method="_on_egg_pack_pressed"]
+[node name="Shop" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -105.0
+offset_top = -99.0
+offset_bottom = 99.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Shop"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/Shop/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/VBoxContainer/PanelContainer"]
+layout_mode = 2
+text = "Shop"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/Shop/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Shop/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="EggPack" parent="CanvasLayer/Control/Shop/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("17_bx6d6")]
+layout_mode = 2
+shop_item = ExtResource("18_4iatc")
+
+[node name="MarginContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -51.0
+offset_bottom = 20.0
+grow_horizontal = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 2
+
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/MarginContainer/Meat"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("10_70xvc")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/MarginContainer/Meat"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_te1dw")
+
+[node name="MoneyLabel" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+text = "$1000"
+script = ExtResource("20_w7bhv")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer" node_paths=PackedStringArray("node")]
+layout_mode = 2
+text = "Shop"
+script = ExtResource("21_o0cx3")
+node = NodePath("../../../Shop")
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer"]
+layout_mode = 2
+color = Color(0.235294, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer/MarginContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 2
+
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer/MarginContainer/Meat"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("20_4nu6w")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer/MarginContainer/Meat"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EggAction" type="TextureButton" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer" node_paths=PackedStringArray("label", "egg_placeholder", "tile_map", "active_color")]
+layout_mode = 2
+script = ExtResource("6_fdcvi")
+label = NodePath("../MarginContainer/Meat/Label2")
+egg_placeholder = NodePath("../../../../../../EggPlaceholder")
+tile_map = NodePath("../../../../../../TileMap")
+egg_scene = ExtResource("8_ym6am")
+active_color = NodePath("../ColorRect")
+
+[node name="Restaurant" type="Button" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
+layout_mode = 2
+text = "Restaurant >"
+
+[connection signal="buy" from="CanvasLayer/Control/Shop/VBoxContainer/ScrollContainer/VBoxContainer/EggPack" to="." method="_on_egg_pack_buy"]
+[connection signal="pressed" from="CanvasLayer/Control/MarginContainer2/HBoxContainer/Restaurant" to="." method="_on_restaurant_pressed"]

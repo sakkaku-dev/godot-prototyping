@@ -2,6 +2,9 @@ extends Node
 
 signal eggs_changed()
 signal chicken_supply_changed()
+signal money_changed()
+signal order_desk_changed()
+signal cutting_board_changed()
 
 signal chicken_removed(res)
 signal chicken_added(res, pos)
@@ -21,14 +24,15 @@ enum Traits {
 }
 
 var chicken_supply := 0:
-	set(v):
-		chicken_supply = v
-		chicken_supply_changed.emit()
-		
+	set(v): chicken_supply = v; chicken_supply_changed.emit()
 var eggs := 0:
-	set(v):
-		eggs = v
-		eggs_changed.emit()
+	set(v): eggs = v; eggs_changed.emit()
+var money := 1000:
+	set(v): money = v; money_changed.emit()
+var order_desks := 0:
+	set(v): order_desks = v; order_desk_changed.emit()
+var cutting_boards := 0:
+	set(v): cutting_boards = v; cutting_board_changed.emit()
 
 var chickens := []
 var assigned_chickens := []
@@ -64,8 +68,16 @@ func add_new_order():
 	order_received.emit(order_id)
 	return order_id
 
-func buy_egg():
-	self.eggs += 1
+func buy_egg(item: ShopResource): if pay_item(item): self.eggs += 1
+func buy_order_desk(item: ShopResource): if pay_item(item): self.order_desks += 1
+func buy_cutting_board(item: ShopResource): if pay_item(item): self.cutting_boards += 1
+func pay_item(item: ShopResource):
+	if item.price > money:
+		print("Not enough money to buy egg: %s" % item.resource_path)
+		return false
+
+	self.money -= item.price
+	return true
 
 func placed_egg():
 	if eggs <= 0: return false

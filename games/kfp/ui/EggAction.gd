@@ -1,21 +1,23 @@
-extends TextureButton
+extends BaseButton
 
 @export var label: Label
 @export var egg_placeholder: Sprite2D
 @export var tile_map: TileMap
 @export var egg_scene: PackedScene
+@export var active_color: ColorRect
 
 var placing_eggs := false:
 	set(v):
 		placing_eggs = v
 		egg_placeholder.visible = v
+		active_color.visible = v
 
 func _ready():
 	KfpManager.eggs_changed.connect(func(): _update())
 	_update()
 	
 	self.placing_eggs = false
-	toggled.connect(func(on): self.placing_eggs = on)
+	pressed.connect(func(): self.placing_eggs = not placing_eggs)
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_cancel"):

@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://c2ro12l6f7xuu"]
 
-[ext_resource type="Script" path="res://games/kfp/okyaku.gd" id="1_8xdq1"]
+[ext_resource type="Script" path="res://games/kfp/customer.gd" id="1_8xdq1"]
 [ext_resource type="Texture2D" uid="uid://dvurvh6atip8l" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceHappy.png" id="2_drute"]
 [ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="2_w1kk5"]
 [ext_resource type="Texture2D" uid="uid://hw8dl0ltqt0t" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceAngry.png" id="3_0xuox"]

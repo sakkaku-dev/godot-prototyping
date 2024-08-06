@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ShopResource" load_steps=3 format=3 uid="uid://bq7dbi1y0m4wi"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/shop/shop_resource.gd" id="1_jsnek"]
+[ext_resource type="Texture2D" uid="uid://bormlewkja157" path="res://games/kfp/assets/EggLarge.png" id="2_ldw86"]
+
+[resource]
+script = ExtResource("1_jsnek")
+name = "Egg"
+sprite = ExtResource("2_ldw86")
+price = 50

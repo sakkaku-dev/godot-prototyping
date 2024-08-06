@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopResource" load_steps=3 format=3 uid="uid://bwpe36rcgikap"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/shop/shop_resource.gd" id="1_kgdlb"]
+[ext_resource type="Texture2D" uid="uid://bysesiwcefw71" path="res://games/kfp/assets/CuttingBoard.png" id="2_qfqw8"]
+
+[resource]
+script = ExtResource("1_kgdlb")
+type = 1
+name = "Cutting Board"
+sprite = ExtResource("2_qfqw8")
+price = 100

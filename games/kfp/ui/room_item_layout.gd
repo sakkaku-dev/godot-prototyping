@@ -24,8 +24,10 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if selected_button:
 		if event.is_action_pressed("action"):
-			if room.place_tile(selected_button, _current_coord()):
-				pass # TODO: remove item from inventory
+			if selected_button.get_count() > 0 and room.place_tile(selected_button, _current_coord()):
+				selected_button.use_item()
+				if selected_button.get_count() <= 0:
+					self.selected_button = null
 		elif event.is_action_pressed("erase"):
 			room.clear_tile(_current_coord())
 		elif event.is_action_pressed("ui_cancel"):

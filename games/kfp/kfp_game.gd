@@ -10,8 +10,9 @@ func _ready():
 	customer_timer.timeout.connect(_spawn_customer)
 
 func _spawn_customer():
-	var node = customer_scene.instantiate()
+	var node = customer_scene.instantiate() as Customer
 	node.global_position = customer_spawn.global_position
+	node.order_completed.connect(func(): KfpManager.money += 5)
 	add_child(node)
 
 func _on_start_button_pressed():
@@ -22,3 +23,9 @@ func _on_farm_button_pressed():
 
 func _on_assign_chicken_assign_chicken(chicken):
 	KfpManager.assigning_chicken = chicken
+
+func _on_order_desk_buy(res: ShopResource) -> void:
+	KfpManager.buy_order_desk(res)
+
+func _on_cutting_board_buy(res: ShopResource) -> void:
+	KfpManager.buy_cutting_board(res)

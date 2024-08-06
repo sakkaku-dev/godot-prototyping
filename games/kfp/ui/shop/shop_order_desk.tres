@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopResource" load_steps=3 format=3 uid="uid://cbd0120oh4qlj"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/shop/shop_resource.gd" id="1_vg3to"]
+[ext_resource type="Texture2D" uid="uid://bpw5rahwqmly3" path="res://games/kfp/assets/OrderDesk.png" id="2_5t0jx"]
+
+[resource]
+script = ExtResource("1_vg3to")
+type = 2
+name = "Order Desk"
+sprite = ExtResource("2_5t0jx")
+price = 100

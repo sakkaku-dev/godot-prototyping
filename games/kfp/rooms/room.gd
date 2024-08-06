@@ -38,6 +38,10 @@ func place_tile(tile: RoomItemTile, coord: Vector2i):
 	if not coord in tiles.get_used_cells():
 		print("Coord %s is not in tiles for %s" % [coord, Placement.keys()[tile.placement]])
 		return false
+		
+	if custom_tiles.get_cell_source_id(coord) != -1:
+		print("Coord %s already has an item there" % [coord])
+		return false
 	
 	custom_tiles.set_cell(coord, tile.source_id, Vector2.ZERO, tile.item_id)
 	return true

@@ -24,7 +24,7 @@
 [ext_resource type="Script" path="res://games/kfp/work/TakeOutQueue.gd" id="23_1ne54"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="23_5vniq"]
 [ext_resource type="PackedScene" uid="uid://cnx7xvoy0ju87" path="res://games/kfp/work/cutting_board.tscn" id="23_f86mw"]
-[ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/okyaku.tscn" id="23_kk0tv"]
+[ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/customer.tscn" id="23_kk0tv"]
 [ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="23_twhax"]
 [ext_resource type="Script" path="res://games/kfp/CustomerSpawn.gd" id="24_kvsde"]
 [ext_resource type="Script" path="res://games/kfp/work/WorkTimer.gd" id="25_1xb8t"]

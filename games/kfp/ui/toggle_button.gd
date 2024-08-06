@@ -1,5 +1,5 @@
 class_name ToggleButton
-extends TextureButton
+extends BaseButton
 
 @export var node: Control
 

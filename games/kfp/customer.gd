@@ -64,8 +64,9 @@ var state = MOVING_ORDER:
 				_move_to(pos, WAITING)
 		elif state == MOVING_ORDER:
 			current_queue = get_tree().get_first_node_in_group(CustomerQueue.GROUP)
-			var pos = current_queue.queue_customer(self)
-			_move_to(pos, ORDER)
+			if current_queue:
+				var pos = current_queue.queue_customer(self)
+				_move_to(pos, ORDER)
 			
 			
 

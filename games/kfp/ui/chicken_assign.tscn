@@ -4,7 +4,15 @@
 [ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="1_hypfb"]
 
 [node name="ChickenAssign" type="TextureButton"]
-custom_minimum_size = Vector2(0, 12)
+custom_minimum_size = Vector2(0, 20)
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 2
 script = ExtResource("1_5rwww")
 
 [node name="ColorRect" type="ColorRect" parent="."]

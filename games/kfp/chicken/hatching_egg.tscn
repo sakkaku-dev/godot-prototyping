@@ -1,10 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2oneau5o6uvo"]
+[gd_scene load_steps=7 format=3 uid="uid://b2oneau5o6uvo"]
 
 [ext_resource type="Script" path="res://games/kfp/chicken/hatching_egg.gd" id="1_5glup"]
-[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="3_e2u0h"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_rn3ep"]
 [ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="5_tud2g"]
-[ext_resource type="Script" path="res://util/Interactable.gd" id="6_gljn5"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="7_nd5av"]
 [ext_resource type="Script" path="res://util/Countdown.gd" id="8_fct82"]
 
@@ -20,27 +18,13 @@ shader_parameter/square_border = true
 shader_parameter/offset = null
 shader_parameter/max_or_add = false
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_d0l07"]
-size = Vector2(18, 18)
-
 [node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("timer")]
 script = ExtResource("1_5glup")
 timer = NodePath("HatchingTimer")
 
-[node name="OutlineInteractable" type="Node" parent="." node_paths=PackedStringArray("interactable", "node")]
-script = ExtResource("3_e2u0h")
-interactable = NodePath("../Interactable")
-node = NodePath("../Sprite2D")
-
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_8mbk1")
 texture = ExtResource("5_tud2g")
-
-[node name="Interactable" type="Area2D" parent="."]
-script = ExtResource("6_gljn5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactable"]
-shape = SubResource("RectangleShape2D_d0l07")
 
 [node name="HatchingTimer" type="Timer" parent="."]
 wait_time = 5.0
