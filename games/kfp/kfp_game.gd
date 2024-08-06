@@ -1,6 +1,10 @@
 extends Node2D
 
 @export var customer_scene: PackedScene
+@export var opened_ui: Control
+@export var closed_ui: Control
+
+@onready var day_timer: Timer = $DayTimer
 
 @onready var customer_timer = $CustomerTimer
 @onready var customer_spawn: Node2D = get_tree().get_first_node_in_group("spawn")
@@ -8,15 +12,39 @@ extends Node2D
 func _ready():
 	KfpManager.assigned_chickens = []
 	customer_timer.timeout.connect(_spawn_customer)
+	day_timer.timeout.connect(_day_ended)
+	_show_buttons()
+
+func _day_ended():
+	customer_timer.stop()
+	_check_if_no_customers_left()
+
+func _check_if_no_customers_left(exclude: Customer = null):
+	if get_tree().get_nodes_in_group(Customer.GROUP).filter(func(c): return c != exclude).size() == 0:
+		_report_day()
+
+func _show_buttons(closed = true):
+	opened_ui.visible = not closed
+	closed_ui.visible = closed
+
+func _report_day():
+	_show_buttons()
 
 func _spawn_customer():
 	var node = customer_scene.instantiate() as Customer
 	node.global_position = customer_spawn.global_position
 	node.order_completed.connect(func(): KfpManager.money += 5)
+	node.removed.connect(func(): _check_if_no_customers_left(node))
 	add_child(node)
 
 func _on_start_button_pressed():
+	day_timer.start()
 	customer_timer.random_start()
+	_show_buttons(false)
+
+func _on_end_button_pressed() -> void:
+	day_timer.stop()
+	_day_ended()
 
 func _on_farm_button_pressed():
 	get_tree().change_scene_to_file("res://games/kfp/rooms/farm.tscn")

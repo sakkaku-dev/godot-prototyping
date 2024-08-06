@@ -1,9 +1,12 @@
 class_name Customer
 extends CharacterBody2D
 
+const GROUP = "Customer"
+
 signal order_failed()
 signal order_completed()
 signal leaving()
+signal removed()
 
 enum {
 	MOVING_ORDER,
@@ -41,6 +44,7 @@ var state = MOVING_ORDER:
 		state = v
 		
 		if state == REMOVE:
+			removed.emit()
 			queue_free()
 		elif state == ORDER:
 			order_wait_time.start()
@@ -71,6 +75,8 @@ var state = MOVING_ORDER:
 			
 
 func _ready():
+	add_to_group(GROUP)
+	
 	emote.set_texture(null)
 	order_wait_time.timeout.connect(func():
 		emote.set_texture(angry_face)
