@@ -2,6 +2,7 @@ extends RoomItemTile
 
 func _ready() -> void:
 	super._ready()
+	buy.connect(func(res): KfpManager.buy_order_desk(res))
 	KfpManager.order_desk_changed.connect(func(): _update())
 
 func get_count():

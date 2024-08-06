@@ -5,6 +5,7 @@ enum Item {
 	EGG,
 	CUTTING_BOARD,
 	ORDER_DESK,
+	LAYOUT,
 }
 
 @export var type := Item.EGG

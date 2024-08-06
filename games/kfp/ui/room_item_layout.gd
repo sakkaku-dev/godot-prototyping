@@ -19,7 +19,8 @@ func _ready() -> void:
 	self.selected_button = null
 	
 	for child in item_button_container.get_children():
-		child.pressed.connect(func(): self.selected_button = child)
+		if child is RoomItemTile:
+			child.pressed.connect(func(): self.selected_button = child)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if selected_button:

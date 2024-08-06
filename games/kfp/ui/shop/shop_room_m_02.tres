@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopResource" load_steps=3 format=3 uid="uid://3ic4qv43txnn"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/shop/shop_resource.gd" id="1_mv8sh"]
+[ext_resource type="Texture2D" uid="uid://jjvrc13u3fm6" path="res://games/kfp/assets/Tiles_Floor.png" id="2_w2u12"]
+
+[resource]
+script = ExtResource("1_mv8sh")
+type = 3
+name = "Layout M 02"
+sprite = ExtResource("2_w2u12")
+price = 2000
