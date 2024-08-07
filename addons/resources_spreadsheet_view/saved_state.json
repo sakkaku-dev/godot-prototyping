@@ -1,0 +1,14 @@
+{
+  "hidden_columns": {
+    "res://games/kfp/ui/shop/": {
+      "resource_local_to_scene": true,
+      "resource_name": true
+    }
+  },
+  "recent_paths": [
+    "res://games/kfp/ui/shop/"
+  ],
+  "table_functions": {
+
+  }
+}

@@ -12,7 +12,7 @@ signal farm_size_changed()
 
 signal chicken_removed(res)
 signal chicken_added(res, pos)
-signal chicken_assigned(c)
+signal chicken_assigned_changed(c)
 
 signal order_received(id)
 signal order_prepared(id)
@@ -66,14 +66,21 @@ func add_random_chicken(pos = Vector2.ZERO):
 	chickens.append(res)
 	chicken_added.emit(res, pos)
 
-############
-### Shop ###
-############
 
-func buy_egg(item: ShopResource): if pay_item(item): self.eggs += 1
-func buy_order_desk(item: ShopResource): if pay_item(item): self.order_desks += 1
-func buy_cutting_board(item: ShopResource): if pay_item(item): self.cutting_boards += 1
-func buy_takeout_desk(item: ShopResource): if pay_item(item): self.takeout_desks += 1
+########################
+### Shop / Inventory ###
+########################
+
+
+func buy_item(item: ShopResource):
+	if pay_item(item):
+		add_item(item)
+func add_item(item: ShopResource):
+	match item.type:
+		ShopResource.Item.ORDER_DESK: self.order_desks += 1
+		ShopResource.Item.CUTTING_BOARD: self.cutting_boards += 1
+		ShopResource.Item.TAKEOUT_DESK: self.takeout_desks += 1
+		ShopResource.Item.EGG: self.eggs += 1
 func pay_item(item: ShopResource):
 	if item.price > money:
 		print("Not enough money to buy egg: %s" % item.resource_path)
@@ -87,10 +94,15 @@ func pay_item(item: ShopResource):
 ### Restaurant ###
 ##################
 
+
 func add_assigned_chicken():
 	assigned_chickens.append(assigning_chicken)
-	chicken_assigned.emit(assigning_chicken)
+	chicken_assigned_changed.emit()
 	assigning_chicken = null
+
+func remove_assigned_chicken(res: ChickenResource):
+	assigned_chickens.erase(res)
+	chicken_assigned_changed.emit()
 
 func add_new_order():
 	order_id += 1

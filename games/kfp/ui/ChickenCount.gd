@@ -3,7 +3,7 @@ extends Label
 @export var show_used := true
 
 func _ready() -> void:
-	KfpManager.chicken_assigned.connect(func(_x): _update())
+	KfpManager.chicken_assigned_changed.connect(func(): _update())
 	KfpManager.chicken_added.connect(func(_x, _y): _update())
 	KfpManager.chicken_removed.connect(func(_x): _update())
 	_update()

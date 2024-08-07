@@ -22,6 +22,12 @@ func _ready() -> void:
 		if child is RoomItemTile:
 			child.pressed.connect(func(): self.selected_button = child)
 
+func _find_button_for_item(item_id: int):
+	for child in item_button_container.get_children():
+		if child is RoomItemTile and child.item_id == item_id:
+			return child
+	return null
+
 func _unhandled_input(event: InputEvent) -> void:
 	if selected_button:
 		if event.is_action_pressed("action"):
@@ -30,7 +36,13 @@ func _unhandled_input(event: InputEvent) -> void:
 				if selected_button.get_count() <= 0:
 					self.selected_button = null
 		elif event.is_action_pressed("erase"):
-			room.clear_tile(_current_coord())
+			var item = room.clear_tile(_current_coord())
+			if item >= 0:
+				var btn = _find_button_for_item(item)
+				if btn:
+					KfpManager.add_item(btn.shop_item)
+				else:
+					print("Cannot find button for item_id %s" % item)
 		elif event.is_action_pressed("ui_cancel"):
 			self.selected_button = null
 			get_viewport().set_input_as_handled()

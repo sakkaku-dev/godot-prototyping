@@ -114,25 +114,26 @@ script = ExtResource("8_prhul")
 layout_mode = 2
 connect_to_global = true
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Actions/HBoxContainer"]
+[node name="Supply" type="MarginContainer" parent="CanvasLayer/Control/Actions/HBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_right = 2
 
-[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/Actions/HBoxContainer/MarginContainer"]
+[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/Actions/HBoxContainer/Supply"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 2
 
-[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/Actions/HBoxContainer/MarginContainer/Meat"]
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/Actions/HBoxContainer/Supply/Meat"]
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 texture = ExtResource("25_n843f")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/Actions/HBoxContainer/MarginContainer/Meat"]
+[node name="Label2" type="Label" parent="CanvasLayer/Control/Actions/HBoxContainer/Supply/Meat"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "0"

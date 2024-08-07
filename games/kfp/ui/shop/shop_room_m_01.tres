@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_0l5rx")
-type = 3
+type = 4
 name = "Layout M 01"
 sprite = ExtResource("2_gfy34")
 price = 2000

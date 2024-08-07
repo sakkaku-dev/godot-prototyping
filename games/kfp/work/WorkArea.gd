@@ -33,6 +33,11 @@ func _ready():
 	self.worker = null
 	add_to_group(GROUP)
 	
+	tree_exiting.connect(func():
+		if worker:
+			KfpManager.remove_assigned_chicken(worker)
+	)
+	
 	interact.interact_started.connect(func(a):
 		#if handle_movement(a): return
 		do_action(a)

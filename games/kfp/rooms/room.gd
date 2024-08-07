@@ -47,5 +47,9 @@ func place_tile(tile: RoomItemTile, coord: Vector2i):
 	return true
 
 func clear_tile(coord: Vector2i):
-	custom_tiles.set_cell(coord, -1)
+	if not coord in custom_tiles.get_used_cells():
+		return -1
 	
+	var alternative = custom_tiles.get_cell_alternative_tile(coord)
+	custom_tiles.set_cell(coord, -1)
+	return alternative

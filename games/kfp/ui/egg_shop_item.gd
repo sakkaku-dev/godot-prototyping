@@ -16,7 +16,7 @@ func _ready() -> void:
 	self.placing_eggs = false
 	
 	KfpManager.eggs_changed.connect(func(): _update())
-	buy.connect(func(res): KfpManager.buy_egg(res))
+	buy.connect(func(res): KfpManager.buy_item(res))
 	pressed.connect(func(): self.placing_eggs = not placing_eggs)
 
 func get_count():

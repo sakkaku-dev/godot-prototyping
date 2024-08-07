@@ -117,25 +117,26 @@ grow_horizontal = 0
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
+[node name="Supply" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_right = 2
 
-[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/MarginContainer"]
+[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/Supply"]
 custom_minimum_size = Vector2(16, 16)
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/separation = 2
 
-[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/MarginContainer/Meat"]
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/Supply/Meat"]
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
 texture = ExtResource("10_70xvc")
 expand_mode = 5
 stretch_mode = 5
 
-[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/MarginContainer/Meat"]
+[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/Supply/Meat"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "0"
