@@ -40,7 +40,7 @@ var cutting_boards := 0:
 var takeout_desks := 0:
 	set(v): takeout_desks = v; takeout_desk_changed.emit()
 
-var stars := -1:
+var stars := 0:
 	set(v): stars = v; stars_changed.emit()
 var average_revenue := 0.0:
 	set(v): average_revenue = v; average_revenue_changed.emit()
@@ -133,19 +133,25 @@ func finish_order(id: int):
 
 func update_revenue(revenue: Array[int]):
 	var avg = calculate_average(revenue)
-	self.average_revenue = (average_revenue + avg) / 2.
+	if average_revenue <= 0:
+		self.average_revenue = avg
+	else:
+		self.average_revenue = add_averages(average_revenue, avg)
 
 func update_reviews(reviews: Array[int]):
 	var avg = calculate_average(reviews)
-	if stars < 0:
+	if stars <= 0:
 		self.stars = avg
 	else:
-		self.stars = (stars + avg) / 2.
+		self.stars = add_averages(stars, avg)
 
 func calculate_average(values: Array[int]):
 	var sum = values.reduce(func(a, b): return a + b, 0.0)
 	return sum / values.size()
 
+func add_averages(avg1: float, avg2: float):
+	var sum = avg1 + avg2
+	return avg1/sum + avg2/sum
 
 ############
 ### Farm ###

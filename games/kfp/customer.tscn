@@ -24,8 +24,6 @@ angry_face = ExtResource("3_0xuox")
 wait_emote = ExtResource("4_466gg")
 
 [node name="NavigationMove2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
-path_desired_distance = 10.0
-target_desired_distance = 5.0
 debug_enabled = true
 script = ExtResource("2_w1kk5")
 enemy = NodePath("..")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://cpxqtds32bdin"]
+[gd_scene load_steps=39 format=4 uid="uid://cpxqtds32bdin"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp_game.gd" id="1_bjgne"]
 [ext_resource type="PackedScene" uid="uid://xtxs4jv066qp" path="res://games/kfp/rooms/room_001.tscn" id="1_qqs23"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" path="res://games/kfp/ui/cutting_board_tile.gd" id="14_be2f8"]
 [ext_resource type="Texture2D" uid="uid://jjvrc13u3fm6" path="res://games/kfp/assets/Tiles_Floor.png" id="16_aq4yn"]
 [ext_resource type="Resource" uid="uid://cbd0120oh4qlj" path="res://games/kfp/ui/shop/shop_order_desk.tres" id="17_f06ir"]
+[ext_resource type="Script" path="res://games/kfp/speed_up_button.gd" id="18_fjsbq"]
 [ext_resource type="PackedScene" uid="uid://cg0w84jqjxbvx" path="res://games/kfp/ui/shop_item.tscn" id="18_if6ci"]
 [ext_resource type="Script" path="res://games/kfp/ui/money_label.gd" id="18_os5ge"]
 [ext_resource type="Resource" uid="uid://bwpe36rcgikap" path="res://games/kfp/ui/shop/shop_cutting_board.tres" id="18_u87dg"]
@@ -68,7 +69,7 @@ min_time = 5.0
 max_time = 8.0
 
 [node name="DayTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 60.0
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -198,11 +199,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="EndButton" type="Button" parent="CanvasLayer/Control/OpenUI"]
-layout_mode = 2
-offset_right = 50.0
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/OpenUI"]
+layout_mode = 0
+offset_right = 54.0
 offset_bottom = 20.0
+
+[node name="EndButton" type="Button" parent="CanvasLayer/Control/OpenUI/HBoxContainer"]
+layout_mode = 2
 text = "Close Early"
+
+[node name="SpeedUpButton" type="Button" parent="CanvasLayer/Control/OpenUI/HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+toggle_mode = true
+text = "Speed Up"
+script = ExtResource("18_fjsbq")
 
 [node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/Control/OpenUI"]
 layout_mode = 1
@@ -224,6 +235,7 @@ timer = NodePath("../../../../../DayTimer")
 flipped = true
 
 [node name="ClosedUI" type="Control" parent="CanvasLayer/Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -436,6 +448,6 @@ size_flags_vertical = 8
 text = "Close"
 
 [connection signal="pressed" from="CanvasLayer/Control/Actions/HBoxContainer/FarmButton" to="." method="_on_farm_button_pressed"]
-[connection signal="pressed" from="CanvasLayer/Control/OpenUI/EndButton" to="." method="_on_end_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/OpenUI/HBoxContainer/EndButton" to="." method="_on_end_button_pressed"]
 [connection signal="assign_chicken" from="CanvasLayer/Control/ClosedUI/AssignChicken" to="." method="_on_assign_chicken_assign_chicken"]
 [connection signal="pressed" from="CanvasLayer/Control/ClosedUI/CloseUI/HBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
