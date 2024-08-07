@@ -9,6 +9,7 @@ signal buy(res: ShopResource)
 @export var count_label: Label
 @export var texture: TextureRect
 @export var buy_button: BaseButton
+@export var highlight_bg: ColorRect
 
 func _ready() -> void:
 	label.text = "%s" % shop_item.name
@@ -17,3 +18,6 @@ func _ready() -> void:
 	count_label.hide()
 
 	buy_button.pressed.connect(func(): buy.emit(shop_item))
+
+func set_highlight(enabled: bool):
+	highlight_bg.visible = enabled

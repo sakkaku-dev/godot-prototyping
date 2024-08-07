@@ -28,7 +28,3 @@ func _spawn_chicken(chicken: ChickenResource, pos = Vector2.ZERO):
 
 func _on_restaurant_pressed():
 	get_tree().change_scene_to_file("res://games/kfp/kfp_game.tscn")
-
-
-func _on_egg_pack_buy(res: Variant) -> void:
-	KfpManager.buy_egg(res)

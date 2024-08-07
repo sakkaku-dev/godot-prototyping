@@ -1,5 +1,7 @@
 extends Label
 
+@export var show_used := true
+
 func _ready() -> void:
 	KfpManager.chicken_assigned.connect(func(_x): _update())
 	KfpManager.chicken_added.connect(func(_x, _y): _update())
@@ -7,4 +9,8 @@ func _ready() -> void:
 	_update()
 
 func _update() -> void:
-	text = "%s / %s" % [KfpManager.assigned_chickens.size(), KfpManager.chickens.size()]
+	text = ""
+	if show_used:
+		text += "%s / " % KfpManager.assigned_chickens.size()
+	
+	text += "%s" % KfpManager.chickens.size()

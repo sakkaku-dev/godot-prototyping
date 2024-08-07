@@ -1,19 +1,21 @@
-[gd_scene load_steps=31 format=4 uid="uid://cpxqtds32bdin"]
+[gd_scene load_steps=33 format=4 uid="uid://cpxqtds32bdin"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp_game.gd" id="1_bjgne"]
 [ext_resource type="PackedScene" uid="uid://xtxs4jv066qp" path="res://games/kfp/rooms/room_001.tscn" id="1_qqs23"]
 [ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/customer.tscn" id="2_8nnux"]
-[ext_resource type="Script" path="res://util/RandomTimer.gd" id="3_olrns"]
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="3_rilgl"]
 [ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="5_yxcle"]
+[ext_resource type="Script" path="res://games/kfp/customer_timer.gd" id="6_5tyov"]
 [ext_resource type="Script" path="res://games/kfp/ui/AssignChicken.gd" id="6_8wori"]
 [ext_resource type="PackedScene" uid="uid://ca4cw8s8sfift" path="res://games/kfp/ui/chicken_assign.tscn" id="7_qvq8i"]
 [ext_resource type="Shader" path="res://shaders/progress.gdshader" id="8_p0i26"]
 [ext_resource type="Script" path="res://ui/progress_full.gd" id="8_wpfs8"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="9_13tox"]
+[ext_resource type="Texture2D" uid="uid://drkq7i3invixj" path="res://games/kfp/assets/Star.png" id="9_t3jng"]
 [ext_resource type="Script" path="res://games/kfp/ui/OrderDeskTile.gd" id="12_ckfw6"]
 [ext_resource type="Script" path="res://games/kfp/ui/room_item_layout.gd" id="13_8fgoh"]
 [ext_resource type="Script" path="res://games/kfp/ui/cutting_board_tile.gd" id="14_be2f8"]
+[ext_resource type="Script" path="res://games/kfp/ui/stars.gd" id="14_pw81x"]
 [ext_resource type="Texture2D" uid="uid://jjvrc13u3fm6" path="res://games/kfp/assets/Tiles_Floor.png" id="16_aq4yn"]
 [ext_resource type="Resource" uid="uid://cbd0120oh4qlj" path="res://games/kfp/ui/shop/shop_order_desk.tres" id="17_f06ir"]
 [ext_resource type="PackedScene" uid="uid://cg0w84jqjxbvx" path="res://games/kfp/ui/shop_item.tscn" id="18_if6ci"]
@@ -55,9 +57,9 @@ material = SubResource("CanvasItemMaterial_vdtqk")
 texture = ExtResource("16_aq4yn")
 
 [node name="CustomerTimer" type="Timer" parent="."]
-script = ExtResource("3_olrns")
-min_time = 2.0
-max_time = 4.0
+script = ExtResource("6_5tyov")
+min_time = 5.0
+max_time = 8.0
 
 [node name="DayTimer" type="Timer" parent="."]
 wait_time = 10.0
@@ -86,6 +88,46 @@ grow_horizontal = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Actions"]
 layout_mode = 2
+
+[node name="Stars" type="HBoxContainer" parent="CanvasLayer/Control/Actions/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+script = ExtResource("14_pw81x")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Actions/HBoxContainer/Stars"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("9_t3jng")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/Control/Actions/HBoxContainer/Stars"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("9_t3jng")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer/Control/Actions/HBoxContainer/Stars"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("9_t3jng")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer/Control/Actions/HBoxContainer/Stars"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("9_t3jng")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="CanvasLayer/Control/Actions/HBoxContainer/Stars"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("9_t3jng")
+expand_mode = 4
+stretch_mode = 5
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/Actions/HBoxContainer"]
 layout_mode = 2

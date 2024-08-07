@@ -9,6 +9,8 @@ extends Node2D
 @onready var customer_timer = $CustomerTimer
 @onready var customer_spawn: Node2D = get_tree().get_first_node_in_group("spawn")
 
+var current_reviews: Array[int] = []
+
 func _ready():
 	KfpManager.assigned_chickens = []
 	customer_timer.timeout.connect(_spawn_customer)
@@ -29,11 +31,16 @@ func _show_buttons(closed = true):
 
 func _report_day():
 	_show_buttons()
+	KfpManager.update_reviews(current_reviews)
 
 func _spawn_customer():
 	var node = customer_scene.instantiate() as Customer
 	node.global_position = customer_spawn.global_position
-	node.order_completed.connect(func(): KfpManager.money += 5)
+	node.order_failed.connect(func(): current_reviews.append(1))
+	node.order_completed.connect(func():
+		KfpManager.money += 5
+		current_reviews.append([4, 4, 4, 3].pick_random())
+	)
 	node.removed.connect(func(): _check_if_no_customers_left(node))
 	add_child(node)
 

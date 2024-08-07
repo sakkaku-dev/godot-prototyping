@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://games/kfp/ui/shop_item.gd" id="1_uhxre"]
 [ext_resource type="Script" path="res://games/kfp/ui/control_hover.gd" id="3_h0gfr"]
 
-[node name="ShopItem" type="TextureButton" node_paths=PackedStringArray("label", "count_label", "texture", "buy_button")]
+[node name="ShopItem" type="TextureButton" node_paths=PackedStringArray("label", "count_label", "texture", "buy_button", "highlight_bg")]
 custom_minimum_size = Vector2(0, 16)
 size_flags_horizontal = 3
 size_flags_vertical = 4
@@ -13,6 +13,16 @@ label = NodePath("MarginContainer/HBoxContainer/Label")
 count_label = NodePath("MarginContainer/HBoxContainer/Count")
 texture = NodePath("MarginContainer/HBoxContainer/TextureRect")
 buy_button = NodePath("MarginContainer/HBoxContainer/BuyButton")
+highlight_bg = NodePath("ColorRect")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.756863, 0.380392, 0.168627, 0.564706)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
