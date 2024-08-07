@@ -37,7 +37,7 @@ var order_desks := 0:
 var cutting_boards := 0:
 	set(v): cutting_boards = v; cutting_board_changed.emit()
 
-var stars := 0:
+var stars := -1:
 	set(v): stars = v; stars_changed.emit()
 var average_revenue := 0.0:
 	set(v): average_revenue = v; average_revenue_changed.emit()
@@ -110,7 +110,10 @@ func update_revenue(revenue: Array[int]):
 
 func update_reviews(reviews: Array[int]):
 	var avg = calculate_average(reviews)
-	self.stars = (stars + avg) / 2.
+	if stars < 0:
+		self.stars = avg
+	else:
+		self.stars = (stars + avg) / 2.
 
 func calculate_average(values: Array[int]):
 	var sum = values.reduce(func(a, b): return a + b, 0.0)

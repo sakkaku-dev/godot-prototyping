@@ -5,4 +5,4 @@ func _ready() -> void:
 	_update()
 	
 func _update():
-	text = "$%s / day" % KfpManager.average_revenue
+	text = "$%.2f / day" % KfpManager.average_revenue

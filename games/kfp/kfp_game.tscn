@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://cpxqtds32bdin"]
+[gd_scene load_steps=36 format=4 uid="uid://cpxqtds32bdin"]
 
 [ext_resource type="Script" path="res://games/kfp/kfp_game.gd" id="1_bjgne"]
 [ext_resource type="PackedScene" uid="uid://xtxs4jv066qp" path="res://games/kfp/rooms/room_001.tscn" id="1_qqs23"]
@@ -8,10 +8,12 @@
 [ext_resource type="Script" path="res://games/kfp/customer_timer.gd" id="6_5tyov"]
 [ext_resource type="Script" path="res://games/kfp/ui/AssignChicken.gd" id="6_8wori"]
 [ext_resource type="PackedScene" uid="uid://ca4cw8s8sfift" path="res://games/kfp/ui/chicken_assign.tscn" id="7_qvq8i"]
+[ext_resource type="PackedScene" uid="uid://cfwh6dwf5t0dn" path="res://games/kfp/ui/chicken_details.tscn" id="8_okhgp"]
 [ext_resource type="Shader" path="res://shaders/progress.gdshader" id="8_p0i26"]
 [ext_resource type="Script" path="res://games/kfp/ui/average_revenue.gd" id="8_prhul"]
 [ext_resource type="Script" path="res://ui/progress_full.gd" id="8_wpfs8"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="9_13tox"]
+[ext_resource type="Script" path="res://games/kfp/ui/assign_chicken_details.gd" id="9_fk5b0"]
 [ext_resource type="PackedScene" uid="uid://d2mkjotosfgwt" path="res://games/kfp/ui/stars.tscn" id="9_yegb0"]
 [ext_resource type="Script" path="res://games/kfp/ui/OrderDeskTile.gd" id="12_ckfw6"]
 [ext_resource type="Script" path="res://games/kfp/ui/room_item_layout.gd" id="13_8fgoh"]
@@ -78,6 +80,16 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("5_yxcle")
+
+[node name="ChickenDetails" parent="CanvasLayer/Control" instance=ExtResource("8_okhgp")]
+layout_mode = 1
+anchors_preset = 4
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 0.0
+offset_right = 93.0
+grow_horizontal = 1
+script = ExtResource("9_fk5b0")
 
 [node name="Actions" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1

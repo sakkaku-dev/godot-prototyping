@@ -1,15 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=17 format=3 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
 [ext_resource type="PackedScene" uid="uid://sout08yq6hm3" path="res://games/kfp/chicken/chicken.tscn" id="2_r7346"]
 [ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="4_2dbax"]
 [ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="4_qjkfk"]
-[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="7_qyd5v"]
+[ext_resource type="PackedScene" uid="uid://cfwh6dwf5t0dn" path="res://games/kfp/ui/chicken_details.tscn" id="6_li68f"]
 [ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="8_ym6am"]
 [ext_resource type="Script" path="res://games/kfp/ui/egg_shop_item.gd" id="9_uognv"]
 [ext_resource type="Texture2D" uid="uid://cpok2jaoducvh" path="res://games/kfp/assets/ChickenMeat.png" id="10_70xvc"]
-[ext_resource type="Script" path="res://games/kfp/ui/ChickenDetails.gd" id="10_hnqaw"]
 [ext_resource type="Script" path="res://games/kfp/ui/meat_count.gd" id="11_te1dw"]
 [ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="16_5g4p0"]
 [ext_resource type="PackedScene" uid="uid://cg0w84jqjxbvx" path="res://games/kfp/ui/shop_item.tscn" id="17_bx6d6"]
@@ -18,10 +17,9 @@
 [ext_resource type="Script" path="res://games/kfp/ui/money_label.gd" id="20_w7bhv"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="21_o0cx3"]
 
-[node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details")]
+[node name="Farm" type="Node2D"]
 script = ExtResource("1_q8j44")
 chicken_scene = ExtResource("2_r7346")
-chicken_details = NodePath("CanvasLayer/Control/ChickenDetails")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_a3vyp")
@@ -50,52 +48,15 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("4_qjkfk")
 
-[node name="ChickenDetails" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("name_label", "traits_label", "butcher_button")]
+[node name="ChickenDetails" parent="CanvasLayer/Control" instance=ExtResource("6_li68f")]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -93.0
-offset_top = -77.0
-offset_bottom = 77.0
-grow_horizontal = 0
-grow_vertical = 2
-script = ExtResource("10_hnqaw")
-name_label = NodePath("MarginContainer/VBoxContainer/Name")
-traits_label = NodePath("MarginContainer/VBoxContainer/Traits")
-butcher_button = NodePath("MarginContainer/VBoxContainer/Button")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/ChickenDetails"]
-layout_mode = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/ChickenDetails/MarginContainer"]
-layout_mode = 2
-
-[node name="Name" type="Label" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Chicken 000"
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 48)
-layout_mode = 2
-texture = ExtResource("7_qyd5v")
-expand_mode = 3
-stretch_mode = 5
-
-[node name="Traits" type="Label" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-horizontal_alignment = 1
-
-[node name="Control" type="Control" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="Button" type="Button" parent="CanvasLayer/Control/ChickenDetails/MarginContainer/VBoxContainer"]
-layout_mode = 2
-text = "Butcher"
+anchors_preset = 4
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 0.0
+offset_right = 93.0
+grow_horizontal = 1
+editable = true
 
 [node name="Shop" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1

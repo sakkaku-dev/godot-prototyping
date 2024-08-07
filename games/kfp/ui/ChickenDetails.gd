@@ -3,6 +3,7 @@ extends PanelContainer
 
 signal butcher_chicken(res)
 
+@export var editable := false
 @export var res: ChickenResource
 
 @export var name_label: Label
@@ -12,6 +13,7 @@ signal butcher_chicken(res)
 func _ready():
 	hide()
 	butcher_button.pressed.connect(func(): butcher_chicken.emit(res))
+	butcher_button.visible = editable
 
 func show_chicken(chicken: ChickenResource):
 	if chicken == null:

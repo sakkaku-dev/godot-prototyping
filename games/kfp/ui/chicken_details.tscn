@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfwh6dwf5t0dn"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/ChickenDetails.gd" id="1_nu207"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="2_udlk3"]
+
+[node name="ChickenDetails" type="PanelContainer" node_paths=PackedStringArray("name_label", "traits_label", "butcher_button")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -77.0
+offset_bottom = 77.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_nu207")
+name_label = NodePath("MarginContainer/VBoxContainer/Name")
+traits_label = NodePath("MarginContainer/VBoxContainer/Traits")
+butcher_button = NodePath("MarginContainer/VBoxContainer/Button")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Chicken 000"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
+layout_mode = 2
+texture = ExtResource("2_udlk3")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Traits" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+
+[node name="Control" type="Control" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Butcher"
