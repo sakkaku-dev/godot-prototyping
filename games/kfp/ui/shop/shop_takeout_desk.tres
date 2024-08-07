@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ShopResource" load_steps=3 format=3 uid="uid://ccpwf38k05l0"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/shop/shop_resource.gd" id="1_165f0"]
+[ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="2_g5ci5"]
+
+[resource]
+script = ExtResource("1_165f0")
+type = 3
+name = "Takeout Desk"
+sprite = ExtResource("2_g5ci5")
+price = 200

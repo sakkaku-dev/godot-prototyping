@@ -5,6 +5,7 @@ signal chicken_supply_changed()
 signal money_changed()
 signal order_desk_changed()
 signal cutting_board_changed()
+signal takeout_desk_changed()
 signal stars_changed()
 signal average_revenue_changed()
 signal farm_size_changed()
@@ -14,7 +15,7 @@ signal chicken_added(res, pos)
 signal chicken_assigned(c)
 
 signal order_received(id)
-signal order_finished(id)
+signal order_prepared(id)
 
 enum Traits {
 	LAZY,
@@ -36,6 +37,8 @@ var order_desks := 0:
 	set(v): order_desks = v; order_desk_changed.emit()
 var cutting_boards := 0:
 	set(v): cutting_boards = v; cutting_board_changed.emit()
+var takeout_desks := 0:
+	set(v): takeout_desks = v; takeout_desk_changed.emit()
 
 var stars := -1:
 	set(v): stars = v; stars_changed.emit()
@@ -51,7 +54,7 @@ var assigning_chicken: ChickenResource
 
 var order_id := 0
 var open_orders := []
-var finished_orders := []
+var prepared_orders := []
 
 func _ready() -> void:
 	for i in range(10):
@@ -70,6 +73,7 @@ func add_random_chicken(pos = Vector2.ZERO):
 func buy_egg(item: ShopResource): if pay_item(item): self.eggs += 1
 func buy_order_desk(item: ShopResource): if pay_item(item): self.order_desks += 1
 func buy_cutting_board(item: ShopResource): if pay_item(item): self.cutting_boards += 1
+func buy_takeout_desk(item: ShopResource): if pay_item(item): self.takeout_desks += 1
 func pay_item(item: ShopResource):
 	if item.price > money:
 		print("Not enough money to buy egg: %s" % item.resource_path)
@@ -99,10 +103,21 @@ func next_open_order() -> int:
 		return -1
 	return open_orders[0]
 
-func finish_order(id: int):
+func prepared_food_for_order(id: int):
 	open_orders.erase(id)
-	finished_orders.append(id)
-	order_finished.emit(id)
+	prepared_orders.append(id)
+	order_prepared.emit(id)
+
+func is_order_ready_for_takeout(id: int):
+	return id in prepared_orders
+
+func finish_order(id: int):
+	if not id in prepared_orders:
+		print("Id %s is not prepared for takeout yet" % id)
+		return false
+	
+	prepared_orders.erase(id)
+	self.money += 10
 
 func update_revenue(revenue: Array[int]):
 	var avg = calculate_average(revenue)

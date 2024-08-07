@@ -5,6 +5,7 @@ enum Item {
 	EGG,
 	CUTTING_BOARD,
 	ORDER_DESK,
+	TAKEOUT_DESK,
 	LAYOUT,
 }
 

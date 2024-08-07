@@ -11,18 +11,30 @@ func _ready():
 	super._ready()
 	icon.hide()
 	
-	queue.awaiting.connect(func(show): icon.visible = show)
-	work_timer.timeout.connect(func(): 
-		KFP.get_object(self).finished_order(working_chicken.item)
-		working_chicken.hold_item(null)
-		icon.hide()
+	queue.awaiting.connect(func(show):
+		icon.visible = show
+		if worker and show:
+			print("Preparing takeout")
+			do_action(null)
 	)
+	work_timer.timeout.connect(func(): 
+		icon.hide()
+		
+		var customer = queue.get_first_customer()
+		if not customer:
+			print("No customer")
+			return
+		
+		if customer.order_id <= 0:
+			print("Customer who hasn't ordered is waiting for takeout for some reason !?!?!")
+			return
+		
+		customer.finish_order()
+		print("Finishing takeout for order %s" % customer.order_id)
+	)
+	
+	KfpManager.order_prepared.connect(func(id): do_action(null))
 
-func can_work(hand: Hand):
-	return hand.is_holding() and KFP.get_object(self).has_orders()
-
-func has_customers():
-	return queue.has_customers()
-
-func has_available_work():
-	return not is_occupied and icon.visible
+func can_work(_hand):
+	var customer = queue.get_first_customer()
+	return customer != null and customer.order_id > 0 and KfpManager.is_order_ready_for_takeout(customer.order_id)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://db0b1s8vxaap8"]
+[gd_scene load_steps=46 format=3 uid="uid://db0b1s8vxaap8"]
 
 [ext_resource type="Script" path="res://games/kfp/old/kfp.gd" id="1_81nka"]
 [ext_resource type="PackedScene" uid="uid://sout08yq6hm3" path="res://games/kfp/chicken/chicken.tscn" id="2_4ve5m"]
@@ -13,21 +13,17 @@
 [ext_resource type="PackedScene" uid="uid://cgwjkb3536q2y" path="res://games/kfp/old/egg_catch_world.tscn" id="10_m22qt"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="12_0h307"]
 [ext_resource type="PackedScene" uid="uid://oqsowgc2oyi" path="res://games/kfp/old/door.tscn" id="16_a2v03"]
+[ext_resource type="PackedScene" uid="uid://cy0alm56aspjv" path="res://games/kfp/work/take_out.tscn" id="17_40qjh"]
 [ext_resource type="PackedScene" uid="uid://batvt4qlisy83" path="res://games/kfp/old/table.tscn" id="18_5u7uy"]
-[ext_resource type="Script" path="res://games/kfp/work/TakeOut.gd" id="18_ucyrk"]
 [ext_resource type="PackedScene" uid="uid://dc0ei8l73md2p" path="res://games/kfp/old/chair.tscn" id="19_v0g1f"]
-[ext_resource type="Texture2D" uid="uid://bau1m1vwsk6md" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_cash.png" id="20_ripfj"]
 [ext_resource type="PackedScene" uid="uid://dyub3loq2lf2p" path="res://games/kfp/work/order_desk.tscn" id="21_bgvab"]
 [ext_resource type="Script" path="res://games/kfp/old/MiniGame.gd" id="21_hdb3y"]
 [ext_resource type="Script" path="res://util/FitCamera.gd" id="22_12hxb"]
 [ext_resource type="Script" path="res://util/Spawner2D.gd" id="22_ey5fr"]
-[ext_resource type="Script" path="res://games/kfp/work/TakeOutQueue.gd" id="23_1ne54"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="23_5vniq"]
 [ext_resource type="PackedScene" uid="uid://cnx7xvoy0ju87" path="res://games/kfp/work/cutting_board.tscn" id="23_f86mw"]
 [ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/customer.tscn" id="23_kk0tv"]
-[ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="23_twhax"]
 [ext_resource type="Script" path="res://games/kfp/CustomerSpawn.gd" id="24_kvsde"]
-[ext_resource type="Script" path="res://games/kfp/work/WorkTimer.gd" id="25_1xb8t"]
 [ext_resource type="Script" path="res://games/kfp/EggCursor.gd" id="28_qfhgi"]
 [ext_resource type="Script" path="res://games/kfp/work/OrderList.gd" id="31_wd14s"]
 [ext_resource type="PackedScene" uid="uid://ci4iyqc760nsx" path="res://games/kfp/work/order_item.tscn" id="32_ubujr"]
@@ -92,23 +88,6 @@ shader_parameter/aspect_ratio = 1.0
 shader_parameter/square_border = true
 shader_parameter/offset = null
 shader_parameter/max_or_add = false
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_w15g2"]
-shader = ExtResource("7_hveeg")
-shader_parameter/thickness = null
-shader_parameter/ring_count = 4
-shader_parameter/ring_offset = null
-shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/border_clipping_fix = true
-shader_parameter/aspect_ratio = 1.0
-shader_parameter/square_border = true
-shader_parameter/offset = null
-shader_parameter/max_or_add = false
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
-size = Vector2(14, 14)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ns4hp"]
 size = Vector2(180, 162)
@@ -319,53 +298,7 @@ position = Vector2(102, 160)
 [node name="Chair" parent="TileMap/Ordering/Table4" instance=ExtResource("19_v0g1f")]
 position = Vector2(-15, -1)
 
-[node name="TakeOut" type="Node2D" parent="TileMap/Ordering" node_paths=PackedStringArray("queue", "icon", "work_timer", "interact")]
-position = Vector2(142, 153)
-script = ExtResource("18_ucyrk")
-queue = NodePath("TakeOutQueue")
-icon = NodePath("Sprite2D3/Emote")
-work_timer = NodePath("Sprite2D3/WorkTimer2")
-interact = NodePath("Sprite2D3/Interactable")
-
-[node name="TakeOutQueue" type="Area2D" parent="TileMap/Ordering/TakeOut"]
-position = Vector2(-14, 1)
-collision_layer = 0
-collision_mask = 4
-script = ExtResource("23_1ne54")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/TakeOut/TakeOutQueue"]
-shape = SubResource("RectangleShape2D_ibnlu")
-
-[node name="Sprite2D3" type="Sprite2D" parent="TileMap/Ordering/TakeOut"]
-material = SubResource("ShaderMaterial_w15g2")
-position = Vector2(-4, 0)
-hframes = 27
-vframes = 18
-frame = 273
-
-[node name="Emote" parent="TileMap/Ordering/TakeOut/Sprite2D3" instance=ExtResource("23_twhax")]
-
-[node name="Emote" parent="TileMap/Ordering/TakeOut/Sprite2D3/Emote" index="0" node_paths=PackedStringArray("timer")]
-texture = ExtResource("20_ripfj")
-timer = NodePath("../../WorkTimer2")
-hide_on_stop = false
-
-[node name="WorkTimer2" type="Timer" parent="TileMap/Ordering/TakeOut/Sprite2D3"]
-wait_time = 0.5
-one_shot = true
-script = ExtResource("25_1xb8t")
-
-[node name="Interactable" type="Area2D" parent="TileMap/Ordering/TakeOut/Sprite2D3"]
-position = Vector2(0, 1)
-script = ExtResource("6_5onm5")
-
-[node name="OutlineInteractable" type="Node" parent="TileMap/Ordering/TakeOut/Sprite2D3/Interactable" node_paths=PackedStringArray("interactable", "node")]
-script = ExtResource("6_d7ngc")
-interactable = NodePath("..")
-node = NodePath("../..")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMap/Ordering/TakeOut/Sprite2D3/Interactable"]
-shape = SubResource("RectangleShape2D_iake3")
+[node name="TakeOut" parent="TileMap/Ordering" instance=ExtResource("17_40qjh")]
 
 [node name="OrderDesk" parent="TileMap/Ordering" instance=ExtResource("21_bgvab")]
 
@@ -621,5 +554,4 @@ overlay = NodePath("../../../Overlay")
 [connection signal="total_eggs_collected" from="TileMap/Ordering/EggCatchGame" to="." method="_on_egg_catch_game_total_eggs_collected"]
 [connection signal="pressed" from="CanvasLayer/Control/FarmUI/FarmActions/HBoxContainer/EggAction" to="." method="_on_egg_action_pressed"]
 
-[editable path="TileMap/Ordering/TakeOut/Sprite2D3/Emote"]
 [editable path="CanvasLayer/Control/FarmUI/ChickenContainer"]

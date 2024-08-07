@@ -1,0 +1,98 @@
+[gd_scene load_steps=14 format=3 uid="uid://cy0alm56aspjv"]
+
+[ext_resource type="Script" path="res://games/kfp/work/TakeOut.gd" id="1_f0166"]
+[ext_resource type="Script" path="res://games/kfp/work/TakeOutQueue.gd" id="2_lreah"]
+[ext_resource type="Texture2D" uid="uid://32y5pqpdsxgr" path="res://games/kfp/assets/Chicken_Uniform.png" id="2_wruy4"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="3_cdxup"]
+[ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="4_sk4y4"]
+[ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="5_2dqpi"]
+[ext_resource type="Texture2D" uid="uid://bau1m1vwsk6md" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_cash.png" id="5_6vfcu"]
+[ext_resource type="Script" path="res://games/kfp/work/WorkTimer.gd" id="6_yi14r"]
+[ext_resource type="Script" path="res://util/Interactable.gd" id="7_qov5w"]
+[ext_resource type="Script" path="res://util/OutlineInteractable.gd" id="8_d1u1b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w15g2"]
+shader = ExtResource("3_cdxup")
+shader_parameter/thickness = null
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ibnlu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_iake3"]
+size = Vector2(14, 14)
+
+[node name="TakeOut" type="Node2D" node_paths=PackedStringArray("queue", "icon", "work_timer", "interact", "chicken_sprite", "mouse_control")]
+z_index = 10
+script = ExtResource("1_f0166")
+queue = NodePath("Sprite2D3/TakeOutQueue")
+icon = NodePath("Sprite2D3/Emote")
+work_timer = NodePath("Sprite2D3/WorkTimer2")
+interact = NodePath("Sprite2D3/Interactable")
+chicken_sprite = NodePath("Sprite2D")
+mouse_control = NodePath("Control")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -13)
+texture = ExtResource("2_wruy4")
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_w15g2")
+position = Vector2(0, -12)
+texture = ExtResource("5_2dqpi")
+
+[node name="TakeOutQueue" type="Area2D" parent="Sprite2D3"]
+position = Vector2(0, 14)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("2_lreah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D3/TakeOutQueue"]
+shape = SubResource("RectangleShape2D_ibnlu")
+
+[node name="Emote" parent="Sprite2D3" instance=ExtResource("4_sk4y4")]
+position = Vector2(0, 1)
+
+[node name="Emote" parent="Sprite2D3/Emote" index="0" node_paths=PackedStringArray("timer")]
+texture = ExtResource("5_6vfcu")
+timer = NodePath("../../WorkTimer2")
+hide_on_stop = false
+
+[node name="WorkTimer2" type="Timer" parent="Sprite2D3"]
+wait_time = 3.0
+one_shot = true
+script = ExtResource("6_yi14r")
+
+[node name="Interactable" type="Area2D" parent="Sprite2D3"]
+position = Vector2(0, 1)
+script = ExtResource("7_qov5w")
+
+[node name="OutlineInteractable" type="Node" parent="Sprite2D3/Interactable" node_paths=PackedStringArray("interactable", "node")]
+script = ExtResource("8_d1u1b")
+interactable = NodePath("..")
+node = NodePath("../..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D3/Interactable"]
+shape = SubResource("RectangleShape2D_iake3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -14.0
+offset_top = -27.0
+offset_right = 14.0
+offset_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[editable path="Sprite2D3/Emote"]

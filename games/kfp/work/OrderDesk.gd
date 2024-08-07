@@ -20,8 +20,9 @@ func _ready():
 			do_action(null)
 	)
 	work_timer.timeout.connect(func():
-		var customer = customer_queue.get_first_customer()
+		icon.hide()
 		
+		var customer = customer_queue.get_first_customer()
 		if not customer:
 			print("No customer")
 			return
@@ -29,19 +30,17 @@ func _ready():
 		if customer.order_id > 0:
 			print("Takeout finished")
 			customer.finish_order()
-			icon.hide()
 			return
 		
 		if not customer.is_ordering():
 			print("Customer is not ordering anymore")
 			return
 		
-		icon.hide()
 		customer.taken_order(KfpManager.add_new_order())
 		print("Taken order: %s" % customer.order_id)
 	)
 	
-	KfpManager.order_finished.connect(func(id):
+	KfpManager.order_prepared.connect(func(id):
 		var customer = customer_queue.get_first_customer()
 		if customer and customer.order_id == id:
 			print("Preparing takeout")
@@ -51,9 +50,3 @@ func _ready():
 
 func can_work(_hand):
 	return customer_queue.has_customers()
-
-func has_customers():
-	return customer.has_customers()
-
-func has_available_work():
-	return not is_occupied and icon.visible

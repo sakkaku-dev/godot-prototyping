@@ -42,8 +42,8 @@ func _spawn_customer():
 	var node = customer_scene.instantiate() as Customer
 	node.global_position = customer_spawn.global_position
 	node.order_failed.connect(func(): current_reviews.append(1))
-	node.order_completed.connect(func():
-		KfpManager.money += 5
+	node.order_completed.connect(func(id):
+		KfpManager.finish_order(id)
 		current_revenue.append(5)
 		current_reviews.append([4, 4, 4, 3].pick_random())
 	)

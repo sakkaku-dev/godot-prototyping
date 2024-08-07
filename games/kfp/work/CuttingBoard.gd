@@ -10,7 +10,7 @@ func _ready():
 	super._ready()
 	
 	work_timer.timeout.connect(func():
-		KfpManager.finish_order(order)
+		KfpManager.prepared_food_for_order(order)
 		var next_oder = KfpManager.next_open_order()
 		if next_oder > 0:
 			start_action(next_oder)

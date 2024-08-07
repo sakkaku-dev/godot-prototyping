@@ -4,7 +4,7 @@ extends CharacterBody2D
 const GROUP = "Customer"
 
 signal order_failed()
-signal order_completed()
+signal order_completed(id)
 signal leaving()
 signal removed()
 
@@ -139,4 +139,4 @@ func taken_order(id):
 func finish_order():
 	emote.set_texture(happy_face)
 	self.state = LEAVING
-	order_completed.emit()
+	order_completed.emit(order_id)

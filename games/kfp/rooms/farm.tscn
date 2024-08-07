@@ -17,9 +17,10 @@
 [ext_resource type="Script" path="res://games/kfp/ui/money_label.gd" id="20_w7bhv"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="21_o0cx3"]
 
-[node name="Farm" type="Node2D"]
+[node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details")]
 script = ExtResource("1_q8j44")
 chicken_scene = ExtResource("2_r7346")
+chicken_details = NodePath("CanvasLayer/Control/ChickenDetails")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = ExtResource("1_a3vyp")
