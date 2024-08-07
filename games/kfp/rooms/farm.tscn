@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=18 format=3 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
@@ -11,8 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://cpok2jaoducvh" path="res://games/kfp/assets/ChickenMeat.png" id="10_70xvc"]
 [ext_resource type="Script" path="res://games/kfp/ui/ChickenDetails.gd" id="10_hnqaw"]
 [ext_resource type="Script" path="res://games/kfp/ui/meat_count.gd" id="11_te1dw"]
-[ext_resource type="Script" path="res://games/kfp/ui/ChickenCount.gd" id="16_1w4nc"]
+[ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="16_5g4p0"]
 [ext_resource type="PackedScene" uid="uid://cg0w84jqjxbvx" path="res://games/kfp/ui/shop_item.tscn" id="17_bx6d6"]
+[ext_resource type="Script" path="res://games/kfp/rooms/farm_size_count.gd" id="17_i4i3g"]
 [ext_resource type="Resource" uid="uid://bq7dbi1y0m4wi" path="res://games/kfp/ui/shop/shop_farm_egg.tres" id="18_4iatc"]
 [ext_resource type="Script" path="res://games/kfp/ui/money_label.gd" id="20_w7bhv"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="21_o0cx3"]
@@ -213,7 +214,7 @@ theme_override_constants/separation = 2
 [node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer/MarginContainer/Meat"]
 custom_minimum_size = Vector2(12, 0)
 layout_mode = 2
-texture = ExtResource("7_qyd5v")
+texture = ExtResource("16_5g4p0")
 expand_mode = 5
 stretch_mode = 5
 
@@ -223,7 +224,7 @@ theme_override_font_sizes/font_size = 8
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("16_1w4nc")
+script = ExtResource("17_i4i3g")
 
 [node name="Chickens" type="TextureButton" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer"]
 layout_mode = 2

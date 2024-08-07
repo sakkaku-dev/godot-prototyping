@@ -10,6 +10,8 @@ var selected_chicken: ChickenResource:
 
 
 func _ready():
+	KfpManager.hatching_eggs = []
+	
 	for chicken in KfpManager.chickens:
 		_spawn_chicken(chicken)
 	KfpManager.chicken_added.connect(func(res, pos): _spawn_chicken(res, pos))

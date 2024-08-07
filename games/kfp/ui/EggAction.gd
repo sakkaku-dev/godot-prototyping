@@ -28,7 +28,7 @@ func _unhandled_input(event):
 			var egg = egg_scene.instantiate()
 			egg.global_position = _current_pos()
 			egg.hatched.connect(func():
-				KfpManager.add_random_chicken(egg.global_position)
+				KfpManager.hatch_egg(egg.global_position)
 				egg.queue_free()
 			)
 			tile_map.add_child(egg)

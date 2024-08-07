@@ -39,7 +39,6 @@ func _unhandled_input(event):
 			return
 		
 		if not KfpManager.placed_egg():
-			print("NO EGGS")
 			return
 		
 		var egg = egg_scene.instantiate()
