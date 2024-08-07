@@ -16,6 +16,7 @@ bg_color = Color(0, 0, 0, 1)
 
 [resource]
 default_font_size = 8
+Button/styles/normal = null
 HSlider/icons/grabber = SubResource("ImageTexture_y4fsq")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_erf8q")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_j5jxt")

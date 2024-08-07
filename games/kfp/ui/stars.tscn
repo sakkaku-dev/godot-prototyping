@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2mkjotosfgwt"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/stars.gd" id="1_3p328"]
+[ext_resource type="Texture2D" uid="uid://drkq7i3invixj" path="res://games/kfp/assets/Star.png" id="2_fx5fk"]
+
+[node name="Stars" type="HBoxContainer"]
+theme_override_constants/separation = 0
+script = ExtResource("1_3p328")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("2_fx5fk")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("2_fx5fk")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("2_fx5fk")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("2_fx5fk")
+expand_mode = 4
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+texture = ExtResource("2_fx5fk")
+expand_mode = 4
+stretch_mode = 5

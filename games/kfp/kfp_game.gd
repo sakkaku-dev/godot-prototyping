@@ -3,12 +3,14 @@ extends Node2D
 @export var customer_scene: PackedScene
 @export var opened_ui: Control
 @export var closed_ui: Control
+@export var report: DailyReport
 
 @onready var day_timer: Timer = $DayTimer
 
 @onready var customer_timer = $CustomerTimer
 @onready var customer_spawn: Node2D = get_tree().get_first_node_in_group("spawn")
 
+var current_revenue: Array[int] = []
 var current_reviews: Array[int] = []
 
 func _ready():
@@ -30,8 +32,11 @@ func _show_buttons(closed = true):
 	closed_ui.visible = closed
 
 func _report_day():
-	_show_buttons()
+	report.open(current_revenue, current_reviews)
 	KfpManager.update_reviews(current_reviews)
+	KfpManager.update_revenue(current_revenue)
+	
+	_show_buttons()
 
 func _spawn_customer():
 	var node = customer_scene.instantiate() as Customer
@@ -39,6 +44,7 @@ func _spawn_customer():
 	node.order_failed.connect(func(): current_reviews.append(1))
 	node.order_completed.connect(func():
 		KfpManager.money += 5
+		current_revenue.append(5)
 		current_reviews.append([4, 4, 4, 3].pick_random())
 	)
 	node.removed.connect(func(): _check_if_no_customers_left(node))

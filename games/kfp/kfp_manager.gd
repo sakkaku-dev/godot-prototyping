@@ -6,6 +6,7 @@ signal money_changed()
 signal order_desk_changed()
 signal cutting_board_changed()
 signal stars_changed()
+signal average_revenue_changed()
 
 signal chicken_removed(res)
 signal chicken_added(res, pos)
@@ -35,8 +36,10 @@ var order_desks := 0:
 var cutting_boards := 0:
 	set(v): cutting_boards = v; cutting_board_changed.emit()
 
-var stars := -1:
+var stars := 0:
 	set(v): stars = v; stars_changed.emit()
+var average_revenue := 0.0:
+	set(v): average_revenue = v; average_revenue_changed.emit()
 
 var chickens := []
 var assigned_chickens := []
@@ -45,6 +48,12 @@ var assigning_chicken: ChickenResource
 var order_id := 0
 var open_orders := []
 var finished_orders := []
+
+func _ready() -> void:
+	add_random_chicken()
+	add_random_chicken()
+	add_random_chicken()
+	add_random_chicken()
 
 func butcher_chicken(res: ChickenResource):
 	if not res in chickens:
@@ -98,13 +107,14 @@ func finish_order(id: int):
 	finished_orders.append(id)
 	order_finished.emit(id)
 
+func update_revenue(revenue: Array[int]):
+	var avg = calculate_average(revenue)
+	self.average_revenue = (average_revenue + avg) / 2.
+
 func update_reviews(reviews: Array[int]):
-	var sum = reviews.reduce(func(a, b): return a + b, 0.0)
-	var avg = sum / reviews.size()
-	
-	if stars < 0:
-		stars = avg
-	else:
-		stars = (stars + avg) / 2.
-	
-	print("Received average review of %s. Total Review at %s" % [avg, stars])
+	var avg = calculate_average(reviews)
+	self.stars = (stars + avg) / 2.
+
+func calculate_average(values: Array[int]):
+	var sum = values.reduce(func(a, b): return a + b, 0.0)
+	return sum / values.size()
