@@ -17,16 +17,6 @@ signal chicken_assigned_changed(c)
 signal order_received(id)
 signal order_prepared(id)
 
-enum Traits {
-	LAZY,
-	DILIGENT,
-	PERFECTIONIST,
-	SLOPPY,
-	CHARMING,
-	NERVOUS,
-	TEAM_PLAYER,
-}
-
 var chicken_supply := 0:
 	set(v): chicken_supply = v; chicken_supply_changed.emit()
 var eggs := 0:
@@ -62,7 +52,7 @@ func _ready() -> void:
 
 func add_random_chicken(pos = Vector2.ZERO):
 	var res = ChickenResource.new()
-	res.traits = [Traits.values().pick_random()]
+	res.traits = [ChickenTraits.get_random_trait()]
 	chickens.append(res)
 	chicken_added.emit(res, pos)
 

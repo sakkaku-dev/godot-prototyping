@@ -12,7 +12,7 @@ func _ready():
 
 func do_action(hand: Hand):
 	if can_work(hand):
-		work_timer.start_work()
+		work_timer.start_work(worker)
 		#working_chicken = hand
 
 func can_work(hand: Hand):

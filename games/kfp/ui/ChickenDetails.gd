@@ -22,5 +22,5 @@ func show_chicken(chicken: ChickenResource):
 	
 	res = chicken
 	name_label.text = "%s" % res.name
-	traits_label.text = "%s" % KfpManager.Traits.keys()[res.traits[0]]
+	traits_label.text = "%s" % "\n".join(res.traits.map(func(x): return ChickenTraits.get_trait_name(x)))
 	show()
