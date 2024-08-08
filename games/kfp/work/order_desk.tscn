@@ -30,7 +30,6 @@ size = Vector2(20, 24)
 size = Vector2(14, 14)
 
 [node name="OrderDesk" type="Node2D" node_paths=PackedStringArray("customer_queue", "icon", "work_timer", "interact", "chicken_sprite", "mouse_control")]
-z_index = 10
 script = ExtResource("1_w6pbh")
 customer_queue = NodePath("Sprite2D/CustomerQueue")
 icon = NodePath("Sprite2D/Emote")

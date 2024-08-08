@@ -162,11 +162,6 @@ node = NodePath("../../../Shop")
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
 layout_mode = 2
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer"]
-visible = false
-layout_mode = 2
-color = Color(0.235294, 0, 0, 1)
-
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 2

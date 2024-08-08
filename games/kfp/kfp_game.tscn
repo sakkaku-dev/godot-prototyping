@@ -134,17 +134,17 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("24_epgnn")
 
-[node name="ShopButton" type="Button" parent="CanvasLayer/Control/Actions/HBoxContainer" node_paths=PackedStringArray("node")]
-layout_mode = 2
-text = "Shop"
-script = ExtResource("9_13tox")
-node = NodePath("../../../ClosedUI/Shop")
-
 [node name="InfoButton" type="Button" parent="CanvasLayer/Control/Actions/HBoxContainer" node_paths=PackedStringArray("node")]
 layout_mode = 2
 text = "Info"
 script = ExtResource("9_13tox")
 node = NodePath("../../../RestaurantInfo")
+
+[node name="ShopButton" type="Button" parent="CanvasLayer/Control/Actions/HBoxContainer" node_paths=PackedStringArray("node")]
+layout_mode = 2
+text = "Shop"
+script = ExtResource("9_13tox")
+node = NodePath("../../../ClosedUI/Shop")
 
 [node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/Actions/HBoxContainer"]
 layout_mode = 2

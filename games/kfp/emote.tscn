@@ -13,7 +13,7 @@ shader_parameter/mix_amount = 0.6
 shader_parameter/fill = 0.2
 
 [node name="EmoteRoot" type="Node2D"]
-z_index = 20
+z_index = 50
 script = ExtResource("1_11hyw")
 
 [node name="Emote" type="Sprite2D" parent="."]

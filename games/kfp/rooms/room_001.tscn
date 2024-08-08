@@ -23,6 +23,7 @@ tile_map_data = PackedByteArray("AAD8//7/CAABAAIAAAD9//7/CAABAAIAAAD+//7/CAABAAI
 tile_set = ExtResource("1_m328i")
 
 [node name="CustomTiles" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAD9//7/AAAAAAAAAgAAAPz/AAAAAAAAAQA=")
 tile_set = ExtResource("1_m328i")
 
 [node name="Camera2D" type="Camera2D" parent="."]

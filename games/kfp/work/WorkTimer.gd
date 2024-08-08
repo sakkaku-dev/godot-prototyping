@@ -13,7 +13,7 @@ func _ready():
 	)
 
 func start_work(chicken: ChickenResource):
-	wait_time = initial_time * ChickenTraits.get_working_speed_multipler(chicken.traits[0])
+	wait_time = initial_time * ChickenTraits.get_multiplier(chicken.traits, ChickenTraits.get_working_speed_multipler)
 	
 	if not started_work:
 		start()

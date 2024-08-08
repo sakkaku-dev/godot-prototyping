@@ -122,11 +122,11 @@ func finish_order(id: int):
 	self.money += 10
 
 func update_revenue(revenue: Array[int]):
-	var avg = calculate_average(revenue)
+	var sum = revenue.reduce(func(a, b): return a + b, 0.0)
 	if average_revenue <= 0:
-		self.average_revenue = avg
+		self.average_revenue = sum
 	else:
-		self.average_revenue = add_averages(average_revenue, avg)
+		self.average_revenue = add_averages(average_revenue, sum)
 
 func update_reviews(reviews: Array[int]):
 	var avg = calculate_average(reviews)
@@ -140,8 +140,7 @@ func calculate_average(values: Array[int]):
 	return sum / values.size()
 
 func add_averages(avg1: float, avg2: float):
-	var sum = avg1 + avg2
-	return avg1/sum + avg2/sum
+	return (avg1 + avg2) / 2.
 
 ############
 ### Farm ###
