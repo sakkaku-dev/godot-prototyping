@@ -9,7 +9,7 @@ var placing_eggs := false:
 	set(v):
 		placing_eggs = v
 		egg_placeholder.visible = v
-		set_highlight(v)
+		#set_highlight(v)
 
 func _ready() -> void:
 	super._ready()

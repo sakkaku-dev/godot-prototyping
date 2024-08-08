@@ -18,6 +18,7 @@ func _ready() -> void:
 	count_label.hide()
 
 	buy_button.pressed.connect(func(): buy.emit(shop_item))
+	set_highlight(false)
 
 func set_highlight(enabled: bool):
 	highlight_bg.visible = enabled

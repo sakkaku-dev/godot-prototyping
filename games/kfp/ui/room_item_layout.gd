@@ -7,11 +7,15 @@ extends Control
 
 var selected_button: RoomItemTile:
 	set(v):
+		if selected_button:
+			selected_button.set_highlight(false)
+		
 		selected_button = v
 		placeholder.visible = v != null
 		
 		if v != null:
 			room.highlight_area(v.placement)
+			v.set_highlight(true)
 		else:
 			room.reset_highlight()
 
