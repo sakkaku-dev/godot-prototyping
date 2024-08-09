@@ -1,41 +1,63 @@
-[gd_scene load_steps=17 format=3 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=26 format=4 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
+[ext_resource type="PackedScene" uid="uid://yp58dkaro2y7" path="res://games/kfp/chicken/dropped_egg.tscn" id="2_aw5e2"]
 [ext_resource type="PackedScene" uid="uid://sout08yq6hm3" path="res://games/kfp/chicken/chicken.tscn" id="2_r7346"]
+[ext_resource type="Script" path="res://games/kfp/rooms/farm_layout.gd" id="3_kvl31"]
 [ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="4_2dbax"]
 [ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="4_qjkfk"]
 [ext_resource type="PackedScene" uid="uid://cfwh6dwf5t0dn" path="res://games/kfp/ui/chicken_details.tscn" id="6_li68f"]
+[ext_resource type="Script" path="res://games/kfp/rooms/tile_placeholder.gd" id="6_vsmom"]
+[ext_resource type="Texture2D" uid="uid://bormlewkja157" path="res://games/kfp/assets/EggLarge.png" id="8_fp5lu"]
 [ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="8_ym6am"]
 [ext_resource type="Script" path="res://games/kfp/ui/egg_shop_item.gd" id="9_uognv"]
 [ext_resource type="Texture2D" uid="uid://cpok2jaoducvh" path="res://games/kfp/assets/ChickenMeat.png" id="10_70xvc"]
-[ext_resource type="Script" path="res://games/kfp/ui/meat_count.gd" id="11_te1dw"]
-[ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="16_5g4p0"]
+[ext_resource type="Script" path="res://games/kfp/ui/buy_button.gd" id="11_edcay"]
+[ext_resource type="Script" path="res://games/kfp/rooms/egg_placer.gd" id="11_m0ayq"]
+[ext_resource type="Script" path="res://games/kfp/ui/counts/egg_count.gd" id="11_t03dd"]
+[ext_resource type="Script" path="res://games/kfp/ui/counts/meat_count.gd" id="11_te1dw"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="14_pyn5m"]
+[ext_resource type="Script" path="res://games/kfp/rooms/TilePlacement.gd" id="17_56jqv"]
 [ext_resource type="PackedScene" uid="uid://cg0w84jqjxbvx" path="res://games/kfp/ui/shop_item.tscn" id="17_bx6d6"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm_size_count.gd" id="17_i4i3g"]
 [ext_resource type="Resource" uid="uid://bq7dbi1y0m4wi" path="res://games/kfp/ui/shop/shop_farm_egg.tres" id="18_4iatc"]
-[ext_resource type="Script" path="res://games/kfp/ui/money_label.gd" id="20_w7bhv"]
+[ext_resource type="Script" path="res://games/kfp/ui/sell_supply.gd" id="19_loju6"]
+[ext_resource type="Script" path="res://games/kfp/ui/counts/money_label.gd" id="20_w7bhv"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="21_o0cx3"]
 
-[node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details")]
+[node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details", "tile_map")]
 script = ExtResource("1_q8j44")
+dropped_egg_scene = ExtResource("2_aw5e2")
 chicken_scene = ExtResource("2_r7346")
 chicken_details = NodePath("CanvasLayer/Control/ChickenDetails")
+tile_map = NodePath("FarmLayout/Dirt")
 
-[node name="TileMap" type="TileMap" parent="."]
+[node name="ThrottleSpawnDroppedEggs" type="Timer" parent="."]
+one_shot = true
+
+[node name="FarmLayout" type="Node2D" parent="."]
+script = ExtResource("3_kvl31")
+
+[node name="Grass" type="TileMapLayer" parent="FarmLayout"]
+tile_map_data = PackedByteArray("AAAPAAkABwAAAAAAAADw//b/BwAAAAAAAADw//f/BwAAAAAAAADw//j/BwAAAAAAAADw//n/BwAAAAAAAADw//r/BwAAAAAAAADw//v/BwAAAAAAAADw//z/BwAAAAAAAADw//3/BwAAAAAAAADw//7/BwAAAAAAAADw////BwAAAAAAAADw/wAABwAAAAAAAADw/wEABwAAAAAAAADw/wIABwAAAAAAAADw/wMABwAAAAAAAADw/wQABwAAAAAAAADw/wUABwAAAAAAAADw/wYABwAAAAAAAADw/wcABwAAAAAAAADw/wgABwAAAAAAAADw/wkABwAAAAAAAADx//b/BwAAAAAAAADx//f/BwAAAAAAAADx//j/BwAAAAAAAADx//n/BwAAAAAAAADx//r/BwAAAAAAAADx//v/BwAAAAAAAADx//z/BwAAAAAAAADx//3/BwAAAAAAAADx//7/BwAAAAAAAADx////BwAAAAAAAADx/wAABwAAAAAAAADx/wEABwAAAAAAAADx/wIABwAAAAAAAADx/wMABwAAAAAAAADx/wQABwAAAAAAAADx/wUABwAAAAAAAADx/wYABwAAAAAAAADx/wcABwAAAAAAAADx/wgABwAAAAAAAADx/wkABwAAAAAAAADy//b/BwAAAAAAAADy//f/BwAAAAAAAADy//j/BwAAAAAAAADy//n/BwAAAAAAAADy//r/BwAAAAAAAADy//v/BwAAAAAAAADy//z/BwAAAAAAAADy//3/BwAAAAAAAADy//7/BwAAAAAAAADy////BwAAAAAAAADy/wAABwAAAAAAAADy/wEABwAAAAAAAADy/wIABwAAAAAAAADy/wMABwAAAAAAAADy/wQABwAAAAAAAADy/wUABwAAAAAAAADy/wYABwAAAAAAAADy/wcABwAAAAAAAADy/wgABwAAAAAAAADy/wkABwAAAAAAAADz//b/BwAAAAAAAADz//f/BwAAAAAAAADz//j/BwAAAAAAAADz//n/BwAAAAAAAADz//r/BwAAAAAAAADz//v/BwAAAAAAAADz//z/BwAAAAAAAADz//3/BwAAAAAAAADz//7/BwAAAAAAAADz////BwAAAAAAAADz/wAABwAAAAAAAADz/wEABwAAAAAAAADz/wIABwAAAAAAAADz/wMABwAAAAAAAADz/wQABwAAAAAAAADz/wUABwAAAAAAAADz/wYABwAAAAAAAADz/wcABwAAAAAAAADz/wgABwAAAAAAAADz/wkABwAAAAAAAAD0//b/BwAAAAAAAAD0//f/BwAAAAAAAAD0//j/BwAAAAAAAAD0//n/BwAAAAAAAAD0//r/BwAAAAAAAAD0//v/BwAAAAAAAAD0//z/BwAAAAAAAAD0//3/BwAAAAAAAAD0//7/BwAAAAAAAAD0////BwAAAAAAAAD0/wAABwAAAAAAAAD0/wEABwAAAAAAAAD0/wIABwAAAAAAAAD0/wMABwAAAAAAAAD0/wQABwAAAAAAAAD0/wUABwAAAAAAAAD0/wYABwAAAAAAAAD0/wcABwAAAAAAAAD0/wgABwAAAAAAAAD0/wkABwAAAAAAAAD1//b/BwAAAAAAAAD1//f/BwAAAAAAAAD1//j/BwAAAAAAAAD1//n/BwAAAAAAAAD1//r/BwAAAAAAAAD1//v/BwAAAAAAAAD1//z/BwAAAAAAAAD1//3/BwAAAAAAAAD1//7/BwAAAAAAAAD1////BwAAAAAAAAD1/wAABwAAAAAAAAD1/wEABwAAAAAAAAD1/wIABwAAAAAAAAD1/wMABwAAAAAAAAD1/wQABwAAAAAAAAD1/wUABwAAAAAAAAD1/wYABwAAAAAAAAD1/wcABwAAAAAAAAD1/wgABwAAAAAAAAD1/wkABwAAAAAAAAD2//b/BwAAAAAAAAD2//f/BwAAAAAAAAD2//j/BwAAAAAAAAD2//n/BwAAAAAAAAD2//r/BwAAAAAAAAD2//v/BwAAAAAAAAD2//z/BwAAAAAAAAD2//3/BwAAAAAAAAD2//7/BwAAAAAAAAD2////BwAAAAAAAAD2/wAABwAAAAAAAAD2/wEABwAAAAAAAAD2/wIABwAAAAAAAAD2/wMABwAAAAAAAAD2/wQABwAAAAAAAAD2/wUABwAAAAAAAAD2/wYABwAAAAAAAAD2/wcABwAAAAAAAAD2/wgABwAAAAAAAAD2/wkABwAAAAAAAAD3//b/BwAAAAAAAAD3//f/BwAAAAAAAAD3//j/BwAAAAAAAAD3//n/BwAAAAAAAAD3//r/BwAAAAAAAAD3//v/BwAAAAAAAAD3//z/BwAAAAAAAAD3//3/BwAAAAAAAAD3//7/BwAAAAAAAAD3////BwAAAAAAAAD3/wAABwAAAAAAAAD3/wEABwAAAAAAAAD3/wIABwAAAAAAAAD3/wMABwAAAAAAAAD3/wQABwAAAAAAAAD3/wUABwAAAAAAAAD3/wYABwAAAAAAAAD3/wcABwAAAAAAAAD3/wgABwAAAAAAAAD3/wkABwAAAAAAAAD4//b/BwAAAAAAAAD4//f/BwAAAAAAAAD4//j/BwAAAAAAAAD4//n/BwAAAAAAAAD4//r/BwAAAAAAAAD4//v/BwAAAAAAAAD4//z/BwAAAAAAAAD4//3/BwAAAAAAAAD4//7/BwAAAAAAAAD4////BwAAAAAAAAD4/wAABwAAAAAAAAD4/wEABwAAAAAAAAD4/wIABwAAAAAAAAD4/wMABwAAAAAAAAD4/wQABwAAAAAAAAD4/wUABwAAAAAAAAD4/wYABwAAAAAAAAD4/wcABwAAAAAAAAD4/wgABwAAAAAAAAD4/wkABwAAAAAAAAD5//b/BwAAAAAAAAD5//f/BwAAAAAAAAD5//j/BwAAAAAAAAD5//n/BwAAAAAAAAD5//r/BwAAAAAAAAD5//v/BwAAAAAAAAD5//z/BwAAAAAAAAD5//3/BwAAAAAAAAD5//7/BwAAAAAAAAD5////BwAAAAAAAAD5/wAABwAAAAAAAAD5/wEABwAAAAAAAAD5/wIABwAAAAAAAAD5/wMABwAAAAAAAAD5/wQABwAAAAAAAAD5/wUABwAAAAAAAAD5/wYABwAAAAAAAAD5/wcABwAAAAAAAAD5/wgABwAAAAAAAAD5/wkABwAAAAAAAAD6//b/BwAAAAAAAAD6//f/BwAAAAAAAAD6//j/BwAAAAAAAAD6//n/BwAAAAAAAAD6//r/BwAAAAAAAAD6//v/BwAAAAAAAAD6//z/BwAAAAAAAAD6//3/BwAAAAAAAAD6//7/BwAAAAAAAAD6////BwAAAAAAAAD6/wAABwAAAAAAAAD6/wEABwAAAAAAAAD6/wIABwAAAAAAAAD6/wMABwAAAAAAAAD6/wQABwAAAAAAAAD6/wUABwAAAAAAAAD6/wYABwAAAAAAAAD6/wcABwAAAAAAAAD6/wgABwAAAAAAAAD6/wkABwAAAAAAAAD7//b/BwAAAAAAAAD7//f/BwAAAAAAAAD7//j/BwAAAAAAAAD7//n/BwAAAAAAAAD7//r/BwAAAAAAAAD7//v/BwAAAAAAAAD7//z/BwAAAAAAAAD7//3/BwAAAAAAAAD7//7/BwAAAAAAAAD7////BwAAAAAAAAD7/wAABwAAAAAAAAD7/wEABwAAAAAAAAD7/wIABwAAAAAAAAD7/wMABwAAAAAAAAD7/wQABwAAAAAAAAD7/wUABwAAAAAAAAD7/wYABwAAAAAAAAD7/wcABwAAAAAAAAD7/wgABwAAAAAAAAD7/wkABwAAAAAAAAD8//b/BwAAAAAAAAD8//f/BwAAAAAAAAD8//j/BwAAAAAAAAD8//n/BwAAAAAAAAD8//r/BwAAAAAAAAD8//v/BwAAAAAAAAD8//z/BwAAAAAAAAD8//3/BwAAAAAAAAD8//7/BwAAAAAAAAD8////BwAAAAAAAAD8/wAABwAAAAAAAAD8/wEABwAAAAAAAAD8/wIABwAAAAAAAAD8/wMABwAAAAAAAAD8/wQABwAAAAAAAAD8/wUABwAAAAAAAAD8/wYABwAAAAAAAAD8/wcABwAAAAAAAAD8/wgABwAAAAAAAAD8/wkABwAAAAAAAAD9//b/BwAAAAAAAAD9//f/BwAAAAAAAAD9//j/BwAAAAAAAAD9//n/BwAAAAAAAAD9//r/BwAAAAAAAAD9//v/BwAAAAAAAAD9//z/BwAAAAAAAAD9//3/BwAAAAAAAAD9//7/BwAAAAAAAAD9////BwAAAAAAAAD9/wAABwAAAAAAAAD9/wEABwAAAAAAAAD9/wIABwAAAAAAAAD9/wMABwAAAAAAAAD9/wQABwAAAAAAAAD9/wUABwAAAAAAAAD9/wYABwAAAAAAAAD9/wcABwAAAAAAAAD9/wgABwAAAAAAAAD9/wkABwAAAAAAAAD+//b/BwAAAAAAAAD+//f/BwAAAAAAAAD+//j/BwAAAAAAAAD+//n/BwAAAAAAAAD+//r/BwAAAAAAAAD+//v/BwAAAAAAAAD+//z/BwAAAAAAAAD+//3/BwAAAAAAAAD+//7/BwAAAAAAAAD+////BwAAAAAAAAD+/wAABwAAAAAAAAD+/wEABwAAAAAAAAD+/wIABwAAAAAAAAD+/wMABwAAAAAAAAD+/wQABwAAAAAAAAD+/wUABwAAAAAAAAD+/wYABwAAAAAAAAD+/wcABwAAAAAAAAD+/wgABwAAAAAAAAD+/wkABwAAAAAAAAD///b/BwAAAAAAAAD///f/BwAAAAAAAAD///j/BwAAAAAAAAD///n/BwAAAAAAAAD///r/BwAAAAAAAAD///v/BwAAAAAAAAD///z/BwAAAAAAAAD///3/BwAAAAAAAAD///7/BwAAAAAAAAD/////BwAAAAAAAAD//wAABwAAAAAAAAD//wEABwAAAAAAAAD//wIABwAAAAAAAAD//wMABwAAAAAAAAD//wQABwAAAAAAAAD//wUABwAAAAAAAAD//wYABwAAAAAAAAD//wcABwAAAAAAAAD//wgABwAAAAAAAAD//wkABwAAAAAAAAAAAPb/BwAAAAAAAAAAAPf/BwAAAAAAAAAAAPj/BwAAAAAAAAAAAPn/BwAAAAAAAAAAAPr/BwAAAAAAAAAAAPv/BwAAAAAAAAAAAPz/BwAAAAAAAAAAAP3/BwAAAAAAAAAAAP7/BwAAAAAAAAAAAP//BwAAAAAAAAAAAAAABwAAAAAAAAAAAAEABwAAAAAAAAAAAAIABwAAAAAAAAAAAAMABwAAAAAAAAAAAAQABwAAAAAAAAAAAAUABwAAAAAAAAAAAAYABwAAAAAAAAAAAAcABwAAAAAAAAAAAAgABwAAAAAAAAAAAAkABwAAAAAAAAABAPb/BwAAAAAAAAABAPf/BwAAAAAAAAABAPj/BwAAAAAAAAABAPn/BwAAAAAAAAABAPr/BwAAAAAAAAABAPv/BwAAAAAAAAABAPz/BwAAAAAAAAABAP3/BwAAAAAAAAABAP7/BwAAAAAAAAABAP//BwAAAAAAAAABAAAABwAAAAAAAAABAAEABwAAAAAAAAABAAIABwAAAAAAAAABAAMABwAAAAAAAAABAAQABwAAAAAAAAABAAUABwAAAAAAAAABAAYABwAAAAAAAAABAAcABwAAAAAAAAABAAgABwAAAAAAAAABAAkABwAAAAAAAAACAPb/BwAAAAAAAAACAPf/BwAAAAAAAAACAPj/BwAAAAAAAAACAPn/BwAAAAAAAAACAPr/BwAAAAAAAAACAPv/BwAAAAAAAAACAPz/BwAAAAAAAAACAP3/BwAAAAAAAAACAP7/BwAAAAAAAAACAP//BwAAAAAAAAACAAAABwAAAAAAAAACAAEABwAAAAAAAAACAAIABwAAAAAAAAACAAMABwAAAAAAAAACAAQABwAAAAAAAAACAAUABwAAAAAAAAACAAYABwAAAAAAAAACAAcABwAAAAAAAAACAAgABwAAAAAAAAACAAkABwAAAAAAAAADAPb/BwAAAAAAAAADAPf/BwAAAAAAAAADAPj/BwAAAAAAAAADAPn/BwAAAAAAAAADAPr/BwAAAAAAAAADAPv/BwAAAAAAAAADAPz/BwAAAAAAAAADAP3/BwAAAAAAAAADAP7/BwAAAAAAAAADAP//BwAAAAAAAAADAAAABwAAAAAAAAADAAEABwAAAAAAAAADAAIABwAAAAAAAAADAAMABwAAAAAAAAADAAQABwAAAAAAAAADAAUABwAAAAAAAAADAAYABwAAAAAAAAADAAcABwAAAAAAAAADAAgABwAAAAAAAAADAAkABwAAAAAAAAAEAPb/BwAAAAAAAAAEAPf/BwAAAAAAAAAEAPj/BwAAAAAAAAAEAPn/BwAAAAAAAAAEAPr/BwAAAAAAAAAEAPv/BwAAAAAAAAAEAPz/BwAAAAAAAAAEAP3/BwAAAAAAAAAEAP7/BwAAAAAAAAAEAP//BwAAAAAAAAAEAAAABwAAAAAAAAAEAAEABwAAAAAAAAAEAAIABwAAAAAAAAAEAAMABwAAAAAAAAAEAAQABwAAAAAAAAAEAAUABwAAAAAAAAAEAAYABwAAAAAAAAAEAAcABwAAAAAAAAAEAAgABwAAAAAAAAAEAAkABwAAAAAAAAAFAPb/BwAAAAAAAAAFAPf/BwAAAAAAAAAFAPj/BwAAAAAAAAAFAPn/BwAAAAAAAAAFAPr/BwAAAAAAAAAFAPv/BwAAAAAAAAAFAPz/BwAAAAAAAAAFAP3/BwAAAAAAAAAFAP7/BwAAAAAAAAAFAP//BwAAAAAAAAAFAAAABwAAAAAAAAAFAAEABwAAAAAAAAAFAAIABwAAAAAAAAAFAAMABwAAAAAAAAAFAAQABwAAAAAAAAAFAAUABwAAAAAAAAAFAAYABwAAAAAAAAAFAAcABwAAAAAAAAAFAAgABwAAAAAAAAAFAAkABwAAAAAAAAAGAPb/BwAAAAAAAAAGAPf/BwAAAAAAAAAGAPj/BwAAAAAAAAAGAPn/BwAAAAAAAAAGAPr/BwAAAAAAAAAGAPv/BwAAAAAAAAAGAPz/BwAAAAAAAAAGAP3/BwAAAAAAAAAGAP7/BwAAAAAAAAAGAP//BwAAAAAAAAAGAAAABwAAAAAAAAAGAAEABwAAAAAAAAAGAAIABwAAAAAAAAAGAAMABwAAAAAAAAAGAAQABwAAAAAAAAAGAAUABwAAAAAAAAAGAAYABwAAAAAAAAAGAAcABwAAAAAAAAAGAAgABwAAAAAAAAAGAAkABwAAAAAAAAAHAPb/BwAAAAAAAAAHAPf/BwAAAAAAAAAHAPj/BwAAAAAAAAAHAPn/BwAAAAAAAAAHAPr/BwAAAAAAAAAHAPv/BwAAAAAAAAAHAPz/BwAAAAAAAAAHAP3/BwAAAAAAAAAHAP7/BwAAAAAAAAAHAP//BwAAAAAAAAAHAAAABwAAAAAAAAAHAAEABwAAAAAAAAAHAAIABwAAAAAAAAAHAAMABwAAAAAAAAAHAAQABwAAAAAAAAAHAAUABwAAAAAAAAAHAAYABwAAAAAAAAAHAAcABwAAAAAAAAAHAAgABwAAAAAAAAAHAAkABwAAAAAAAAAIAPb/BwAAAAAAAAAIAPf/BwAAAAAAAAAIAPj/BwAAAAAAAAAIAPn/BwAAAAAAAAAIAPr/BwAAAAAAAAAIAPv/BwAAAAAAAAAIAPz/BwAAAAAAAAAIAP3/BwAAAAAAAAAIAP7/BwAAAAAAAAAIAP//BwAAAAAAAAAIAAAABwAAAAAAAAAIAAEABwAAAAAAAAAIAAIABwAAAAAAAAAIAAMABwAAAAAAAAAIAAQABwAAAAAAAAAIAAUABwAAAAAAAAAIAAYABwAAAAAAAAAIAAcABwAAAAAAAAAIAAgABwAAAAAAAAAIAAkABwAAAAAAAAAJAPb/BwAAAAAAAAAJAPf/BwAAAAAAAAAJAPj/BwAAAAAAAAAJAPn/BwAAAAAAAAAJAPr/BwAAAAAAAAAJAPv/BwAAAAAAAAAJAPz/BwAAAAAAAAAJAP3/BwAAAAAAAAAJAP7/BwAAAAAAAAAJAP//BwAAAAAAAAAJAAAABwAAAAAAAAAJAAEABwAAAAAAAAAJAAIABwAAAAAAAAAJAAMABwAAAAAAAAAJAAQABwAAAAAAAAAJAAUABwAAAAAAAAAJAAYABwAAAAAAAAAJAAcABwAAAAAAAAAJAAgABwAAAAAAAAAJAAkABwAAAAAAAAAKAPb/BwAAAAAAAAAKAPf/BwAAAAAAAAAKAPj/BwAAAAAAAAAKAPn/BwAAAAAAAAAKAPr/BwAAAAAAAAAKAPv/BwAAAAAAAAAKAPz/BwAAAAAAAAAKAP3/BwAAAAAAAAAKAP7/BwAAAAAAAAAKAP//BwAAAAAAAAAKAAAABwAAAAAAAAAKAAEABwAAAAAAAAAKAAIABwAAAAAAAAAKAAMABwAAAAAAAAAKAAQABwAAAAAAAAAKAAUABwAAAAAAAAAKAAYABwAAAAAAAAAKAAcABwAAAAAAAAAKAAgABwAAAAAAAAAKAAkABwAAAAAAAAALAPb/BwAAAAAAAAALAPf/BwAAAAAAAAALAPj/BwAAAAAAAAALAPn/BwAAAAAAAAALAPr/BwAAAAAAAAALAPv/BwAAAAAAAAALAPz/BwAAAAAAAAALAP3/BwAAAAAAAAALAP7/BwAAAAAAAAALAP//BwAAAAAAAAALAAAABwAAAAAAAAALAAEABwAAAAAAAAALAAIABwAAAAAAAAALAAMABwAAAAAAAAALAAQABwAAAAAAAAALAAUABwAAAAAAAAALAAYABwAAAAAAAAALAAcABwAAAAAAAAALAAgABwAAAAAAAAALAAkABwAAAAAAAAAMAPb/BwAAAAAAAAAMAPf/BwAAAAAAAAAMAPj/BwAAAAAAAAAMAPn/BwAAAAAAAAAMAPr/BwAAAAAAAAAMAPv/BwAAAAAAAAAMAPz/BwAAAAAAAAAMAP3/BwAAAAAAAAAMAP7/BwAAAAAAAAAMAP//BwAAAAAAAAAMAAAABwAAAAAAAAAMAAEABwAAAAAAAAAMAAIABwAAAAAAAAAMAAMABwAAAAAAAAAMAAQABwAAAAAAAAAMAAUABwAAAAAAAAAMAAYABwAAAAAAAAAMAAcABwAAAAAAAAAMAAgABwAAAAAAAAAMAAkABwAAAAAAAAANAPb/BwAAAAAAAAANAPf/BwAAAAAAAAANAPj/BwAAAAAAAAANAPn/BwAAAAAAAAANAPr/BwAAAAAAAAANAPv/BwAAAAAAAAANAPz/BwAAAAAAAAANAP3/BwAAAAAAAAANAP7/BwAAAAAAAAANAP//BwAAAAAAAAANAAAABwAAAAAAAAANAAEABwAAAAAAAAANAAIABwAAAAAAAAANAAMABwAAAAAAAAANAAQABwAAAAAAAAANAAUABwAAAAAAAAANAAYABwAAAAAAAAANAAcABwAAAAAAAAANAAgABwAAAAAAAAANAAkABwAAAAAAAAAOAPb/BwAAAAAAAAAOAPf/BwAAAAAAAAAOAPj/BwAAAAAAAAAOAPn/BwAAAAAAAAAOAPr/BwAAAAAAAAAOAPv/BwAAAAAAAAAOAPz/BwAAAAAAAAAOAP3/BwAAAAAAAAAOAP7/BwAAAAAAAAAOAP//BwAAAAAAAAAOAAAABwAAAAAAAAAOAAEABwAAAAAAAAAOAAIABwAAAAAAAAAOAAMABwAAAAAAAAAOAAQABwAAAAAAAAAOAAUABwAAAAAAAAAOAAYABwAAAAAAAAAOAAcABwAAAAAAAAAOAAgABwAAAAAAAAAOAAkABwAAAAAAAAAPAPb/BwAAAAAAAAAPAPf/BwAAAAAAAAAPAPj/BwAAAAAAAAAPAPn/BwAAAAAAAAAPAPr/BwAAAAAAAAAPAPv/BwAAAAAAAAAPAPz/BwAAAAAAAAAPAP3/BwAAAAAAAAAPAP7/BwAAAAAAAAAPAP//BwAAAAAAAAAPAAAABwAAAAAAAAAPAAEABwAAAAAAAAAPAAIABwAAAAAAAAAPAAMABwAAAAAAAAAPAAQABwAAAAAAAAAPAAUABwAAAAAAAAAPAAYABwAAAAAAAAAPAAcABwAAAAAAAAAPAAgABwAAAAAAAAA=")
 tile_set = ExtResource("1_a3vyp")
-format = 2
-layer_0/name = "Grass"
-layer_0/tile_data = PackedInt32Array(-524303, 7, 0, -458767, 7, 0, -393231, 7, 0, -327695, 7, 0, -262159, 7, 0, -196623, 7, 0, -131087, 7, 0, -65551, 7, 0, -15, 7, 0, 65521, 7, 0, 131057, 7, 0, 196593, 7, 0, 262129, 7, 0, 327665, 7, 0, 393201, 7, 0, 458737, 7, 0, 524273, 7, 0, 589809, 7, 0, -524302, 7, 0, -458766, 7, 0, -393230, 7, 0, -327694, 7, 0, -262158, 7, 0, -196622, 7, 0, -131086, 7, 0, -65550, 7, 0, -14, 7, 0, 65522, 7, 0, 131058, 7, 0, 196594, 7, 0, 262130, 7, 0, 327666, 7, 0, 393202, 7, 0, 458738, 7, 0, 524274, 7, 0, 589810, 7, 0, -524301, 7, 0, -458765, 7, 0, -393229, 7, 0, -327693, 7, 0, -262157, 7, 0, -196621, 7, 0, -131085, 7, 0, -65549, 7, 0, -13, 7, 0, 65523, 7, 0, 131059, 7, 0, 196595, 7, 0, 262131, 7, 0, 327667, 7, 0, 393203, 7, 0, 458739, 7, 0, 524275, 7, 0, 589811, 7, 0, -524300, 7, 0, -458764, 7, 0, -393228, 7, 0, -327692, 7, 0, -262156, 7, 0, -196620, 7, 0, -131084, 7, 0, -65548, 7, 0, -12, 7, 0, 65524, 7, 0, 131060, 7, 0, 196596, 7, 0, 262132, 7, 0, 327668, 7, 0, 393204, 7, 0, 458740, 7, 0, 524276, 7, 0, 589812, 7, 0, -524299, 7, 0, -458763, 7, 0, -393227, 7, 0, -327691, 7, 0, -262155, 7, 0, -196619, 7, 0, -131083, 7, 0, -65547, 7, 0, -11, 7, 0, 65525, 7, 0, 131061, 7, 0, 196597, 7, 0, 262133, 7, 0, 327669, 7, 0, 393205, 7, 0, 458741, 7, 0, 524277, 7, 0, 589813, 7, 0, -524298, 7, 0, -458762, 7, 0, -393226, 7, 0, -327690, 7, 0, -262154, 7, 0, -196618, 7, 0, -131082, 7, 0, -65546, 7, 0, -10, 7, 0, 65526, 7, 0, 131062, 7, 0, 196598, 7, 0, 262134, 7, 0, 327670, 7, 0, 393206, 7, 0, 458742, 7, 0, 524278, 7, 0, 589814, 7, 0, -524297, 7, 0, -458761, 7, 0, -393225, 7, 0, -327689, 7, 0, -262153, 7, 0, -196617, 7, 0, -131081, 7, 0, -65545, 7, 0, -9, 7, 0, 65527, 7, 0, 131063, 7, 0, 196599, 7, 0, 262135, 7, 0, 327671, 7, 0, 393207, 7, 0, 458743, 7, 0, 524279, 7, 0, 589815, 7, 0, -524296, 7, 0, -458760, 7, 0, -393224, 7, 0, -327688, 7, 0, -262152, 7, 0, -196616, 7, 0, -131080, 7, 0, -65544, 7, 0, -8, 7, 0, 65528, 7, 0, 131064, 7, 0, 196600, 7, 0, 262136, 7, 0, 327672, 7, 0, 393208, 7, 0, 458744, 7, 0, 524280, 7, 0, 589816, 7, 0, -524295, 7, 0, -458759, 7, 0, -393223, 7, 0, -327687, 7, 0, -262151, 7, 0, -196615, 7, 0, -131079, 7, 0, -65543, 7, 0, -7, 7, 0, 65529, 7, 0, 131065, 7, 0, 196601, 7, 0, 262137, 7, 0, 327673, 7, 0, 393209, 7, 0, 458745, 7, 0, 524281, 7, 0, 589817, 7, 0, -524294, 7, 0, -458758, 7, 0, -393222, 7, 0, -327686, 7, 0, -262150, 7, 0, -196614, 7, 0, -131078, 7, 0, -65542, 7, 0, -6, 7, 0, 65530, 7, 0, 131066, 7, 0, 196602, 7, 0, 262138, 7, 0, 327674, 7, 0, 393210, 7, 0, 458746, 7, 0, 524282, 7, 0, 589818, 7, 0, -524293, 7, 0, -458757, 7, 0, -393221, 7, 0, -327685, 7, 0, -262149, 7, 0, -196613, 7, 0, -131077, 7, 0, -65541, 7, 0, -5, 7, 0, 65531, 7, 0, 131067, 7, 0, 196603, 7, 0, 262139, 7, 0, 327675, 7, 0, 393211, 7, 0, 458747, 7, 0, 524283, 7, 0, 589819, 7, 0, -524292, 7, 0, -458756, 7, 0, -393220, 7, 0, -327684, 7, 0, -262148, 7, 0, -196612, 7, 0, -131076, 7, 0, -65540, 7, 0, -4, 7, 0, 65532, 7, 0, 131068, 7, 0, 196604, 7, 0, 262140, 7, 0, 327676, 7, 0, 393212, 7, 0, 458748, 7, 0, 524284, 7, 0, 589820, 7, 0, -524291, 7, 0, -458755, 7, 0, -393219, 7, 0, -327683, 7, 0, -262147, 7, 0, -196611, 7, 0, -131075, 7, 0, -65539, 7, 0, -3, 7, 0, 65533, 7, 0, 131069, 7, 0, 196605, 7, 0, 262141, 7, 0, 327677, 7, 0, 393213, 7, 0, 458749, 7, 0, 524285, 7, 0, 589821, 7, 0, -524290, 7, 0, -458754, 7, 0, -393218, 7, 0, -327682, 7, 0, -262146, 7, 0, -196610, 7, 0, -131074, 7, 0, -65538, 7, 0, -2, 7, 0, 65534, 7, 0, 131070, 7, 0, 196606, 7, 0, 262142, 7, 0, 327678, 7, 0, 393214, 7, 0, 458750, 7, 0, 524286, 7, 0, 589822, 7, 0, -524289, 7, 0, -458753, 7, 0, -393217, 7, 0, -327681, 7, 0, -262145, 7, 0, -196609, 7, 0, -131073, 7, 0, -65537, 7, 0, -1, 7, 0, 65535, 7, 0, 131071, 7, 0, 196607, 7, 0, 262143, 7, 0, 327679, 7, 0, 393215, 7, 0, 458751, 7, 0, 524287, 7, 0, 589823, 7, 0, -589824, 7, 0, -524288, 7, 0, -458752, 7, 0, -393216, 7, 0, -327680, 7, 0, -262144, 7, 0, -196608, 7, 0, -131072, 7, 0, -65536, 7, 0, 0, 7, 0, 65536, 7, 0, 131072, 7, 0, 196608, 7, 0, 262144, 7, 0, 327680, 7, 0, 393216, 7, 0, 458752, 7, 0, 524288, 7, 0, -589823, 7, 0, -524287, 7, 0, -458751, 7, 0, -393215, 7, 0, -327679, 7, 0, -262143, 7, 0, -196607, 7, 0, -131071, 7, 0, -65535, 7, 0, 1, 7, 0, 65537, 7, 0, 131073, 7, 0, 196609, 7, 0, 262145, 7, 0, 327681, 7, 0, 393217, 7, 0, 458753, 7, 0, 524289, 7, 0, -589822, 7, 0, -524286, 7, 0, -458750, 7, 0, -393214, 7, 0, -327678, 7, 0, -262142, 7, 0, -196606, 7, 0, -131070, 7, 0, -65534, 7, 0, 2, 7, 0, 65538, 7, 0, 131074, 7, 0, 196610, 7, 0, 262146, 7, 0, 327682, 7, 0, 393218, 7, 0, 458754, 7, 0, 524290, 7, 0, -589821, 7, 0, -524285, 7, 0, -458749, 7, 0, -393213, 7, 0, -327677, 7, 0, -262141, 7, 0, -196605, 7, 0, -131069, 7, 0, -65533, 7, 0, 3, 7, 0, 65539, 7, 0, 131075, 7, 0, 196611, 7, 0, 262147, 7, 0, 327683, 7, 0, 393219, 7, 0, 458755, 7, 0, 524291, 7, 0, -589820, 7, 0, -524284, 7, 0, -458748, 7, 0, -393212, 7, 0, -327676, 7, 0, -262140, 7, 0, -196604, 7, 0, -131068, 7, 0, -65532, 7, 0, 4, 7, 0, 65540, 7, 0, 131076, 7, 0, 196612, 7, 0, 262148, 7, 0, 327684, 7, 0, 393220, 7, 0, 458756, 7, 0, 524292, 7, 0, -589819, 7, 0, -524283, 7, 0, -458747, 7, 0, -393211, 7, 0, -327675, 7, 0, -262139, 7, 0, -196603, 7, 0, -131067, 7, 0, -65531, 7, 0, 5, 7, 0, 65541, 7, 0, 131077, 7, 0, 196613, 7, 0, 262149, 7, 0, 327685, 7, 0, 393221, 7, 0, 458757, 7, 0, 524293, 7, 0, -589818, 7, 0, -524282, 7, 0, -458746, 7, 0, -393210, 7, 0, -327674, 7, 0, -262138, 7, 0, -196602, 7, 0, -131066, 7, 0, -65530, 7, 0, 6, 7, 0, 65542, 7, 0, 131078, 7, 0, 196614, 7, 0, 262150, 7, 0, 327686, 7, 0, 393222, 7, 0, 458758, 7, 0, 524294, 7, 0, -589817, 7, 0, -524281, 7, 0, -458745, 7, 0, -393209, 7, 0, -327673, 7, 0, -262137, 7, 0, -196601, 7, 0, -131065, 7, 0, -65529, 7, 0, 7, 7, 0, 65543, 7, 0, 131079, 7, 0, 196615, 7, 0, 262151, 7, 0, 327687, 7, 0, 393223, 7, 0, 458759, 7, 0, 524295, 7, 0, -589816, 7, 0, -524280, 7, 0, -458744, 7, 0, -393208, 7, 0, -327672, 7, 0, -262136, 7, 0, -196600, 7, 0, -131064, 7, 0, -65528, 7, 0, 8, 7, 0, 65544, 7, 0, 131080, 7, 0, 196616, 7, 0, 262152, 7, 0, 327688, 7, 0, 393224, 7, 0, 458760, 7, 0, 524296, 7, 0, -589815, 7, 0, -524279, 7, 0, -458743, 7, 0, -393207, 7, 0, -327671, 7, 0, -262135, 7, 0, -196599, 7, 0, -131063, 7, 0, -65527, 7, 0, 9, 7, 0, 65545, 7, 0, 131081, 7, 0, 196617, 7, 0, 262153, 7, 0, 327689, 7, 0, 393225, 7, 0, 458761, 7, 0, 524297, 7, 0, -589814, 7, 0, -524278, 7, 0, -458742, 7, 0, -393206, 7, 0, -327670, 7, 0, -262134, 7, 0, -196598, 7, 0, -131062, 7, 0, -65526, 7, 0, 10, 7, 0, 65546, 7, 0, 131082, 7, 0, 196618, 7, 0, 262154, 7, 0, 327690, 7, 0, 393226, 7, 0, 458762, 7, 0, 524298, 7, 0, -589813, 7, 0, -524277, 7, 0, -458741, 7, 0, -393205, 7, 0, -327669, 7, 0, -262133, 7, 0, -196597, 7, 0, -131061, 7, 0, -65525, 7, 0, 11, 7, 0, 65547, 7, 0, 131083, 7, 0, 196619, 7, 0, 262155, 7, 0, 327691, 7, 0, 393227, 7, 0, 458763, 7, 0, 524299, 7, 0, -589812, 7, 0, -524276, 7, 0, -458740, 7, 0, -393204, 7, 0, -327668, 7, 0, -262132, 7, 0, -196596, 7, 0, -131060, 7, 0, -65524, 7, 0, 12, 7, 0, 65548, 7, 0, 131084, 7, 0, 196620, 7, 0, 262156, 7, 0, 327692, 7, 0, 393228, 7, 0, 458764, 7, 0, 524300, 7, 0, -589811, 7, 0, -524275, 7, 0, -458739, 7, 0, -393203, 7, 0, -327667, 7, 0, -262131, 7, 0, -196595, 7, 0, -131059, 7, 0, -65523, 7, 0, 13, 7, 0, 65549, 7, 0, 131085, 7, 0, 196621, 7, 0, 262157, 7, 0, 327693, 7, 0, 393229, 7, 0, 458765, 7, 0, 524301, 7, 0, -589810, 7, 0, -524274, 7, 0, -458738, 7, 0, -393202, 7, 0, -327666, 7, 0, -262130, 7, 0, -196594, 7, 0, -131058, 7, 0, -65522, 7, 0, 14, 7, 0, 65550, 7, 0, 131086, 7, 0, 196622, 7, 0, 262158, 7, 0, 327694, 7, 0, 393230, 7, 0, 458766, 7, 0, 524302, 7, 0, -589809, 7, 0, -524273, 7, 0, -458737, 7, 0, -393201, 7, 0, -327665, 7, 0, -262129, 7, 0, -196593, 7, 0, -131057, 7, 0, -65521, 7, 0, 15, 7, 0, 65551, 7, 0, 131087, 7, 0, 196623, 7, 0, 262159, 7, 0, 327695, 7, 0, 393231, 7, 0, 458767, 7, 0, 524303, 7, 0, -589840, 7, 0, -524304, 7, 0, -458768, 7, 0, -393232, 7, 0, -327696, 7, 0, -262160, 7, 0, -196624, 7, 0, -131088, 7, 0, -65552, 7, 0, -16, 7, 0, 65520, 7, 0, 131056, 7, 0, 196592, 7, 0, 262128, 7, 0, 327664, 7, 0, 393200, 7, 0, 458736, 7, 0, 524272, 7, 0, 589808, 7, 0, 655344, 7, 0, -589839, 7, 0, 655345, 7, 0, -589838, 7, 0, 655346, 7, 0, -589837, 7, 0, 655347, 7, 0, -589836, 7, 0, 655348, 7, 0, -589835, 7, 0, 655349, 7, 0, -589834, 7, 0, 655350, 7, 0, -589833, 7, 0, 655351, 7, 0, -589832, 7, 0, 655352, 7, 0, -589831, 7, 0, 655353, 7, 0, -589830, 7, 0, 655354, 7, 0, -589829, 7, 0, 655355, 7, 0, -589828, 7, 0, 655356, 7, 0, -589827, 7, 0, 655357, 7, 0, -589826, 7, 0, 655358, 7, 0, -589825, 7, 0, 655359, 7, 0, -655360, 7, 0, 589824, 7, 0, -655359, 7, 0, 589825, 7, 0, -655358, 7, 0, 589826, 7, 0, -655357, 7, 0, 589827, 7, 0, -655356, 7, 0, 589828, 7, 0, -655355, 7, 0, 589829, 7, 0, -655354, 7, 0, 589830, 7, 0, -655353, 7, 0, 589831, 7, 0, -655352, 7, 0, 589832, 7, 0, -655351, 7, 0, 589833, 7, 0, -655350, 7, 0, 589834, 7, 0, -655349, 7, 0, 589835, 7, 0, -655348, 7, 0, 589836, 7, 0, -655347, 7, 0, 589837, 7, 0, -655346, 7, 0, 589838, 7, 0, -655345, 7, 0, 589839, 7, 0)
-layer_1/name = "Dirt"
-layer_1/tile_data = PackedInt32Array(262149, 196615, 2, 196612, 131079, 1, 131075, 131079, 1, 131074, 131079, 1, 65533, 131079, 1, 131070, 131079, 1, 131071, 131079, 1, 131072, 131079, 1, 131073, 131079, 1, 196610, 131079, 1, 196611, 131079, 1, 262148, 131079, 2, 65540, 131079, 1, 131076, 131079, 1, 196613, 196615, 1, -131074, 131079, 1, 65538, 131079, 1, 196607, 131079, 1, 65534, 131079, 1, -3, 131079, 1, -65540, 131079, 1, -4, 131079, 1, 196605, 131079, 1, 131068, 131079, 1, 65532, 131079, 1, -5, 131079, 1, -65541, 131079, 1, -131078, 65543, 1, 262146, 131079, 2, 196609, 131079, 1, -196609, 131079, 1, -196610, 131079, 1, -196611, 131079, 1, -262148, 131079, 0, -262149, 131079, 0, 131077, 196615, 1, 65541, 196615, 1, 5, 196615, 1, -65531, 196615, 1, -131067, 196615, 1, -196603, 196615, 1, -262139, 196615, 1, -327675, 196615, 0, 4, 131079, 1, -65532, 131079, 1, -131068, 131079, 1, -196604, 131079, 1, -262140, 131079, 1, -327676, 131079, 0, 262147, 131079, 2, 65539, 131079, 1, 3, 131079, 1, -65533, 131079, 1, -131069, 131079, 1, -196605, 131079, 1, -262141, 131079, 1, -327677, 131079, 0, 2, 131079, 1, -65534, 131079, 1, -131070, 131079, 1, -196606, 131079, 1, -262142, 131079, 1, -327678, 131079, 0, 262145, 131079, 2, 65537, 131079, 1, 1, 131079, 1, -65535, 131079, 1, -131071, 131079, 1, -196607, 131079, 1, -262143, 131079, 1, -327679, 131079, 0, 262144, 131079, 2, 196608, 131079, 1, 65536, 131079, 1, 0, 131079, 1, -65536, 131079, 1, -131072, 131079, 1, -196608, 131079, 1, -262144, 131079, 1, -327680, 131079, 0, 327679, 131079, 2, 262143, 131079, 1, 65535, 131079, 1, -1, 131079, 1, -65537, 131079, 1, -131073, 131079, 1, -262145, 131079, 0, 327678, 131079, 2, 262142, 131079, 1, 196606, 131079, 1, -2, 131079, 1, -65538, 131079, 1, -262146, 131079, 0, 327677, 131079, 2, 262141, 131079, 1, 131069, 131079, 1, -65539, 131079, 1, -131075, 131079, 1, -262147, 131079, 0, 327676, 131079, 2, 262140, 131079, 1, 196604, 131079, 1, -131076, 131079, 1, -196612, 131079, 1, 327675, 131079, 2, 262139, 131079, 1, 196603, 131079, 1, 131067, 131079, 1, 65531, 131079, 1, -131077, 131079, 1, -196613, 131079, 1, 327674, 65543, 2, 262138, 65543, 1, 196602, 65543, 1, 131066, 65543, 1, 65530, 65543, 1, -6, 65543, 1, -65542, 65543, 1, -196614, 65543, 1, -262150, 65543, 0)
-layer_2/name = "Fence"
-layer_2/tile_data = PackedInt32Array(-327674, 65543, 3, -262138, 65543, 3, -196602, 65543, 3, -131066, 65543, 3, -65530, 65543, 3, 6, 65543, 3, 65542, 65543, 3, 131078, 65543, 3, -393210, 7, 65539, -327685, 7, 1, -327684, 7, 1, -327683, 7, 1, -327682, 7, 1, -327681, 7, 1, -393216, 7, 1, -393215, 7, 1, -393214, 7, 1, -393213, 7, 1, -393212, 7, 1, -393211, 7, 1, 262150, 65543, 3, 393211, 7, 1, 393212, 7, 1, 393213, 7, 1, 393214, 7, 1, 393215, 7, 1, 327680, 7, 1, 327681, 7, 1, 327682, 7, 1, 327683, 7, 1, 327684, 7, 1, 327685, 7, 1, 327686, 7, 65538, -327687, 7, 3, -262151, 65543, 3, -196615, 65543, 3, -131079, 65543, 3, -65543, 65543, 3, -7, 65543, 3, 65529, 65543, 3, 131065, 65543, 3, 196601, 65543, 3, 327673, 65543, 3, 393209, 7, 2, 393210, 7, 1, 196614, 65543, 3, 262137, 65543, 3, -327686, 7, 1)
+
+[node name="Dirt" type="TileMapLayer" parent="FarmLayout"]
+tile_map_data = PackedByteArray("AAACAAIABwACAAEAAAACAAEABwACAAEAAAACAAAABwACAAEAAAACAP//BwACAAEAAAACAP7/BwACAAEAAAACAP3/BwACAAEAAAABAAIABwACAAEAAAABAAEABwACAAEAAAABAAAABwACAAEAAAABAP//BwACAAEAAAABAP7/BwACAAEAAAABAP3/BwACAAEAAAAAAAIABwACAAEAAAAAAAEABwACAAEAAAAAAAAABwACAAEAAAAAAP//BwACAAEAAAAAAP7/BwACAAEAAAAAAP3/BwACAAEAAAD//wIABwACAAEAAAD//wEABwACAAEAAAD//wAABwACAAEAAAD/////BwACAAEAAAD///7/BwACAAEAAAD///3/BwACAAEAAAD+/wIABwACAAEAAAD+/wEABwACAAEAAAD+/wAABwACAAEAAAD+////BwACAAEAAAD+//7/BwACAAEAAAD+//3/BwACAAEAAAD9/wIABwACAAEAAAD9/wEABwACAAEAAAD9/wAABwACAAEAAAD9////BwACAAEAAAD9//7/BwACAAEAAAD9//3/BwACAAEAAAADAAMABwADAAIAAAADAAIABwADAAEAAAADAAEABwADAAEAAAADAAAABwADAAEAAAADAP//BwADAAEAAAADAP7/BwADAAEAAAADAP3/BwADAAEAAAADAPz/BwADAAAAAAACAAMABwACAAIAAAACAPz/BwACAAAAAAABAAMABwACAAIAAAABAPz/BwACAAAAAAAAAAMABwACAAIAAAAAAPz/BwACAAAAAAD//wMABwACAAIAAAD///z/BwACAAAAAAD+/wMABwACAAIAAAD+//z/BwACAAAAAAD9/wMABwACAAIAAAD9//z/BwACAAAAAAD8/wMABwABAAIAAAD8/wIABwABAAEAAAD8/wEABwABAAEAAAD8/wAABwABAAEAAAD8////BwABAAEAAAD8//7/BwABAAEAAAD8//3/BwABAAEAAAD8//z/BwABAAAAAAA=")
+tile_set = ExtResource("1_a3vyp")
+
+[node name="Fence" type="TileMapLayer" parent="FarmLayout"]
+tile_map_data = PackedByteArray("AAD7//v/BwAAAAMAAAD7//z/BwABAAMAAAD7//3/BwABAAMAAAD7//7/BwABAAMAAAD7////BwABAAMAAAD7/wAABwABAAMAAAD7/wEABwABAAMAAAD7/wIABwABAAMAAAD7/wMABwABAAMAAAD7/wQABwAAAAIAAAAEAPv/BwAAAAMAAQADAPv/BwAAAAEAAAACAPv/BwAAAAEAAAABAPv/BwAAAAEAAAAAAPv/BwAAAAEAAAD///v/BwAAAAEAAAD+//v/BwAAAAEAAAD9//v/BwAAAAEAAAD8//v/BwAAAAEAAAAEAAQABwAAAAIAAQAEAAMABwABAAMAAAAEAAIABwABAAMAAAAEAAEABwABAAMAAAAEAAAABwABAAMAAAAEAP//BwABAAMAAAAEAP7/BwABAAMAAAAEAP3/BwABAAMAAAAEAPz/BwABAAMAAAADAAQABwAAAAEAAAACAAQABwAAAAEAAAABAAQABwAAAAEAAAD9/wQABwAAAAEAAAD8/wQABwAAAAEAAAD+/wQABwAAAAEAAAD//wQABwAAAAEAAAAAAAQABwAAAAEAAAA=")
+tile_set = ExtResource("1_a3vyp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="EggPlaceholder" type="Sprite2D" parent="."]
+[node name="EggPlaceholder" type="Sprite2D" parent="." node_paths=PackedStringArray("layer", "tile_highlight")]
 texture = ExtResource("4_2dbax")
+script = ExtResource("6_vsmom")
+layer = NodePath("../FarmLayout/Dirt")
+tile_highlight = NodePath("../FarmLayout")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -48,6 +70,164 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("4_qjkfk")
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+offset_right = 53.0
+offset_bottom = 48.0
+theme_override_constants/separation = 0
+
+[node name="Eggs" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="EggPlacer" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/Eggs" node_paths=PackedStringArray("placeholder")]
+layout_mode = 2
+script = ExtResource("11_m0ayq")
+placeholder = NodePath("../../../../../EggPlaceholder")
+scene = ExtResource("8_ym6am")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/Eggs"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/Eggs/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/Eggs/HBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Eggs/HBoxContainer/MarginContainer/Meat"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("8_fp5lu")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/HBoxContainer/Eggs/HBoxContainer/MarginContainer/Meat"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_t03dd")
+
+[node name="BuyEgg" type="Button" parent="CanvasLayer/Control/HBoxContainer/Eggs/HBoxContainer" node_paths=PackedStringArray("parent")]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+($10)"
+script = ExtResource("11_edcay")
+parent = NodePath("../../EggPlacer")
+
+[node name="Chicken" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Chicken" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/Chicken"]
+layout_mode = 2
+script = ExtResource("17_56jqv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/Chicken"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Supply" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/Chicken/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/Chicken/HBoxContainer/Supply"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Chicken/HBoxContainer/Supply/Meat"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("14_pyn5m")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/HBoxContainer/Chicken/HBoxContainer/Supply/Meat"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "0/10"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("17_i4i3g")
+
+[node name="BuyFarmSize" type="Button" parent="CanvasLayer/Control/HBoxContainer/Chicken/HBoxContainer" node_paths=PackedStringArray("parent")]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+($10)"
+script = ExtResource("11_edcay")
+parent = NodePath("../../Chicken")
+item = "FarmSize"
+
+[node name="Supply" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="EggPlacer" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/Supply"]
+layout_mode = 2
+script = ExtResource("17_56jqv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/Supply"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="Supply" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/Supply/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_right = 2
+
+[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/Supply/HBoxContainer/Supply"]
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 2
+
+[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Supply/HBoxContainer/Supply/Meat"]
+custom_minimum_size = Vector2(12, 0)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("10_70xvc")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/HBoxContainer/Supply/HBoxContainer/Supply/Meat" node_paths=PackedStringArray("container")]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_te1dw")
+container = NodePath("../../../..")
+
+[node name="SellSupply" type="Button" parent="CanvasLayer/Control/HBoxContainer/Supply/HBoxContainer" node_paths=PackedStringArray("parent")]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "+($10)"
+script = ExtResource("19_loju6")
+parent = NodePath("../../EggPlacer")
 
 [node name="ChickenDetails" parent="CanvasLayer/Control" instance=ExtResource("6_li68f")]
 layout_mode = 1
@@ -101,98 +281,51 @@ size_flags_vertical = 3
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="EggPack" parent="CanvasLayer/Control/Shop/VBoxContainer/ScrollContainer/VBoxContainer" node_paths=PackedStringArray("egg_placeholder", "tile_map") instance=ExtResource("17_bx6d6")]
+[node name="EggPack" parent="CanvasLayer/Control/Shop/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("17_bx6d6")]
 layout_mode = 2
 script = ExtResource("9_uognv")
-egg_placeholder = NodePath("../../../../../../../EggPlaceholder")
-tile_map = NodePath("../../../../../../../TileMap")
-egg_scene = ExtResource("8_ym6am")
-ground_layer = 1
 source_id = 0
 item_id = 0
 placement = 0
 shop_item = ExtResource("18_4iatc")
+
+[node name="Restaurant" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Restaurant >"
 
 [node name="MarginContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -51.0
-offset_bottom = 20.0
+offset_left = -49.0
+offset_bottom = 12.0
 grow_horizontal = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2"]
 layout_mode = 2
+size_flags_horizontal = 8
 theme_override_constants/separation = 2
 
-[node name="Supply" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
-visible = false
+[node name="MoneyLabel2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_right = 2
-
-[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/Supply"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 2
-
-[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/Supply/Meat"]
-custom_minimum_size = Vector2(12, 0)
-layout_mode = 2
-texture = ExtResource("10_70xvc")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/Supply/Meat"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("11_te1dw")
+text = "$1000"
+script = ExtResource("20_w7bhv")
 
 [node name="Button" type="Button" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer" node_paths=PackedStringArray("node")]
+visible = false
 layout_mode = 2
 text = "Shop"
 script = ExtResource("21_o0cx3")
 node = NodePath("../../../Shop")
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
-layout_mode = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 2
-theme_override_constants/margin_right = 2
-
-[node name="Meat" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer/MarginContainer"]
-custom_minimum_size = Vector2(16, 16)
-layout_mode = 2
-size_flags_horizontal = 0
-theme_override_constants/separation = 2
-
-[node name="Sprite2D" type="TextureRect" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer/MarginContainer/Meat"]
-custom_minimum_size = Vector2(12, 0)
-layout_mode = 2
-texture = ExtResource("16_5g4p0")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="Label2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer/MarginContainer/Meat"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-script = ExtResource("17_i4i3g")
-
-[node name="Chickens" type="TextureButton" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer/PanelContainer"]
-layout_mode = 2
-
-[node name="Restaurant" type="Button" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
-layout_mode = 2
-text = "Restaurant >"
-
-[connection signal="pressed" from="CanvasLayer/Control/MarginContainer2/HBoxContainer/Restaurant" to="." method="_on_restaurant_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/Restaurant" to="." method="_on_restaurant_pressed"]

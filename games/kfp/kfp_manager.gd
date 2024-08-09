@@ -10,6 +10,8 @@ signal stars_changed()
 signal average_revenue_changed()
 signal farm_size_changed()
 
+signal egg_hatched(coord: Vector2i)
+
 signal chicken_removed(res)
 signal chicken_added(res, pos)
 signal chicken_assigned_changed(c)
@@ -21,7 +23,7 @@ var chicken_supply := 0:
 	set(v): chicken_supply = v; chicken_supply_changed.emit()
 var eggs := 0:
 	set(v): eggs = v; eggs_changed.emit()
-var money := 1000:
+var money := 100:
 	set(v): money = v; money_changed.emit()
 var order_desks := 0:
 	set(v): order_desks = v; order_desk_changed.emit()
@@ -34,24 +36,29 @@ var stars := 0:
 	set(v): stars = v; stars_changed.emit()
 var average_revenue := 0.0:
 	set(v): average_revenue = v; average_revenue_changed.emit()
-var max_farm_size := 20:
+var max_farm_size := 10:
 	set(v): max_farm_size = v; farm_size_changed.emit()
+
+var chicken_hatch_rate := 1.0
 
 var hatching_eggs := []
 var chickens := []
 var assigned_chickens := []
 var assigning_chicken: ChickenResource
 
-var order_id := 0
 var open_orders := []
 var prepared_orders := []
+var order_id := 0
+var chicken_id := 0
 
 func _ready() -> void:
-	for i in range(10):
+	for i in range(0):
 		add_random_chicken()
 
 func add_random_chicken(pos = Vector2.ZERO):
+	chicken_id += 1
 	var res = ChickenResource.new()
+	res.name = "Chicken %s" % chicken_id
 	res.traits = [ChickenTraits.get_random_trait()]
 	chickens.append(res)
 	chicken_added.emit(res, pos)
@@ -61,24 +68,37 @@ func add_random_chicken(pos = Vector2.ZERO):
 ### Shop / Inventory ###
 ########################
 
-
-func buy_item(item: ShopResource):
-	if pay_item(item):
+func buy_upgrade(item: String):
+	var price = KfpUpgradeManager.get_upgrade_price(item)
+	if pay_item(price):
 		add_item(item)
-func add_item(item: ShopResource):
-	match item.type:
-		ShopResource.Item.ORDER_DESK: self.order_desks += 1
-		ShopResource.Item.CUTTING_BOARD: self.cutting_boards += 1
-		ShopResource.Item.TAKEOUT_DESK: self.takeout_desks += 1
-		ShopResource.Item.EGG: self.eggs += 1
-func pay_item(item: ShopResource):
-	if item.price > money:
-		print("Not enough money to buy egg: %s" % item.resource_path)
+		KfpUpgradeManager.upgrade(item)
+	
+func buy_item(item: ShopResource):
+	if pay_item(item.price):
+		add_item(item.map_to_upgrade())
+func add_item(type: String, amount = 1):
+	match type:
+		KfpUpgradeManager.ORDER_DESK: self.order_desks += amount
+		KfpUpgradeManager.CUTTING_BOARD: self.cutting_boards += amount
+		KfpUpgradeManager.TAKEOUT_DESK: self.takeout_desks += amount
+		KfpUpgradeManager.EGG: self.eggs += amount
+		KfpUpgradeManager.FARM_SIZE: self.max_farm_size = int(KfpUpgradeManager.get_upgrade_value(type))
+		_: print("Unknown upgrade type: %s" % type)
+func pay_item(price: int):
+	if price > money:
+		print("Not enough money to buy item: %s" % price)
 		return false
 
-	self.money -= item.price
+	self.money -= price
 	return true
-
+func sell_supply(price: int):
+	if chicken_supply <= 0:
+		print("No supply to sell")
+		return
+	
+	self.chicken_supply -= 1
+	self.money += price
 
 ##################
 ### Restaurant ###
@@ -155,25 +175,42 @@ func butcher_chicken(res: ChickenResource):
 	chicken_removed.emit(res)
 	self.chicken_supply += randi_range(2, 5)
 
+func get_total_chickens_in_farm():
+	return chickens.size() + hatching_eggs.size()
+
 func is_farm_full():
-	return (chickens.size() + hatching_eggs.size()) >= max_farm_size
+	return get_total_chickens_in_farm() >= max_farm_size
 
-func hatch_egg(pos = Vector2.ZERO):
-	if hatching_eggs.is_empty():
-		print("No eggs are currently hatching")
-		return
+func hatch_egg(coord: Vector2i, pos = Vector2.ZERO):
+	var eggs = hatching_eggs.filter(func(x): return x[0] == coord)
+	if eggs.is_empty():
+		print("No egg hatching at %s" % coord)
+		return false
 	
+	hatching_eggs.erase(eggs[0])
 	add_random_chicken(pos)
-	hatching_eggs.remove_at(0)
+	egg_hatched.emit(coord)
+	return true
 
-func placed_egg():
+func place_egg(coord: Vector2i, value: float):
 	if eggs <= 0:
 		print("NO EGGS")
 		return false
-	if is_farm_full():
-		print("NO SPACE")
+	
+	if hatching_eggs.filter(func(x): return x[0] == coord).size() > 0:
+		print("An egg is already at %s" % coord)
 		return false
 	
-	hatching_eggs.append(0)
+	if is_farm_full():
+		print("Farm is full. Cannot place another egg")
+		return false
+	
+	hatching_eggs.append([coord, value])
 	self.eggs -= 1
 	return true
+
+func get_chicken_hatch_rate():
+	return chickens.size() * chicken_hatch_rate
+
+func get_chicken_egg_drop_rate():
+	return max(log(chickens.size()) * 0.03, 0.03)

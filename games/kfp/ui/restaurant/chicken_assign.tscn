@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ca4cw8s8sfift"]
 
-[ext_resource type="Script" path="res://games/kfp/ui/chicken_assign.gd" id="1_5rwww"]
-[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="1_hypfb"]
+[ext_resource type="Script" path="res://games/kfp/ui/restaurant/chicken_assign.gd" id="1_5rwww"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="1_hypfb"]
 
 [node name="ChickenAssign" type="TextureButton"]
 custom_minimum_size = Vector2(0, 20)

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://2cau7k08ftdx"
-path="res://.godot/imported/Chicken_Uniform_000_Chicken_Naked.png-4ae11416dc62fe39d5498be8eb45d615.ctex"
+path="res://.godot/imported/Chicken_Naked.png-923e7b7203828a6e0e2b686f7c5505ee.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png"
-dest_files=["res://.godot/imported/Chicken_Uniform_000_Chicken_Naked.png-4ae11416dc62fe39d5498be8eb45d615.ctex"]
+source_file="res://games/kfp/assets/Chicken_Naked.png"
+dest_files=["res://.godot/imported/Chicken_Naked.png-923e7b7203828a6e0e2b686f7c5505ee.ctex"]
 
 [params]
 

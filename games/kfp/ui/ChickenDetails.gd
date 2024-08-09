@@ -2,6 +2,7 @@ class_name ChickenDetails
 extends PanelContainer
 
 signal butcher_chicken(res)
+signal close()
 
 @export var editable := false
 @export var res: ChickenResource
@@ -9,9 +10,11 @@ signal butcher_chicken(res)
 @export var name_label: Label
 @export var traits_label: Label
 @export var butcher_button: BaseButton
+@export var close_button: BaseButton
 
 func _ready():
 	hide()
+	close_button.pressed.connect(func(): close.emit())
 	butcher_button.pressed.connect(func(): butcher_chicken.emit(res))
 	butcher_button.visible = editable
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d2mkjotosfgwt"]
 
-[ext_resource type="Script" path="res://games/kfp/ui/stars.gd" id="1_3p328"]
+[ext_resource type="Script" path="res://games/kfp/ui/restaurant/stars.gd" id="1_3p328"]
 [ext_resource type="Texture2D" uid="uid://drkq7i3invixj" path="res://games/kfp/assets/Star.png" id="2_fx5fk"]
 
 [node name="Stars" type="HBoxContainer"]

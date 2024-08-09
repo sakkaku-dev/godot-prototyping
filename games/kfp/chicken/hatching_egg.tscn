@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://games/kfp/chicken/hatching_egg.gd" id="1_5glup"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_rn3ep"]
+[ext_resource type="Script" path="res://util/Selectable.gd" id="5_q8kb6"]
 [ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="5_tud2g"]
 [ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="7_nd5av"]
-[ext_resource type="Script" path="res://util/Countdown.gd" id="8_fct82"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8mbk1"]
 shader = ExtResource("4_rn3ep")
@@ -18,37 +18,20 @@ shader_parameter/square_border = true
 shader_parameter/offset = null
 shader_parameter/max_or_add = false
 
-[node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("timer")]
+[node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("label")]
 script = ExtResource("1_5glup")
-timer = NodePath("HatchingTimer")
+label = NodePath("Countdown")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_8mbk1")
 texture = ExtResource("5_tud2g")
 
-[node name="HatchingTimer" type="Timer" parent="."]
-wait_time = 5.0
-one_shot = true
-autostart = true
-
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -12.0
-offset_top = -17.0
-offset_right = 14.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Countdown" type="Label" parent="MarginContainer" node_paths=PackedStringArray("timer")]
-layout_mode = 2
+[node name="Countdown" type="Label" parent="."]
+z_index = 20
+offset_left = -7.0
+offset_top = -12.0
+offset_right = 9.0
+offset_bottom = -5.0
 size_flags_horizontal = 4
 theme = ExtResource("7_nd5av")
 theme_override_constants/outline_size = 2
@@ -56,5 +39,23 @@ theme_override_font_sizes/font_size = 6
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("8_fct82")
-timer = NodePath("../../HatchingTimer")
+
+[node name="ClickTimeout" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Selectable" type="Control" parent="." node_paths=PackedStringArray("sprite")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_q8kb6")
+sprite = NodePath("../Sprite2D")

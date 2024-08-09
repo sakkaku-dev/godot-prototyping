@@ -8,4 +8,4 @@ script = ExtResource("1_jsnek")
 type = 0
 name = "Egg"
 sprite = ExtResource("2_ldw86")
-price = 50
+price = 20

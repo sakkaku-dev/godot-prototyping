@@ -29,6 +29,7 @@ config/icon="res://icon.svg"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 DeepwaterGame="*res://games/rogue-fishing/deepwater_game.tscn"
 KfpManager="*res://games/kfp/kfp_manager.gd"
+KfpUpgradeManager="*res://games/kfp/KfpUpgradeManager.gd"
 
 [display]
 

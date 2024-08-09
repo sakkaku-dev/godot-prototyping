@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="2_w1kk5"]
 [ext_resource type="Texture2D" uid="uid://hw8dl0ltqt0t" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_faceAngry.png" id="3_0xuox"]
 [ext_resource type="Texture2D" uid="uid://dwrgh3orljchb" path="res://assets/Emote Pack/PNG/Pixel/Style 4/emote_dots3.png" id="4_466gg"]
-[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="6_wpaxm"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="6_wpaxm"]
 [ext_resource type="Script" path="res://games/kfp/PeopleDetection.gd" id="7_hbjd8"]
 [ext_resource type="PackedScene" uid="uid://drho3wwa07qog" path="res://games/kfp/emote.tscn" id="7_tyjf7"]
 

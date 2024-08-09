@@ -8,4 +8,4 @@ script = ExtResource("1_kgdlb")
 type = 1
 name = "Cutting Board"
 sprite = ExtResource("2_qfqw8")
-price = 200
+price = 100

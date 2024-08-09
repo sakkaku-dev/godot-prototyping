@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://yp58dkaro2y7"]
+
+[ext_resource type="Script" path="res://games/kfp/chicken/dropped_egg.gd" id="1_2dyux"]
+[ext_resource type="Texture2D" uid="uid://2is22vrwv0lb" path="res://games/kfp/assets/Egg.png" id="1_x20ec"]
+
+[node name="DroppedEgg" type="Node2D"]
+z_index = 50
+script = ExtResource("1_2dyux")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_x20ec")
+
+[node name="Control" type="Control" parent="."]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AutopickupTimer" type="Timer" parent="."]
+wait_time = 8.0
+one_shot = true
+autostart = true

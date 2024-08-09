@@ -1,12 +1,10 @@
 class_name Room
-extends Node2D
+extends TileLayerHighlight
 
 enum Placement {
 	WORK_AREA,
 	INTERIOR,
 }
-
-@export var dim_color := Color.DIM_GRAY
 
 @onready var floor_tiles: TileMapLayer = $FloorTiles
 @onready var wall_tiles: TileMapLayer = $WallTiles
@@ -16,11 +14,11 @@ enum Placement {
 
 @onready var premade_tiles := [floor_tiles, wall_tiles, interior_tiles, work_area_tiles]
 
+func get_layers():
+	return premade_tiles
+
 func highlight_area(place: Placement):
-	for tile in premade_tiles:
-		tile.modulate = dim_color
-	
-	_get_tiles_for_placement(place).modulate = Color.WHITE
+	highlight(_get_tiles_for_placement(place))
 
 func _get_tiles_for_placement(place: Placement) -> TileMapLayer:
 	match place:
@@ -28,10 +26,6 @@ func _get_tiles_for_placement(place: Placement) -> TileMapLayer:
 		Placement.INTERIOR: return interior_tiles
 	
 	return null
-	
-func reset_highlight():
-	for tile in premade_tiles:
-		tile.modulate = Color.WHITE
 
 func place_tile(tile: RoomItemTile, coord: Vector2i):
 	var tiles = _get_tiles_for_placement(tile.placement)

@@ -44,7 +44,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if item >= 0:
 				var btn = _find_button_for_item(item)
 				if btn:
-					KfpManager.add_item(btn.shop_item)
+					KfpManager.add_item(btn.shop_item.type)
 				else:
 					print("Cannot find button for item_id %s" % item)
 		elif event.is_action_pressed("ui_cancel"):

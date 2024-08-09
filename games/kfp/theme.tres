@@ -1,4 +1,25 @@
-[gd_resource type="Theme" load_steps=5 format=3 uid="uid://nuajw7fj24ph"]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://nuajw7fj24ph"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_diovu"]
+content_margin_left = 2.0
+content_margin_top = 0.0
+content_margin_right = 2.0
+content_margin_bottom = 0.0
+bg_color = Color(0.24, 0.076, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1qr04"]
+content_margin_left = 2.0
+content_margin_top = 0.0
+content_margin_right = 2.0
+content_margin_bottom = 0.0
+bg_color = Color(0.81, 0.2808, 0.162, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4f00w"]
+content_margin_left = 2.0
+content_margin_top = 0.0
+content_margin_right = 2.0
+content_margin_bottom = 0.0
+bg_color = Color(0.553801, 0.179878, 0, 1)
 
 [sub_resource type="ImageTexture" id="ImageTexture_y4fsq"]
 
@@ -14,10 +35,18 @@ content_margin_right = 2.0
 content_margin_bottom = 2.0
 bg_color = Color(0, 0, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p3tr6"]
+bg_color = Color(0, 0, 0, 0.635294)
+
 [resource]
 default_font_size = 8
-Button/styles/normal = null
+Button/styles/disabled = SubResource("StyleBoxFlat_diovu")
+Button/styles/focus = SubResource("StyleBoxFlat_1qr04")
+Button/styles/hover = SubResource("StyleBoxFlat_1qr04")
+Button/styles/normal = SubResource("StyleBoxFlat_4f00w")
+Button/styles/pressed = SubResource("StyleBoxFlat_1qr04")
 HSlider/icons/grabber = SubResource("ImageTexture_y4fsq")
 HSlider/styles/grabber_area = SubResource("StyleBoxFlat_erf8q")
 HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_j5jxt")
 HSlider/styles/slider = SubResource("StyleBoxFlat_e5022")
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_p3tr6")

@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://d4nk2fwl7uc8p"
+
+[deps]
+
+files=["res://games/kfp/data/upgrades.type.translation", "res://games/kfp/data/upgrades.price.translation", "res://games/kfp/data/upgrades.value.translation"]
+
+source_file="res://games/kfp/data/upgrades.csv"
+dest_files=["res://games/kfp/data/upgrades.type.translation", "res://games/kfp/data/upgrades.price.translation", "res://games/kfp/data/upgrades.value.translation"]
+
+[params]
+
+compress=true
+delimiter=0

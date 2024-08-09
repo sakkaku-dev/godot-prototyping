@@ -1,0 +1,8 @@
+﻿name,type,price,value
+Farm 1,FarmSize,100,15
+Farm 2,FarmSize,500,20
+Farm 3,FarmSize,1000,30
+Egg 1,Egg,10,
+OrderDesk 1,OrderDesk,100,
+TakeoutDesk 1,TakeoutDesk,100,
+CuttingBoard 1,CuttingBoard,100,

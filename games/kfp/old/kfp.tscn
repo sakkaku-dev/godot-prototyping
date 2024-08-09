@@ -29,7 +29,7 @@
 [ext_resource type="PackedScene" uid="uid://ci4iyqc760nsx" path="res://games/kfp/work/order_item.tscn" id="32_ubujr"]
 [ext_resource type="Script" path="res://util/SnappedCursor.gd" id="33_ad36h"]
 [ext_resource type="PackedScene" uid="uid://dexy72aki71ak" path="res://games/kfp/old/blue_icon_button.tscn" id="33_bd0wr"]
-[ext_resource type="Script" path="res://games/kfp/TotalChickenLabel.gd" id="35_l5ssy"]
+[ext_resource type="Script" path="res://games/kfp/ui/counts/TotalChickenLabel.gd" id="35_l5ssy"]
 [ext_resource type="Script" path="res://effects/PositionEffect.gd" id="38_yq75v"]
 [ext_resource type="Script" path="res://ui/Overlay.gd" id="41_inooq"]
 [ext_resource type="Script" path="res://effects/EffectRunner.gd" id="42_3wflj"]

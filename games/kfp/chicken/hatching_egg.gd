@@ -5,28 +5,37 @@ signal hatched()
 
 const GROUP = "HatchingEgg"
 
-@export var timer: Timer
-#@export var interactable: Interactable
-#@export var game_scene: PackedScene
+@export var label: Label
+@export var hatch_value := 1000.0:
+	set(v):
+		hatch_value = max(v, 0)
+		label.text = "%.0f" % v
+		
+		if hatch_value <= 0 and not has_hatched:
+			hatched.emit()
+			has_hatched = true
 
-#@onready var mini_game: MiniGame = get_tree().get_first_node_in_group(MiniGame.GROUP)
+@onready var click_timeout: Timer = $ClickTimeout
+@onready var selectable: Selectable = $Selectable
 
+var has_hatched := false
 var coord := Vector2i.ZERO
-#var is_playing := false
 
 func _ready():
 	add_to_group(GROUP)
-	timer.timeout.connect(func(): hatched.emit())
+	selectable.clicked.connect(func(): click_timeout.start())
+	self.hatch_value = hatch_value
 	
-	#interactable.interact_started.connect(func(_x):
-		#var game = game_scene.instantiate()
-		#game.current_time_left = timer.time_left
-		#game.hatched.connect(_on_hatched)
-		#mini_game.start_game(game)
-		#is_playing = true
-	#)
+	hatched.connect(func():
+		KfpManager.hatch_egg(coord, global_position)
+		queue_free()
+	)
 
-func _on_hatched():
-	hatched.emit()
-	#if is_playing:
-		#mini_game.hide_game()
+func _process(delta: float) -> void:
+	if not click_timeout.is_stopped():
+		self.hatch_value -= delta * _get_time_left_percentage()
+		
+	self.hatch_value -= delta * KfpManager.get_chicken_hatch_rate()
+	
+func _get_time_left_percentage():
+	return remap(pow(click_timeout.time_left, 3), 0., pow(click_timeout.wait_time, 3) , 0., 100.)

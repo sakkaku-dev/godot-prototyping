@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfwh6dwf5t0dn"]
 
 [ext_resource type="Script" path="res://games/kfp/ui/ChickenDetails.gd" id="1_nu207"]
-[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Uniform_000_Chicken_Naked.png" id="2_udlk3"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="2_udlk3"]
 
-[node name="ChickenDetails" type="PanelContainer" node_paths=PackedStringArray("name_label", "traits_label", "butcher_button")]
+[node name="ChickenDetails" type="PanelContainer" node_paths=PackedStringArray("name_label", "traits_label", "butcher_button", "close_button")]
 anchors_preset = 6
 anchor_left = 1.0
 anchor_top = 0.5
@@ -17,7 +17,8 @@ grow_vertical = 2
 script = ExtResource("1_nu207")
 name_label = NodePath("MarginContainer/VBoxContainer/Name")
 traits_label = NodePath("MarginContainer/VBoxContainer/Traits")
-butcher_button = NodePath("MarginContainer/VBoxContainer/Button")
+butcher_button = NodePath("MarginContainer/VBoxContainer/Butcher")
+close_button = NodePath("MarginContainer/VBoxContainer/Close")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 2
@@ -38,6 +39,7 @@ expand_mode = 3
 stretch_mode = 5
 
 [node name="Traits" type="Label" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 horizontal_alignment = 1
 
@@ -45,6 +47,10 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Button" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="Butcher" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Butcher"
+
+[node name="Close" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Close"
