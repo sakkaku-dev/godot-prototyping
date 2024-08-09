@@ -10,6 +10,7 @@ signal stars_changed()
 signal average_revenue_changed()
 signal farm_size_changed()
 
+signal item_bought(item: String)
 signal egg_hatched(coord: Vector2i)
 
 signal chicken_removed(res)
@@ -73,10 +74,12 @@ func buy_upgrade(item: String):
 	if pay_item(price):
 		add_item(item)
 		KfpUpgradeManager.upgrade(item)
+		item_bought.emit(item)
 	
 func buy_item(item: ShopResource):
 	if pay_item(item.price):
 		add_item(item.map_to_upgrade())
+
 func add_item(type: String, amount = 1):
 	match type:
 		KfpUpgradeManager.ORDER_DESK: self.order_desks += amount
@@ -85,6 +88,7 @@ func add_item(type: String, amount = 1):
 		KfpUpgradeManager.EGG: self.eggs += amount
 		KfpUpgradeManager.FARM_SIZE: self.max_farm_size = int(KfpUpgradeManager.get_upgrade_value(type))
 		_: print("Unknown upgrade type: %s" % type)
+
 func pay_item(price: int):
 	if price > money:
 		print("Not enough money to buy item: %s" % price)
@@ -92,6 +96,7 @@ func pay_item(price: int):
 
 	self.money -= price
 	return true
+
 func sell_supply(price: int):
 	if chicken_supply <= 0:
 		print("No supply to sell")

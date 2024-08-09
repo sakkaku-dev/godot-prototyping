@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=27 format=4 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" path="res://games/kfp/ui/sell_supply.gd" id="19_loju6"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/money_label.gd" id="20_w7bhv"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="21_o0cx3"]
+[ext_resource type="Script" path="res://games/kfp/ui/restaurant_button.gd" id="25_b87jr"]
 
 [node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details", "tile_map")]
 script = ExtResource("1_q8j44")
@@ -289,6 +290,24 @@ item_id = 0
 placement = 0
 shop_item = ExtResource("18_4iatc")
 
+[node name="BuyRestaurant" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Restaurant >"
+script = ExtResource("11_edcay")
+label = "Buy Restaurant"
+hide_if_disabled = true
+max_upgrade = 1
+item = "Restaurant"
+
 [node name="Restaurant" type="Button" parent="CanvasLayer/Control"]
 layout_mode = 1
 anchors_preset = 3
@@ -301,6 +320,7 @@ offset_top = -20.0
 grow_horizontal = 0
 grow_vertical = 0
 text = "Restaurant >"
+script = ExtResource("25_b87jr")
 
 [node name="MarginContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
 layout_mode = 1

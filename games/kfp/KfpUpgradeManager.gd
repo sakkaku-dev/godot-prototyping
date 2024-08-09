@@ -5,6 +5,7 @@ const EGG = "Egg"
 const ORDER_DESK = "OrderDesk"
 const TAKEOUT_DESK = "TakeoutDesk"
 const CUTTING_BOARD = "CuttingBoard"
+const RESTAURANT = "Restaurant"
 
 var upgrades = {}
 var upgrade_count = {}
@@ -25,13 +26,13 @@ func upgrade(type: String):
 	
 	upgrade_count[type] += 1
 
-func _get_current_upgrade_idx(type: String) -> int:
+func get_upgrade_count(type: String) -> int:
 	if not type in upgrade_count:
 		return 0
 	return upgrade_count[type]
 
 func _get_current_upgrade(type: String) -> Dictionary:
-	var idx = _get_current_upgrade_idx(type)
+	var idx = get_upgrade_count(type)
 	if not type in upgrades:
 		return {}
 	if idx >= upgrades[type].size():
