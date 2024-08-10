@@ -82,13 +82,14 @@ func _ready():
 		emote.set_texture(angry_face)
 		self.state = LEAVING
 	)
-	food_wait_time.timeout.connect(func():
-		emote.set_texture(angry_face)
-		self.state = LEAVING
-		order_failed.emit()
-	)
+	food_wait_time.timeout.connect(func(): leave_unhappy())
 	
 	_move_to_order_desk()
+
+func leave_unhappy():
+	emote.set_texture(angry_face)
+	self.state = LEAVING
+	order_failed.emit()
 
 func _move_to_order_desk():
 	self.state = MOVING_ORDER

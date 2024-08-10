@@ -114,6 +114,9 @@ func sell_supply(price: int):
 ### Restaurant ###
 ##################
 
+func has_supply_left():
+	var all_orders = open_orders.size() + prepared_orders.size()
+	return chicken_supply - all_orders > 0
 
 func add_assigned_chicken():
 	assigned_chickens.append(assigning_chicken)

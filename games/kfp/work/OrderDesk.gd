@@ -22,6 +22,12 @@ func _ready():
 	work_timer.timeout.connect(func():
 		icon.hide()
 		
+		if not KfpManager.has_supply_left():
+			print("No supply left")
+			for item in customer_queue.customers:
+				item.leave_unhappy()
+			return
+		
 		var customer = customer_queue.get_first_customer()
 		if not customer:
 			print("No customer")

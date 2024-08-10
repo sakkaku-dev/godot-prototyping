@@ -15,7 +15,6 @@ const RESTAURANT_UPGRADES = [
 @onready var restaurant_placeholder: Sprite2D = $RestaurantPlaceholder
 
 @onready var customer_timer = $CustomerTimer
-@onready var customer_spawn: Node2D = get_tree().get_first_node_in_group("spawn")
 
 var current_revenue: Array[int] = []
 var current_reviews: Array[int] = []
@@ -46,6 +45,7 @@ func _show_buttons(closed = true):
 	closed_ui.visible = closed
 
 func _report_day():
+	customer_timer.stop()
 	report.open(current_revenue, current_reviews)
 	KfpManager.update_reviews(current_reviews)
 	KfpManager.update_revenue(current_revenue)
@@ -54,7 +54,7 @@ func _report_day():
 
 func _spawn_customer():
 	var node = customer_scene.instantiate() as Customer
-	node.global_position = customer_spawn.global_position
+	node.global_position = get_tree().get_first_node_in_group("spawn").global_position
 	node.order_failed.connect(func(): current_reviews.append(1))
 	node.order_completed.connect(func(id):
 		KfpManager.finish_order(id)
