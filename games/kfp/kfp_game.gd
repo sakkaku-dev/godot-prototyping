@@ -1,5 +1,11 @@
 extends Node2D
 
+const RESTAURANT_UPGRADES = [
+	"res://games/kfp/rooms/room_000.tscn",
+	"res://games/kfp/rooms/room_001.tscn",
+	"res://games/kfp/rooms/room_003.tscn"
+]
+
 @export var customer_scene: PackedScene
 @export var opened_ui: Control
 @export var closed_ui: Control
@@ -15,6 +21,12 @@ var current_reviews: Array[int] = []
 
 func _ready():
 	KfpManager.assigned_chickens = []
+	
+	var idx = KfpUpgradeManager.get_upgrade_count(KfpUpgradeManager.RESTAURANT) - 1
+	if idx >= 0:
+		var node = load(RESTAURANT_UPGRADES[idx]).instantiate()
+		add_child(node)
+	
 	customer_timer.timeout.connect(_spawn_customer)
 	day_timer.timeout.connect(_day_ended)
 	_show_buttons()

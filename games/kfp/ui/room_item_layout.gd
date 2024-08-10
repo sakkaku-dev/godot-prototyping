@@ -14,10 +14,12 @@ var selected_button: RoomItemTile:
 		placeholder.visible = v != null
 		
 		if v != null:
-			room.highlight_area(v.placement)
+			if room:
+				room.highlight_area(v.placement)
 			v.set_highlight(true)
 		else:
-			room.reset_highlight()
+			if room:
+				room.reset_highlight()
 
 func _ready() -> void:
 	self.selected_button = null

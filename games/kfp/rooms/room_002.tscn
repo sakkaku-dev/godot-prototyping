@@ -15,3 +15,6 @@ tile_map_data = PackedByteArray("AAABAPz/CQAAAAAAAAABAP3/CQAAAAAAAAACAPz/CQAAAAA
 
 [node name="InteriorTiles" parent="." index="3"]
 tile_map_data = PackedByteArray("AAABAP7/CAACAAEAAAABAPz/CAACAAEAAAABAP3/CAACAAEAAAABAAEACAACAAEAAAABAAIACAACAAEAAAABAAAACAACAAEAAAABAP//CAACAAEAAAA=")
+
+[node name="Marker2D" parent="." index="5"]
+position = Vector2(-90, 228)

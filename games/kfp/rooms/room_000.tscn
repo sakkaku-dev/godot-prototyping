@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=4 uid="uid://dnfwfscgaqjdf"]
+
+[ext_resource type="PackedScene" uid="uid://xtxs4jv066qp" path="res://games/kfp/rooms/room_001.tscn" id="1_8uqom"]
+
+[node name="Room000" instance=ExtResource("1_8uqom")]
+
+[node name="FloorTiles" parent="." index="0"]
+tile_map_data = PackedByteArray("AAD+/wAACQAAAAAAAAD+/wEACQAAAAAAAAD//wAACQAAAAAAAAD//wEACQAAAAAAAAD//wIACQAAAAAAAAAAAAAACQAAAAAAAAAAAAEACQAAAAAAAAABAAAACQAAAAAAAAABAAEACQAAAAAAAAA=")
+
+[node name="WallTiles" parent="." index="1"]
+tile_map_data = PackedByteArray("AAD9//3/CAAAAAEAAAD9//7/CAAAAAEAAAD9////CAAAAAEAAAD9/wAACAAAAAEAAAD9/wEACAAAAAEAAAD+//3/CAABAAEAAAD///3/CAABAAEAAAAAAP3/CAABAAEAAAABAP3/CAABAAEAAAD9/wIACAAAAAIAAAD+/wIACAABAAIAAAAAAAIACAABAAIAAAABAAIACAABAAIAAAACAAIACAACAAIAAAACAAEACAACAAEAAAACAAAACAACAAEAAAD+//z/CAABAAAAAAD///z/CAABAAAAAAAAAPz/CAABAAAAAAABAPz/CAABAAAAAAD9//z/CAAAAAAAAAACAPz/CAACAAAAAAACAP3/CAACAAEAAAACAP7/CAACAAEAAAACAP//CAACAAEAAAA=")
+
+[node name="WorkAreaTiles" parent="." index="2"]
+tile_map_data = PackedByteArray("AAD+//7/CQAAAAAAAAD///7/CQAAAAAAAAAAAP7/CQAAAAAAAAABAP7/CQAAAAAAAAA=")
+
+[node name="InteriorTiles" parent="." index="3"]
+tile_map_data = PackedByteArray("AAD+////CAABAAIAAAD/////CAABAAIAAAAAAP//CAABAAIAAAABAP//CAABAAIAAAA=")
+
+[node name="Marker2D" parent="." index="5"]
+position = Vector2(-9, 228)
