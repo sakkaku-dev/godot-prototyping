@@ -3,9 +3,9 @@ Farm 1,FarmSize,100,15
 Farm 2,FarmSize,500,20
 Farm 3,FarmSize,1000,30
 Egg 1,Egg,10,
-OrderDesk 1,OrderDesk,100,
-TakeoutDesk 1,TakeoutDesk,100,
-CuttingBoard 1,CuttingBoard,100,
-Restaurant 1,Restaurant,50,
+OrderDesk 1,OrderDesk,10,
+TakeoutDesk 1,TakeoutDesk,10,
+CuttingBoard 1,CuttingBoard,10,
+Restaurant 1,Restaurant,10,
 Restaurant 2,Restaurant,1000,
 Restaurant 3,Restaurant,5000,

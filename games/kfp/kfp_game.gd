@@ -23,7 +23,7 @@ var current_reviews: Array[int] = []
 func _ready():
 	KfpManager.assigned_chickens = []
 	
-	var idx = KfpUpgradeManager.get_upgrade_count(KfpUpgradeManager.RESTAURANT) - 1
+	var idx = KfpManager.get_item_count(KfpUpgradeManager.RESTAURANT) - 1
 	if idx >= 0:
 		var node = load(RESTAURANT_UPGRADES[idx]).instantiate()
 		add_child(node)

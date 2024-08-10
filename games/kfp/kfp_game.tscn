@@ -249,7 +249,6 @@ grow_vertical = 0
 text = "Farm >"
 
 [node name="AssignChicken" type="PanelContainer" parent="CanvasLayer/Control/ClosedUI" node_paths=PackedStringArray("container")]
-visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -407,6 +406,7 @@ size_flags_horizontal = 8
 [node name="PlaceTile" type="TextureButton" parent="CanvasLayer/Control/ClosedUI/HBoxContainer2/Takeout" node_paths=PackedStringArray("count")]
 layout_mode = 2
 script = ExtResource("34_2hhuw")
+placement = 1
 count = NodePath("../HBoxContainer/MarginContainer/Meat/CuttingBoardCount")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/ClosedUI/HBoxContainer2/Takeout"]

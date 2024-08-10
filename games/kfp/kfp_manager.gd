@@ -76,9 +76,6 @@ func add_item(type: String, amount = 1):
 		self.max_farm_size = int(KfpUpgradeManager.get_upgrade_value(type))
 		return
 	
-	if type == KfpUpgradeManager.RESTAURANT:
-		return
-	
 	if not type in items:
 		items[type] = 0
 	
@@ -152,7 +149,8 @@ func finish_order(id: int):
 		return false
 	
 	prepared_orders.erase(id)
-	self.money += 10
+	self.chicken_supply -= 1
+	self.money += randi_range(20, 30)
 
 func update_revenue(revenue: Array[int]):
 	var sum = revenue.reduce(func(a, b): return a + b, 0.0)

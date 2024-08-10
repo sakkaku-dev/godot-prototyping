@@ -7,15 +7,15 @@ enum Placement {
 }
 
 const TYPE_ID_MAP = {
-	KfpUpgradeManager.CUTTING_BOARD: 0,
-	KfpUpgradeManager.ORDER_DESK: 1,
-	KfpUpgradeManager.TAKEOUT_DESK: 2,
+	KfpUpgradeManager.CUTTING_BOARD: 1,
+	KfpUpgradeManager.ORDER_DESK: 2,
+	KfpUpgradeManager.TAKEOUT_DESK: 3,
 }
-const ID_TYPE_MAP = {
-	0: KfpUpgradeManager.CUTTING_BOARD,
-	1: KfpUpgradeManager.ORDER_DESK,
-	2: KfpUpgradeManager.TAKEOUT_DESK,
-}
+
+@onready var ID_TYPE_MAP = TYPE_ID_MAP.keys() \
+	.reduce(func(acc, key):
+		acc[TYPE_ID_MAP[key]] = key
+		return acc, {})
 
 @export var source_id := 0
 

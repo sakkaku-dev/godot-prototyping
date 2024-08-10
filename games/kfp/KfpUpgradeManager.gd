@@ -43,8 +43,7 @@ func get_upgrade_count(type: String) -> int:
 func has_last_upgrade(type: String) -> bool:
 	return get_upgrade_count(type) >= upgrades[type].size()
 
-func _get_current_upgrade(type: String) -> Dictionary:
-	var idx = get_upgrade_count(type)
+func get_upgrade(type: String, idx: int) -> Dictionary:
 	if not type in upgrades:
 		return {}
 	if idx >= upgrades[type].size():
@@ -52,15 +51,15 @@ func _get_current_upgrade(type: String) -> Dictionary:
 
 	return upgrades[type][idx]
 
-func get_upgrade_price(type: String) -> int:
-	var upgrade = _get_current_upgrade(type)
+func get_upgrade_price(type: String, idx = get_upgrade_count(type)) -> int:
+	var upgrade = get_upgrade(type, idx)
 	if upgrade.is_empty():
 		return 0
 	
 	return int(upgrade["price"])
 
-func get_upgrade_value(type: String) -> Variant:
-	var upgrade = _get_current_upgrade(type)
+func get_upgrade_value(type: String, idx = get_upgrade_count(type)) -> Variant:
+	var upgrade = get_upgrade(type, idx)
 	if upgrade.is_empty():
 		return null
 	
