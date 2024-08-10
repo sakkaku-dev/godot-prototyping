@@ -4,7 +4,7 @@ extends Button
 @export var hide_if_disabled := false
 @export var disable_on_last := false
 @export var max_upgrade := -1
-@export var parent: TilePlacement
+@export var parent: Control
 @export_enum(
 	KfpUpgradeManager.EGG,
 	KfpUpgradeManager.ORDER_DESK,
@@ -21,7 +21,7 @@ func _ready() -> void:
 	
 	pressed.connect(func(): KfpManager.buy_upgrade(item))
 	KfpManager.money_changed.connect(func(): _update())
-	KfpManager.item_bought.connect(func(): _update())
+	KfpManager.item_bought.connect(func(_x): _update())
 	_update()
 
 func _update():

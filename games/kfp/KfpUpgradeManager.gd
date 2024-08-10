@@ -7,6 +7,15 @@ const TAKEOUT_DESK = "TakeoutDesk"
 const CUTTING_BOARD = "CuttingBoard"
 const RESTAURANT = "Restaurant"
 
+const UPGRADES = [
+	KfpUpgradeManager.EGG,
+	KfpUpgradeManager.ORDER_DESK,
+	KfpUpgradeManager.CUTTING_BOARD,
+	KfpUpgradeManager.TAKEOUT_DESK,
+	KfpUpgradeManager.FARM_SIZE,
+	KfpUpgradeManager.RESTAURANT,
+]
+
 var upgrades = {}
 var upgrade_count = {}
 

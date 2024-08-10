@@ -1,16 +1,13 @@
 extends Node
 
-signal eggs_changed()
 signal chicken_supply_changed()
 signal money_changed()
-signal order_desk_changed()
-signal cutting_board_changed()
-signal takeout_desk_changed()
 signal stars_changed()
 signal average_revenue_changed()
 signal farm_size_changed()
 
 signal item_bought(item: String)
+signal items_changed(item: String)
 signal egg_hatched(coord: Vector2i)
 
 signal chicken_removed(res)
@@ -22,16 +19,8 @@ signal order_prepared(id)
 
 var chicken_supply := 0:
 	set(v): chicken_supply = v; chicken_supply_changed.emit()
-var eggs := 5:
-	set(v): eggs = v; eggs_changed.emit()
 var money := 100:
 	set(v): money = v; money_changed.emit()
-var order_desks := 0:
-	set(v): order_desks = v; order_desk_changed.emit()
-var cutting_boards := 0:
-	set(v): cutting_boards = v; cutting_board_changed.emit()
-var takeout_desks := 0:
-	set(v): takeout_desks = v; takeout_desk_changed.emit()
 
 var stars := 0:
 	set(v): stars = v; stars_changed.emit()
@@ -51,6 +40,8 @@ var open_orders := []
 var prepared_orders := []
 var order_id := 0
 var chicken_id := 0
+
+var items = {}
 
 func _ready() -> void:
 	for i in range(0):
@@ -81,13 +72,18 @@ func buy_item(item: ShopResource):
 		add_item(item.map_to_upgrade())
 
 func add_item(type: String, amount = 1):
-	match type:
-		KfpUpgradeManager.ORDER_DESK: self.order_desks += amount
-		KfpUpgradeManager.CUTTING_BOARD: self.cutting_boards += amount
-		KfpUpgradeManager.TAKEOUT_DESK: self.takeout_desks += amount
-		KfpUpgradeManager.EGG: self.eggs += amount
-		KfpUpgradeManager.FARM_SIZE: self.max_farm_size = int(KfpUpgradeManager.get_upgrade_value(type))
-		_: print("Unknown upgrade type: %s" % type)
+	if type == KfpUpgradeManager.FARM_SIZE:
+		self.max_farm_size = int(KfpUpgradeManager.get_upgrade_value(type))
+		return
+	
+	if type == KfpUpgradeManager.RESTAURANT:
+		return
+	
+	if not type in items:
+		items[type] = 0
+	
+	items[type] += amount
+	items_changed.emit(type)
 
 func pay_item(price: int):
 	if price > money:
@@ -96,6 +92,18 @@ func pay_item(price: int):
 
 	self.money -= price
 	return true
+
+func use_item(type: String):
+	if get_item_count(type) <= 0:
+		print("No item %s" % type)
+		return
+	
+	items[type] -= 1
+	items_changed.emit(type)
+
+func get_item_count(type: String):
+	if not type in items: return 0
+	return items[type]
 
 func sell_supply(price: int):
 	if chicken_supply <= 0:
@@ -198,7 +206,7 @@ func hatch_egg(coord: Vector2i, pos = Vector2.ZERO):
 	return true
 
 func place_egg(coord: Vector2i, value: float):
-	if eggs <= 0:
+	if get_item_count(KfpUpgradeManager.EGG) <= 0:
 		print("NO EGGS")
 		return false
 	
@@ -211,7 +219,7 @@ func place_egg(coord: Vector2i, value: float):
 		return false
 	
 	hatching_eggs.append([coord, value])
-	self.eggs -= 1
+	use_item(KfpUpgradeManager.EGG)
 	return true
 
 func get_chicken_hatch_rate():

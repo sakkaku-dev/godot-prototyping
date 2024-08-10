@@ -12,6 +12,7 @@ const RESTAURANT_UPGRADES = [
 @export var report: DailyReport
 
 @onready var day_timer: Timer = $DayTimer
+@onready var restaurant_placeholder: Sprite2D = $RestaurantPlaceholder
 
 @onready var customer_timer = $CustomerTimer
 @onready var customer_spawn: Node2D = get_tree().get_first_node_in_group("spawn")
@@ -26,6 +27,7 @@ func _ready():
 	if idx >= 0:
 		var node = load(RESTAURANT_UPGRADES[idx]).instantiate()
 		add_child(node)
+		restaurant_placeholder.room = node
 	
 	customer_timer.timeout.connect(_spawn_customer)
 	day_timer.timeout.connect(_day_ended)

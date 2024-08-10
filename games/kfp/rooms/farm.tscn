@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=23 format=4 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
@@ -11,20 +11,16 @@
 [ext_resource type="Script" path="res://games/kfp/rooms/tile_placeholder.gd" id="6_vsmom"]
 [ext_resource type="Texture2D" uid="uid://bormlewkja157" path="res://games/kfp/assets/EggLarge.png" id="8_fp5lu"]
 [ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="8_ym6am"]
-[ext_resource type="Script" path="res://games/kfp/ui/egg_shop_item.gd" id="9_uognv"]
 [ext_resource type="Texture2D" uid="uid://cpok2jaoducvh" path="res://games/kfp/assets/ChickenMeat.png" id="10_70xvc"]
 [ext_resource type="Script" path="res://games/kfp/ui/buy_button.gd" id="11_edcay"]
 [ext_resource type="Script" path="res://games/kfp/rooms/egg_placer.gd" id="11_m0ayq"]
-[ext_resource type="Script" path="res://games/kfp/ui/counts/egg_count.gd" id="11_t03dd"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/meat_count.gd" id="11_te1dw"]
+[ext_resource type="Script" path="res://games/kfp/ui/counts/item_count.gd" id="13_0ockw"]
 [ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="14_pyn5m"]
 [ext_resource type="Script" path="res://games/kfp/rooms/TilePlacement.gd" id="17_56jqv"]
-[ext_resource type="PackedScene" uid="uid://cg0w84jqjxbvx" path="res://games/kfp/ui/shop_item.tscn" id="17_bx6d6"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm_size_count.gd" id="17_i4i3g"]
-[ext_resource type="Resource" uid="uid://bq7dbi1y0m4wi" path="res://games/kfp/ui/shop/shop_farm_egg.tres" id="18_4iatc"]
 [ext_resource type="Script" path="res://games/kfp/ui/sell_supply.gd" id="19_loju6"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/money_label.gd" id="20_w7bhv"]
-[ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="21_o0cx3"]
 [ext_resource type="Script" path="res://games/kfp/ui/restaurant_button.gd" id="25_b87jr"]
 
 [node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details", "tile_map")]
@@ -99,13 +95,6 @@ layout_mode = 2
 text = "$1000"
 script = ExtResource("20_w7bhv")
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/MarginContainer2/MarginContainer/HBoxContainer" node_paths=PackedStringArray("node")]
-visible = false
-layout_mode = 2
-text = "Shop"
-script = ExtResource("21_o0cx3")
-node = NodePath("../../../../../Shop")
-
 [node name="Eggs" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
@@ -147,7 +136,8 @@ theme_override_font_sizes/font_size = 8
 text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
-script = ExtResource("11_t03dd")
+script = ExtResource("13_0ockw")
+item = "Egg"
 
 [node name="BuyEgg" type="Button" parent="CanvasLayer/Control/HBoxContainer/Eggs/HBoxContainer" node_paths=PackedStringArray("parent")]
 custom_minimum_size = Vector2(12, 12)
@@ -260,63 +250,7 @@ parent = NodePath("../../EggPlacer")
 
 [node name="ChickenDetails" parent="CanvasLayer/Control" instance=ExtResource("6_li68f")]
 layout_mode = 1
-anchors_preset = 4
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 0.0
-offset_right = 93.0
-grow_horizontal = 1
 editable = true
-
-[node name="Shop" type="PanelContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -105.0
-offset_top = -99.0
-offset_bottom = 99.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Shop"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/Control/Shop/VBoxContainer"]
-layout_mode = 2
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Shop/VBoxContainer/PanelContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/VBoxContainer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-text = "Shop -"
-horizontal_alignment = 1
-
-[node name="MoneyLabel2" type="Label" parent="CanvasLayer/Control/Shop/VBoxContainer/PanelContainer/HBoxContainer"]
-layout_mode = 2
-text = "$1000"
-script = ExtResource("20_w7bhv")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/Shop/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Shop/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="EggPack" parent="CanvasLayer/Control/Shop/VBoxContainer/ScrollContainer/VBoxContainer" instance=ExtResource("17_bx6d6")]
-layout_mode = 2
-script = ExtResource("9_uognv")
-source_id = 0
-item_id = 0
-placement = 0
-shop_item = ExtResource("18_4iatc")
 
 [node name="BuyRestaurant" type="Button" parent="CanvasLayer/Control"]
 layout_mode = 1

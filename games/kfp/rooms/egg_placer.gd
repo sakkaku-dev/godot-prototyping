@@ -7,5 +7,5 @@ func place_at(coord: Vector2i):
 		var node = create_node()
 		node.coord = coord
 
-		if KfpManager.eggs <= 0:
+		if KfpManager.get_item_count(KfpUpgradeManager.EGG) <= 0:
 			self.is_placing = false

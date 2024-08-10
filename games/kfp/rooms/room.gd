@@ -6,6 +6,19 @@ enum Placement {
 	INTERIOR,
 }
 
+const TYPE_ID_MAP = {
+	KfpUpgradeManager.CUTTING_BOARD: 0,
+	KfpUpgradeManager.ORDER_DESK: 1,
+	KfpUpgradeManager.TAKEOUT_DESK: 2,
+}
+const ID_TYPE_MAP = {
+	0: KfpUpgradeManager.CUTTING_BOARD,
+	1: KfpUpgradeManager.ORDER_DESK,
+	2: KfpUpgradeManager.TAKEOUT_DESK,
+}
+
+@export var source_id := 0
+
 @onready var floor_tiles: TileMapLayer = $FloorTiles
 @onready var wall_tiles: TileMapLayer = $WallTiles
 @onready var interior_tiles: TileMapLayer = $InteriorTiles
@@ -37,7 +50,7 @@ func place_tile(tile: RoomItemTile, coord: Vector2i):
 		print("Coord %s already has an item there" % [coord])
 		return false
 	
-	custom_tiles.set_cell(coord, tile.source_id, Vector2.ZERO, tile.item_id)
+	custom_tiles.set_cell(coord, source_id, Vector2.ZERO, TYPE_ID_MAP[tile.count.item])
 	return true
 
 func clear_tile(coord: Vector2i):
@@ -46,4 +59,4 @@ func clear_tile(coord: Vector2i):
 	
 	var alternative = custom_tiles.get_cell_alternative_tile(coord)
 	custom_tiles.set_cell(coord, -1)
-	return alternative
+	return ID_TYPE_MAP[alternative]
