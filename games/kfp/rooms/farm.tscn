@@ -45,11 +45,11 @@ tile_map_data = PackedByteArray("AAAPAAkABwAAAAAAAADw//b/BwAAAAAAAADw//f/BwAAAAA
 tile_set = ExtResource("1_a3vyp")
 
 [node name="Dirt" type="TileMapLayer" parent="FarmLayout"]
-tile_map_data = PackedByteArray("AAACAAIABwACAAEAAAACAAEABwACAAEAAAACAAAABwACAAEAAAACAP//BwACAAEAAAACAP7/BwACAAEAAAACAP3/BwACAAEAAAABAAIABwACAAEAAAABAAEABwACAAEAAAABAAAABwACAAEAAAABAP//BwACAAEAAAABAP7/BwACAAEAAAABAP3/BwACAAEAAAAAAAIABwACAAEAAAAAAAEABwACAAEAAAAAAAAABwACAAEAAAAAAP//BwACAAEAAAAAAP7/BwACAAEAAAAAAP3/BwACAAEAAAD//wIABwACAAEAAAD//wEABwACAAEAAAD//wAABwACAAEAAAD/////BwACAAEAAAD///7/BwACAAEAAAD///3/BwACAAEAAAD+/wIABwACAAEAAAD+/wEABwACAAEAAAD+/wAABwACAAEAAAD+////BwACAAEAAAD+//7/BwACAAEAAAD+//3/BwACAAEAAAD9/wIABwACAAEAAAD9/wEABwACAAEAAAD9/wAABwACAAEAAAD9////BwACAAEAAAD9//7/BwACAAEAAAD9//3/BwACAAEAAAADAAMABwADAAIAAAADAAIABwADAAEAAAADAAEABwADAAEAAAADAAAABwADAAEAAAADAP//BwADAAEAAAADAP7/BwADAAEAAAADAP3/BwADAAEAAAADAPz/BwADAAAAAAACAAMABwACAAIAAAACAPz/BwACAAAAAAABAAMABwACAAIAAAABAPz/BwACAAAAAAAAAAMABwACAAIAAAAAAPz/BwACAAAAAAD//wMABwACAAIAAAD///z/BwACAAAAAAD+/wMABwACAAIAAAD+//z/BwACAAAAAAD9/wMABwACAAIAAAD9//z/BwACAAAAAAD8/wMABwABAAIAAAD8/wIABwABAAEAAAD8/wEABwABAAEAAAD8/wAABwABAAEAAAD8////BwABAAEAAAD8//7/BwABAAEAAAD8//3/BwABAAEAAAD8//z/BwABAAAAAAA=")
+tile_map_data = PackedByteArray("AAABAAEABwADAAIAAAABAAAABwADAAEAAAABAP//BwADAAEAAAABAP7/BwADAAAAAAAAAAEABwACAAIAAAAAAAAABwACAAEAAAAAAP//BwACAAEAAAAAAP7/BwACAAAAAAD//wEABwACAAIAAAD//wAABwACAAEAAAD/////BwACAAEAAAD///7/BwACAAAAAAD+//7/BwABAAAAAAD+////BwABAAEAAAD+/wAABwABAAEAAAD+/wEABwABAAIAAAA=")
 tile_set = ExtResource("1_a3vyp")
 
 [node name="Fence" type="TileMapLayer" parent="FarmLayout"]
-tile_map_data = PackedByteArray("AAD7//v/BwAAAAMAAAD7//z/BwABAAMAAAD7//3/BwABAAMAAAD7//7/BwABAAMAAAD7////BwABAAMAAAD7/wAABwABAAMAAAD7/wEABwABAAMAAAD7/wIABwABAAMAAAD7/wMABwABAAMAAAD7/wQABwAAAAIAAAAEAPv/BwAAAAMAAQADAPv/BwAAAAEAAAACAPv/BwAAAAEAAAABAPv/BwAAAAEAAAAAAPv/BwAAAAEAAAD///v/BwAAAAEAAAD+//v/BwAAAAEAAAD9//v/BwAAAAEAAAD8//v/BwAAAAEAAAAEAAQABwAAAAIAAQAEAAMABwABAAMAAAAEAAIABwABAAMAAAAEAAEABwABAAMAAAAEAAAABwABAAMAAAAEAP//BwABAAMAAAAEAP7/BwABAAMAAAAEAP3/BwABAAMAAAAEAPz/BwABAAMAAAADAAQABwAAAAEAAAACAAQABwAAAAEAAAABAAQABwAAAAEAAAD9/wQABwAAAAEAAAD8/wQABwAAAAEAAAD+/wQABwAAAAEAAAD//wQABwAAAAEAAAAAAAQABwAAAAEAAAA=")
+tile_map_data = PackedByteArray("AAACAAIABwAAAAIAAQABAAIABwAAAAEAAAAAAAIABwAAAAEAAAD//wIABwAAAAEAAAD+/wIABwAAAAEAAAD9/wIABwAAAAIAAAD9//3/BwAAAAMAAAD9//7/BwABAAMAAAD9////BwABAAMAAAD9/wAABwABAAMAAAD9/wEABwABAAMAAAACAP3/BwAAAAMAAQABAP3/BwAAAAEAAAAAAP3/BwAAAAEAAAD///3/BwAAAAEAAAD+//3/BwAAAAEAAAACAAEABwABAAMAAAACAAAABwABAAMAAAACAP//BwABAAMAAAACAP7/BwABAAMAAAA=")
 tile_set = ExtResource("1_a3vyp")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -77,6 +77,34 @@ layout_mode = 1
 offset_right = 53.0
 offset_bottom = 48.0
 theme_override_constants/separation = 0
+
+[node name="MarginContainer2" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/MarginContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 2
+
+[node name="MoneyLabel2" type="Label" parent="CanvasLayer/Control/HBoxContainer/MarginContainer2/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "$1000"
+script = ExtResource("20_w7bhv")
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/HBoxContainer/MarginContainer2/MarginContainer/HBoxContainer" node_paths=PackedStringArray("node")]
+visible = false
+layout_mode = 2
+text = "Shop"
+script = ExtResource("21_o0cx3")
+node = NodePath("../../../../../Shop")
 
 [node name="Eggs" type="PanelContainer" parent="CanvasLayer/Control/HBoxContainer"]
 layout_mode = 2
@@ -321,31 +349,5 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "Restaurant >"
 script = ExtResource("25_b87jr")
-
-[node name="MarginContainer2" type="PanelContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -49.0
-offset_bottom = 12.0
-grow_horizontal = 0
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/MarginContainer2"]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_constants/separation = 2
-
-[node name="MoneyLabel2" type="Label" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer"]
-layout_mode = 2
-text = "$1000"
-script = ExtResource("20_w7bhv")
-
-[node name="Button" type="Button" parent="CanvasLayer/Control/MarginContainer2/HBoxContainer" node_paths=PackedStringArray("node")]
-visible = false
-layout_mode = 2
-text = "Shop"
-script = ExtResource("21_o0cx3")
-node = NodePath("../../../Shop")
 
 [connection signal="pressed" from="CanvasLayer/Control/Restaurant" to="." method="_on_restaurant_pressed"]

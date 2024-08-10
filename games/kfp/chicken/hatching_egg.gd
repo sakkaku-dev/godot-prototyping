@@ -6,17 +6,22 @@ signal hatched()
 const GROUP = "HatchingEgg"
 
 @export var label: Label
+@export var click_hatch_value := 200.
 @export var hatch_value := 1000.0:
 	set(v):
 		hatch_value = max(v, 0)
-		label.text = "%.0f" % v
+		
+		var p = remap(v, 0., initial_hatch, 1., 0.)
+		progress_fill.set_fill(p)
 		
 		if hatch_value <= 0 and not has_hatched:
 			hatched.emit()
 			has_hatched = true
 
+@onready var initial_hatch := hatch_value
 @onready var click_timeout: Timer = $ClickTimeout
 @onready var selectable: Selectable = $Selectable
+@onready var progress_fill: ProgressManualFill = $ProgressFill
 
 var has_hatched := false
 var coord := Vector2i.ZERO
@@ -38,4 +43,4 @@ func _process(delta: float) -> void:
 	self.hatch_value -= delta * KfpManager.get_chicken_hatch_rate()
 	
 func _get_time_left_percentage():
-	return remap(pow(click_timeout.time_left, 3), 0., pow(click_timeout.wait_time, 3) , 0., 100.)
+	return remap(pow(click_timeout.time_left, 2), 0., pow(click_timeout.wait_time, 2) , 0., click_hatch_value)

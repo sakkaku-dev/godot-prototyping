@@ -22,9 +22,9 @@ signal order_prepared(id)
 
 var chicken_supply := 0:
 	set(v): chicken_supply = v; chicken_supply_changed.emit()
-var eggs := 0:
+var eggs := 5:
 	set(v): eggs = v; eggs_changed.emit()
-var money := 100:
+var money := 0:
 	set(v): money = v; money_changed.emit()
 var order_desks := 0:
 	set(v): order_desks = v; order_desk_changed.emit()
@@ -37,7 +37,7 @@ var stars := 0:
 	set(v): stars = v; stars_changed.emit()
 var average_revenue := 0.0:
 	set(v): average_revenue = v; average_revenue_changed.emit()
-var max_farm_size := 10:
+var max_farm_size := 5:
 	set(v): max_farm_size = v; farm_size_changed.emit()
 
 var chicken_hatch_rate := 1.0
@@ -218,4 +218,5 @@ func get_chicken_hatch_rate():
 	return chickens.size() * chicken_hatch_rate
 
 func get_chicken_egg_drop_rate():
-	return max(log(chickens.size()) * 0.03, 0.03)
+	if chickens.is_empty(): return 0.0
+	return max(log(chickens.size()) * 0.05, 0.03)

@@ -31,6 +31,9 @@ func get_upgrade_count(type: String) -> int:
 		return 0
 	return upgrade_count[type]
 
+func has_last_upgrade(type: String) -> bool:
+	return get_upgrade_count(type) >= upgrades[type].size()
+
 func _get_current_upgrade(type: String) -> Dictionary:
 	var idx = get_upgrade_count(type)
 	if not type in upgrades:
