@@ -7,7 +7,7 @@ const GROUP = "HatchingEgg"
 
 @export var label: Label
 @export var click_hatch_value := 200.
-@export var hatch_value := 1000.0:
+@export var hatch_value := 100.0:
 	set(v):
 		hatch_value = max(v, 0)
 		

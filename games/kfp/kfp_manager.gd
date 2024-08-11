@@ -224,8 +224,9 @@ func place_egg(coord: Vector2i, value: float):
 	return true
 
 func get_chicken_hatch_rate():
-	return chickens.size() * chicken_hatch_rate
+	if chickens.is_empty(): return 0.0
+	return (log(chickens.size() * 2) / log(2)) + 1
 
 func get_chicken_egg_drop_rate():
 	if chickens.is_empty(): return 0.0
-	return max(log(chickens.size()) * 0.05, 0.03)
+	return max(((log(chickens.size()) / log(2)) + 0.05)  * 0.05, 0.01)

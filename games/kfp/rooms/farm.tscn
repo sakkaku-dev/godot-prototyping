@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=4 uid="uid://dnbccbhtttajv"]
+[gd_scene load_steps=25 format=4 uid="uid://dnbccbhtttajv"]
 
 [ext_resource type="TileSet" uid="uid://bckjaqf2jpp51" path="res://games/kfp/rooms/tiles.tres" id="1_a3vyp"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm.gd" id="1_q8j44"]
@@ -15,12 +15,14 @@
 [ext_resource type="Script" path="res://games/kfp/ui/buy_button.gd" id="11_edcay"]
 [ext_resource type="Script" path="res://games/kfp/rooms/egg_placer.gd" id="11_m0ayq"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/meat_count.gd" id="11_te1dw"]
+[ext_resource type="Script" path="res://games/kfp/ui/hatch_per_second.gd" id="12_u21w3"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/item_count.gd" id="13_0ockw"]
 [ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="14_pyn5m"]
 [ext_resource type="Script" path="res://games/kfp/rooms/TilePlacement.gd" id="17_56jqv"]
 [ext_resource type="Script" path="res://games/kfp/rooms/farm_size_count.gd" id="17_i4i3g"]
 [ext_resource type="Script" path="res://games/kfp/ui/sell_supply.gd" id="19_loju6"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/money_label.gd" id="20_w7bhv"]
+[ext_resource type="Script" path="res://games/kfp/ui/counts/eggs_per_second.gd" id="23_hdb33"]
 [ext_resource type="Script" path="res://games/kfp/ui/restaurant_button.gd" id="25_b87jr"]
 
 [node name="Farm" type="Node2D" node_paths=PackedStringArray("chicken_details", "tile_map")]
@@ -67,6 +69,46 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("4_qjkfk")
+
+[node name="Stats" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -33.0
+offset_bottom = 12.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Stats"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/Stats/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Stats/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("8_fp5lu")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/Stats/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "10/s"
+script = ExtResource("23_hdb33")
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="CanvasLayer/Control/Stats/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+texture = ExtResource("14_pyn5m")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/Stats/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+text = "10/s"
+script = ExtResource("12_u21w3")
 
 [node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
