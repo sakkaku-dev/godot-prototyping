@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2oneau5o6uvo"]
+[gd_scene load_steps=11 format=3 uid="uid://b2oneau5o6uvo"]
 
 [ext_resource type="Script" path="res://games/kfp/chicken/hatching_egg.gd" id="1_5glup"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_rn3ep"]
+[ext_resource type="Script" path="res://games/kfp/ui/HatchCountdown.gd" id="5_mjm46"]
 [ext_resource type="Script" path="res://util/Selectable.gd" id="5_q8kb6"]
 [ext_resource type="Texture2D" uid="uid://b04yxymphgo83" path="res://games/kfp/assets/EggInside.png" id="5_tud2g"]
 [ext_resource type="Shader" path="res://shaders/progress.gdshader" id="6_s6nwa"]
@@ -25,15 +26,14 @@ shader = ExtResource("6_s6nwa")
 shader_parameter/fill_color = Color(0.82, 0.230147, 0.1394, 1)
 shader_parameter/fill = 0.0
 
-[node name="HatchingEgg" type="Node2D" node_paths=PackedStringArray("label")]
+[node name="HatchingEgg" type="Node2D"]
 script = ExtResource("1_5glup")
-label = NodePath("Countdown")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_8mbk1")
 texture = ExtResource("5_tud2g")
 
-[node name="Countdown" type="Label" parent="."]
+[node name="Countdown" type="Label" parent="." node_paths=PackedStringArray("click_timeout", "progress_fill")]
 visible = false
 z_index = 20
 offset_left = -7.0
@@ -47,6 +47,9 @@ theme_override_font_sizes/font_size = 6
 text = "00:00"
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("5_mjm46")
+click_timeout = NodePath("../ClickTimeout")
+progress_fill = NodePath("../ProgressFill")
 
 [node name="ClickTimeout" type="Timer" parent="."]
 wait_time = 2.0

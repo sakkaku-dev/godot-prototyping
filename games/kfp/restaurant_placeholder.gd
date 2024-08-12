@@ -1,7 +1,13 @@
+class_name TilePlaceholder
 extends Sprite2D
 
-@export var room: Room
+signal placing(type: String)
+
+@export var room: TileLayerHighlight
 @export var tile_map: TileMapLayer
+@export var removeable := true
+
+@onready var default_texture: Texture2D = texture
 
 var selected_button: RoomItemTile:
 	set(v):
@@ -13,6 +19,7 @@ var selected_button: RoomItemTile:
 		
 		if selected_button:
 			selected_button.set_enabled(true)
+			texture = selected_button.texture if selected_button.texture else default_texture
 		
 		if v != null:
 			if room:
@@ -30,17 +37,30 @@ func _get_count() -> int:
 func _unhandled_input(event: InputEvent) -> void:
 	if selected_button:
 		if event.is_action_pressed("action"):
-			if _get_count() > 0 and room.place_tile(selected_button, _current_coord()):
+			if _can_place_item() and room.place_tile(selected_button, _current_coord()):
 				KfpManager.use_item(selected_button.count.item)
 				if _get_count() <= 0:
 					self.selected_button = null
-		elif event.is_action_pressed("erase"):
+		elif event.is_action_pressed("erase") and removeable:
 			var item = room.clear_tile(_current_coord())
 			if item:
 				KfpManager.add_item(item)
 		elif event.is_action_pressed("ui_cancel"):
 			self.selected_button = null
 			get_viewport().set_input_as_handled()
+
+func _get_selected_item():
+	if not selected_button: return null
+	return selected_button.count.item
+
+func _can_place_item():
+	if _get_count() <= 0:
+		return false
+	
+	if _get_selected_item() == KfpUpgradeManager.EGG:
+		return not KfpManager.is_farm_full()
+	
+	return true
 
 func _process(delta: float) -> void:
 	if visible:

@@ -12,6 +12,8 @@ extends Button
 	KfpUpgradeManager.TAKEOUT_DESK,
 	KfpUpgradeManager.FARM_SIZE,
 	KfpUpgradeManager.RESTAURANT,
+	KfpUpgradeManager.FARM_NEST,
+	KfpUpgradeManager.BUTCHER_HOUSE,
 ) var item := KfpUpgradeManager.EGG
 
 func _ready() -> void:

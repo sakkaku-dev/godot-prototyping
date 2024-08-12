@@ -8,11 +8,13 @@ signal farm_size_changed()
 
 signal item_bought(item: String)
 signal items_changed(item: String)
+
+signal egg_placed()
 signal egg_hatched(coord: Vector2i)
 
 signal chicken_removed(res)
 signal chicken_added(res, pos)
-signal chicken_assigned_changed(c)
+signal chicken_assigned_changed(res: ChickenResource)
 
 signal order_received(id)
 signal order_prepared(id)
@@ -31,7 +33,9 @@ var max_farm_size := 5:
 
 var chicken_hatch_rate := 1.0
 
-var hatching_eggs := []
+var used_chickens := {}
+var farm_items := {}
+var hatching_eggs := {}
 var chickens := []
 var assigned_chickens := []
 var assigning_chicken: ChickenResource
@@ -46,6 +50,10 @@ var items = {}
 func _ready() -> void:
 	for i in range(0):
 		add_random_chicken()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("debug"):
+		print("Chickens: %s, Used: , Hatching: " % [chickens.size(), used_chickens.size(), hatching_eggs.size()])
 
 func add_random_chicken(pos = Vector2.ZERO):
 	chicken_id += 1
@@ -93,10 +101,12 @@ func pay_item(price: int):
 func use_item(type: String):
 	if get_item_count(type) <= 0:
 		print("No item %s" % type)
-		return
+		return false
 	
 	items[type] -= 1
 	items_changed.emit(type)
+	print("used item %s, remaining %s" % [type, items[type]])
+	return true
 
 func get_item_count(type: String):
 	if not type in items: return 0
@@ -120,12 +130,12 @@ func has_supply_left():
 
 func add_assigned_chicken():
 	assigned_chickens.append(assigning_chicken)
-	chicken_assigned_changed.emit()
+	chicken_assigned_changed.emit(assigning_chicken)
 	assigning_chicken = null
 
 func remove_assigned_chicken(res: ChickenResource):
 	assigned_chickens.erase(res)
-	chicken_assigned_changed.emit()
+	chicken_assigned_changed.emit(res)
 
 func add_new_order():
 	order_id += 1
@@ -180,6 +190,15 @@ func add_averages(avg1: float, avg2: float):
 ### Farm ###
 ############
 
+func get_available_chickens():
+	return chickens.filter(func(c): return not c in used_chickens)
+
+func use_chicken_for(chicken: ChickenResource, coord: Vector2i):
+	if chicken in used_chickens:
+		print("Chicken %s is already used at %s" % [chicken, used_chickens[chicken]])
+		return
+	used_chickens[chicken] = coord
+
 func butcher_chicken(res: ChickenResource):
 	if not res in chickens:
 		print("Chicken does not exist or already has been butchered")
@@ -196,33 +215,31 @@ func is_farm_full():
 	return get_total_chickens_in_farm() >= max_farm_size
 
 func hatch_egg(coord: Vector2i, pos = Vector2.ZERO):
-	var eggs = hatching_eggs.filter(func(x): return x[0] == coord)
-	if eggs.is_empty():
+	if not coord in hatching_eggs:
 		print("No egg hatching at %s" % coord)
 		return false
 	
-	hatching_eggs.erase(eggs[0])
+	hatching_eggs.erase(coord)
 	add_random_chicken(pos)
 	egg_hatched.emit(coord)
 	return true
 
-func place_egg(coord: Vector2i, value: float):
-	if get_item_count(KfpUpgradeManager.EGG) <= 0:
-		print("NO EGGS")
+func get_farm_item(coord: Vector2i) -> String:
+	if not coord in farm_items: return ""
+	return farm_items[coord]
+
+func place_farm_item(coord: Vector2i, type: String):
+	if coord in farm_items:
+		print("Item %s is already at %s. Cannot place %s" % [farm_items[coord], coord, type])
 		return false
 	
-	if hatching_eggs.filter(func(x): return x[0] == coord).size() > 0:
-		print("An egg is already at %s" % coord)
-		return false
-	
-	if is_farm_full():
-		print("Farm is full. Cannot place another egg")
-		return false
-	
-	hatching_eggs.append([coord, value])
-	use_item(KfpUpgradeManager.EGG)
+	farm_items[coord] = type
 	return true
 
+func start_hatching(coord: Vector2i, value: float):
+	hatching_eggs[coord] = value
+	egg_placed.emit()
+	
 func get_chicken_hatch_rate():
 	if chickens.is_empty(): return 0.0
 	return (log(chickens.size() * 2) / log(2)) + 1

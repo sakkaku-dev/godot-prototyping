@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://sout08yq6hm3"]
+[gd_scene load_steps=12 format=3 uid="uid://sout08yq6hm3"]
 
 [ext_resource type="Script" path="res://games/kfp/chicken/chicken.gd" id="1_b7dkh"]
 [ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="2_p5k63"]
 [ext_resource type="Script" path="res://move/RandomMoveCollide.gd" id="3_y3fg4"]
 [ext_resource type="Shader" path="res://shaders/outline.gdshader" id="4_2rqnx"]
 [ext_resource type="Script" path="res://util/RandomTimer.gd" id="4_3k465"]
-[ext_resource type="Script" path="res://util/Selectable.gd" id="12_dxtcv"]
+[ext_resource type="Texture2D" uid="uid://ct7g2xldwg16q" path="res://games/kfp/assets/ButcherIcon.png" id="6_er7oy"]
+[ext_resource type="Script" path="res://games/kfp/ui/Draggable.gd" id="6_oy1i5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kwg02"]
 shader = ExtResource("4_2rqnx")
@@ -21,6 +22,11 @@ shader_parameter/max_or_add = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gc8n8"]
 size = Vector2(10, 4)
+
+[sub_resource type="ImageTexture" id="ImageTexture_h38he"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yhei"]
+size = Vector2(14, 14)
 
 [node name="Chicken" type="CharacterBody2D" node_paths=PackedStringArray("selectable")]
 collision_layer = 0
@@ -54,7 +60,44 @@ script = ExtResource("4_3k465")
 min_time = 1.0
 max_time = 2.0
 
-[node name="Selectable" type="Control" parent="." node_paths=PackedStringArray("sprite")]
+[node name="ButcherButton" type="TextureButton" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -27.0
+offset_right = 6.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = SubResource("ImageTexture_h38he")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="ColorRect" type="ColorRect" parent="ButcherButton"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.639216)
+
+[node name="TextureRect" type="TextureRect" parent="ButcherButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_er7oy")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Selectable" type="Control" parent="." node_paths=PackedStringArray("parent", "sprite")]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -67,5 +110,15 @@ offset_right = 8.0
 offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("12_dxtcv")
+script = ExtResource("6_oy1i5")
+parent = NodePath("..")
 sprite = NodePath("../Sprite2D")
+
+[node name="DragArea" type="Area2D" parent="."]
+position = Vector2(0, -5)
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DragArea"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_5yhei")

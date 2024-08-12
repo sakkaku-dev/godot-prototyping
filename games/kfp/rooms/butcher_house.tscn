@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqddvku447u1w"]
+
+[ext_resource type="Script" path="res://games/kfp/rooms/butcher_house.gd" id="1_8yuni"]
+[ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="1_fxp3d"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="2_l10nq"]
+[ext_resource type="Script" path="res://games/kfp/rooms/droppable_area.gd" id="3_ojd3d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ohesa"]
+
+[node name="ButcherHouse" type="Node2D"]
+script = ExtResource("1_8yuni")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -5)
+texture = ExtResource("1_fxp3d")
+
+[node name="Chicken" type="Sprite2D" parent="."]
+position = Vector2(-5, 0)
+texture = ExtResource("2_l10nq")
+
+[node name="DroppableArea" type="Area2D" parent="."]
+position = Vector2(0, -3)
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("3_ojd3d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DroppableArea"]
+shape = SubResource("RectangleShape2D_ohesa")

@@ -4,6 +4,7 @@ extends TileLayerHighlight
 @onready var grass: TileMapLayer = $Grass
 @onready var dirt: TileMapLayer = $Dirt
 @onready var fence: TileMapLayer = $Fence
+@onready var custom_tiles: TileMapLayer = $Custom
 
 func _ready() -> void:
 	KfpManager.farm_size_changed.connect(_update)
@@ -31,3 +32,12 @@ func _update():
 
 func get_layers():
 	return [grass, dirt, fence]
+
+func get_tiles_for_placement(place: Placement) -> TileMapLayer:
+	match place:
+		Placement.CUSTOM: return custom_tiles
+	
+	return dirt
+
+func has_item_at(coord: Vector2i):
+	return KfpManager.get_farm_item(coord) != ""

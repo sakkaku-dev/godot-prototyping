@@ -46,6 +46,11 @@ export/convert_text_resources_to_binary=false
 
 enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg", "res://addons/resources_spreadsheet_view/plugin.cfg", "res://addons/rmsmartshape/plugin.cfg")
 
+[global_group]
+
+map=""
+droppable=""
+
 [gui]
 
 common/snap_controls_to_pixels=false
@@ -127,6 +132,7 @@ erase={
 2d_physics/layer_6="interactable"
 2d_physics/layer_7="door"
 2d_physics/layer_8="effect_zone"
+2d_physics/layer_9="droppable"
 
 [navigation]
 

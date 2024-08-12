@@ -5,7 +5,7 @@ extends TextureButton
 @onready var color_rect = $ColorRect
 
 func _ready():
-	KfpManager.chicken_assigned_changed.connect(func(): _update())
+	KfpManager.chicken_assigned_changed.connect(func(_x): _update())
 	visibility_changed.connect(func(): _update())
 
 func _update():

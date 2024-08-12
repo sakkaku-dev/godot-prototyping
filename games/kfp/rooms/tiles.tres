@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=13 format=3 uid="uid://bckjaqf2jpp51"]
+[gd_resource type="TileSet" load_steps=16 format=3 uid="uid://bckjaqf2jpp51"]
 
 [ext_resource type="Texture2D" uid="uid://c2ffxfrvdeaq7" path="res://games/kfp/assets/Tiles_Ground.png" id="1_0xwvt"]
 [ext_resource type="PackedScene" uid="uid://cnx7xvoy0ju87" path="res://games/kfp/work/cutting_board.tscn" id="1_p3rv4"]
@@ -6,12 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://dyub3loq2lf2p" path="res://games/kfp/work/order_desk.tscn" id="2_mauoy"]
 [ext_resource type="Texture2D" uid="uid://jjvrc13u3fm6" path="res://games/kfp/assets/Tiles_Floor.png" id="3_nhqtm"]
 [ext_resource type="PackedScene" uid="uid://cy0alm56aspjv" path="res://games/kfp/work/take_out.tscn" id="3_sgfi1"]
+[ext_resource type="PackedScene" uid="uid://b2oneau5o6uvo" path="res://games/kfp/chicken/hatching_egg.tscn" id="4_xnaxs"]
+[ext_resource type="PackedScene" uid="uid://cf0jyj8oi57j7" path="res://games/kfp/rooms/farm_nest.tscn" id="5_dvg1i"]
+[ext_resource type="PackedScene" uid="uid://cqddvku447u1w" path="res://games/kfp/rooms/butcher_house.tscn" id="6_8hbu5"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_omh6o"]
 resource_name = "Tasks"
 scenes/1/scene = ExtResource("1_p3rv4")
 scenes/2/scene = ExtResource("2_mauoy")
 scenes/3/scene = ExtResource("3_sgfi1")
+scenes/4/scene = ExtResource("4_xnaxs")
+scenes/5/scene = ExtResource("5_dvg1i")
+scenes/6/scene = ExtResource("6_8hbu5")
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_a3rt7"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)

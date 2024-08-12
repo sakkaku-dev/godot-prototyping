@@ -1,0 +1,121 @@
+[gd_scene load_steps=15 format=3 uid="uid://cf0jyj8oi57j7"]
+
+[ext_resource type="Script" path="res://games/kfp/rooms/farm_nest.gd" id="1_cavsh"]
+[ext_resource type="Texture2D" uid="uid://dodyoulvckatq" path="res://games/kfp/assets/Nest.png" id="1_kfk3c"]
+[ext_resource type="Shader" path="res://shaders/outline.gdshader" id="2_60d04"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="2_bav0v"]
+[ext_resource type="Script" path="res://games/kfp/rooms/droppable_area.gd" id="2_t1d14"]
+[ext_resource type="Theme" uid="uid://cawnfgdu3gima" path="res://theme.tres" id="4_ikxlo"]
+[ext_resource type="Script" path="res://games/kfp/ui/HatchCountdown.gd" id="5_6c5sv"]
+[ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="7_aef0s"]
+[ext_resource type="Script" path="res://util/Selectable.gd" id="8_ubii2"]
+[ext_resource type="Shader" path="res://shaders/progress.gdshader" id="10_1ffbm"]
+[ext_resource type="Script" path="res://games/kfp/ui/progress_manual_fill.gd" id="11_03y3n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_366ld"]
+shader = ExtResource("2_60d04")
+shader_parameter/thickness = null
+shader_parameter/ring_count = 4
+shader_parameter/ring_offset = null
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/border_clipping_fix = true
+shader_parameter/aspect_ratio = 1.0
+shader_parameter/square_border = true
+shader_parameter/offset = null
+shader_parameter/max_or_add = false
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdxc7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_21o4e"]
+shader = ExtResource("10_1ffbm")
+shader_parameter/fill_color = Color(0.82, 0.230147, 0.1394, 1)
+shader_parameter/fill = 0.0
+
+[node name="FarmNest" type="Node2D"]
+script = ExtResource("1_cavsh")
+
+[node name="Chicken" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_366ld")
+position = Vector2(0, -2)
+texture = ExtResource("2_bav0v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_kfk3c")
+
+[node name="DroppableArea" type="Area2D" parent="."]
+collision_layer = 256
+collision_mask = 0
+script = ExtResource("2_t1d14")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DroppableArea"]
+shape = SubResource("RectangleShape2D_wdxc7")
+
+[node name="Countdown" type="Label" parent="." node_paths=PackedStringArray("click_timeout", "progress_fill")]
+visible = false
+z_index = 20
+offset_left = -8.0
+offset_top = -15.0
+offset_right = 8.0
+offset_bottom = -8.0
+size_flags_horizontal = 4
+theme = ExtResource("4_ikxlo")
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 6
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("5_6c5sv")
+click_timeout = NodePath("../ClickTimeout")
+progress_fill = NodePath("../ProgressFill")
+has_hatched = true
+
+[node name="Capacity" type="Label" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_right = 7.0
+offset_bottom = 12.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("7_aef0s")
+text = "0/2"
+
+[node name="ClickTimeout" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Selectable" type="Control" parent="." node_paths=PackedStringArray("sprite")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_ubii2")
+sprite = NodePath("../Chicken")
+
+[node name="ProgressFill" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_21o4e")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -6.0
+offset_top = -13.0
+offset_right = 6.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.28, 0.1232, 0.056, 1)
+script = ExtResource("11_03y3n")

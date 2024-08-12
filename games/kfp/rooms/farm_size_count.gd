@@ -5,6 +5,7 @@ func _ready() -> void:
 	KfpManager.items_changed.connect(func(_x): _update())
 	KfpManager.chicken_added.connect(func(_x, _y): _update())
 	KfpManager.chicken_removed.connect(func(_x): _update())
+	KfpManager.egg_placed.connect(func(): _update())
 	_update()
 
 func _update() -> void:
