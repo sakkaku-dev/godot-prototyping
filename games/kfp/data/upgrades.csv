@@ -7,7 +7,7 @@ OrderDesk 1,OrderDesk,10,
 TakeoutDesk 1,TakeoutDesk,10,
 CuttingBoard 1,CuttingBoard,10,
 Restaurant 1,Restaurant,10,
-Restaurant 2,Restaurant,1000,
-Restaurant 3,Restaurant,5000,
+Restaurant 2,Restaurant,50,
+Restaurant 3,Restaurant,100,
 Farm Nest 1,FarmNest,10
 Butcher House 1,ButcherHouse,10

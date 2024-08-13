@@ -1,10 +1,14 @@
+class_name Farm
 extends Node2D
+
+signal move_to_restaurant()
 
 @export var dropped_egg_scene: PackedScene
 @export var chicken_scene: PackedScene
 @export var tile_map: TileMapLayer
 
 @onready var throttle_spawn_dropped_eggs: Timer = $ThrottleSpawnDroppedEggs
+@onready var canvas_layer: CanvasLayer = $CanvasLayer
 
 var placing_tile: TilePlacement:
 	set(v):
@@ -12,11 +16,11 @@ var placing_tile: TilePlacement:
 
 var selected_chicken: Chicken:
 	set(v):
-		if selected_chicken:
+		if is_instance_valid(selected_chicken):
 			selected_chicken.set_selected(false)
 		selected_chicken = v
 		
-		if selected_chicken:
+		if is_instance_valid(selected_chicken):
 			selected_chicken.set_selected(true)
 
 var egg_drop_value := 0.0:
@@ -31,7 +35,7 @@ func _ready():
 		_spawn_chicken(chicken, _get_random_tile_position())
 	
 	KfpManager.chicken_added.connect(func(res, pos): _spawn_chicken(res, pos))
-	KfpManager.chicken_removed.connect(func(res): if selected_chicken and selected_chicken.res == res: self.selected_chicken = null)
+	KfpManager.chicken_removed.connect(func(res): if not is_instance_valid(selected_chicken) or selected_chicken.res == res: self.selected_chicken = null)
 	
 	#chicken_details.close.connect(func(): self.selected_chicken = null)
 	#chicken_details.butcher_chicken.connect(func(res):
@@ -63,12 +67,14 @@ func _spawn_chicken(chicken: ChickenResource, pos = Vector2.ZERO):
 	add_child(node)
 
 func _on_restaurant_pressed():
-	get_tree().change_scene_to_file("res://games/kfp/kfp_game.tscn")
+	move_to_restaurant.emit()
 
 func set_placing_tile(tile: TilePlacement):
 	self.placing_tile = tile
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("ui_cancel") and self.placing_tile:
 		self.placing_tile = null
 		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("action") and selected_chicken:
+		self.selected_chicken = null

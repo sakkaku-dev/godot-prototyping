@@ -38,6 +38,9 @@ func _ready():
 
 func set_selected(selected: bool):
 	butcher_button.visible = selected
+	move_collide.stop()
+	idle_timer.stop()
+	wander_timer.start(4.) # wait for player to do something
 
 func _on_drag_ended():
 	for area in drag_area.get_overlapping_areas():

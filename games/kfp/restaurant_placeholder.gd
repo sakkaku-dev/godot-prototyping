@@ -15,13 +15,13 @@ var selected_button: RoomItemTile:
 			selected_button.set_enabled(false)
 		
 		selected_button = v
-		visible = v != null
+		visible = v != null and _get_selected_item()
 		
 		if selected_button:
 			selected_button.set_enabled(true)
 			texture = selected_button.texture if selected_button.texture else default_texture
 		
-		if v != null:
+		if visible:
 			if room:
 				room.highlight_area(v.placement)
 		else:
@@ -51,6 +51,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _get_selected_item():
 	if not selected_button: return null
+	if not selected_button.count: return null
 	return selected_button.count.item
 
 func _can_place_item():
@@ -64,7 +65,7 @@ func _can_place_item():
 
 func _process(delta: float) -> void:
 	if visible:
-		global_position = _current_pos()
+		position = _current_pos()
 
 func _current_pos():
 	return tile_map.map_to_local(_current_coord())

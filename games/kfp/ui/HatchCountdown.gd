@@ -10,7 +10,9 @@ signal hatched()
 @export var has_hatched := false:
 	set(v):
 		has_hatched = v
-		visible = not has_hatched
+		#visible = not has_hatched
+		if progress_fill:
+			progress_fill.visible = not has_hatched
 @export var multiplier := 1.0
 @export var hatch_value := 100.0:
 	set(v):

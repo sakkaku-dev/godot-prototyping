@@ -9,6 +9,9 @@ const RESTAURANT = "Restaurant"
 const FARM_NEST = "FarmNest"
 const BUTCHER_HOUSE = "ButcherHouse"
 
+@export var restaurant_base_price := 50
+@export var restaurant_price_growth := 1.1
+
 var upgrades = {}
 var upgrade_count = {}
 
