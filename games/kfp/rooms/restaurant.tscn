@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://8x1g7iw2214i"]
+[gd_scene load_steps=36 format=4 uid="uid://8x1g7iw2214i"]
 
 [ext_resource type="Script" path="res://games/kfp/restaurant.gd" id="1_pftnj"]
 [ext_resource type="PackedScene" uid="uid://c2ro12l6f7xuu" path="res://games/kfp/customer.tscn" id="2_d82fc"]
@@ -9,8 +9,11 @@
 [ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="7_1aiwk"]
 [ext_resource type="PackedScene" uid="uid://cfwh6dwf5t0dn" path="res://games/kfp/ui/chicken_details.tscn" id="8_yh1qi"]
 [ext_resource type="Script" path="res://games/kfp/ui/restaurant/assign_chicken_details.gd" id="9_51urn"]
+[ext_resource type="Script" path="res://games/kfp/ui/customer_per_second.gd" id="9_i0ocw"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="10_37gkt"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/money_label.gd" id="10_vjcvh"]
 [ext_resource type="Texture2D" uid="uid://cpok2jaoducvh" path="res://games/kfp/assets/ChickenMeat.png" id="11_omabk"]
+[ext_resource type="Script" path="res://games/kfp/ui/start_button.gd" id="12_1j6kv"]
 [ext_resource type="Script" path="res://games/kfp/ui/counts/meat_count.gd" id="12_lemam"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="13_sjshw"]
 [ext_resource type="Texture2D" uid="uid://bjrd1dfgo7akm" path="res://games/kfp/assets/Chicken.png" id="14_itace"]
@@ -78,6 +81,44 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("7_1aiwk")
+
+[node name="RestaurantStats" type="PanelContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -33.0
+offset_bottom = 12.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/RestaurantStats"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/RestaurantStats/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/RestaurantStats/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("10_37gkt")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/RestaurantStats/VBoxContainer/HBoxContainer2" node_paths=PackedStringArray("parent")]
+layout_mode = 2
+text = "10/s"
+script = ExtResource("9_i0ocw")
+parent = NodePath("..")
+
+[node name="StartButton" type="Button" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -70.0
+offset_bottom = 12.0
+grow_horizontal = 0
+text = "Open Restaurant"
+script = ExtResource("12_1j6kv")
 
 [node name="ChickenDetails" parent="CanvasLayer/Control" instance=ExtResource("8_yh1qi")]
 layout_mode = 1
@@ -175,6 +216,7 @@ script = ExtResource("13_sjshw")
 node = NodePath("../../../ClosedUI/AssignChicken")
 
 [node name="OpenUI" type="Control" parent="CanvasLayer/Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -281,15 +323,18 @@ size_flags_vertical = 2
 theme_override_constants/separation = 0
 
 [node name="HBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control/ClosedUI"]
-layout_mode = 2
-offset_left = 410.0
-offset_right = 480.0
-offset_bottom = 28.0
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -70.0
+offset_top = -38.0
+offset_bottom = 38.0
+grow_horizontal = 0
+grow_vertical = 2
 theme_override_constants/separation = 0
-
-[node name="StartButton" type="Button" parent="CanvasLayer/Control/ClosedUI/HBoxContainer2"]
-layout_mode = 2
-text = "Open Restaurant"
 
 [node name="OrderDesk" type="PanelContainer" parent="CanvasLayer/Control/ClosedUI/HBoxContainer2"]
 layout_mode = 2
@@ -467,12 +512,13 @@ layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 0
 
-[node name="Buy" type="Button" parent="CanvasLayer/Control/ClosedUI/HBoxContainer2/Restaurant/HBoxContainer"]
+[node name="Buy" type="Button" parent="CanvasLayer/Control/ClosedUI/HBoxContainer2/Restaurant/HBoxContainer" node_paths=PackedStringArray("parent")]
 custom_minimum_size = Vector2(12, 12)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "+($10)"
 script = ExtResource("22_unhxj")
+parent = NodePath("../../PlaceTile")
 item = "Restaurant"
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/ClosedUI/HBoxContainer2/Restaurant/HBoxContainer"]
@@ -670,7 +716,7 @@ text = "Close"
 script = ExtResource("30_tnhr0")
 node = NodePath("../../../../..")
 
+[connection signal="pressed" from="CanvasLayer/Control/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/OpenUI/HBoxContainer/EndButton" to="." method="_on_end_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/ClosedUI/FarmButton" to="." method="_on_farm_button_pressed"]
 [connection signal="assign_chicken" from="CanvasLayer/Control/ClosedUI/AssignChicken" to="." method="_on_assign_chicken_assign_chicken"]
-[connection signal="pressed" from="CanvasLayer/Control/ClosedUI/HBoxContainer2/StartButton" to="." method="_on_start_button_pressed"]

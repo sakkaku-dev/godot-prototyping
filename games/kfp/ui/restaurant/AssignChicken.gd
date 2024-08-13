@@ -6,9 +6,13 @@ signal assign_chicken(chicken: ChickenResource)
 @export var container: Control
 
 func _ready():
+	visibility_changed.connect(func(): if visible: _update())
 	_update()
 	
 func _update():
+	for c in container.get_children():
+		c.queue_free()
+	
 	for c in KfpManager.chickens:
 		var node = scene.instantiate()
 		node.res = c

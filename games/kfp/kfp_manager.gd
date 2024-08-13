@@ -5,6 +5,7 @@ signal money_changed()
 signal stars_changed()
 signal average_revenue_changed()
 signal farm_size_changed()
+signal reputation_changed()
 
 signal item_bought(item: String)
 signal items_changed(item: String)
@@ -15,6 +16,7 @@ signal egg_hatched(coord: Vector2i)
 signal chicken_removed(res)
 signal chicken_added(res, pos)
 signal chicken_assigned_changed(res: ChickenResource)
+signal chicken_changed()
 
 signal order_received(id)
 signal order_prepared(id)
@@ -30,7 +32,10 @@ var average_revenue := 0.0:
 	set(v): average_revenue = v; average_revenue_changed.emit()
 var max_farm_size := 5:
 	set(v): max_farm_size = v; farm_size_changed.emit()
+var reputation := 0.0:
+	set(v): reputation = v; reputation_changed.emit()
 
+var reputation_change_rate := 0.5
 var chicken_hatch_rate := 1.0
 
 var used_chickens := {}
@@ -50,6 +55,9 @@ var items = {}
 func _ready() -> void:
 	for i in range(0):
 		add_random_chicken()
+	
+	chicken_added.connect(func(_x, _y): chicken_changed.emit())
+	chicken_removed.connect(func(_x): chicken_changed.emit())
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("debug"):
@@ -164,6 +172,18 @@ func finish_order(id: int):
 	prepared_orders.erase(id)
 	self.chicken_supply -= 1
 	self.money += randi_range(20, 30)
+	self.reputation *= 1 + reputation_change_rate
+
+func failed_order(id: int):
+	open_orders.erase(id)
+	prepared_orders.erase(id)
+	self.reputation *= 1 - reputation_change_rate
+
+func open_restaurant():
+	self.reputation = 0.01
+
+func get_customers_per_second():
+	return reputation
 
 func update_revenue(revenue: Array[int]):
 	var sum = revenue.reduce(func(a, b): return a + b, 0.0)

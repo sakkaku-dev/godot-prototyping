@@ -55,7 +55,7 @@ func _get_selected_item():
 	return selected_button.count.item
 
 func _can_place_item():
-	if _get_count() <= 0:
+	if _get_count() <= 0 or _get_selected_item() == null:
 		return false
 	
 	if _get_selected_item() == KfpUpgradeManager.EGG:
