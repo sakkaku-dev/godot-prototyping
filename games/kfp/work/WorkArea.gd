@@ -27,7 +27,7 @@ var worker: ChickenResource:
 		worker = v
 		chicken_sprite.visible = v != null
 
-var is_occupied := false
+#var is_occupied := false
 
 func _ready():
 	self.worker = null
@@ -60,16 +60,19 @@ func _process(delta: float) -> void:
 func do_action(_h: Hand):
 	pass
 
-func has_available_work():
-	return not is_occupied or worker == null
+func is_occupied():
+	return worker != null
 
-func lock_work():
-	is_occupied = true
-	print("Lock")
+#func has_available_work():
+	#return not is_occupied or worker == null
 
-func finished_work():
-	is_occupied = false
-	print("Unlock")
+#func lock_work():
+	#is_occupied = true
+	#print("Lock")
+#
+#func finished_work():
+	#is_occupied = false
+	#print("Unlock")
 
 #func _unhandled_input(event):
 	#if is_moving and event.is_action_pressed("action"):

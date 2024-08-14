@@ -34,7 +34,7 @@ func _ready():
 		if chicken == res:
 			queue_free()
 	)
-	
+
 
 func set_selected(selected: bool):
 	butcher_button.visible = selected

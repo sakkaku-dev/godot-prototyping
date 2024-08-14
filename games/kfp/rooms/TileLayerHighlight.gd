@@ -43,19 +43,24 @@ func reset_highlight():
 func get_tiles_for_placement(place: Placement) -> TileMapLayer:
 	return null
 
+func _map_coord() -> Vector2i:
+	return get_tiles_for_placement(Placement.CUSTOM).local_to_map(global_position)
+
 func place_tile(tile: RoomItemTile, coord: Vector2i):
 	var tiles = get_tiles_for_placement(tile.placement)
-	if not coord in tiles.get_used_cells():
-		print("Coord %s is not in tiles for %s" % [coord, Placement.keys()[tile.placement]])
+	
+	var local_coord = coord - _map_coord()
+	if not local_coord in tiles.get_used_cells():
+		print("Coord %s is not in tiles for %s" % [local_coord, Placement.keys()[tile.placement]])
 		return false
 	
-	if has_item_at(coord):
-		print("Coord %s already has an item there" % [coord])
+	if has_item_at(local_coord):
+		print("Coord %s already has an item there" % [local_coord])
 		return false
 	
 	var custom = get_tiles_for_placement(Placement.CUSTOM)
-	custom.set_cell(coord, -1)
-	custom.set_cell(coord, source_id, Vector2.ZERO, TYPE_ID_MAP[tile.count.item])
+	custom.set_cell(local_coord, -1)
+	custom.set_cell(local_coord, source_id, Vector2.ZERO, TYPE_ID_MAP[tile.count.item])
 	return true
 
 func has_item_at(coord: Vector2i):
@@ -63,11 +68,12 @@ func has_item_at(coord: Vector2i):
 	return custom.get_cell_source_id(coord) != -1
 
 func clear_tile(coord: Vector2i):
+	var local_coord = coord - _map_coord()
 	var custom = get_tiles_for_placement(Placement.CUSTOM)
-	if not coord in custom.get_used_cells():
+	if not local_coord in custom.get_used_cells():
 		print("No object at %s" % coord)
 		return -1
 	
-	var alternative = custom.get_cell_alternative_tile(coord)
-	custom.set_cell(coord, -1)
+	var alternative = custom.get_cell_alternative_tile(local_coord)
+	custom.set_cell(local_coord, -1)
 	return idTypeMap[alternative]

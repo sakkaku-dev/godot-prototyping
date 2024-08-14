@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bormlewkja157"
-path="res://.godot/imported/EggLarge.png-c5e507751e14c61f152dc496ef34402b.ctex"
+uid="uid://cft8vkcvna261"
+path="res://.godot/imported/Butcher.png-046d725556f110527c3c5e2d5516fe47.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://games/kfp/assets/EggLarge.png"
-dest_files=["res://.godot/imported/EggLarge.png-c5e507751e14c61f152dc496ef34402b.ctex"]
+source_file="res://games/kfp/assets/Butcher.png"
+dest_files=["res://.godot/imported/Butcher.png-046d725556f110527c3c5e2d5516fe47.ctex"]
 
 [params]
 

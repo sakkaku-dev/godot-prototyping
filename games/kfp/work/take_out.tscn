@@ -47,11 +47,12 @@ material = SubResource("ShaderMaterial_w15g2")
 position = Vector2(0, -12)
 texture = ExtResource("5_2dqpi")
 
-[node name="TakeOutQueue" type="Area2D" parent="Sprite2D3"]
+[node name="TakeOutQueue" type="Area2D" parent="Sprite2D3" node_paths=PackedStringArray("work_area")]
 position = Vector2(0, 14)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("2_lreah")
+work_area = NodePath("../..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D3/TakeOutQueue"]
 shape = SubResource("RectangleShape2D_ibnlu")

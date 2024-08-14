@@ -30,6 +30,11 @@ var selected_button: RoomItemTile:
 
 func _ready() -> void:
 	self.selected_button = null
+	
+	visibility_changed.connect(func():
+		if not is_visible_in_tree():
+			self.selected_button = null
+	)
 
 func _get_count() -> int:
 	return KfpManager.get_item_count(selected_button.count.item)
@@ -65,7 +70,7 @@ func _can_place_item():
 
 func _process(delta: float) -> void:
 	if visible:
-		position = _current_pos()
+		global_position = _current_pos()
 
 func _current_pos():
 	return tile_map.map_to_local(_current_coord())

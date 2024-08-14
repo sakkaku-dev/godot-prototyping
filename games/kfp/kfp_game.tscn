@@ -10,9 +10,9 @@ script = ExtResource("1_bjgne")
 [node name="Game" type="Node2D" parent="."]
 
 [node name="Restaurant" parent="Game" instance=ExtResource("2_swx2m")]
+position = Vector2(1040, 0)
 
 [node name="Farm" parent="Game" instance=ExtResource("31_nt8wo")]
-position = Vector2(-935, 0)
 
 [node name="CanvasLayer" parent="Game/Farm" index="3"]
 visible = false
@@ -21,6 +21,6 @@ visible = false
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true
-position_smoothing_speed = 10.0
+position_smoothing_speed = 15.0
 
 [editable path="Game/Farm"]

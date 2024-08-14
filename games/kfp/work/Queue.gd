@@ -5,6 +5,7 @@ signal awaiting(has_customer)
 
 @export var dir := Vector2.LEFT
 @export var distance := 20
+@export var work_area: WorkArea
 
 var customers := []
 
@@ -13,10 +14,13 @@ func _ready():
 		if is_in_queue(b):
 			awaiting.emit(true)
 	)
-	body_exited.connect(func(b):
-		if is_in_queue(b):
-			remove_customer(b)
-	)
+	#body_exited.connect(func(b):
+		#if is_in_queue(b):
+			#remove_customer(b)
+	#)
+
+func leave_queue(customer: Customer):
+	customers.erase(customer)
 
 func queue_customer(customer: Customer):
 	customers.append(customer)
@@ -38,3 +42,6 @@ func has_customers():
 
 func is_in_queue(customer: Customer):
 	return customer in customers
+
+func get_length():
+	return customers.size()

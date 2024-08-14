@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="ShopResource" load_steps=3 format=3 uid="uid://bq7dbi1y0m4wi"]
 
 [ext_resource type="Script" path="res://games/kfp/ui/shop/shop_resource.gd" id="1_jsnek"]
-[ext_resource type="Texture2D" uid="uid://bormlewkja157" path="res://games/kfp/assets/EggLarge.png" id="2_ldw86"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_64nww"]
+load_path = "res://.godot/imported/EggLarge.png-c5e507751e14c61f152dc496ef34402b.ctex"
 
 [resource]
 script = ExtResource("1_jsnek")
 type = 0
 name = "Egg"
-sprite = ExtResource("2_ldw86")
+sprite = SubResource("CompressedTexture2D_64nww")
 price = 20

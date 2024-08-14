@@ -17,7 +17,7 @@ func set_target(movement_target: Vector2):
 func _on_velocity_computed(safe_velocity):
 	enemy.velocity = safe_velocity
 	enemy.move_and_slide()
-	
+
 func process(delta):
 	if is_navigation_finished(): return
 	if stop: return

@@ -8,6 +8,12 @@
 [ext_resource type="Texture2D" uid="uid://ct7g2xldwg16q" path="res://games/kfp/assets/ButcherIcon.png" id="6_er7oy"]
 [ext_resource type="Script" path="res://games/kfp/ui/Draggable.gd" id="6_oy1i5"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yhei"]
+size = Vector2(14, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gc8n8"]
+size = Vector2(10, 4)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kwg02"]
 shader = ExtResource("4_2rqnx")
 shader_parameter/thickness = null
@@ -20,13 +26,7 @@ shader_parameter/square_border = true
 shader_parameter/offset = null
 shader_parameter/max_or_add = false
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_gc8n8"]
-size = Vector2(10, 4)
-
 [sub_resource type="ImageTexture" id="ImageTexture_h38he"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5yhei"]
-size = Vector2(14, 14)
 
 [node name="Chicken" type="CharacterBody2D" node_paths=PackedStringArray("selectable")]
 collision_layer = 0
@@ -34,14 +34,23 @@ collision_mask = 65
 script = ExtResource("1_b7dkh")
 selectable = NodePath("Selectable")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_kwg02")
-position = Vector2(1, -6)
-texture = ExtResource("2_p5k63")
+[node name="DragArea" type="Area2D" parent="."]
+position = Vector2(0, -5)
+collision_layer = 0
+collision_mask = 256
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DragArea"]
+position = Vector2(0, -1)
+shape = SubResource("RectangleShape2D_5yhei")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -2)
 shape = SubResource("RectangleShape2D_gc8n8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_kwg02")
+position = Vector2(1, -6)
+texture = ExtResource("2_p5k63")
 
 [node name="MoveCollide" type="Node" parent="." node_paths=PackedStringArray("sprite")]
 script = ExtResource("3_y3fg4")
@@ -113,12 +122,3 @@ grow_vertical = 2
 script = ExtResource("6_oy1i5")
 parent = NodePath("..")
 sprite = NodePath("../Sprite2D")
-
-[node name="DragArea" type="Area2D" parent="."]
-position = Vector2(0, -5)
-collision_layer = 0
-collision_mask = 256
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DragArea"]
-position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_5yhei")

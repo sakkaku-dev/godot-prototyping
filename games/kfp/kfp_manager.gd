@@ -35,6 +35,7 @@ var max_farm_size := 5:
 var reputation := 0.0:
 	set(v): reputation = v; reputation_changed.emit()
 
+var initial_reputation := .1
 var reputation_change_rate := 0.5
 var chicken_hatch_rate := 1.0
 
@@ -180,7 +181,7 @@ func failed_order(id: int):
 	self.reputation *= 1 - reputation_change_rate
 
 func open_restaurant():
-	self.reputation = 0.01
+	self.reputation = initial_reputation
 
 func get_customers_per_second():
 	return reputation

@@ -51,13 +51,15 @@ func _get_random_tile_position():
 	return tile_map.map_to_local(cells.pick_random())
 
 func _spawn_dropped_egg(value: float):
-	var node = dropped_egg_scene.instantiate()
-	node.amount = floor(value)
-	node.global_position = _get_random_tile_position()
-	add_child(node)
+	var amount = floor(value)
+	#var node = dropped_egg_scene.instantiate()
+	#node.amount = floor(value)
+	#node.global_position = _get_random_tile_position()
+	#add_child(node)
 	
-	throttle_spawn_dropped_eggs.start()
-	return node.amount
+	#throttle_spawn_dropped_eggs.start()
+	KfpManager.add_item(KfpUpgradeManager.EGG, amount)
+	return amount
 
 func _spawn_chicken(chicken: ChickenResource, pos = Vector2.ZERO):
 	var node = chicken_scene.instantiate()
@@ -69,12 +71,12 @@ func _spawn_chicken(chicken: ChickenResource, pos = Vector2.ZERO):
 func _on_restaurant_pressed():
 	move_to_restaurant.emit()
 
-func set_placing_tile(tile: TilePlacement):
-	self.placing_tile = tile
-
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_cancel") and self.placing_tile:
-		self.placing_tile = null
-		get_viewport().set_input_as_handled()
-	elif event.is_action_pressed("action") and selected_chicken:
-		self.selected_chicken = null
+#func set_placing_tile(tile: TilePlacement):
+	#self.placing_tile = tile
+#
+#func _unhandled_input(event: InputEvent) -> void:
+	#if event.is_action_pressed("ui_cancel") and self.placing_tile:
+		#self.placing_tile = null
+		#get_viewport().set_input_as_handled()
+	#elif event.is_action_pressed("action") and selected_chicken:
+		#self.selected_chicken = null

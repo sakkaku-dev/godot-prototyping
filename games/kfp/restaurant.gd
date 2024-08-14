@@ -34,7 +34,7 @@ var room: Room
 
 func _ready() -> void:
 	KfpManager.item_bought.connect(func(item): if item == KfpUpgradeManager.RESTAURANT: _update_restaurant())
-	
+		
 	#customer_timer.timeout.connect(_spawn_customer)
 	#day_timer.timeout.connect(_day_ended)
 	_show_buttons()
@@ -79,7 +79,6 @@ func _show_buttons(closed = true):
 
 func _spawn_customer():
 	var node = customer_scene.instantiate() as Customer
-	node.global_position = get_tree().get_first_node_in_group("spawn").global_position
 	node.order_failed.connect(func(): KfpManager.failed_order(node.order_id))
 	node.order_completed.connect(func(id):
 		KfpManager.finish_order(id)

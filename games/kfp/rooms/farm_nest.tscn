@@ -12,6 +12,8 @@
 [ext_resource type="Shader" path="res://shaders/progress.gdshader" id="10_1ffbm"]
 [ext_resource type="Script" path="res://games/kfp/ui/progress_manual_fill.gd" id="11_03y3n"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdxc7"]
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_366ld"]
 shader = ExtResource("2_60d04")
 shader_parameter/thickness = null
@@ -24,23 +26,13 @@ shader_parameter/square_border = true
 shader_parameter/offset = null
 shader_parameter/max_or_add = false
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wdxc7"]
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_21o4e"]
 shader = ExtResource("10_1ffbm")
-shader_parameter/fill_color = Color(0.82, 0.230147, 0.1394, 1)
-shader_parameter/fill = 0.0
+shader_parameter/fill_color = Color(0.890196, 0.258824, 0.384314, 1)
+shader_parameter/fill = 0.54
 
 [node name="FarmNest" type="Node2D"]
 script = ExtResource("1_cavsh")
-
-[node name="Chicken" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_366ld")
-position = Vector2(0, -2)
-texture = ExtResource("2_bav0v")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_kfk3c")
 
 [node name="DroppableArea" type="Area2D" parent="."]
 collision_layer = 256
@@ -49,6 +41,14 @@ script = ExtResource("2_t1d14")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DroppableArea"]
 shape = SubResource("RectangleShape2D_wdxc7")
+
+[node name="Chicken" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_366ld")
+position = Vector2(0, -2)
+texture = ExtResource("2_bav0v")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_kfk3c")
 
 [node name="Countdown" type="Label" parent="." node_paths=PackedStringArray("click_timeout", "progress_fill")]
 visible = false
@@ -105,6 +105,7 @@ script = ExtResource("8_ubii2")
 sprite = NodePath("../Chicken")
 
 [node name="ProgressFill" type="ColorRect" parent="."]
+visible = false
 material = SubResource("ShaderMaterial_21o4e")
 anchors_preset = 8
 anchor_left = 0.5
@@ -117,5 +118,5 @@ offset_right = 6.0
 offset_bottom = -11.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0.28, 0.1232, 0.056, 1)
+color = Color(0.341176, 0.145098, 0.231373, 1)
 script = ExtResource("11_03y3n")

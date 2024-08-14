@@ -1,0 +1,68 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://ddri7g73m721c"]
+
+[sub_resource type="Shader" id="Shader_eqkvf"]
+code = "shader_type canvas_item;
+
+uniform vec4 color1: source_color = vec4(1.);
+uniform vec4 color2: source_color = vec4(1.);
+uniform vec4 color3: source_color = vec4(1.);
+uniform vec4 color4: source_color = vec4(1.);
+uniform vec4 color5: source_color = vec4(1.);
+uniform vec4 color6: source_color = vec4(1.);
+uniform vec4 color7: source_color = vec4(1.);
+uniform vec4 color8: source_color = vec4(1.);
+uniform vec4 color9: source_color = vec4(1.);
+
+uniform vec4 alt_color1: source_color = vec4(1.);
+uniform vec4 alt_color2: source_color = vec4(1.);
+uniform vec4 alt_color3: source_color = vec4(1.);
+uniform vec4 alt_color4: source_color = vec4(1.);
+uniform vec4 alt_color5: source_color = vec4(1.);
+uniform vec4 alt_color6: source_color = vec4(1.);
+uniform vec4 alt_color7: source_color = vec4(1.);
+uniform vec4 alt_color8: source_color = vec4(1.);
+uniform vec4 alt_color9: source_color = vec4(1.);
+
+void fragment() {
+	if (COLOR == color1) {
+		COLOR = alt_color1;
+	} else if (COLOR == color2) {
+		COLOR = alt_color2;
+	} else if (COLOR == color3) {
+		COLOR = alt_color3;
+	} else if (COLOR == color4) {
+		COLOR = alt_color4;
+	} else if (COLOR == color5) {
+		COLOR = alt_color5;
+	} else if (COLOR == color6) {
+		COLOR = alt_color6;
+	} else if (COLOR == color7) {
+		COLOR = alt_color7;
+	} else if (COLOR == color8) {
+		COLOR = alt_color8;
+	} else if (COLOR == color9) {
+		COLOR = alt_color9;
+	}
+}
+"
+
+[resource]
+shader = SubResource("Shader_eqkvf")
+shader_parameter/color1 = Color(0.94902, 0.713726, 0.239216, 1)
+shader_parameter/color2 = Color(1, 1, 1, 1)
+shader_parameter/color3 = Color(0.580392, 0.207843, 0.239216, 1)
+shader_parameter/color4 = Color(0.831373, 0.431373, 0.2, 1)
+shader_parameter/color5 = Color(0.341176, 0.145098, 0.231373, 1)
+shader_parameter/color6 = Color(0.694118, 0.431373, 0.270588, 1)
+shader_parameter/color7 = Color(0.560784, 0.262745, 0.286275, 1)
+shader_parameter/color8 = Color(0.54902, 0.807843, 0.423529, 1)
+shader_parameter/color9 = Color(1, 1, 1, 1)
+shader_parameter/alt_color1 = Color(0.941176, 0.854902, 0.694118, 1)
+shader_parameter/alt_color2 = Color(0.388235, 0.294118, 0.490196, 1)
+shader_parameter/alt_color3 = Color(0.768627, 0.364706, 0.623529, 1)
+shader_parameter/alt_color4 = Color(0.890196, 0.603922, 0.67451, 1)
+shader_parameter/alt_color5 = Color(0.388235, 0.294118, 0.490196, 1)
+shader_parameter/alt_color6 = Color(0.890196, 0.603922, 0.67451, 1)
+shader_parameter/alt_color7 = Color(0.768627, 0.364706, 0.623529, 1)
+shader_parameter/alt_color8 = Color(0.576471, 0.831373, 0.709804, 1)
+shader_parameter/alt_color9 = Color(1, 1, 1, 1)
