@@ -30,6 +30,7 @@ PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_came
 DeepwaterGame="*res://games/rogue-fishing/deepwater_game.tscn"
 KfpManager="*res://games/kfp/kfp_manager.gd"
 KfpUpgradeManager="*res://games/kfp/KfpUpgradeManager.gd"
+HoloIncData="*res://games/holo_inc/holo_inc_data.gd"
 
 [display]
 

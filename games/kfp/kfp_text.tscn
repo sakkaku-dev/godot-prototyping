@@ -1,0 +1,85 @@
+[gd_scene load_steps=7 format=3 uid="uid://dxdyahch0blyl"]
+
+[ext_resource type="Script" path="res://games/kfp/ui/counts/item_count.gd" id="1_cp7vd"]
+[ext_resource type="Theme" uid="uid://nuajw7fj24ph" path="res://games/kfp/theme.tres" id="1_jibwq"]
+[ext_resource type="Script" path="res://games/kfp/kfp_text.gd" id="1_y8mns"]
+[ext_resource type="Texture2D" uid="uid://2cau7k08ftdx" path="res://games/kfp/assets/Chicken_Naked.png" id="3_c563x"]
+[ext_resource type="Script" path="res://games/kfp/ui/counts/ChickenCount.gd" id="4_f7fh0"]
+[ext_resource type="Script" path="res://games/kfp/text/buy_text_button.gd" id="6_r712r"]
+
+[node name="kfp_text" type="Node2D" node_paths=PackedStringArray("button")]
+script = ExtResource("1_y8mns")
+button = NodePath("CanvasLayer/Control/CenterContainer/TextureButton")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("1_jibwq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Eggs" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/Eggs"]
+layout_mode = 2
+text = "Eggs"
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/VBoxContainer/Eggs" node_paths=PackedStringArray("parent")]
+layout_mode = 2
+script = ExtResource("1_cp7vd")
+item = "Egg"
+parent = NodePath("..")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/CenterContainer"]
+layout_mode = 2
+texture_normal = ExtResource("3_c563x")
+
+[node name="Label2" type="Label" parent="CanvasLayer/Control/CenterContainer/TextureButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = 1.0
+offset_right = 5.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "00"
+horizontal_alignment = 1
+script = ExtResource("4_f7fh0")
+show_used = false
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -4.0
+grow_horizontal = 0
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer2"]
+layout_mode = 2
+text = "Buy Farm"
+script = ExtResource("6_r712r")
+item = "FarmSize"

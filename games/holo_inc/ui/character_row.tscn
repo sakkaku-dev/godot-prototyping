@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://df8lccupipj38"]
+
+[ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="1_np2qi"]
+[ext_resource type="Script" path="res://games/holo_inc/ui/character_row.gd" id="1_yx2lk"]
+
+[node name="CharacterRow" type="TextureButton" node_paths=PackedStringArray("label")]
+custom_minimum_size = Vector2(0, 20)
+script = ExtResource("1_yx2lk")
+label = NodePath("CharacterRow/Label")
+
+[node name="CharacterRow" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="CharacterRow"]
+layout_mode = 2
+texture = ExtResource("1_np2qi")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CharacterRow"]
+layout_mode = 2
+text = "1x - Kiara"

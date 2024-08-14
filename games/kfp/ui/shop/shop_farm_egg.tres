@@ -3,7 +3,6 @@
 [ext_resource type="Script" path="res://games/kfp/ui/shop/shop_resource.gd" id="1_jsnek"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_64nww"]
-load_path = "res://.godot/imported/EggLarge.png-c5e507751e14c61f152dc496ef34402b.ctex"
 
 [resource]
 script = ExtResource("1_jsnek")

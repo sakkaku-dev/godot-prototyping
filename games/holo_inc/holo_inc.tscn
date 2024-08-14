@@ -1,0 +1,159 @@
+[gd_scene load_steps=9 format=3 uid="uid://dyo6b8gh2r73j"]
+
+[ext_resource type="Texture2D" uid="uid://d05yosaf1g5hf" path="res://assets/hololive.svg" id="1_46qsl"]
+[ext_resource type="Script" path="res://games/holo_inc/holo_inc.gd" id="1_nie3d"]
+[ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="3_xubhb"]
+[ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="4_smhsk"]
+[ext_resource type="Script" path="res://games/holo_inc/ui/character_list.gd" id="5_pr22p"]
+[ext_resource type="PackedScene" uid="uid://df8lccupipj38" path="res://games/holo_inc/ui/character_row.tscn" id="6_htchw"]
+[ext_resource type="Script" path="res://games/holo_inc/ui/character_details.gd" id="7_sgrh0"]
+
+[sub_resource type="Theme" id="Theme_0bkr5"]
+default_font_size = 12
+
+[node name="holo_inc" type="Node2D" node_paths=PackedStringArray("gacha_button", "character_label", "character_list", "holo_container", "holo_button", "holo_label")]
+script = ExtResource("1_nie3d")
+gacha_button = NodePath("CanvasLayer/Control/Characters/List/Button")
+character_label = NodePath("CanvasLayer/Control/VBoxContainer/Character/HBoxContainer/Label")
+character_list = NodePath("CanvasLayer/Control/Characters")
+holo_container = NodePath("CanvasLayer/Control/VBoxContainer/Coins")
+holo_button = NodePath("CanvasLayer/Control/CenterContainer/TextureButton")
+holo_label = NodePath("CanvasLayer/Control/VBoxContainer/Coins/HBoxContainer/Label")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_0bkr5")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Coins" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/Coins"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/Coins/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_46qsl")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/Coins/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/Coins"]
+layout_mode = 2
+
+[node name="Character" type="PanelContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/Character"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/VBoxContainer/Character/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("3_xubhb")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/VBoxContainer/Character/HBoxContainer"]
+layout_mode = 2
+text = "0"
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/VBoxContainer/Character" node_paths=PackedStringArray("node")]
+layout_mode = 2
+script = ExtResource("4_smhsk")
+node = NodePath("../../../Characters")
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/CenterContainer"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+texture_normal = ExtResource("1_46qsl")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Characters" type="PanelContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("container", "details_page", "list")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -137.0
+offset_top = -100.0
+offset_right = 137.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_pr22p")
+container = NodePath("List/ScrollContainer/VBoxContainer")
+row_scene = ExtResource("6_htchw")
+details_page = NodePath("Details")
+list = NodePath("List")
+
+[node name="List" type="VBoxContainer" parent="CanvasLayer/Control/Characters"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/Characters/List"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Characters/List/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/Characters/List"]
+layout_mode = 2
+text = "Buy"
+
+[node name="Details" type="VBoxContainer" parent="CanvasLayer/Control/Characters" node_paths=PackedStringArray("label", "collect_coin_button")]
+layout_mode = 2
+script = ExtResource("7_sgrh0")
+label = NodePath("Label")
+collect_coin_button = NodePath("HBoxContainer/Collect")
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Characters/Details"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+texture = ExtResource("3_xubhb")
+expand_mode = 3
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Characters/Details"]
+layout_mode = 2
+text = "KIARA"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/Characters/Details"]
+layout_mode = 2
+
+[node name="Collect" type="Button" parent="CanvasLayer/Control/Characters/Details/HBoxContainer"]
+layout_mode = 2
+text = "Collect Coins"
