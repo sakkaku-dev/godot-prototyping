@@ -1,7 +1,8 @@
-[gd_scene load_steps=19 format=3 uid="uid://dyo6b8gh2r73j"]
+[gd_scene load_steps=15 format=3 uid="uid://dyo6b8gh2r73j"]
 
 [ext_resource type="Texture2D" uid="uid://d05yosaf1g5hf" path="res://assets/hololive.svg" id="1_46qsl"]
 [ext_resource type="Script" path="res://games/holo_inc/holo_inc.gd" id="1_nie3d"]
+[ext_resource type="Theme" uid="uid://ds8adv6qojfuc" path="res://games/holo_inc/theme.tres" id="2_ohr5j"]
 [ext_resource type="Texture2D" uid="uid://bjtlwi1qsb05a" path="res://assets/Pixel Platformer/Preview.png" id="3_2x7pc"]
 [ext_resource type="PackedScene" uid="uid://bsnk8tx4mx1dl" path="res://games/holo_inc/world.tscn" id="3_8o8fj"]
 [ext_resource type="Script" path="res://games/holo_inc/ui/item_panel.gd" id="3_q3st4"]
@@ -14,30 +15,12 @@
 [ext_resource type="Script" path="res://games/holo_inc/ui/character_details.gd" id="7_sgrh0"]
 [ext_resource type="Script" path="res://games/holo_inc/ui/fight_panel.gd" id="12_5grdj"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0p1wy"]
-bg_color = Color(0, 0, 0, 0.239216)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x7aqp"]
-bg_color = Color(0.32, 0.773333, 1, 0.756863)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pm0no"]
-bg_color = Color(0, 0, 0, 0.545098)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvkwm"]
-bg_color = Color(0, 0.42, 0.7, 0.545098)
-
-[sub_resource type="Theme" id="Theme_0bkr5"]
-default_font_size = 12
-Button/styles/disabled = SubResource("StyleBoxFlat_0p1wy")
-Button/styles/focus = SubResource("StyleBoxFlat_x7aqp")
-Button/styles/hover = SubResource("StyleBoxFlat_x7aqp")
-Button/styles/normal = SubResource("StyleBoxFlat_pm0no")
-Button/styles/pressed = SubResource("StyleBoxFlat_fvkwm")
-
 [node name="holo_inc" type="Node2D" node_paths=PackedStringArray("map", "fight_button")]
 script = ExtResource("1_nie3d")
 map = NodePath("CanvasLayer/Control/HBoxContainer/Map")
 fight_button = NodePath("CanvasLayer/Control/Shop/Fight/TextureButton")
+
+[node name="FightTimer" type="Timer" parent="."]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -49,7 +32,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme = SubResource("Theme_0bkr5")
+theme = ExtResource("2_ohr5j")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 1
@@ -115,6 +98,7 @@ stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/HBoxContainer/Map/MapViewport"]
 handle_input_locally = false
+canvas_item_default_texture_filter = 0
 size = Vector2i(400, 231)
 render_target_update_mode = 4
 

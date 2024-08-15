@@ -4,6 +4,8 @@ signal holo_coins_changed()
 signal map_changed()
 signal item_bought(item: Item)
 signal fighting_changed()
+signal team_health_changed()
+signal enemy_health_changed()
 
 signal character_added(character: String)
 signal character_action_changed(character: String)
@@ -35,18 +37,22 @@ enum Item {
 var characters := {}
 var character_actions := {}
 
-var team_health := 0.0:
+var team_health := -1.0:
 	set(v):
-		team_health = v
+		team_health = max(v, 0)
+		team_health_changed.emit()
+
 		if team_health <= 0:
 			if is_fighting:
 				print("Team lost")
 			
 			is_fighting = false
 
-var enemy_health := 0.0:
+var enemy_health := -1.0:
 	set(v):
 		enemy_health = v
+		enemy_health_changed.emit()
+
 		if enemy_health <= 0:
 			if is_fighting:
 				self.map += 1
@@ -93,6 +99,12 @@ func count_characters_doing(action: Action, include_char_count := false) -> int:
 
 func start_fight():
 	team_health = get_team_health()
+	#if team_health < 0:
+		#team_health = get_team_health()
+	#elif team_health == 0:
+		#print("Team has no health to fight")
+		#return
+	
 	enemy_health = get_enemy_health(map)
 	is_fighting = true
 
@@ -100,13 +112,13 @@ func has_team_member() -> bool:
 	return count_characters_doing(Action.FIGHT_TEAM) >= 1
 
 func get_team_health() -> float:
-	return count_characters_doing(Action.FIGHT_TEAM, true) * 10
+	return count_characters_doing(Action.FIGHT_TEAM, true)
 
 func get_enemy_health(lvl: float) -> float:
-	return pow(2, lvl) * 10.
+	return pow(2, lvl)
 
 func get_enemy_strength(lvl: float) -> float:
-	return pow(4, lvl) * 10.
+	return pow(1.2, lvl)
 
 ####################
 ###### Items #######

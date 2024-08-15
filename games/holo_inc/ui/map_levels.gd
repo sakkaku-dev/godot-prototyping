@@ -8,7 +8,8 @@ func _ready() -> void:
 	_create_levels()
 
 func _create_levels():
+	var start = 1
 	for i in range(levels_per_section):
 		var level = level_scene.instantiate()
-		level.level = section * levels_per_section + i
+		level.level = section * levels_per_section + i + start
 		add_child(level)

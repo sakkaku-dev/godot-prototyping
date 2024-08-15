@@ -28,3 +28,4 @@ func _update():
 	label.text = "%s - %sx" % [character, count]
 	disabled = count <= 0
 	action_container.visible = not disabled
+	modulate = Color.DIM_GRAY if count <= 0 else Color.WHITE
