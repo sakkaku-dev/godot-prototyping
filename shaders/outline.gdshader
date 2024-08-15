@@ -65,5 +65,5 @@ void fragment(){
 		}
 	}
     vec3 final_color = mix(outline_color.rgb, sprite_color.rgb, sprite_color.a);
-    COLOR = vec4(final_color, clamp(alpha, 0.0, 1.0));
+    COLOR.rgb = vec4(final_color, clamp(alpha, 0.0, 1.0)).rgb;
 }

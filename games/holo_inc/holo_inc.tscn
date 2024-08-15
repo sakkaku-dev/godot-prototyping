@@ -1,14 +1,18 @@
-[gd_scene load_steps=15 format=3 uid="uid://dyo6b8gh2r73j"]
+[gd_scene load_steps=19 format=3 uid="uid://dyo6b8gh2r73j"]
 
 [ext_resource type="Texture2D" uid="uid://d05yosaf1g5hf" path="res://assets/hololive.svg" id="1_46qsl"]
 [ext_resource type="Script" path="res://games/holo_inc/holo_inc.gd" id="1_nie3d"]
-[ext_resource type="TileSet" uid="uid://c4qqaixbjro7s" path="res://games/holo_inc/tiles.tres" id="2_w4ynb"]
+[ext_resource type="Texture2D" uid="uid://bjtlwi1qsb05a" path="res://assets/Pixel Platformer/Preview.png" id="3_2x7pc"]
+[ext_resource type="PackedScene" uid="uid://bsnk8tx4mx1dl" path="res://games/holo_inc/world.tscn" id="3_8o8fj"]
 [ext_resource type="Script" path="res://games/holo_inc/ui/item_panel.gd" id="3_q3st4"]
 [ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="3_xubhb"]
+[ext_resource type="Script" path="res://games/holo_inc/ui/map_levels.gd" id="4_rwrfy"]
 [ext_resource type="Script" path="res://games/kfp/ui/toggle_button.gd" id="4_smhsk"]
+[ext_resource type="PackedScene" uid="uid://cpbovygcqy0gn" path="res://games/holo_inc/ui/map_level.tscn" id="5_ayx8r"]
 [ext_resource type="Script" path="res://games/holo_inc/ui/character_list.gd" id="5_pr22p"]
 [ext_resource type="PackedScene" uid="uid://df8lccupipj38" path="res://games/holo_inc/ui/character_row.tscn" id="6_htchw"]
 [ext_resource type="Script" path="res://games/holo_inc/ui/character_details.gd" id="7_sgrh0"]
+[ext_resource type="Script" path="res://games/holo_inc/ui/fight_panel.gd" id="12_5grdj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0p1wy"]
 bg_color = Color(0, 0, 0, 0.239216)
@@ -30,13 +34,10 @@ Button/styles/hover = SubResource("StyleBoxFlat_x7aqp")
 Button/styles/normal = SubResource("StyleBoxFlat_pm0no")
 Button/styles/pressed = SubResource("StyleBoxFlat_fvkwm")
 
-[node name="holo_inc" type="Node2D" node_paths=PackedStringArray("character_list", "holo_container")]
+[node name="holo_inc" type="Node2D" node_paths=PackedStringArray("map", "fight_button")]
 script = ExtResource("1_nie3d")
-character_list = NodePath("CanvasLayer/Control/Characters")
-holo_container = NodePath("CanvasLayer/Control/VBoxContainer/Coins")
-
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_set = ExtResource("2_w4ynb")
+map = NodePath("CanvasLayer/Control/HBoxContainer/Map")
+fight_button = NodePath("CanvasLayer/Control/Shop/Fight/TextureButton")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -50,21 +51,74 @@ grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_0bkr5")
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control"]
-layout_mode = 2
-offset_right = 480.0
-offset_bottom = 270.0
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Control/HBoxContainer"]
+layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 
-[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/CenterContainer"]
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/HBoxContainer/CenterContainer"]
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 texture_normal = ExtResource("1_46qsl")
 ignore_texture_size = true
 stretch_mode = 5
+
+[node name="Map" type="VBoxContainer" parent="CanvasLayer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+
+[node name="MapCard" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/Map"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control/HBoxContainer/Map/MapCard"]
+layout_mode = 2
+color = Color(0.956863, 0.67451, 0.4, 1)
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/HBoxContainer/Map/MapCard"]
+visible = false
+modulate = Color(0.288518, 0.288518, 0.288518, 1)
+layout_mode = 2
+texture = ExtResource("3_2x7pc")
+expand_mode = 2
+stretch_mode = 6
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/HBoxContainer/Map/MapCard"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/Control/HBoxContainer/Map/MapCard/MarginContainer"]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="MapLevels" type="HBoxContainer" parent="CanvasLayer/Control/HBoxContainer/Map/MapCard/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme_override_constants/separation = 25
+script = ExtResource("4_rwrfy")
+level_scene = ExtResource("5_ayx8r")
+
+[node name="MapViewport" type="SubViewportContainer" parent="CanvasLayer/Control/HBoxContainer/Map"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CanvasLayer/Control/HBoxContainer/Map/MapViewport"]
+handle_input_locally = false
+size = Vector2i(400, 231)
+render_target_update_mode = 4
+
+[node name="World" parent="CanvasLayer/Control/HBoxContainer/Map/MapViewport/SubViewport" instance=ExtResource("3_8o8fj")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
 layout_mode = 0
@@ -77,7 +131,7 @@ mouse_filter = 2
 script = ExtResource("3_q3st4")
 item = 2
 count_label = NodePath("HBoxContainer/Label")
-price_button = NodePath("../../CenterContainer/TextureButton")
+price_button = NodePath("../../HBoxContainer/CenterContainer/TextureButton")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/Coins"]
 layout_mode = 2
@@ -220,6 +274,30 @@ layout_mode = 2
 text = "Map"
 
 [node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/Shop/Map"]
+layout_mode = 2
+
+[node name="Fight" type="PanelContainer" parent="CanvasLayer/Control/Shop" node_paths=PackedStringArray("button")]
+layout_mode = 2
+mouse_filter = 2
+script = ExtResource("12_5grdj")
+button = NodePath("TextureButton")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/Shop/Fight"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/Shop/Fight/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("1_46qsl")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/Shop/Fight/HBoxContainer"]
+layout_mode = 2
+text = "Fight"
+
+[node name="TextureButton" type="TextureButton" parent="CanvasLayer/Control/Shop/Fight"]
 layout_mode = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]

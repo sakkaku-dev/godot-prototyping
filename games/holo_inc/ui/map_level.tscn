@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cpbovygcqy0gn"]
+
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="1_ai6ar"]
+[ext_resource type="Script" path="res://games/holo_inc/ui/map_level.gd" id="2_lh8ay"]
+
+[node name="MapLevel" type="TextureButton"]
+custom_minimum_size = Vector2(16, 16)
+texture_normal = ExtResource("1_ai6ar")
+ignore_texture_size = true
+stretch_mode = 5
+script = ExtResource("2_lh8ay")

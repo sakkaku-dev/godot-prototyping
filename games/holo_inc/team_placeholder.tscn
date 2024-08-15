@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://ctnvkd0u4ymyp"]
+
+[ext_resource type="Script" path="res://games/holo_inc/team_placeholder.gd" id="1_27je5"]
+[ext_resource type="Texture2D" uid="uid://42m8myr62key" path="res://games/tako-runner/assets/Shadow.png" id="1_et05n"]
+[ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="3_ijay3"]
+
+[node name="TeamPlaceholder" type="Node2D"]
+script = ExtResource("1_27je5")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.313726)
+position = Vector2(0, -2)
+scale = Vector2(0.555555, 0.555556)
+texture = ExtResource("1_et05n")
+
+[node name="Character" type="Sprite2D" parent="."]
+position = Vector2(0, -11)
+texture = ExtResource("3_ijay3")
