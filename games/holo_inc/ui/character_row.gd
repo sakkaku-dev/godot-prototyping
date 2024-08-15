@@ -5,6 +5,7 @@ signal character_selected()
 @export var character: String
 @export var label: Label
 @export var team_button: Control
+@export var lvl_label: Label
 
 @export var action_container: Control
 
@@ -17,6 +18,7 @@ func _ready() -> void:
 	_update()
 	
 	HoloIncData.item_bought.connect(func(i): if i == HoloIncData.Item.MAP: _update_actions())
+	HoloIncData.fighting_changed.connect(func(): _update_experience())
 	_update_actions()
 
 
@@ -29,3 +31,7 @@ func _update():
 	disabled = count <= 0
 	action_container.visible = not disabled
 	modulate = Color.DIM_GRAY if count <= 0 else Color.WHITE
+	_update_experience()
+
+func _update_experience():
+	lvl_label.text = "Lvl %s" % HoloIncData.get_character_level(character)

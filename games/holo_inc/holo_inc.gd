@@ -29,10 +29,10 @@ func _show_map():
 	map.show()
 
 func _process(delta: float) -> void:
-	HoloIncData.holo_coins += delta * 1000 #* HoloIncData.count_characters_doing(HoloIncData.Action.COLLECTING_COINS, true)
+	HoloIncData.holo_coins += 1 + delta * 1000 * HoloIncData.count_characters_doing(HoloIncData.Action.COLLECTING_COINS, true)
 
 func _simulate_fight():
-	var team_strength = HoloIncData.count_characters_doing(HoloIncData.Action.FIGHT_TEAM, true)
+	var team_strength = HoloIncData.get_team_strength()
 	HoloIncData.enemy_health -= team_strength * randf_range(0.8, 1.2)
 
 	var enemy_strength = HoloIncData.get_enemy_strength(HoloIncData.map)

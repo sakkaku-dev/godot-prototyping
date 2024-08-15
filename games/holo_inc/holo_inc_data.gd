@@ -36,6 +36,7 @@ enum Item {
 
 var characters := {}
 var character_actions := {}
+var character_exp := {}
 
 var team_health := -1.0:
 	set(v):
@@ -55,7 +56,7 @@ var enemy_health := -1.0:
 
 		if enemy_health <= 0:
 			if is_fighting:
-				self.map += 1
+				fight_won()
 				print("Enemies defeated")
 
 			is_fighting = false
@@ -77,8 +78,6 @@ var gacha_bought := 1
 func set_character_action(character: String, action: Action):
 	character_actions[character] = action
 	character_action_changed.emit(character)
-	
-	print(character_actions)
 
 func get_total_characters() -> int:
 	return characters.values().reduce(func(a, b): return a + b, 0)
@@ -88,11 +87,18 @@ func get_character_count(character: String) -> int:
 	return characters[character]
 
 func count_characters_doing(action: Action, include_char_count := false) -> int:
-	return character_actions.keys() \
-		.filter(func(k): return character_actions[k] == action) \
+	return get_characters_for_action(action) \
 		.map(func(k): return get_character_count(k) if include_char_count else 1) \
 		.reduce(func(a, b): return a+b, 0)
-	
+
+func get_characters_for_action(action: Action):
+	return character_actions.keys().filter(func(k): return character_actions[k] == action)
+
+func get_character_level(c: String):
+	var ex = character_exp[c] if c in character_exp else 0
+	return floor(sqrt(ex))
+
+
 ####################
 ###### Fight #######
 ####################
@@ -108,11 +114,28 @@ func start_fight():
 	enemy_health = get_enemy_health(map)
 	is_fighting = true
 
+func fight_won():
+	for c in get_characters_for_action(Action.FIGHT_TEAM):
+		if c not in character_exp:
+			character_exp[c] = 0
+		character_exp[c] += get_enemy_strength(map)
+	self.map += 1
+	print("Experience: %s" % character_exp)
+
 func has_team_member() -> bool:
 	return count_characters_doing(Action.FIGHT_TEAM) >= 1
 
 func get_team_health() -> float:
-	return count_characters_doing(Action.FIGHT_TEAM, true)
+	var result := 0.0
+	for c in get_characters_for_action(Action.FIGHT_TEAM):
+		result += pow(get_character_count(c), get_character_level(c)) 
+	return result
+
+func get_team_strength() -> float:
+	var result := 0.0
+	for c in get_characters_for_action(Action.FIGHT_TEAM):
+		result += pow(get_character_count(c), get_character_level(c))
+	return result
 
 func get_enemy_health(lvl: float) -> float:
 	return pow(2, lvl)
@@ -152,7 +175,7 @@ func _buy_gacha():
 
 func get_price(item: Item):
 	match item:
-		Item.GACHA: return floor(log(gacha_bought) * 50 + 10)
+		Item.GACHA: return floor(pow(1.5, gacha_bought) * 20)
 		Item.MAP: return pow(5, map) + 100
 
 	return 0
