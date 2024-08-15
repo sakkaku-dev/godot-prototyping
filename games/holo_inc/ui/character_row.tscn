@@ -1,12 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://df8lccupipj38"]
+[gd_scene load_steps=4 format=3 uid="uid://df8lccupipj38"]
 
 [ext_resource type="Texture2D" uid="uid://bi1q3vf0feu3k" path="res://games/kfp/assets/Kiara.png" id="1_np2qi"]
 [ext_resource type="Script" path="res://games/holo_inc/ui/character_row.gd" id="1_yx2lk"]
+[ext_resource type="Script" path="res://games/holo_inc/ui/character_action.gd" id="3_o52cl"]
 
-[node name="CharacterRow" type="TextureButton" node_paths=PackedStringArray("label")]
-custom_minimum_size = Vector2(0, 20)
+[node name="CharacterRow" type="TextureButton" node_paths=PackedStringArray("label", "action_container")]
+custom_minimum_size = Vector2(0, 25)
+toggle_mode = true
 script = ExtResource("1_yx2lk")
 label = NodePath("CharacterRow/Label")
+action_container = NodePath("CharacterRow/ActionContainer")
 
 [node name="CharacterRow" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -24,4 +27,15 @@ stretch_mode = 5
 
 [node name="Label" type="Label" parent="CharacterRow"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "1x - Kiara"
+
+[node name="ActionContainer" type="HBoxContainer" parent="CharacterRow"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="CoinAction" type="Button" parent="CharacterRow/ActionContainer"]
+layout_mode = 2
+toggle_mode = true
+text = "Coin"
+script = ExtResource("3_o52cl")
