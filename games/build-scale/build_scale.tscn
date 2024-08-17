@@ -1,11 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://cd2n0guuyqrw8"]
+[gd_scene load_steps=15 format=3 uid="uid://cd2n0guuyqrw8"]
 
 [ext_resource type="Script" path="res://games/build-scale/build_scale.gd" id="1_uxewa"]
 [ext_resource type="Script" path="res://games/build-scale/follow_camera.gd" id="2_x1j2w"]
 [ext_resource type="Script" path="res://games/build-scale/coin_spawner.gd" id="3_tkxrd"]
 [ext_resource type="Texture2D" uid="uid://yu3c04bf2nxw" path="res://assets/Prototype Textures/PNG/Dark/texture_08.png" id="4_krc51"]
 [ext_resource type="Texture2D" uid="uid://q5dy652c8beq" path="res://assets/Prototype Textures/PNG/Dark/texture_09.png" id="5_0byot"]
-[ext_resource type="PackedScene" uid="uid://d1yijblfbpocr" path="res://games/build-scale/levels/level_1.tscn" id="7_ctmyv"]
+[ext_resource type="Script" path="res://games/build-scale/bounce_area.gd" id="6_ftjoh"]
+[ext_resource type="Texture2D" uid="uid://yswm4g63sv7k" path="res://assets/Prototype Textures/PNG/Green/texture_01.png" id="7_8so2s"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5v3d"]
 albedo_texture = ExtResource("5_0byot")
@@ -23,6 +24,12 @@ uv1_scale = Vector3(1, 8, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_arr1e"]
 albedo_texture = ExtResource("5_0byot")
 uv1_scale = Vector3(25, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g3tnj"]
+albedo_texture = ExtResource("7_8so2s")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n10p7"]
+size = Vector3(0.90625, 5.77344, 1)
 
 [sub_resource type="Theme" id="Theme_q3kkb"]
 default_font_size = 12
@@ -81,7 +88,21 @@ size = Vector3(27.2049, 1, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.70617, 3.86779, 0)
 script = ExtResource("3_tkxrd")
 
-[node name="Level1" parent="CoinFall" instance=ExtResource("7_ctmyv")]
+[node name="BounceArea" type="Area3D" parent="CoinFall"]
+transform = Transform3D(0.763368, -0.645964, 0, 0.645964, 0.763368, 0, 0, 0, 1, -9.2988, -33.7791, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("6_ftjoh")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CoinFall/BounceArea"]
+transform = Transform3D(1, -2.98023e-08, 0, 2.98023e-08, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_g3tnj")
+use_collision = true
+size = Vector3(0.587402, 5.65283, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CoinFall/BounceArea"]
+transform = Transform3D(1, -1.78814e-07, 0, 1.78814e-07, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_n10p7")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

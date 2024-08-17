@@ -10,10 +10,11 @@ height = 0.486941
 
 [node name="Coin" type="RigidBody3D"]
 collision_layer = 2
+axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 max_contacts_reported = 5
-angular_velocity = Vector3(0, 0, 0.174533)
+angular_damp = 1.0
 script = ExtResource("1_1jor6")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
@@ -39,3 +40,6 @@ collision_mask = 32768
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="ThrowDetector"]
 shape = SubResource("SphereShape3D_bikw0")
+
+[node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
+aabb = AABB(-0.80977, -0.72769, -0.512803, 1.61954, 1.45538, 1.02561)

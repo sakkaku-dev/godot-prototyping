@@ -3,12 +3,13 @@ extends RigidBody3D
 
 signal picked_up()
 signal deadend_reached()
+signal left_screen()
 
 @export var scale_speed := 2
 @export var max_radius := 1.5
 @export var min_radius := 0.2
 @export var max_mass := 2
-@export var min_mass := 0.5
+@export var min_mass := 1
 
 @export var max_jump_force := 8
 @export var min_jump_force := 5
@@ -18,6 +19,7 @@ signal deadend_reached()
 @onready var pickup_area: Area3D = $PickupArea
 @onready var pickup_collision: CollisionShape3D = $PickupArea/CollisionShape3D
 @onready var throw_detector: Area3D = $ThrowDetector
+@onready var visible_on_screen_notifier_3d: VisibleOnScreenNotifier3D = $VisibleOnScreenNotifier3D
 
 var pos: Vector3
 var deadend := false
@@ -32,6 +34,8 @@ func _ready() -> void:
 		_picked_up(item.item)
 		item.queue_free()
 	)
+	
+	visible_on_screen_notifier_3d.screen_exited.connect(func(): left_screen.emit())
 
 func _picked_up(item: ItemResource.Type):
 	picked_up.emit(item)
@@ -65,12 +69,13 @@ func set_radius(radius: float):
 	pickup_shape.radius = r
 	
 	csg_cylinder_3d.radius = r
-	#mass = remap(r, min_radius, max_radius, min_mass, max_mass)
+	mass = remap(r, min_radius, max_radius, min_mass, max_mass)
 
 func _integrate_forces(state: PhysicsDirectBodyState3D):
 	if state.get_contact_count() >= 1:
 		can_jump = false
 		can_scale = true
+		linear_damp = 0
 		
 		var first_n = Vector2.ZERO
 		for x in state.get_contact_count():
@@ -85,3 +90,4 @@ func _integrate_forces(state: PhysicsDirectBodyState3D):
 		
 	else:
 		can_jump = false
+		linear_damp = 1

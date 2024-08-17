@@ -61,11 +61,8 @@ func spawn_new_coin():
 	return spawn.spawn()
 
 func setup_target():
-	follow_target.deadend_reached.connect(func():
-		follow_target.queue_free()
-		follow_target = spawn_new_coin()
-		setup_target()
-	)
+	follow_target.deadend_reached.connect(func(): _reset_coin())
+	follow_target.left_screen.connect(func(): _reset_coin())
 	follow_target.picked_up.connect(func(item):
 		match item:
 			ItemResource.Type.Health:
@@ -75,6 +72,12 @@ func setup_target():
 			ItemResource.Type.Coin:
 				coins += 1
 	)
+
+func _reset_coin():
+	if is_instance_valid(follow_target):
+		follow_target.queue_free()
+	follow_target = spawn_new_coin()
+	setup_target()
 
 func _process(delta: float) -> void:
 	if is_instance_valid(follow_target) and is_inside_tree():
