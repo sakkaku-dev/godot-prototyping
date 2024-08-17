@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=3 uid="uid://0i16wdk1peha"]
+
+[ext_resource type="Script" path="res://games/build-scale/enemy.gd" id="1_ano6k"]
+[ext_resource type="Script" path="res://move/NavigationMove2D.gd" id="1_weswv"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="3_fl8fd"]
+[ext_resource type="Texture2D" uid="uid://dcifso0y8sxvg" path="res://assets/Pixel Platformer/Tiles/Characters/tile_0015.png" id="4_ugowg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0qw1r"]
+radius = 10.0499
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_ano6k")
+
+[node name="NavigationMove2D" type="NavigationAgent2D" parent="." node_paths=PackedStringArray("enemy")]
+script = ExtResource("1_weswv")
+speed = 50
+enemy = NodePath("..")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_fl8fd")
+max_health = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_0qw1r")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
+texture = ExtResource("4_ugowg")

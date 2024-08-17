@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=3 uid="uid://tkymh13ecf31"]
+
+[ext_resource type="Script" path="res://games/build-scale/coin_throw.gd" id="1_w560s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qh3xe"]
+
+[node name="CoinThrow" type="Area3D"]
+collision_layer = 32768
+collision_mask = 2
+script = ExtResource("1_w560s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512685, 0)
+shape = SubResource("BoxShape3D_qh3xe")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+use_collision = true
+size = Vector3(1, 0.270508, 1)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.658662, 0.710612, 0)
+use_collision = true
+size = Vector3(0.288574, 1.70984, 1)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.658007, 0.710612, 0)
+use_collision = true
+size = Vector3(0.288574, 1.70984, 1)

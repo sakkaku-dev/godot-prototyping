@@ -1,0 +1,43 @@
+[gd_scene load_steps=8 format=3 uid="uid://cayxifu6jbn0w"]
+
+[ext_resource type="Script" path="res://games/build-scale/boomerang.gd" id="1_kh5gs"]
+[ext_resource type="Texture2D" uid="uid://ctdps03u43t46" path="res://assets/Pixel Platformer/Tiles/tile_0151.png" id="1_vvntl"]
+[ext_resource type="Script" path="res://combat/Hurtbox.gd" id="3_n1mpw"]
+[ext_resource type="Script" path="res://combat/HitBox.gd" id="4_6cdpp"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0iwip"]
+radius = 6.08276
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ncsmf"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bb3kk"]
+radius = 6.0
+
+[node name="Boomerang" type="CharacterBody2D" node_paths=PackedStringArray("hurtbox", "hit_box")]
+collision_layer = 0
+script = ExtResource("1_kh5gs")
+hurtbox = NodePath("Hurtbox")
+hit_box = NodePath("HitBox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_0iwip")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = ExtResource("1_vvntl")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 32768
+collision_mask = 0
+script = ExtResource("3_n1mpw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_ncsmf")
+
+[node name="HitBox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16388
+script = ExtResource("4_6cdpp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_bb3kk")

@@ -28,8 +28,6 @@ config/icon="res://icon.svg"
 
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 DeepwaterGame="*res://games/rogue-fishing/deepwater_game.tscn"
-KfpManager="*res://games/kfp/kfp_manager.gd"
-KfpUpgradeManager="*res://games/kfp/KfpUpgradeManager.gd"
 HoloIncData="*res://games/holo_inc/holo_inc_data.gd"
 
 [display]
@@ -51,6 +49,7 @@ enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg", "res://addon
 
 map=""
 droppable=""
+player=""
 
 [gui]
 

@@ -11,7 +11,7 @@ func _ready():
 	area_entered.connect(func(a):
 		if exclude == a:
 			return
-		a.damage(damage, type)
+		a.damage(damage, global_position)
 	)
 	
 	if timer:
