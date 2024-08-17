@@ -1,3 +1,4 @@
+class_name CoinSpawner
 extends Marker3D
 
 const COIN = preload("res://games/build-scale/coin.tscn")

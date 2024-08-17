@@ -1,8 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://tkymh13ecf31"]
+[gd_scene load_steps=10 format=3 uid="uid://tkymh13ecf31"]
 
 [ext_resource type="Script" path="res://games/build-scale/coin_throw.gd" id="1_w560s"]
+[ext_resource type="Texture2D" uid="uid://bl4kvkhqj0t76" path="res://assets/Prototype Textures/PNG/Orange/texture_03.png" id="2_8jx0e"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qh3xe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4dnu"]
+albedo_texture = ExtResource("2_8jx0e")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rbo0u"]
+viewport_path = NodePath("Sprite3D/SubViewport")
+
+[sub_resource type="ImageTexture" id="ImageTexture_6f7r3"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_ob8gs"]
+
+[sub_resource type="ImageTexture" id="ImageTexture_mgj2j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2oisq"]
+content_margin_left = 20.0
+content_margin_top = 20.0
+content_margin_right = 20.0
+content_margin_bottom = 20.0
+bg_color = Color(0.88, 0.3916, 0.2288, 1)
 
 [node name="CoinThrow" type="Area3D"]
 collision_layer = 32768
@@ -10,19 +30,26 @@ collision_mask = 2
 script = ExtResource("1_w560s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.512685, 0)
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.256343, 0.256343, 0)
 shape = SubResource("BoxShape3D_qh3xe")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0.256343, 0.256343, 0)
+material_override = SubResource("StandardMaterial3D_t4dnu")
 use_collision = true
-size = Vector3(1, 0.270508, 1)
+size = Vector3(1, 0.270508, 0.588135)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.658662, 0.710612, 0)
-use_collision = true
-size = Vector3(0.288574, 1.70984, 1)
+[node name="Sprite3D" type="Sprite3D" parent="."]
+visible = false
+texture = SubResource("ViewportTexture_rbo0u")
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.658007, 0.710612, 0)
-use_collision = true
-size = Vector3(0.288574, 1.70984, 1)
+[node name="SubViewport" type="SubViewport" parent="Sprite3D"]
+transparent_bg = true
+
+[node name="HSlider" type="HSlider" parent="Sprite3D/SubViewport"]
+offset_right = 8.0
+offset_bottom = 16.0
+theme_override_icons/grabber = SubResource("ImageTexture_6f7r3")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_ob8gs")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_mgj2j")
+theme_override_styles/slider = SubResource("StyleBoxFlat_2oisq")

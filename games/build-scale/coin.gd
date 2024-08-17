@@ -10,7 +10,7 @@ signal deadend_reached()
 @export var max_mass := 2
 @export var min_mass := 0.5
 
-@export var max_jump_force := 10
+@export var max_jump_force := 8
 @export var min_jump_force := 5
 
 @onready var csg_cylinder_3d: CSGCylinder3D = $CSGCylinder3D
@@ -22,13 +22,14 @@ signal deadend_reached()
 var pos: Vector3
 var deadend := false
 var can_jump := false
+var can_scale := true
 
 var skills: Array[ItemResource.Type] = []
 
 func _ready() -> void:
 	global_position = pos
 	pickup_area.pickup.connect(func(item):
-		_picked_up(item.item.type)
+		_picked_up(item.item)
 		item.queue_free()
 	)
 
@@ -69,8 +70,18 @@ func set_radius(radius: float):
 func _integrate_forces(state: PhysicsDirectBodyState3D):
 	if state.get_contact_count() >= 1:
 		can_jump = false
+		can_scale = true
+		
+		var first_n = Vector2.ZERO
 		for x in state.get_contact_count():
-			if state.get_contact_local_normal(x).dot(Vector3.UP) > 0.5:
+			var n = state.get_contact_local_normal(x)
+			if not first_n:
+				first_n = n
+			if n.dot(Vector3.UP) > 0.5:
 				can_jump = true
+			
+			if first_n and n and n.dot(first_n) < 0:
+				can_scale = false
+		
 	else:
 		can_jump = false
