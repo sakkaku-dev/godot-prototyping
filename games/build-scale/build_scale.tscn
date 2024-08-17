@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://cd2n0guuyqrw8"]
+[gd_scene load_steps=16 format=3 uid="uid://cd2n0guuyqrw8"]
 
 [ext_resource type="Script" path="res://games/build-scale/build_scale.gd" id="1_uxewa"]
 [ext_resource type="Script" path="res://games/build-scale/follow_camera.gd" id="2_x1j2w"]
 [ext_resource type="Script" path="res://games/build-scale/coin_spawner.gd" id="3_tkxrd"]
+[ext_resource type="Script" path="res://games/build-scale/follow_after.gd" id="3_vuw37"]
 [ext_resource type="Texture2D" uid="uid://yu3c04bf2nxw" path="res://assets/Prototype Textures/PNG/Dark/texture_08.png" id="4_krc51"]
 [ext_resource type="Texture2D" uid="uid://q5dy652c8beq" path="res://assets/Prototype Textures/PNG/Dark/texture_09.png" id="5_0byot"]
 [ext_resource type="Script" path="res://games/build-scale/bounce_area.gd" id="6_ftjoh"]
@@ -51,35 +52,45 @@ coin_label = NodePath("../../CanvasLayer/Control/MarginContainer/VBoxContainer/H
 offset_y = -4
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="CoinFall"]
-transform = Transform3D(1, 0, 0, 0, 0.498125, 0.867106, 0, -0.867106, 0.498125, 19.4362, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.498125, 0.867105, 0, -0.867105, 0.498125, 19.4362, 0, 0)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CoinFall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -12.6, -93.958, 0)
+[node name="Walls" type="Node3D" parent="CoinFall"]
+transform = Transform3D(1, 0, 0, 0, 0.498125, 0.867105, 0, -0.867105, 0.498125, 19.4362, 0, 0)
+script = ExtResource("3_vuw37")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CoinFall/Walls"]
+transform = Transform3D(1, 0, 0, 0, 0.498125, -0.867105, 0, 0.867105, 0.498125, -32.0362, -681.158, -1185.72)
 material_override = SubResource("StandardMaterial3D_j5v3d")
 use_collision = true
-size = Vector3(2, 200, 1)
+size = Vector3(2, 2746.97, 1)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="CoinFall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6, -93.958, 0)
+[node name="CSGBox3D2" type="CSGBox3D" parent="CoinFall/Walls"]
+transform = Transform3D(1, 0, 0, 0, 0.498125, -0.867105, 0, 0.867105, 0.498125, -6.8362, -686.622, -1195.23)
 material_override = SubResource("StandardMaterial3D_6bxof")
 use_collision = true
-size = Vector3(2, 200, 1)
+size = Vector3(2, 2768.91, 1)
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="CoinFall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.062, -93.9577, -1)
+[node name="CSGBox3D4" type="CSGBox3D" parent="CoinFall/Walls"]
+transform = Transform3D(1, 0, 0, 0, 0.498125, -0.867105, 0, 0.867105, 0.498125, -19.4982, -692.058, -1206.7)
 material_override = SubResource("StandardMaterial3D_0n4v8")
 use_collision = true
-size = Vector3(25, 200, 1)
+size = Vector3(25, 2794.22, 1)
 
-[node name="CSGBox3D6" type="CSGBox3D" parent="CoinFall"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.062, -93.9577, 1)
+[node name="CSGBox3D6" type="CSGBox3D" parent="CoinFall/Walls"]
+transform = Transform3D(1, 0, 0, 0, 0.498125, -0.867105, 0, 0.867105, 0.498125, -19.4982, -682.152, -1185.44)
 visible = false
 material_override = SubResource("StandardMaterial3D_0n4v8")
 use_collision = true
-size = Vector3(25, 200, 1)
+size = Vector3(25, 2747.48, 1)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="CoinFall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.022995, 6.50094, 0)
+material_override = SubResource("StandardMaterial3D_arr1e")
+use_collision = true
+size = Vector3(27.2049, 1, 1)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="CoinFall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.023, -2500, 0)
 material_override = SubResource("StandardMaterial3D_arr1e")
 use_collision = true
 size = Vector3(27.2049, 1, 1)
