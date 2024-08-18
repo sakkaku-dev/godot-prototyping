@@ -34,7 +34,7 @@ SceneManager="*res://addons/scene_manager/SceneManager.tscn"
 [display]
 
 window/size/viewport_width=540
-window/size/viewport_height=960
+window/size/viewport_height=540
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 

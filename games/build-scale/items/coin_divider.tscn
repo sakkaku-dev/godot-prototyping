@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://csum4l0f63bdc"]
+
+[ext_resource type="PackedScene" uid="uid://cffhrb38m65mx" path="res://games/build-scale/items/coin_object.tscn" id="1_ewmhn"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_lvaml"]
+viewport_path = NodePath("SubViewport")
+
+[node name="CoinDivider" instance=ExtResource("1_ewmhn")]
+type = 5
+
+[node name="Sprite3D" parent="." index="2"]
+texture = SubResource("ViewportTexture_lvaml")
+
+[editable path="Sprite3D"]

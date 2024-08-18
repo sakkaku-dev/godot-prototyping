@@ -5,4 +5,7 @@ enum Type {
 	Coin,
 	CoinHole,
 	CoinDouble,
+	EndCoinAdd,
+	EndCoinDouble,
+	EndCoinDivider,
 }

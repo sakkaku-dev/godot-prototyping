@@ -15,12 +15,12 @@
 	"nodes":[
 		{
 			"mesh":0,
-			"name":"LevelBreak"
+			"name":"LevelEnd"
 		}
 	],
 	"meshes":[
 		{
-			"name":"Cube",
+			"name":"Cube.002",
 			"primitives":[
 				{
 					"attributes":{
@@ -37,68 +37,68 @@
 		{
 			"bufferView":0,
 			"componentType":5126,
-			"count":384,
+			"count":96,
 			"max":[
-				12.057960510253906,
-				13.720954895019531,
-				0.7707458138465881
+				8.225425720214844,
+				1.6545770168304443,
+				0.9999994039535522
 			],
 			"min":[
-				-12.108169555664062,
-				-25.096208572387695,
-				-0.7712417840957642
+				-6.935255527496338,
+				-11.575783729553223,
+				-1.0000015497207642
 			],
 			"type":"VEC3"
 		},
 		{
 			"bufferView":1,
 			"componentType":5126,
-			"count":384,
+			"count":96,
 			"type":"VEC3"
 		},
 		{
 			"bufferView":2,
 			"componentType":5126,
-			"count":384,
+			"count":96,
 			"type":"VEC2"
 		},
 		{
 			"bufferView":3,
 			"componentType":5123,
-			"count":576,
+			"count":144,
 			"type":"SCALAR"
 		}
 	],
 	"bufferViews":[
 		{
 			"buffer":0,
-			"byteLength":4608,
+			"byteLength":1152,
 			"byteOffset":0,
 			"target":34962
 		},
 		{
 			"buffer":0,
-			"byteLength":4608,
-			"byteOffset":4608,
-			"target":34962
-		},
-		{
-			"buffer":0,
-			"byteLength":3072,
-			"byteOffset":9216,
-			"target":34962
-		},
-		{
-			"buffer":0,
 			"byteLength":1152,
-			"byteOffset":12288,
+			"byteOffset":1152,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":768,
+			"byteOffset":2304,
+			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":288,
+			"byteOffset":3072,
 			"target":34963
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":13440,
-			"uri":"level_break.bin"
+			"byteLength":3360,
+			"uri":"level_endgltf.bin"
 		}
 	]
 }

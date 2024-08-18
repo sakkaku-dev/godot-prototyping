@@ -25,6 +25,7 @@ signal left_screen()
 @onready var multiplier_pickup: AudioStreamPlayer = $MultiplierPickup
 @onready var impact_sound: AudioStreamPlayer = $ImpactSound
 @onready var break_sound: AudioStreamPlayer = $BreakSound
+@onready var down: AudioStreamPlayer = $Down
 
 var pos: Vector3
 var deadend := false
@@ -32,6 +33,7 @@ var can_jump := false
 var can_scale := true
 var coins := 0
 var multiplier := 1
+var divider := 0
 
 var had_contact := false
 
@@ -47,17 +49,25 @@ func _ready() -> void:
 func _picked_up(item: ItemObject):
 	match item.type:
 		ItemResource.Type.Coin:
-			coins += 1
+			coins += 10
 			coin_pickup.play()
 			item.queue_free()
 		ItemResource.Type.CoinDouble:
 			multiplier += 1
 			multiplier_pickup.play()
 			item.queue_free()
+		ItemResource.Type.EndCoinAdd:
+			coins += 100
+			coin_pickup.play()
+			item.queue_free()
+		ItemResource.Type.EndCoinDouble:
+			multiplier += 5
+			multiplier_pickup.play()
+			item.queue_free()
 		ItemResource.Type.CoinHole:
-			died.emit()
-			hide()
-			get_tree().paused = true
+			divider += 1
+			down.play()
+			item.queue_free()
 
 func get_total_coins():
 	return coins * multiplier
