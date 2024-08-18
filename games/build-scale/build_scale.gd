@@ -8,8 +8,8 @@ func _ready() -> void:
 	InputMapper.override_key_inputs({
 		"move_left": [KEY_A],
 		"move_right": [KEY_D],
-		"move_up": [KEY_W],
-		"move_down": [KEY_S],
+		"move_up": [KEY_W, KEY_UP],
+		"move_down": [KEY_S, KEY_DOWN],
 		"attack": [MOUSE_BUTTON_LEFT],
 		"jump": [KEY_SPACE]
 	})

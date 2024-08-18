@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://tkymh13ecf31"]
+[gd_scene load_steps=12 format=3 uid="uid://tkymh13ecf31"]
 
 [ext_resource type="Script" path="res://games/build-scale/coin_throw.gd" id="1_w560s"]
 [ext_resource type="Texture2D" uid="uid://bl4kvkhqj0t76" path="res://assets/Prototype Textures/PNG/Orange/texture_03.png" id="2_8jx0e"]
+[ext_resource type="AudioStream" uid="uid://b1uik1hav38lh" path="res://games/build-scale/sound/ボヨン.mp3" id="3_xsp3d"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qh3xe"]
 
@@ -11,18 +12,25 @@ albedo_texture = ExtResource("2_8jx0e")
 [sub_resource type="ViewportTexture" id="ViewportTexture_rbo0u"]
 viewport_path = NodePath("Sprite3D/SubViewport")
 
-[sub_resource type="ImageTexture" id="ImageTexture_6f7r3"]
+[sub_resource type="ImageTexture" id="ImageTexture_f8y85"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_ob8gs"]
+[sub_resource type="ImageTexture" id="ImageTexture_ivmtn"]
 
-[sub_resource type="ImageTexture" id="ImageTexture_mgj2j"]
+[sub_resource type="ImageTexture" id="ImageTexture_0al08"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2oisq"]
-content_margin_left = 20.0
-content_margin_top = 20.0
-content_margin_right = 20.0
-content_margin_bottom = 20.0
-bg_color = Color(0.88, 0.3916, 0.2288, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_njryn"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijsgy"]
+content_margin_left = 3.0
+content_margin_top = 3.0
+content_margin_right = 3.0
+content_margin_bottom = 3.0
+bg_color = Color(0.87, 0.38309, 0.2349, 1)
 
 [node name="CoinThrow" type="Area3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
@@ -46,11 +54,21 @@ texture = SubResource("ViewportTexture_rbo0u")
 
 [node name="SubViewport" type="SubViewport" parent="Sprite3D"]
 transparent_bg = true
+size = Vector2i(128, 256)
 
-[node name="HSlider" type="HSlider" parent="Sprite3D/SubViewport"]
-offset_right = 8.0
-offset_bottom = 16.0
-theme_override_icons/grabber = SubResource("ImageTexture_6f7r3")
-theme_override_icons/grabber_highlight = SubResource("ImageTexture_ob8gs")
-theme_override_icons/grabber_disabled = SubResource("ImageTexture_mgj2j")
-theme_override_styles/slider = SubResource("StyleBoxFlat_2oisq")
+[node name="HSlider2" type="VSlider" parent="Sprite3D/SubViewport"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_icons/grabber = SubResource("ImageTexture_f8y85")
+theme_override_icons/grabber_highlight = SubResource("ImageTexture_ivmtn")
+theme_override_icons/grabber_disabled = SubResource("ImageTexture_0al08")
+theme_override_styles/slider = SubResource("StyleBoxFlat_njryn")
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_ijsgy")
+value = 24.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_xsp3d")
+volume_db = -10.0

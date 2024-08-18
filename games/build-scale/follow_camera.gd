@@ -9,8 +9,13 @@ const LEVELS = [
 @export var coin_spawner: CoinSpawner
 @export var goal: Area3D
 @export var gameover: Gameover
-
 @export var offset_y := -3
+
+@onready var gameover_sound: AudioStreamPlayer = $GameoverSound
+@onready var hurt: AudioStreamPlayer = $Hurt
+@onready var start: AudioStreamPlayer = $Start
+@onready var bgm: AudioStreamPlayer = $BGM
+@onready var win: AudioStreamPlayer = $Win
 
 var coins := 0:
 	set(v):
@@ -25,47 +30,27 @@ var level_flip = {}
 func _ready() -> void:
 	self.coins = 0
 	
-	goal.body_entered.connect(func():
+	goal.body_entered.connect(func(a):
 		gameover.show_coins(follow_target)
+		bgm.stop()
+		win.play()
 	)
 	
-	#_init_level()
 	follow_target = spawn_new_coin()
 	setup_target()
-
-#func _init_level():
-	#_spawn_level(Vector3.ZERO, FIRST)
-#
-#func _random_level():
-	#var lvls = LEVELS.duplicate().filter(func(r): return r.resource_path != previous)
-	#return lvls.pick_random()
-#
-#func _spawn_level(pos = Vector3.ZERO, scene: PackedScene = _random_level()):
-	#last_spawned = pos
-	#
-	#var level_id = scene.resource_path
-	#if not level_id in level_flip:
-		#level_flip[level_id] = false
-	#else:
-		#level_flip[level_id] = not level_flip[level_id]
-	#previous = level_id
-	#
-	#var lvl = scene.instantiate() as CoinLevel
-	#lvl.pos = pos
-	#lvl.flipped = level_flip[level_id]
-	#lvl.spawn_next.connect(func(pos):
-		#if pos.y < last_spawned.y:
-			#_spawn_level(pos)
-	#)
-	#get_tree().current_scene.call_deferred("add_child", lvl)
+	bgm.play()
 
 func spawn_new_coin():
+	start.play()
 	var spawn = coin_spawner
 	return spawn.spawn()
 
 func setup_target():
 	follow_target.died.connect(func():
+		hurt.play()
+		gameover_sound.play()
 		gameover.show_coins(follow_target, true)
+		bgm.stop()
 	)
 
 func _reset_coin():

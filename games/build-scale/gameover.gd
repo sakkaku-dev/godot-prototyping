@@ -8,9 +8,14 @@ extends Control
 
 func _ready() -> void:
 	hide()
-	button.pressed.connect(func(): get_tree().reload_current_scene())
+	button.pressed.connect(func():
+		SceneManager.reload_scene()
+		#get_tree().reload_current_scene()
+	)
 
 func show_coins(coin: Coin, died = false):
+	get_tree().paused = true
+	
 	if died:
 		coins.hide()
 		double_coins.hide()
