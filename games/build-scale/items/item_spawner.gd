@@ -1,6 +1,11 @@
 extends Node3D
 
-const COIN_ITEM = preload("res://games/build-scale/items/coin_item.tscn")
+
+const SCENES = {
+	ItemResource.Type.Coin: preload("res://games/build-scale/items/coin_object.tscn"),
+	ItemResource.Type.CoinHole: preload("res://games/build-scale/items/coin_hole.tscn"),
+	ItemResource.Type.CoinDouble: preload("res://games/build-scale/items/coin_double.tscn"),
+}
 
 @export var type := ItemResource.Type.Coin
 @export var spawn_chance := 0.0
@@ -17,7 +22,6 @@ func _available_items():
 
 func spawn_item(type = _available_items().pick_random()):
 	var item = type
-	if item:
-		var node = COIN_ITEM.instantiate()
-		node.item = item
+	if item != null:
+		var node = SCENES[type].instantiate()
 		add_child(node)

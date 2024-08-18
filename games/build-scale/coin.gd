@@ -1,7 +1,7 @@
 class_name Coin
 extends RigidBody3D
 
-signal picked_up()
+signal died()
 signal deadend_reached()
 signal left_screen()
 
@@ -25,20 +25,32 @@ var pos: Vector3
 var deadend := false
 var can_jump := false
 var can_scale := true
+var coins := 0
+var multiplier := 1
 
 var skills: Array[ItemResource.Type] = []
 
 func _ready() -> void:
 	global_position = pos
-	pickup_area.pickup.connect(func(item):
-		_picked_up(item.item)
-		item.queue_free()
-	)
+	pickup_area.pickup.connect(func(item): _picked_up(item))
 	
 	visible_on_screen_notifier_3d.screen_exited.connect(func(): left_screen.emit())
 
-func _picked_up(item: ItemResource.Type):
-	picked_up.emit(item)
+func _picked_up(item: ItemObject):
+	match item.type:
+		ItemResource.Type.Coin:
+			coins += 1
+			item.queue_free()
+		ItemResource.Type.CoinDouble:
+			multiplier += 1
+			item.queue_free()
+		ItemResource.Type.CoinHole:
+			died.emit()
+			hide()
+			get_tree().paused = true
+
+func get_total_coins():
+	return coins * multiplier
 
 func _process(delta: float) -> void:
 	if deadend: return
@@ -71,23 +83,23 @@ func set_radius(radius: float):
 	csg_cylinder_3d.radius = r
 	mass = remap(r, min_radius, max_radius, min_mass, max_mass)
 
-func _integrate_forces(state: PhysicsDirectBodyState3D):
-	if state.get_contact_count() >= 1:
-		can_jump = false
-		can_scale = true
-		linear_damp = 0
-		
-		var first_n = Vector2.ZERO
-		for x in state.get_contact_count():
-			var n = state.get_contact_local_normal(x)
-			if not first_n:
-				first_n = n
-			if n.dot(Vector3.UP) > 0.5:
-				can_jump = true
-			
-			if first_n and n and n.dot(first_n) < 0:
-				can_scale = false
-		
-	else:
-		can_jump = false
-		linear_damp = 1
+#func _integrate_forces(state: PhysicsDirectBodyState3D):
+	#if state.get_contact_count() >= 1:
+		#can_jump = false
+		#can_scale = true
+		#linear_damp = 0
+		#
+		#var firsta_n = Vector2.ZERO
+		#for x in state.get_contact_count():
+			#var n = state.get_contact_local_normal(x)
+			#if not first_n:
+				#first_n = n
+			#if n.dot(Vector3.UP) > 0.5:
+				#can_jump = true
+			#
+			#if first_n and n and n.dot(first_n) < 0:
+				#can_scale = false
+		#
+	#else:
+		#can_jump = false
+		#linear_damp = 1

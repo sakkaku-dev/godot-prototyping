@@ -25,6 +25,7 @@ content_margin_bottom = 20.0
 bg_color = Color(0.88, 0.3916, 0.2288, 1)
 
 [node name="CoinThrow" type="Area3D"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
 collision_layer = 32768
 collision_mask = 2
 script = ExtResource("1_w560s")

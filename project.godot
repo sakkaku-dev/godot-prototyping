@@ -32,8 +32,8 @@ HoloIncData="*res://games/holo_inc/holo_inc_data.gd"
 
 [display]
 
-window/size/viewport_width=480
-window/size/viewport_height=270
+window/size/viewport_width=540
+window/size/viewport_height=960
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
@@ -140,6 +140,7 @@ erase={
 
 [physics]
 
+3d/physics_engine="JoltPhysics3D"
 2d/default_gravity=20.0
 
 [rendering]

@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dep7byj7xqpis"]
+
+[ext_resource type="Texture2D" uid="uid://uoff7r046i3t" path="res://assets/Prototype Textures/PNG/Purple/texture_03.png" id="1_ad5w5"]
+[ext_resource type="Script" path="res://games/build-scale/items/pickup_item.gd" id="2_wh3is"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_j80dg"]
+height = 0.383552
+radius = 0.361379
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gtoqp"]
+albedo_texture = ExtResource("1_ad5w5")
+
+[node name="PickupItem" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("2_wh3is")
+type = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_j80dg")
+
+[node name="CoinDouble" type="Node3D" parent="."]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CoinDouble"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_gtoqp")
+radius = 0.330176
+height = 0.186398
+sides = 16

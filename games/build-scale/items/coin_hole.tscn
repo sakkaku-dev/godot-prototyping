@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://d2fyvftd8eb4w"]
+
+[ext_resource type="Script" path="res://games/build-scale/items/pickup_item.gd" id="1_t4sld"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_kr3t6"]
+height = 0.383552
+radius = 0.460182
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_it7b6"]
+albedo_color = Color(0, 0, 0, 1)
+
+[node name="PickupItem" type="Area3D"]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("1_t4sld")
+type = 1
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_kr3t6")
+
+[node name="CoinHole" type="Node3D" parent="."]
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="CoinHole"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_it7b6")
+height = 0.215245
+sides = 16

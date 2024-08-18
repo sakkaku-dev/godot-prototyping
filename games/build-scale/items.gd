@@ -1,7 +1,10 @@
 extends Node3D
 
-@export var min_items := 1
+@export var items: Array[ItemResource.Type] = []
 
 func _ready() -> void:
 	var spawner = get_children()
-	spawner.pick_random().spawn_item()
+	for item in items:
+		var child = spawner.pick_random()
+		spawner.erase(child)
+		child.spawn_item(item)

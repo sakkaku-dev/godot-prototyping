@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmen610bxrnvc"]
+
+[ext_resource type="Script" path="res://games/build-scale/bounce_area.gd" id="1_23ann"]
+[ext_resource type="Texture2D" uid="uid://yswm4g63sv7k" path="res://assets/Prototype Textures/PNG/Green/texture_01.png" id="2_fpyu5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g3tnj"]
+albedo_texture = ExtResource("2_fpyu5")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n10p7"]
+size = Vector3(0.90625, 5.77344, 1)
+
+[node name="BounceArea" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_23ann")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_g3tnj")
+use_collision = true
+size = Vector3(0.587402, 5.65283, 0.868896)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, -1.78814e-07, 0, 1.78814e-07, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_n10p7")

@@ -3,6 +3,8 @@ extends Node2D
 @onready var camera_3d: Camera3D = $CoinFall/Camera3D
 
 func _ready() -> void:
+	get_tree().paused = false
+	
 	InputMapper.override_key_inputs({
 		"move_left": [KEY_A],
 		"move_right": [KEY_D],

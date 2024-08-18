@@ -14,6 +14,7 @@ axis_lock_linear_z = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 max_contacts_reported = 5
+linear_damp = 0.5
 angular_damp = 1.0
 script = ExtResource("1_1jor6")
 

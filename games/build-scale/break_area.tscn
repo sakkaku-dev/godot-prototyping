@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://bxhpaduj20blk"]
+
+[ext_resource type="Script" path="res://games/build-scale/break_area.gd" id="1_45o7e"]
+[ext_resource type="Texture2D" uid="uid://bk1f5f376j8xg" path="res://assets/Prototype Textures/PNG/Red/texture_03.png" id="2_biaov"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fvl7y"]
+albedo_texture = ExtResource("2_biaov")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n10p7"]
+size = Vector3(0.90625, 7.68372, 1)
+
+[node name="BreakArea" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_45o7e")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0, 1, 0, 0.964233, 0)
+material_override = SubResource("StandardMaterial3D_fvl7y")
+use_collision = true
+size = Vector3(0.445068, 7.5813, 1.87329)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, -1.78814e-07, 0, 1.78814e-07, 1, 0, 0, 0, 1, 0, 0.955139, 0)
+shape = SubResource("BoxShape3D_n10p7")

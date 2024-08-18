@@ -2,13 +2,7 @@ class_name ItemResource
 extends Resource
 
 enum Type {
-	Health,
 	Coin,
-	
-	# SkillSpikes,
-	# SkillGravity,
-	# SkillJump,
+	CoinHole,
+	CoinDouble,
 }
-
-@export var texture: Texture2D
-@export var type: Type

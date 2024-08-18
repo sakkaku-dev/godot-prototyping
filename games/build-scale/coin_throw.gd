@@ -1,7 +1,7 @@
 extends Area3D
 
-@export var max_force := 10
-@export var force_increase := 30
+@export var max_force := 25
+@export var force_increase := 50
 
 var pressed := false
 var force := 0.0:
