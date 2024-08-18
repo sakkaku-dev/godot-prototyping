@@ -1,7 +1,10 @@
 extends Node2D
 
+@onready var button: Button = $CanvasLayer/Control/CenterContainer/HBoxContainer/Button
+
 func _ready() -> void:
 	get_tree().paused = false
+	button.grab_focus()
 	
 	InputMapper.override_key_inputs({
 		"move_left": [KEY_A],

@@ -6,6 +6,7 @@ extends Area3D
 @export var min_volume := -25
 @export var max_volume := -10
 @onready var audio_stream_player: AudioStreamPlayer = $AudioStreamPlayer
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 var pressed := false
 var force := 0.0:
@@ -19,10 +20,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		for b in get_overlapping_bodies():
 			if b is Coin:
 				var dir = Vector3.LEFT.rotated(Vector3.FORWARD, global_rotation.z)
-				print(dir)
 				b.apply_central_impulse(dir * force)
 				audio_stream_player.volume_db = remap(force, 0, max_force, min_volume, max_volume)
-				audio_stream_player.play()
+				animation_player.play("push")
 				break
 		pressed = false
 		force = 0.0

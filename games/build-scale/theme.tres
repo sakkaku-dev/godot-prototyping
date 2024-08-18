@@ -7,6 +7,9 @@
 [resource]
 default_font = ExtResource("1_lrfhy")
 default_font_size = 16
+Button/colors/font_color = Color(0.737193, 0.737193, 0.737193, 1)
+Button/colors/font_focus_color = Color(1, 1, 1, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
 Button/styles/disabled = ExtResource("1_1gnkr")
 Button/styles/focus = ExtResource("2_0l1oa")
 Button/styles/hover = ExtResource("2_0l1oa")

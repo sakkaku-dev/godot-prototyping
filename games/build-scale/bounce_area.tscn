@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dmen610bxrnvc"]
+[gd_scene load_steps=9 format=3 uid="uid://dmen610bxrnvc"]
 
 [ext_resource type="Script" path="res://games/build-scale/bounce_area.gd" id="1_23ann"]
 [ext_resource type="Texture2D" uid="uid://yswm4g63sv7k" path="res://assets/Prototype Textures/PNG/Green/texture_01.png" id="2_fpyu5"]
@@ -9,6 +9,67 @@ albedo_texture = ExtResource("2_fpyu5")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n10p7"]
 size = Vector3(0.90625, 5.77344, 1)
+
+[sub_resource type="Animation" id="Animation_gv558"]
+resource_name = "bounce"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D5:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.3, 1.07, 1), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_lwjpi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D5:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AudioStreamPlayer:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rvuq2"]
+_data = {
+"RESET": SubResource("Animation_lwjpi"),
+"bounce": SubResource("Animation_gv558")
+}
 
 [node name="BounceArea" type="Area3D"]
 collision_layer = 0
@@ -27,3 +88,8 @@ shape = SubResource("BoxShape3D_n10p7")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_gyfc7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_rvuq2")
+}

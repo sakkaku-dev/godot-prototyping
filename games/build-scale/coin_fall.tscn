@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://b7qtnlfmg3uq8"]
+[gd_scene load_steps=36 format=3 uid="uid://b7qtnlfmg3uq8"]
 
 [ext_resource type="Script" path="res://games/build-scale/follow_camera.gd" id="1_8af4p"]
 [ext_resource type="AudioStream" uid="uid://dgb1e5kdg0706" path="res://games/build-scale/sound/ぴょこぴょこダンス.mp3" id="2_g0run"]
@@ -27,6 +27,7 @@
 [ext_resource type="Theme" uid="uid://i7y6g0kn16ys" path="res://games/build-scale/theme.tres" id="24_crhn8"]
 [ext_resource type="StyleBox" uid="uid://dbx5yh5y0nxsx" path="res://games/build-scale/active_button.tres" id="26_uvqwd"]
 [ext_resource type="StyleBox" uid="uid://befqlspgvseqn" path="res://games/build-scale/normal_button.tres" id="27_sbekf"]
+[ext_resource type="AudioStream" uid="uid://cntsq2th24cip" path="res://games/build-scale/sound/鞘を持つ.mp3" id="28_3swv2"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5v3d"]
 albedo_texture = ExtResource("7_2yj4y")
@@ -121,7 +122,7 @@ use_collision = true
 size = Vector3(27.205, 1.5, 1)
 
 [node name="Goal" type="Area3D" parent="WallBot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.18698, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.985641, 0)
 collision_layer = 0
 collision_mask = 2
 
@@ -135,7 +136,7 @@ script = ExtResource("9_dvlq0")
 [node name="Level1" parent="." instance=ExtResource("10_ied3i")]
 
 [node name="Level02" parent="." instance=ExtResource("11_c0axm")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -26.1634, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -28.1579, 0)
 
 [node name="Level03" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -74.8756, 0)
@@ -153,7 +154,7 @@ max_force = 50
 force_increase = 80
 
 [node name="BreakArea" parent="Level03" instance=ExtResource("14_quye2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.11935, 3.71819, 0)
+transform = Transform3D(1, 0, 0, 0, 1.29, 0, 0, 0, 1, 9.11935, 4.39668, 0)
 
 [node name="BounceArea" parent="Level03" instance=ExtResource("15_2oaui")]
 transform = Transform3D(0.653117, -0.757257, 0, 0.757257, 0.653117, 0, 0, 0, 1, -0.446518, -4.4985, 0)
@@ -406,6 +407,10 @@ coins = NodePath("CenterContainer/VBoxContainer/HBoxContainer/Coins")
 double_coins = NodePath("CenterContainer/VBoxContainer/HBoxContainer/Coins/DoubleCoins")
 divide_coins = NodePath("CenterContainer/VBoxContainer/HBoxContainer/Coins/DivideCoins")
 button = NodePath("CenterContainer/VBoxContainer/Button")
+
+[node name="MoneySound" type="AudioStreamPlayer" parent="CanvasLayer/Control"]
+stream = ExtResource("28_3swv2")
+pitch_scale = 1.5
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
 layout_mode = 1

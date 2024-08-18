@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://tkymh13ecf31"]
+[gd_scene load_steps=15 format=3 uid="uid://tkymh13ecf31"]
 
 [ext_resource type="Script" path="res://games/build-scale/coin_throw.gd" id="1_w560s"]
 [ext_resource type="Texture2D" uid="uid://bl4kvkhqj0t76" path="res://assets/Prototype Textures/PNG/Orange/texture_03.png" id="2_8jx0e"]
@@ -31,6 +31,91 @@ content_margin_top = 3.0
 content_margin_right = 3.0
 content_margin_bottom = 3.0
 bg_color = Color(0.87, 0.38309, 0.2349, 1)
+
+[sub_resource type="Animation" id="Animation_c770s"]
+resource_name = "push"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D:use_collision")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGBox3D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.256343, 0.256343, 0), Vector3(-0.039, 0.256, 0), Vector3(0.256343, 0.256343, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_tcjib"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CSGBox3D:use_collision")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CSGBox3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.256343, 0.256343, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("AudioStreamPlayer:playing")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kaxmv"]
+_data = {
+"RESET": SubResource("Animation_tcjib"),
+"push": SubResource("Animation_c770s")
+}
 
 [node name="CoinThrow" type="Area3D"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
@@ -72,3 +157,8 @@ value = 24.0
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_xsp3d")
 volume_db = -10.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kaxmv")
+}

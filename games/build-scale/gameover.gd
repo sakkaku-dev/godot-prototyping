@@ -9,11 +9,15 @@ signal reached_num()
 @export var divide_coins: Label
 @export var button: Button
 
+@onready var money_sound: AudioStreamPlayer = $MoneySound
+
 var target_num := 0.0
 var current_num := 0.0:
 	set(v):
 		current_num = v
 		coins.text = "%.0f" % v
+		if not money_sound.playing:
+			money_sound.play()
 		if int(current_num) == int(target_num):
 			current_num = target_num
 			reached_num.emit()
@@ -48,6 +52,8 @@ func show_coins(coin: Coin, died = false):
 	target_num = current_num * coin.multiplier
 	if target_num != current_num:
 		await reached_num
+	else:
+		await get_tree().create_timer(0.5).timeout
 	double_coins.hide()
 	
 	divide_coins.text = "%%%s" % coin.divider
@@ -56,6 +62,8 @@ func show_coins(coin: Coin, died = false):
 	target_num = current_num / coin.divider
 	if target_num != current_num:
 		await reached_num
+	else:
+		await get_tree().create_timer(0.5).timeout
 	divide_coins.hide()
 	
 	#double_coins.text = "Multiplier: %s" % coin.multiplier

@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://chd2hpgncahop" path="res://games/build-scale/circle.png" id="3_qu8qa"]
 
 [sub_resource type="Curve" id="Curve_0fb4r"]
-_data = [Vector2(0, 0.452305), 0.0, 0.0, 0, 0, Vector2(0.996169, 0), -1.15871, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.996169, 0), -1.15871, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="CurveTexture" id="CurveTexture_oxsxd"]
