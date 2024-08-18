@@ -20,7 +20,8 @@ resources_spreadsheet_view/context_menu_on_leftclick=false
 
 [application]
 
-config/name="godot-prototype"
+config/name="coin-machine"
+run/main_scene="res://games/build-scale/build_scale.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 

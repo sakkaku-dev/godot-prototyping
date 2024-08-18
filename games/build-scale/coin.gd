@@ -1,6 +1,7 @@
 class_name Coin
 extends RigidBody3D
 
+signal picked_up()
 signal died()
 signal deadend_reached()
 signal left_screen()
@@ -21,11 +22,8 @@ signal left_screen()
 @onready var throw_detector: Area3D = $ThrowDetector
 @onready var visible_on_screen_notifier_3d: VisibleOnScreenNotifier3D = $VisibleOnScreenNotifier3D
 
-@onready var coin_pickup: AudioStreamPlayer = $CoinPickup
-@onready var multiplier_pickup: AudioStreamPlayer = $MultiplierPickup
 @onready var impact_sound: AudioStreamPlayer = $ImpactSound
 @onready var break_sound: AudioStreamPlayer = $BreakSound
-@onready var down: AudioStreamPlayer = $Down
 
 var pos: Vector3
 var deadend := false
@@ -33,7 +31,7 @@ var can_jump := false
 var can_scale := true
 var coins := 0
 var multiplier := 1
-var divider := 0
+var divider := 1
 
 var had_contact := false
 
@@ -50,24 +48,17 @@ func _picked_up(item: ItemObject):
 	match item.type:
 		ItemResource.Type.Coin:
 			coins += 10
-			coin_pickup.play()
-			item.queue_free()
 		ItemResource.Type.CoinDouble:
 			multiplier += 1
-			multiplier_pickup.play()
-			item.queue_free()
 		ItemResource.Type.EndCoinAdd:
 			coins += 100
-			coin_pickup.play()
-			item.queue_free()
 		ItemResource.Type.EndCoinDouble:
 			multiplier += 5
-			multiplier_pickup.play()
-			item.queue_free()
 		ItemResource.Type.CoinHole:
 			divider += 1
-			down.play()
-			item.queue_free()
+	
+	picked_up.emit(item.type)
+	item.queue_free()
 
 func get_total_coins():
 	return coins * multiplier

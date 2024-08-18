@@ -27,7 +27,6 @@ items = Array[int]([0, 0, 0, 0])
 [node name="ItemSpawner5" type="Node3D" parent="Coins"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.27732, -7.78664, 0)
 script = ExtResource("4_m3xrn")
-spawn_chance = 0.3
 
 [node name="Sprite3D" type="Sprite3D" parent="Coins/ItemSpawner5"]
 texture = ExtResource("5_5uy51")
@@ -35,7 +34,6 @@ texture = ExtResource("5_5uy51")
 [node name="ItemSpawner8" type="Node3D" parent="Coins"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.43439, -14.5445, 0)
 script = ExtResource("4_m3xrn")
-spawn_chance = 0.3
 
 [node name="Sprite3D" type="Sprite3D" parent="Coins/ItemSpawner8"]
 texture = ExtResource("5_5uy51")
@@ -43,7 +41,6 @@ texture = ExtResource("5_5uy51")
 [node name="ItemSpawner9" type="Node3D" parent="Coins"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.04055, -9.51783, 0)
 script = ExtResource("4_m3xrn")
-spawn_chance = 0.3
 
 [node name="Sprite3D" type="Sprite3D" parent="Coins/ItemSpawner9"]
 texture = ExtResource("5_5uy51")
@@ -51,7 +48,6 @@ texture = ExtResource("5_5uy51")
 [node name="ItemSpawner6" type="Node3D" parent="Coins"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.687279, -4.53992, 0)
 script = ExtResource("4_m3xrn")
-spawn_chance = 0.3
 
 [node name="Sprite3D" type="Sprite3D" parent="Coins/ItemSpawner6"]
 texture = ExtResource("5_5uy51")
@@ -59,7 +55,6 @@ texture = ExtResource("5_5uy51")
 [node name="ItemSpawner7" type="Node3D" parent="Coins"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.33618, -10.4911, 0)
 script = ExtResource("4_m3xrn")
-spawn_chance = 0.3
 
 [node name="Sprite3D" type="Sprite3D" parent="Coins/ItemSpawner7"]
 texture = ExtResource("5_5uy51")
@@ -67,7 +62,6 @@ texture = ExtResource("5_5uy51")
 [node name="ItemSpawner10" type="Node3D" parent="Coins"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.425302, -13.7213, 0)
 script = ExtResource("4_m3xrn")
-spawn_chance = 0.3
 
 [node name="Sprite3D" type="Sprite3D" parent="Coins/ItemSpawner10"]
 texture = ExtResource("5_5uy51")

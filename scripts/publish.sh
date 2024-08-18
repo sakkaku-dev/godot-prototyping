@@ -3,7 +3,7 @@
 # Deps:
 # butler: for itchio
 
-GAME="the-last-archiver"
+GAME="coin-machine"
 USER="kuma-gee"
 VERSION="$1"
 

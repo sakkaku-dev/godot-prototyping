@@ -10,14 +10,10 @@ const SCENES = {
 }
 
 @export var type := ItemResource.Type.Coin
-@export var spawn_chance := 0.0
 
 func _ready() -> void:
 	for c in get_children():
 		c.queue_free()
-		
-	if randf() < spawn_chance:
-		spawn_item(type)
 
 func _available_items():
 	return ItemResource.Type.values()

@@ -6,7 +6,7 @@
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_sygkp"]
 height = 0.383552
-radius = 0.350132
+radius = 0.444662
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1gbjp"]
 albedo_texture = ExtResource("1_s1nos")
@@ -28,11 +28,11 @@ shape = SubResource("CylinderShape3D_sygkp")
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="CoinObject"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_1gbjp")
-radius = 0.303595
+radius = 0.396127
 height = 0.144726
 sides = 32
 
 [node name="Sprite3D" parent="." instance=ExtResource("3_c4idm")]
-transform = Transform3D(0.27, 0, 0, 0, 0.27, 0, 0, 0, 0.27, 0, 0.551287, 0.140774)
+transform = Transform3D(0.27, 0, 0, 0, 0.27, 0, 0, 0, 0.27, 0, 0.704711, 0.140774)
 texture = SubResource("ViewportTexture_uujuf")
 text = "+10"

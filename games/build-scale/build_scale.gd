@@ -1,7 +1,5 @@
 extends Node2D
 
-@onready var camera_3d: Camera3D = $CoinFall/Camera3D
-
 func _ready() -> void:
 	get_tree().paused = false
 	
@@ -14,6 +12,5 @@ func _ready() -> void:
 		"jump": [KEY_SPACE]
 	})
 
-func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("jump"):
-		camera_3d.setup_target()
+func _on_button_pressed() -> void:
+	SceneManager.change_scene("res://games/build-scale/coin_fall.tscn")

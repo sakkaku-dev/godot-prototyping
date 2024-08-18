@@ -1,13 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://djra6gw2gnma6"]
+[gd_scene load_steps=2 format=3 uid="uid://djra6gw2gnma6"]
 
 [ext_resource type="PackedScene" uid="uid://cffhrb38m65mx" path="res://games/build-scale/items/coin_object.tscn" id="1_cxj48"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_dwynx"]
-viewport_path = NodePath("SubViewport")
 
 [node name="EndCoinAdd" instance=ExtResource("1_cxj48")]
 type = 3
 
 [node name="Sprite3D" parent="." index="2"]
-texture = SubResource("ViewportTexture_dwynx")
 text = "+100"

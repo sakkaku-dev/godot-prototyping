@@ -1,0 +1,14 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://i7y6g0kn16ys"]
+
+[ext_resource type="StyleBox" uid="uid://befqlspgvseqn" path="res://games/build-scale/normal_button.tres" id="1_1gnkr"]
+[ext_resource type="FontFile" uid="uid://dytr1wsbw65aj" path="res://games/build-scale/boombox2.ttf" id="1_lrfhy"]
+[ext_resource type="StyleBox" uid="uid://dbx5yh5y0nxsx" path="res://games/build-scale/active_button.tres" id="2_0l1oa"]
+
+[resource]
+default_font = ExtResource("1_lrfhy")
+default_font_size = 16
+Button/styles/disabled = ExtResource("1_1gnkr")
+Button/styles/focus = ExtResource("2_0l1oa")
+Button/styles/hover = ExtResource("2_0l1oa")
+Button/styles/normal = ExtResource("1_1gnkr")
+Button/styles/pressed = ExtResource("2_0l1oa")

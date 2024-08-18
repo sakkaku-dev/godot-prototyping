@@ -14,4 +14,4 @@ type = 1
 material_override = SubResource("StandardMaterial3D_82oyg")
 
 [node name="Sprite3D" parent="." index="2"]
-text = "/ 2"
+text = "%2"

@@ -1,3 +1,4 @@
+class_name CoinMachineGame
 extends Camera3D
 
 const FIRST = preload("res://games/build-scale/levels/level_1.tscn")
@@ -16,26 +17,24 @@ const LEVELS = [
 @onready var start: AudioStreamPlayer = $Start
 @onready var bgm: AudioStreamPlayer = $BGM
 @onready var win: AudioStreamPlayer = $Win
-
-var coins := 0:
-	set(v):
-		coins = v
+@onready var coin_pickup: AudioStreamPlayer = $CoinPickup
+@onready var multiplier_pickup: AudioStreamPlayer = $MultiplierPickup
+@onready var down: AudioStreamPlayer = $Down
 
 var follow_target: Coin
-var last_spawned := Vector3.ZERO
-
-var previous := ""
-var level_flip = {}
 
 func _ready() -> void:
-	self.coins = 0
-	
+	get_tree().paused = false
 	goal.body_entered.connect(func(a):
 		gameover.show_coins(follow_target)
 		bgm.stop()
 		win.play()
 	)
 	
+	start_game()
+
+func start_game():
+	await get_tree().create_timer(0.5).timeout
 	follow_target = spawn_new_coin()
 	setup_target()
 	bgm.play()
@@ -52,6 +51,19 @@ func setup_target():
 		gameover.show_coins(follow_target, true)
 		bgm.stop()
 	)
+	follow_target.picked_up.connect(func(type):
+		match type:
+			ItemResource.Type.Coin:
+				coin_pickup.play()
+			ItemResource.Type.CoinDouble:
+				multiplier_pickup.play()
+			ItemResource.Type.EndCoinAdd:
+				coin_pickup.play()
+			ItemResource.Type.EndCoinDouble:
+				multiplier_pickup.play()
+			ItemResource.Type.CoinHole:
+				down.play()
+	)
 
 func _reset_coin():
 	if is_instance_valid(follow_target):
@@ -61,4 +73,6 @@ func _reset_coin():
 
 func _process(delta: float) -> void:
 	if is_instance_valid(follow_target) and is_inside_tree():
-		global_position.y = follow_target.global_position.y + offset_y
+		var pos = follow_target.global_position.y + offset_y
+		if pos >= -140:
+			global_position.y = pos

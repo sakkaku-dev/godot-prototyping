@@ -1,12 +1,14 @@
-[gd_scene load_steps=10 format=3 uid="uid://cp2mlvyck5w8x"]
+[gd_scene load_steps=9 format=3 uid="uid://cp2mlvyck5w8x"]
 
 [ext_resource type="Script" path="res://games/build-scale/coin.gd" id="1_1jor6"]
+[ext_resource type="Texture2D" uid="uid://dger4ywsdwcly" path="res://assets/Prototype Textures/PNG/Light/texture_11.png" id="2_ercog"]
 [ext_resource type="Script" path="res://games/build-scale/pickup_area.gd" id="2_pbh1o"]
-[ext_resource type="AudioStream" uid="uid://h3ug0o55w7bj" path="res://games/build-scale/sound/coin.wav" id="4_6q8vu"]
-[ext_resource type="AudioStream" uid="uid://2wec1xocosvg" path="res://games/build-scale/sound/1up.wav" id="5_a2jyu"]
 [ext_resource type="AudioStream" uid="uid://boh6irk8v2ac1" path="res://games/build-scale/sound/グラスを置く.mp3" id="6_2wgli"]
 [ext_resource type="AudioStream" uid="uid://cvcl2dfds5d6m" path="res://games/build-scale/sound/break.wav" id="6_5opvu"]
-[ext_resource type="AudioStream" uid="uid://cdorl6gih6ja6" path="res://games/build-scale/sound/down.wav" id="7_3g22g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yx0yt"]
+albedo_color = Color(1, 1, 0, 1)
+albedo_texture = ExtResource("2_ercog")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ys2mg"]
 height = 0.486941
@@ -24,6 +26,7 @@ script = ExtResource("1_1jor6")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_yx0yt")
 height = 0.334491
 sides = 32
 
@@ -49,17 +52,8 @@ shape = SubResource("SphereShape3D_bikw0")
 [node name="VisibleOnScreenNotifier3D" type="VisibleOnScreenNotifier3D" parent="."]
 aabb = AABB(-0.80977, -0.72769, -0.512803, 1.61954, 1.45538, 1.02561)
 
-[node name="CoinPickup" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_6q8vu")
-
-[node name="MultiplierPickup" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("5_a2jyu")
-
 [node name="ImpactSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_2wgli")
 
 [node name="BreakSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("6_5opvu")
-
-[node name="Down" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("7_3g22g")
