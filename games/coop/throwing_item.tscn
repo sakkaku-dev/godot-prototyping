@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3l1sb3cu34np"]
+
+[ext_resource type="Script" path="res://games/coop/throwing_item.gd" id="1_ixvvj"]
+[ext_resource type="Script" path="res://games/storage-game/Interactable3D.gd" id="2_dwyu7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xjwlf"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5sen8"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="ThrowingItem" type="CharacterBody3D"]
+collision_layer = 0
+script = ExtResource("1_ixvvj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_xjwlf")
+
+[node name="Interactable3D" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("2_dwyu7")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactable3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0485259, 0)
+shape = SubResource("BoxShape3D_5sen8")

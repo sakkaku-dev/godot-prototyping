@@ -13,7 +13,9 @@ static func override_key_inputs(inputs: Dictionary):
 			value = [inputs[action]]
 
 		for k in value:
-			if k >= MOUSE_BUTTON_LEFT and k <= MOUSE_BUTTON_XBUTTON2:
+			if k is InputEvent:
+				InputMap.action_add_event(action, k)
+			elif k >= MOUSE_BUTTON_LEFT and k <= MOUSE_BUTTON_XBUTTON2:
 				InputMap.action_add_event(action, mouse(k))
 			else:
 				InputMap.action_add_event(action, key(k))
@@ -33,8 +35,14 @@ static func joy_btn(k: int) -> InputEventJoypadButton:
 	ev.button_index = k
 	return ev
 
-static func joy_stick(axis: int, value: int) -> InputEventJoypadMotion:
+static func joy_stick_x(value: int) -> InputEventJoypadMotion:
 	var ev = InputEventJoypadMotion.new()
-	ev.axis = axis
+	ev.axis = JOY_AXIS_LEFT_X
+	ev.axis_value = value
+	return ev
+
+static func joy_stick_y(value: int) -> InputEventJoypadMotion:
+	var ev = InputEventJoypadMotion.new()
+	ev.axis = JOY_AXIS_LEFT_Y
 	ev.axis_value = value
 	return ev

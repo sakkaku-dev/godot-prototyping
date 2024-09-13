@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bh085bw7niar2"]
+
+[ext_resource type="Script" path="res://games/coop/item_nodes.gd" id="1_3ma2w"]
+[ext_resource type="Texture2D" uid="uid://yu3c04bf2nxw" path="res://assets/Prototype Textures/PNG/Dark/texture_08.png" id="2_ygvaj"]
+[ext_resource type="Texture2D" uid="uid://dbxat128fnwet" path="res://assets/Prototype Textures/PNG/Green/texture_03.png" id="3_fjt1h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gch72"]
+albedo_texture = ExtResource("2_ygvaj")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xfdrc"]
+albedo_texture = ExtResource("3_fjt1h")
+
+[node name="ItemNodes" type="Node3D" node_paths=PackedStringArray("item_node")]
+script = ExtResource("1_3ma2w")
+item_node = NodePath("Item")
+
+[node name="Item" type="CSGBox3D" parent="."]
+transform = Transform3D(0.999996, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 0.999996, 0, 0.1, 0)
+material_override = SubResource("StandardMaterial3D_gch72")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="Cauldron" type="CSGBox3D" parent="."]
+transform = Transform3D(0.999996, 0, -1.49012e-08, 0, 1, 0, 1.49012e-08, 0, 0.999996, 0, 0.114753, 0)
+visible = false
+material_override = SubResource("StandardMaterial3D_xfdrc")
+size = Vector3(0.3, 0.5, 0.3)

@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://hne88dktobly"]
+
+[ext_resource type="Script" path="res://games/coop/trash.gd" id="1_4yguj"]
+[ext_resource type="Texture2D" uid="uid://bk1f5f376j8xg" path="res://assets/Prototype Textures/PNG/Red/texture_03.png" id="2_5r6qj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2jmb1"]
+size = Vector3(1.5, 1.5, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wmtu4"]
+albedo_texture = ExtResource("2_5r6qj")
+
+[node name="Trash" type="Area3D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_4yguj")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_2jmb1")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_wmtu4")
+use_collision = true

@@ -1,0 +1,156 @@
+[gd_scene load_steps=20 format=3 uid="uid://cw0gbib56g3he"]
+
+[ext_resource type="Script" path="res://games/storage-game/Player3D.gd" id="1_50fob"]
+[ext_resource type="PackedScene" uid="uid://b3l1sb3cu34np" path="res://games/coop/throwing_item.tscn" id="2_mk33b"]
+[ext_resource type="Shader" path="res://shaders/toon.gdshader" id="3_5enpg"]
+[ext_resource type="PackedScene" uid="uid://ctgqify6i2hce" path="res://assets/Conveyor Kit/Models/GLB format/arrow.glb" id="3_xep7n"]
+[ext_resource type="Script" path="res://games/storage-game/HoldPoint.gd" id="4_m8px3"]
+[ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="5_j70tk"]
+[ext_resource type="PackedScene" uid="uid://bh085bw7niar2" path="res://games/coop/item_nodes.tscn" id="6_h6ra8"]
+[ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="6_h83od"]
+[ext_resource type="PackedScene" uid="uid://dm63pvby76jke" path="res://assets/models/base_blob.glb" id="7_vdtoe"]
+[ext_resource type="Script" path="res://games/coop/chargeable.gd" id="8_tfhw7"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5d65d"]
+render_priority = 0
+shader = ExtResource("3_5enpg")
+shader_parameter/ToonRampOffset = 0.6
+shader_parameter/ToonRampSmoothness = 0.05
+shader_parameter/ToonRampTinting = Color(0, 0, 0, 1)
+shader_parameter/RimPower = 1.0
+shader_parameter/RimCutOff = 0.5
+shader_parameter/RimSmoothness = 0.05
+shader_parameter/RimLightBrightness = 20.0
+shader_parameter/SubSurfDistortion = 1.0
+shader_parameter/SubSurfTint = Color(0, 0, 0, 1)
+shader_parameter/SubSurfBrightness = 3.0
+shader_parameter/SubSurfCutoff = 0.5
+shader_parameter/SubSurfSmoothness = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
+size = Vector3(0.425781, 0.80249, 0.367188)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m2dxa"]
+render_priority = 0
+shader = ExtResource("3_5enpg")
+shader_parameter/ToonRampOffset = 0.5
+shader_parameter/ToonRampSmoothness = 0.05
+shader_parameter/ToonRampTinting = null
+shader_parameter/RimPower = 1.0
+shader_parameter/RimCutOff = 0.5
+shader_parameter/RimSmoothness = 0.05
+shader_parameter/RimLightBrightness = 20.0
+shader_parameter/SubSurfDistortion = 1.0
+shader_parameter/SubSurfTint = null
+shader_parameter/SubSurfBrightness = 3.0
+shader_parameter/SubSurfCutoff = 0.5
+shader_parameter/SubSurfSmoothness = 0.05
+
+[sub_resource type="Curve" id="Curve_p55jf"]
+_data = [Vector2(0, 0.12967), 0.0, 0.0476427, 0, 0, Vector2(0.680952, 0.903297), -0.477454, -0.477454, 0, 0, Vector2(1, 0.120879), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_k6q7m"]
+curve = SubResource("Curve_p55jf")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pt5vo"]
+direction = Vector3(0, 0.5, 1)
+spread = 15.0
+initial_velocity_min = 0.5
+initial_velocity_max = 0.7
+gravity = Vector3(0, 0, 0)
+damping_min = 0.5
+damping_max = 1.0
+scale_curve = SubResource("CurveTexture_k6q7m")
+
+[sub_resource type="SphereMesh" id="SphereMesh_ji7jd"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_y3gh8"]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c36do"]
+size = Vector3(0.686523, 2.03931, 0.585938)
+
+[node name="TopDownPlayer3D" type="CharacterBody3D" node_paths=PackedStringArray("animation", "throw_charge", "item_nodes")]
+collision_layer = 2
+script = ExtResource("1_50fob")
+animation = NodePath("Pivot/base_blob/AnimationPlayer")
+throw_charge = NodePath("ThrowCharge")
+item_nodes = NodePath("Pivot/HoldPoint/ItemNodes")
+throw_item = ExtResource("2_mk33b")
+throw_angle = 30.0
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="Marker3D" type="Marker3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0185907, -0.222561, -0.715104)
+
+[node name="base_blob" parent="Pivot" instance=ExtResource("7_vdtoe")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Pivot/base_blob/Armature" index="0"]
+bones/1/rotation = Quaternion(-0.125313, 1.1827e-07, -1.49384e-08, 0.992117)
+bones/2/rotation = Quaternion(0.0358865, -0.0221647, 0.965951, -0.255264)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/rotation = Quaternion(-0.00415111, 0.000108505, -0.0559867, 0.998423)
+bones/3/scale = Vector3(1, 1, 1)
+bones/4/rotation = Quaternion(0.0616858, 3.91822e-14, 1.47071e-08, 0.998096)
+bones/5/rotation = Quaternion(-0.0358869, -0.0221647, 0.965951, 0.255264)
+bones/5/scale = Vector3(1, 1, 1)
+bones/6/rotation = Quaternion(-0.00415113, -0.000108602, 0.0559867, 0.998423)
+bones/7/rotation = Quaternion(0.997804, 0.0459065, -0.00968407, 0.046756)
+bones/7/scale = Vector3(0.999991, 1, 0.999992)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(0.997804, -0.0459065, 0.00968407, 0.046756)
+bones/9/scale = Vector3(0.999991, 1, 0.999992)
+bones/10/scale = Vector3(1, 1, 1)
+
+[node name="Cube" parent="Pivot/base_blob/Armature/Skeleton3D" index="0"]
+material_override = SubResource("ShaderMaterial_5d65d")
+
+[node name="arrow2" parent="Pivot" instance=ExtResource("3_xep7n")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -0.35312, 0)
+visible = false
+
+[node name="HoldPoint" type="Node3D" parent="Pivot"]
+transform = Transform3D(0.998017, 0, 0.0629473, 0, 1, 0, -0.0629473, 0, 0.998017, 0, 1.07277, -0.418513)
+script = ExtResource("4_m8px3")
+
+[node name="ItemNodes" parent="Pivot/HoldPoint" instance=ExtResource("6_h6ra8")]
+
+[node name="Hand3D" type="Area3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365838, -0.448045)
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("5_j70tk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/Hand3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0386596, 0.179565)
+shape = SubResource("BoxShape3D_cvd3t")
+
+[node name="RunParticles" type="GPUParticles3D" parent="Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00170274, 0.0684867)
+material_override = SubResource("ShaderMaterial_m2dxa")
+amount = 16
+lifetime = 0.8
+process_material = SubResource("ParticleProcessMaterial_pt5vo")
+draw_passes = 2
+draw_pass_1 = SubResource("SphereMesh_ji7jd")
+draw_pass_2 = SubResource("SphereMesh_y3gh8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08441, 0)
+shape = SubResource("BoxShape3D_c36do")
+
+[node name="Gravity3D" type="Node" parent="."]
+script = ExtResource("6_h83od")
+
+[node name="ThrowCharge" type="Node" parent="."]
+script = ExtResource("8_tfhw7")
+max_value = 15.0
+increase = 30.0
+
+[editable path="Pivot/base_blob"]

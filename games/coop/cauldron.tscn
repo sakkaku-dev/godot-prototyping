@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3 uid="uid://m6dlgd44drfk"]
+
+[ext_resource type="Script" path="res://games/coop/cauldron.gd" id="1_5gmnb"]
+[ext_resource type="Texture2D" uid="uid://5ipmi8mbxd6m" path="res://assets/Prototype Textures/PNG/Green/texture_10.png" id="2_jb18j"]
+[ext_resource type="Script" path="res://games/coop/chargeable.gd" id="3_lwpye"]
+[ext_resource type="Shader" path="res://games/coop/test_3d.gdshader" id="4_jeadr"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="5_2odvn"]
+[ext_resource type="Script" path="res://games/coop/action_icon.gd" id="6_4jo70"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2jmb1"]
+size = Vector3(1.5, 1.5, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01ial"]
+albedo_texture = ExtResource("2_jb18j")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1vvbj"]
+render_priority = 0
+shader = ExtResource("4_jeadr")
+shader_parameter/mix_color = Color(0, 0, 0, 1)
+shader_parameter/mix_amount = 0.9
+shader_parameter/fill = 0.0
+shader_parameter/scale = 0.2
+shader_parameter/rotation_speed = 1.0
+shader_parameter/tex = ExtResource("5_2odvn")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vofb8"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Cauldron" type="Area3D" node_paths=PackedStringArray("chargeable", "icon", "ingredients", "label")]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_5gmnb")
+chargeable = NodePath("MixChargeable")
+icon = NodePath("ActionIcon")
+ingredients = NodePath("Ingredients")
+label = NodePath("SubViewport/CanvasLayer/CenterContainer/Label")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("BoxShape3D_2jmb1")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_01ial")
+use_collision = true
+
+[node name="MixChargeable" type="Node" parent="."]
+script = ExtResource("3_lwpye")
+activate_on_charged = true
+
+[node name="ActionIcon" type="Sprite3D" parent="." node_paths=PackedStringArray("chargeable")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material_override = SubResource("ShaderMaterial_1vvbj")
+cast_shadow = 0
+billboard = 1
+texture = ExtResource("5_2odvn")
+script = ExtResource("6_4jo70")
+chargeable = NodePath("../MixChargeable")
+
+[node name="Ingredients" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+billboard = 1
+texture = SubResource("ViewportTexture_vofb8")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewport"]
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewport/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="SubViewport/CanvasLayer/CenterContainer"]
+layout_mode = 2
+text = "2x"

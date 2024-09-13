@@ -12,10 +12,10 @@ var _data := {}
 func _ready():
 	add_to_group(GROUP)
 
-func _unhandled_input(event):
-	if event.is_action_pressed("debug"):
-		for c in _data:
-			print("%s - %s" % [c, _data[c]])
+#func _unhandled_input(event):
+	#if event.is_action_pressed("debug"):
+		#for c in _data:
+			#print("%s - %s" % [c, _data[c]])
 
 func get_coord(pos: Vector3):
 	var c = local_to_map(pos)

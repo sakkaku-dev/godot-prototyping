@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://nbuharppq8ih"]
+
+[ext_resource type="Texture2D" uid="uid://u0l07jqmesco" path="res://assets/Prototype Textures/PNG/Dark/texture_13.png" id="1_0hvrm"]
+[ext_resource type="Script" path="res://assets/Prototype Textures/prototype_library.gd" id="1_w2ce6"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_8pb2i"]
+load_path = "res://.godot/imported/texture_13.png-75da1257e493b821da4b286587f4b370.s3tc.ctex"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_exdw3"]
+albedo_texture = SubResource("CompressedTexture2D_8pb2i")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i28t1"]
+albedo_texture = ExtResource("1_0hvrm")
+uv1_scale = Vector3(3, 1, 1)
+
+[node name="PrototypeLibrary" type="Node3D"]
+script = ExtResource("1_w2ce6")
+
+[node name="Block" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("StandardMaterial3D_exdw3")
+use_collision = true
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+material_override = SubResource("StandardMaterial3D_exdw3")
+use_collision = true
+size = Vector3(1, 0.2, 1)
+
+[node name="Wall" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+material_override = SubResource("StandardMaterial3D_i28t1")
+size = Vector3(0.2, 3, 1)
