@@ -1,34 +1,22 @@
-[gd_scene load_steps=20 format=3 uid="uid://cw0gbib56g3he"]
+[gd_scene load_steps=21 format=3 uid="uid://cw0gbib56g3he"]
 
 [ext_resource type="Script" path="res://games/storage-game/Player3D.gd" id="1_50fob"]
 [ext_resource type="PackedScene" uid="uid://b3l1sb3cu34np" path="res://games/coop/throwing_item.tscn" id="2_mk33b"]
 [ext_resource type="Shader" path="res://shaders/toon.gdshader" id="3_5enpg"]
 [ext_resource type="PackedScene" uid="uid://ctgqify6i2hce" path="res://assets/Conveyor Kit/Models/GLB format/arrow.glb" id="3_xep7n"]
 [ext_resource type="Script" path="res://games/storage-game/HoldPoint.gd" id="4_m8px3"]
+[ext_resource type="Texture2D" uid="uid://yswm4g63sv7k" path="res://assets/Prototype Textures/PNG/Green/texture_01.png" id="4_pce6x"]
 [ext_resource type="Script" path="res://games/storage-game/Hand3D.gd" id="5_j70tk"]
 [ext_resource type="PackedScene" uid="uid://bh085bw7niar2" path="res://games/coop/item_nodes.tscn" id="6_h6ra8"]
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="6_h83od"]
 [ext_resource type="PackedScene" uid="uid://dm63pvby76jke" path="res://assets/models/base_blob.glb" id="7_vdtoe"]
 [ext_resource type="Script" path="res://games/coop/chargeable.gd" id="8_tfhw7"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5d65d"]
-render_priority = 0
-shader = ExtResource("3_5enpg")
-shader_parameter/ToonRampOffset = 0.6
-shader_parameter/ToonRampSmoothness = 0.05
-shader_parameter/ToonRampTinting = Color(0, 0, 0, 1)
-shader_parameter/RimPower = 1.0
-shader_parameter/RimCutOff = 0.5
-shader_parameter/RimSmoothness = 0.05
-shader_parameter/RimLightBrightness = 20.0
-shader_parameter/SubSurfDistortion = 1.0
-shader_parameter/SubSurfTint = Color(0, 0, 0, 1)
-shader_parameter/SubSurfBrightness = 3.0
-shader_parameter/SubSurfCutoff = 0.5
-shader_parameter/SubSurfSmoothness = 0.05
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2m7w2"]
+albedo_texture = ExtResource("4_pce6x")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_cvd3t"]
-size = Vector3(0.425781, 0.80249, 0.367188)
+size = Vector3(0.792725, 1.5791, 0.638672)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m2dxa"]
 render_priority = 0
@@ -74,7 +62,7 @@ height = 0.2
 [sub_resource type="BoxShape3D" id="BoxShape3D_c36do"]
 size = Vector3(0.686523, 2.03931, 0.585938)
 
-[node name="TopDownPlayer3D" type="CharacterBody3D" node_paths=PackedStringArray("animation", "throw_charge", "item_nodes")]
+[node name="TopDownPlayer3D" type="CharacterBody3D" node_paths=PackedStringArray("animation", "throw_charge", "item_nodes") groups=["player"]]
 collision_layer = 2
 script = ExtResource("1_50fob")
 animation = NodePath("Pivot/base_blob/AnimationPlayer")
@@ -109,7 +97,7 @@ bones/9/scale = Vector3(0.999991, 1, 0.999992)
 bones/10/scale = Vector3(1, 1, 1)
 
 [node name="Cube" parent="Pivot/base_blob/Armature/Skeleton3D" index="0"]
-material_override = SubResource("ShaderMaterial_5d65d")
+material_override = SubResource("StandardMaterial3D_2m7w2")
 
 [node name="arrow2" parent="Pivot" instance=ExtResource("3_xep7n")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, -0.35312, 0)
@@ -122,13 +110,12 @@ script = ExtResource("4_m8px3")
 [node name="ItemNodes" parent="Pivot/HoldPoint" instance=ExtResource("6_h6ra8")]
 
 [node name="Hand3D" type="Area3D" parent="Pivot"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.365838, -0.448045)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.720929, -0.525441)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("5_j70tk")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Pivot/Hand3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0386596, 0.179565)
 shape = SubResource("BoxShape3D_cvd3t")
 
 [node name="RunParticles" type="GPUParticles3D" parent="Pivot"]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctoanxjg4nxn3"]
+
+[ext_resource type="Shader" path="res://games/coop/test_3d.gdshader" id="1_ic15h"]
+[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="2_tk5s2"]
+[ext_resource type="Script" path="res://games/coop/action_icon.gd" id="3_kxln1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1vvbj"]
+render_priority = 0
+shader = ExtResource("1_ic15h")
+shader_parameter/mix_color = Color(0, 0, 0, 1)
+shader_parameter/mix_amount = 0.9
+shader_parameter/fill = 0.0
+shader_parameter/scale = 0.3
+shader_parameter/rotation_speed = 1.0
+shader_parameter/tex = ExtResource("2_tk5s2")
+
+[node name="ActionIcon" type="Sprite3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material_override = SubResource("ShaderMaterial_1vvbj")
+cast_shadow = 0
+billboard = 1
+texture = ExtResource("2_tk5s2")
+script = ExtResource("3_kxln1")

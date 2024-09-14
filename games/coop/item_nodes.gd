@@ -13,10 +13,10 @@ func show_item(item, hide_others = true):
 	get_node_for_item(item).show()
 
 func get_node_for_item(item):
+	if item is GridItem:
+		return cauldron
 	
-	
-	if item is PotionItem:
-		return item_node
+	return item_node
 
 func hide_all():
 	for c in get_children():

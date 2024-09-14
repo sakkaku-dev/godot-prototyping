@@ -9,7 +9,7 @@ albedo_texture = ExtResource("2_stfbf")
 [sub_resource type="BoxShape3D" id="BoxShape3D_2jmb1"]
 size = Vector3(1.5, 1.5, 1.5)
 
-[node name="Material" type="Area3D"]
+[node name="Material" type="Area3D" groups=["moveable"]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_mndcy")

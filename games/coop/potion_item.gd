@@ -18,6 +18,12 @@ const RECIPIES = {
 	Type.POTION_GREEN: [Type.HERB_CUTTED, Type.HERB_CUTTED, Type.FEATHER],
 }
 
+const PRICES = {
+	Type.POTION_RED: 10,
+	Type.POTION_BLUE: 20,
+	Type.POTION_GREEN: 30,
+}
+
 enum Process {
 	CUTTING,
 	DISTILL,
@@ -48,6 +54,10 @@ func _init(item: Type):
 
 func get_name():
 	return Type.keys()[type]
+
+func get_price():
+	if not type in PRICES: return 0
+	return PRICES[type]
 
 static func find_recipe(items: Array):
 	for key in RECIPIES.keys():

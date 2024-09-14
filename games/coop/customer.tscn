@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://c0bc23gx30dqg"]
+
+[ext_resource type="Script" path="res://games/coop/customer.gd" id="1_7x41g"]
+[ext_resource type="PackedScene" uid="uid://dm63pvby76jke" path="res://assets/models/base_blob.glb" id="1_s06h4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ogfih"]
+size = Vector3(0.656494, 2.07614, 0.560547)
+
+[node name="Customer" type="CharacterBody3D" groups=["customer"]]
+collision_layer = 32
+collision_mask = 33
+script = ExtResource("1_7x41g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.03798, 0.0266953)
+shape = SubResource("BoxShape3D_ogfih")
+
+[node name="Pivot" type="Node3D" parent="."]
+
+[node name="base_blob" parent="Pivot" instance=ExtResource("1_s06h4")]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+avoidance_enabled = true
+radius = 1.0
+debug_enabled = true

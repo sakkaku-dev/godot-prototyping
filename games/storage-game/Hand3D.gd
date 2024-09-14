@@ -26,7 +26,7 @@ func get_interactable() -> Interactable3D:
 
 func hold_item(i):
 	item = i
-	print("Holding item %s" % i.type)
+	print("Holding item %s" % i.get_name())
 
 func is_holding_item():
 	return item != null

@@ -1,8 +1,10 @@
 class_name Player3D
 extends CharacterBody3D
 
-@export var run_speed := 5
-@export var speed := 3
+signal accepted()
+
+@export var run_speed := 8
+@export var speed := 5
 @export var acceleration := 50
 @export var forward := Vector3.FORWARD
 
@@ -61,6 +63,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			_update_hand_items()
 		else:
 			hand_3d.action(false)
+	elif event.is_action_pressed("accept"):
+		accepted.emit()
 
 func _update_hand_items():
 	if hand_3d.is_holding_item():

@@ -39,6 +39,11 @@ func _ready():
 	)
 
 func interact(hand: Hand3D):
+	if pickupable:
+		hand.hold_item(GridItem.new(GridItem.Type.CAULDRON))
+		queue_free()
+		return
+	
 	if is_someone_else_working(hand):
 		print("Someone is already working on it")
 		return
@@ -60,6 +65,10 @@ func is_someone_else_working(hand: Hand3D):
 	return last_hand != null and last_hand != hand
 
 func action(hand: Hand3D, pressed: bool):
+	if pickupable:
+		print("In pickup mode")
+		return
+	
 	if is_someone_else_working(hand):
 		print("Someone is already working on it")
 		return

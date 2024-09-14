@@ -1,21 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://bqqnmayb2s48f"]
+[gd_scene load_steps=7 format=3 uid="uid://bqqnmayb2s48f"]
 
 [ext_resource type="Script" path="res://games/coop/prep_area_3d.gd" id="1_j28bw"]
-[ext_resource type="Shader" path="res://games/coop/test_3d.gdshader" id="2_lbxqu"]
-[ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="3_5fpcv"]
-[ext_resource type="Script" path="res://games/coop/action_icon.gd" id="4_bctlj"]
+[ext_resource type="PackedScene" uid="uid://ctoanxjg4nxn3" path="res://games/coop/action_icon.tscn" id="2_d3olx"]
 [ext_resource type="PackedScene" uid="uid://bh085bw7niar2" path="res://games/coop/item_nodes.tscn" id="5_cp404"]
 [ext_resource type="Texture2D" uid="uid://uoff7r046i3t" path="res://assets/Prototype Textures/PNG/Purple/texture_03.png" id="6_cjt6h"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1vvbj"]
-render_priority = 0
-shader = ExtResource("2_lbxqu")
-shader_parameter/mix_color = Color(0, 0, 0, 1)
-shader_parameter/mix_amount = 0.9
-shader_parameter/fill = 0.0
-shader_parameter/scale = 0.2
-shader_parameter/rotation_speed = 1.0
-shader_parameter/tex = ExtResource("3_5fpcv")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2jmb1"]
 size = Vector3(1.5, 1.5, 1.5)
@@ -23,20 +11,14 @@ size = Vector3(1.5, 1.5, 1.5)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw3kx"]
 albedo_texture = ExtResource("6_cjt6h")
 
-[node name="PrepArea" type="Area3D" node_paths=PackedStringArray("item_node", "icon")]
+[node name="PrepArea" type="Area3D" node_paths=PackedStringArray("item_node", "icon") groups=["moveable"]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_j28bw")
 item_node = NodePath("ItemNodes")
 icon = NodePath("ActionIcon")
 
-[node name="ActionIcon" type="Sprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-material_override = SubResource("ShaderMaterial_1vvbj")
-cast_shadow = 0
-billboard = 1
-texture = ExtResource("3_5fpcv")
-script = ExtResource("4_bctlj")
+[node name="ActionIcon" parent="." instance=ExtResource("2_d3olx")]
 
 [node name="ItemNodes" parent="." instance=ExtResource("5_cp404")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

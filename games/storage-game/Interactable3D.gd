@@ -3,6 +3,9 @@ extends Area3D
 
 signal interacted(hand: Hand3D)
 
+var pickupable := false
+var interactable := true
+
 func interact(hand: Hand3D):
 	interacted.emit(hand)
 

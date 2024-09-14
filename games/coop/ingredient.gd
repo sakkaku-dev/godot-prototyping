@@ -4,6 +4,11 @@ extends Interactable3D
 @export var type := PotionItem.Type.FEATHER
 
 func interact(hand: Hand3D):
+	if pickupable:
+		hand.hold_item(GridItem.new(GridItem.Type.MATERIAL))
+		queue_free()
+		return
+	
 	var item = PotionItem.Type.keys()[type]
 	if hand.is_holding_item():
 		print("Already holding an item. Cannot pickup %s" % item)

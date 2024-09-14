@@ -10,6 +10,10 @@ func place(pos: Vector3i, obj: Node3D):
 		print("Already an object at %s" % pos)
 		return
 	
+	if get_cell_item(pos) != INVALID_CELL_ITEM:
+		print("Already a tile at %s" % pos)
+		return
+	
 	data[pos] = obj
 	root.add_child(obj)
 	obj.global_position = map_to_local(pos)

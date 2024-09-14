@@ -12,11 +12,9 @@ var item: PotionItem:
 		if item == null:
 			icon.hide()
 			item_node.hide_all()
-			print("Hide items")
 		else:
 			icon.visible = can_prepare(item)
 			item_node.show_item(item)
-			print("Show item %s" % item.type)
 
 var is_preparing := false
 
@@ -50,6 +48,11 @@ func can_prepare(item):
 	return item is PotionItem and item.type in PotionItem.PROCESSES[type]
 
 func interact(hand: Hand3D):
+	if pickupable:
+		hand.hold_item(GridItem.new(GridItem.Type.PREP_AREA))
+		queue_free()
+		return
+	
 	if item == null:
 		if not hand.is_holding_item():
 			print("Not holding any items to put in")
@@ -68,6 +71,10 @@ func interact(hand: Hand3D):
 		item = null
 
 func action(hand: Hand3D, pressed: bool):
+	if pickupable:
+		print("In pickup mode")
+		return
+	
 	if pressed and not can_prepare(item):
 		print("Cannot prepare %s at this station" % item.get_name())
 		return

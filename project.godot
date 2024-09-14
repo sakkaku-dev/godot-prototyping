@@ -52,6 +52,9 @@ enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg", "res://addon
 map=""
 droppable=""
 player=""
+moveable=""
+cashier=""
+customer=""
 
 [gui]
 
@@ -132,6 +135,7 @@ erase={
 2d_physics/layer_5="enemy_hurtbox"
 3d_physics/layer_5="objects"
 2d_physics/layer_6="interactable"
+3d_physics/layer_6="customer"
 2d_physics/layer_7="door"
 2d_physics/layer_8="effect_zone"
 2d_physics/layer_9="droppable"
