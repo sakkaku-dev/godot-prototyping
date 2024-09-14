@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://m6dlgd44drfk"]
+[gd_scene load_steps=9 format=3 uid="uid://m6dlgd44drfk"]
 
 [ext_resource type="Script" path="res://games/coop/cauldron.gd" id="1_5gmnb"]
 [ext_resource type="Texture2D" uid="uid://5ipmi8mbxd6m" path="res://assets/Prototype Textures/PNG/Green/texture_10.png" id="2_jb18j"]
 [ext_resource type="Script" path="res://games/coop/chargeable.gd" id="3_lwpye"]
 [ext_resource type="PackedScene" uid="uid://ctoanxjg4nxn3" path="res://games/coop/action_icon.tscn" id="4_n6xpv"]
+[ext_resource type="Theme" uid="uid://dsxq24xebl0ij" path="res://games/coop/coop_theme.tres" id="5_4c38v"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2jmb1"]
 size = Vector3(1.5, 1.5, 1.5)
@@ -55,6 +56,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("5_4c38v")
 
 [node name="Label" type="Label" parent="SubViewport/CanvasLayer/CenterContainer"]
 layout_mode = 2

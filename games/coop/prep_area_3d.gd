@@ -19,6 +19,9 @@ var item: PotionItem:
 var is_preparing := false
 
 func _ready():
+	reset()
+
+func reset():
 	item = null
 
 func _process(delta: float) -> void:
@@ -49,7 +52,7 @@ func can_prepare(item):
 
 func interact(hand: Hand3D):
 	if pickupable:
-		hand.hold_item(GridItem.new(GridItem.Type.PREP_AREA))
+		hand.hold_item(GridItem.new(GridItem.Type.PREP_AREA, {"item": item}), global_position)
 		queue_free()
 		return
 	

@@ -13,6 +13,7 @@
 [ext_resource type="Script" path="res://games/coop/cashier.gd" id="12_b7ujl"]
 [ext_resource type="PackedScene" uid="uid://ctoanxjg4nxn3" path="res://games/coop/action_icon.tscn" id="13_g4xs1"]
 [ext_resource type="Script" path="res://games/coop/chargeable.gd" id="14_ulyhj"]
+[ext_resource type="Theme" uid="uid://dsxq24xebl0ij" path="res://games/coop/coop_theme.tres" id="15_5s8e5"]
 [ext_resource type="Script" path="res://games/coop/time_slider.gd" id="15_qjup0"]
 [ext_resource type="Texture2D" uid="uid://ye3ke6pu36qr" path="res://icon.svg" id="16_58ut5"]
 [ext_resource type="MeshLibrary" uid="uid://vgjr746otf71" path="res://assets/Prototype Textures/prototypes.tres" id="18_qcp5f"]
@@ -29,9 +30,6 @@ agent_radius = 0.25
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jbe45"]
 size = Vector3(0.658203, 1, 0.765625)
-
-[sub_resource type="Theme" id="Theme_rb2ux"]
-default_font_size = 32
 
 [node name="CoopGame" type="Node3D" node_paths=PackedStringArray("cashier", "shop_open_time", "money_label")]
 script = ExtResource("1_t8gqi")
@@ -58,7 +56,8 @@ one_shot = true
 transform = Transform3D(-0.930083, -0.321953, -0.176896, -0.065209, -0.329201, 0.942006, -0.361516, 0.887678, 0.28519, 0, 1.83953, 0)
 shadow_enabled = true
 
-[node name="TopDownPlayer3D" parent="." instance=ExtResource("1_o0pun")]
+[node name="TopDownPlayer3D" parent="." node_paths=PackedStringArray("grid") instance=ExtResource("1_o0pun")]
+grid = NodePath("../NavigationRegion3D/GridMap")
 throw_angle = 45.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -140,7 +139,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_rb2ux")
+theme = ExtResource("15_5s8e5")
 
 [node name="ShopOpenTime" type="MarginContainer" parent="CanvasLayer/Control"]
 layout_mode = 1

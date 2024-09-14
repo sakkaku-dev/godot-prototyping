@@ -1,5 +1,7 @@
 class_name Hand3D extends Area3D
 
+signal picked_up_at(pos: Vector3)
+
 var item
 
 func interact():
@@ -24,8 +26,9 @@ func get_interactable() -> Interactable3D:
 			return area
 	return null
 
-func hold_item(i):
+func hold_item(i, pos = Vector3.ZERO):
 	item = i
+	picked_up_at.emit(pos)
 	print("Holding item %s" % i.get_name())
 
 func is_holding_item():

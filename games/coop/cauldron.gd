@@ -10,6 +10,8 @@ var items := []
 var last_hand: Hand3D
 
 func _ready():
+	reset()
+	
 	chargeable.charged.connect(func():
 		var potion = PotionItem.find_recipe(items)
 		items.clear()
@@ -25,10 +27,6 @@ func _ready():
 		
 		last_hand.hold_item(PotionItem.new(potion))
 	)
-	
-	icon.hide()
-	ingredients.hide()
-	
 	chargeable.charging_started.connect(func():
 		icon.show()
 		ingredients.hide()
@@ -40,7 +38,10 @@ func _ready():
 
 func interact(hand: Hand3D):
 	if pickupable:
-		hand.hold_item(GridItem.new(GridItem.Type.CAULDRON))
+		if hand.is_holding_item():
+			print("Player is holding an item, but shouldn't be possible")
+
+		hand.hold_item(GridItem.new(GridItem.Type.CAULDRON, {"items": items}), global_position)
 		queue_free()
 		return
 	
@@ -49,8 +50,7 @@ func interact(hand: Hand3D):
 		return
 	
 	if not hand.is_holding_item():
-		#hand.hold_item(self)
-		#queue_free()
+		print("No items in hand")
 		return
 	
 	items.append(hand.take_item())
@@ -87,3 +87,8 @@ func action(hand: Hand3D, pressed: bool):
 	else:
 		chargeable.stop()
 		last_hand = null
+
+func reset():
+	items = []
+	icon.hide()
+	ingredients.hide()

@@ -11,3 +11,6 @@ func interact(hand: Hand3D):
 
 func action(hand: Hand3D, pressed: bool):
 	pass
+
+func reset():
+	pass

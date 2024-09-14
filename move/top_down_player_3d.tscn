@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://cw0gbib56g3he"]
 
-[ext_resource type="Script" path="res://games/storage-game/Player3D.gd" id="1_50fob"]
+[ext_resource type="Script" path="res://games/coop/Player3D.gd" id="1_50fob"]
 [ext_resource type="PackedScene" uid="uid://b3l1sb3cu34np" path="res://games/coop/throwing_item.tscn" id="2_mk33b"]
 [ext_resource type="Shader" path="res://shaders/toon.gdshader" id="3_5enpg"]
 [ext_resource type="PackedScene" uid="uid://ctgqify6i2hce" path="res://assets/Conveyor Kit/Models/GLB format/arrow.glb" id="3_xep7n"]

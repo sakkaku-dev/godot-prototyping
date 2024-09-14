@@ -8,9 +8,11 @@ enum Type {
 }
 
 var type: Type = -1
+var data = {}
 
-func _init(t: Type) -> void:
+func _init(t: Type, d = {}) -> void:
 	type = t
+	data = d
 
 func get_name():
 	return Type.keys()[type]

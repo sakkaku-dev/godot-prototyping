@@ -7,6 +7,8 @@ var shop_open := false:
 		_update_moveable_objects()
 		
 		if shop_open:
+			navigation_region_3d.bake_navigation_mesh()
+			
 			print("Opening Shop")
 			customer_spawner.start_timer()
 			shop_open_timer.start()
@@ -34,6 +36,8 @@ var money := 0:
 
 @onready var customer_spawner: CustomerSpawner = $CustomerSpawner
 @onready var shop_open_timer: Timer = $ShopOpenTimer
+@onready var navigation_region_3d: NavigationRegion3D = $NavigationRegion3D
+@onready var grid_map: ShopGridMap = $NavigationRegion3D/GridMap
 
 func _create_tw(prev_tw: Tween):
 	if prev_tw and prev_tw.is_running():
@@ -66,7 +70,8 @@ func _ready() -> void:
 			_check_all_customers_left(c)
 	)
 	cashier.money_received.connect(func(m): money += m)
-
+	grid_map.object_placed.connect(func(): _update_moveable_objects())
+	
 	for player in get_tree().get_nodes_in_group("player"):
 		ready_players[player] = false
 		player.accepted.connect(func():
@@ -89,6 +94,10 @@ func start_game():
 func _update_moveable_objects():
 	for obj in get_tree().get_nodes_in_group("moveable"):
 		obj.pickupable = not shop_open
+
+func _reset_moveable_objects():
+	for obj in get_tree().get_nodes_in_group("moveable"):
+		obj.reset()
 
 func _check_all_customers_left(current_customer: ShopCustomer = null):
 	var customers = get_tree().get_nodes_in_group("customer").filter(func(c): return c != current_customer)

@@ -6,11 +6,11 @@ signal accepted()
 @export var run_speed := 8
 @export var speed := 5
 @export var acceleration := 50
-@export var forward := Vector3.FORWARD
 
 @export var animation: AnimationPlayer
 @export var phyiscal_bone_simulator: PhysicalBoneSimulator3D
 @export var throw_charge: Chargeable
+@export var grid: ShopGridMap
 
 @export var item_nodes: ItemNodes
 @export var throw_item: PackedScene
@@ -28,9 +28,20 @@ func _ready() -> void:
 	_update_hand_items()
 	#phyiscal_bone_simulator.physical_bones_start_simulation()
 
+	hand_3d.picked_up_at.connect(func(pos: Vector3):
+		var p = grid.local_to_map(pos)
+		grid.remove(Vector2i(p.x, p.z))
+	)
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"):
-		if hand_3d.interact():
+		if hand_3d.is_holding_item() and hand_3d.item is GridItem:
+			var face_dir = _get_face_dir() * grid.cell_size
+			var player_pos = grid.local_to_map(global_transform.origin + face_dir)
+			if await grid.place(Vector2i(player_pos.x, player_pos.z), hand_3d.item):
+				hand_3d.take_item()
+				_update_hand_items()
+		elif hand_3d.interact():
 			_update_hand_items()
 	elif event.is_action_pressed("action"):
 		if hand_3d.action(true):
@@ -39,6 +50,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		if not hand_3d.is_holding_item():
 			print("Not holding any items to throw")
 			return
+			
+		if not hand_3d.item is PotionItem:
+			print("Can only throw potion items")
+			return 
 		
 		throw_charge.start()
 	elif event.is_action_released("action"):
@@ -51,8 +66,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			get_tree().current_scene.add_child(throwing_item)
 			throwing_item.global_position = item_nodes.global_position
 			
-			var quat = pivot.basis.get_euler() as Vector3
-			var dir = Vector3.FORWARD.rotated(Vector3.UP, quat.y)
+			var dir = _get_face_dir()
 			var throw: Vector3 = dir * force
 			var throw_axis = throw.rotated(Vector3.UP, deg_to_rad(90)).normalized()
 			
@@ -65,6 +79,10 @@ func _unhandled_input(event: InputEvent) -> void:
 			hand_3d.action(false)
 	elif event.is_action_pressed("accept"):
 		accepted.emit()
+
+func _get_face_dir():
+	var quat = pivot.basis.get_euler() as Vector3
+	return Vector3.FORWARD.rotated(Vector3.UP, quat.y)
 
 func _update_hand_items():
 	if hand_3d.is_holding_item():
