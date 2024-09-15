@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cw0gbib56g3he"]
+[gd_scene load_steps=22 format=3 uid="uid://cw0gbib56g3he"]
 
 [ext_resource type="Script" path="res://games/coop/Player3D.gd" id="1_50fob"]
 [ext_resource type="PackedScene" uid="uid://b3l1sb3cu34np" path="res://games/coop/throwing_item.tscn" id="2_mk33b"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="6_h83od"]
 [ext_resource type="PackedScene" uid="uid://dm63pvby76jke" path="res://assets/models/base_blob.glb" id="7_vdtoe"]
 [ext_resource type="Script" path="res://games/coop/chargeable.gd" id="8_tfhw7"]
+[ext_resource type="Script" path="res://input/PlayerInput.gd" id="12_io2bm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2m7w2"]
 albedo_texture = ExtResource("4_pce6x")
@@ -139,5 +140,8 @@ script = ExtResource("6_h83od")
 script = ExtResource("8_tfhw7")
 max_value = 15.0
 increase = 30.0
+
+[node name="PlayerInput" type="Node" parent="."]
+script = ExtResource("12_io2bm")
 
 [editable path="Pivot/base_blob"]

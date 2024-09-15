@@ -1,7 +1,7 @@
 [gd_scene load_steps=23 format=3 uid="uid://cdouhs6f2ym6q"]
 
 [ext_resource type="Script" path="res://games/storage-game/storage_game.gd" id="1_rpnej"]
-[ext_resource type="PackedScene" uid="uid://cw0gbib56g3he" path="res://move/top_down_player_3d.tscn" id="2_1bg0u"]
+[ext_resource type="PackedScene" uid="uid://cw0gbib56g3he" path="res://games/coop/top_down_player_3d.tscn" id="2_1bg0u"]
 [ext_resource type="MeshLibrary" uid="uid://njjso41g2757" path="res://games/storage-game/storage.tres" id="2_1352v"]
 [ext_resource type="PackedScene" uid="uid://ctgqify6i2hce" path="res://assets/Conveyor Kit/Models/GLB format/arrow.glb" id="2_m5847"]
 [ext_resource type="Script" path="res://games/storage-game/PlacementArrow.gd" id="2_vf6n8"]

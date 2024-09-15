@@ -1,7 +1,8 @@
-[gd_scene load_steps=21 format=3 uid="uid://dn00n221yqw2p"]
+[gd_scene load_steps=22 format=3 uid="uid://dn00n221yqw2p"]
 
-[ext_resource type="PackedScene" uid="uid://cw0gbib56g3he" path="res://move/top_down_player_3d.tscn" id="1_o0pun"]
 [ext_resource type="Script" path="res://games/coop/coop_game.gd" id="1_t8gqi"]
+[ext_resource type="Script" path="res://games/coop/player_spawner.gd" id="2_2l0l7"]
+[ext_resource type="PackedScene" uid="uid://cw0gbib56g3he" path="res://games/coop/top_down_player_3d.tscn" id="3_5awe5"]
 [ext_resource type="PackedScene" uid="uid://c0bc23gx30dqg" path="res://games/coop/customer.tscn" id="3_dqsu2"]
 [ext_resource type="PackedScene" uid="uid://m6dlgd44drfk" path="res://games/coop/cauldron.tscn" id="5_0kpkd"]
 [ext_resource type="Script" path="res://games/coop/ShopGridMap.gd" id="5_gi45j"]
@@ -37,6 +38,11 @@ cashier = NodePath("NavigationRegion3D/Cashier")
 shop_open_time = NodePath("CanvasLayer/Control/ShopOpenTime")
 money_label = NodePath("CanvasLayer/Control/MarginContainer/HBoxContainer/Money")
 
+[node name="PlayerSpawner" type="Marker3D" parent="." node_paths=PackedStringArray("grid")]
+script = ExtResource("2_2l0l7")
+player = ExtResource("3_5awe5")
+grid = NodePath("../NavigationRegion3D/GridMap")
+
 [node name="CustomerSpawner" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.889, 0, -5.14688)
 script = ExtResource("10_m4myw")
@@ -55,10 +61,6 @@ one_shot = true
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.930083, -0.321953, -0.176896, -0.065209, -0.329201, 0.942006, -0.361516, 0.887678, 0.28519, 0, 1.83953, 0)
 shadow_enabled = true
-
-[node name="TopDownPlayer3D" parent="." node_paths=PackedStringArray("grid") instance=ExtResource("1_o0pun")]
-grid = NodePath("../NavigationRegion3D/GridMap")
-throw_angle = 45.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.676876, 0.736097, 0, -0.736097, 0.676876, 0, 15, 15)
