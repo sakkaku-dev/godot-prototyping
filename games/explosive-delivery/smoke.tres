@@ -1,0 +1,6 @@
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://dy0wbqfsq1j4h"]
+
+[ext_resource type="Material" uid="uid://cc8fnuf0u60io" path="res://games/explosive-delivery/smoke_material.tres" id="1_3xv2q"]
+
+[resource]
+material = ExtResource("1_3xv2q")

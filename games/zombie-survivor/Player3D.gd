@@ -5,9 +5,12 @@ extends CharacterBody3D
 
 @export var grid: DataGridMap
 @export var wall_scene: PackedScene
+@export var gun: Gun
 
 @onready var gravity_3d = $Gravity3D
 @onready var pivot = $Pivot
+
+@onready var camera: Camera3D = get_viewport().get_camera_3d()
 
 var walk_vel: Vector3
 var placing := false
@@ -21,17 +24,23 @@ func _unhandled_input(event: InputEvent) -> void:
 			var coord = Vector3i(player_coord.x, 0, player_coord.z) + Vector3i(aim_dir)
 			grid.place(coord, wall)
 		else:
-			pass
+			gun.fire()
 	elif event.is_action_pressed("item_wall"):
 		placing = not placing
-		print("Placing %s" % placing)
 
 
 func _physics_process(delta: float) -> void:
 	var move_2d = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	var move_dir = Vector3(move_2d.x, 0, move_2d.y).normalized()
-	if move_dir:
-		pivot.basis = Basis.looking_at(move_dir)
+		
+	var mouse_pos = get_viewport().get_mouse_position()
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	var ray_end = ray_origin + camera.project_ray_normal(mouse_pos) * 1000
+	var intersection = get_world_3d().direct_space_state.intersect_ray(PhysicsRayQueryParameters3D.create(ray_origin, ray_end))
+	if not intersection.is_empty(): 
+		var dir = pivot.global_position.direction_to(intersection.position)
+		dir.y = 0
+		pivot.basis = Basis.looking_at(dir)
 	
 	velocity = gravity_3d.apply_gravity(self, delta) + _walk(move_dir, delta)
 	move_and_slide()

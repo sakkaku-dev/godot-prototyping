@@ -5,6 +5,7 @@ signal customer_left(c)
 
 @export var scene: PackedScene
 @onready var random_timer: RandomTimer = $RandomTimer
+@onready var leave_position: Marker3D = $LeavePosition
 
 func _ready() -> void:
 	random_timer.timeout.connect(func(): spawn())
@@ -26,5 +27,5 @@ func spawn():
 	var cashier = get_tree().get_first_node_in_group("cashier")
 	var target = cashier.add_to_queue(customer)
 	customer.move_to(target)
-	customer.return_pos = global_position
+	customer.return_pos = leave_position.global_position
 	

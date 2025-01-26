@@ -137,8 +137,11 @@ erase={
 2d_physics/layer_6="interactable"
 3d_physics/layer_6="customer"
 2d_physics/layer_7="door"
+3d_physics/layer_7="player_hurtbox"
 2d_physics/layer_8="effect_zone"
+3d_physics/layer_8="enemy_hurtbox"
 2d_physics/layer_9="droppable"
+3d_physics/layer_9="enemy"
 
 [navigation]
 

@@ -12,7 +12,6 @@ func _ready():
 
 		"jump": KEY_SPACE,
 		"run": KEY_SHIFT,
-		"roll": KEY_CTRL,
 	})
 
 func _process(delta):

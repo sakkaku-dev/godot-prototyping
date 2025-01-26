@@ -1,16 +1,25 @@
-[gd_scene load_steps=14 format=3 uid="uid://cybhys3rop57c"]
+[gd_scene load_steps=20 format=3 uid="uid://cybhys3rop57c"]
 
 [ext_resource type="Script" path="res://games/zombie-survivor/zombie_survivor_3d.gd" id="1_fcavv"]
+[ext_resource type="Script" path="res://games/zombie-survivor/hurtbox.gd" id="2_0kt1g"]
 [ext_resource type="Texture2D" uid="uid://yu3c04bf2nxw" path="res://assets/Prototype Textures/PNG/Dark/texture_08.png" id="2_6r6jf"]
+[ext_resource type="Script" path="res://games/zombie-survivor/interactable.gd" id="3_yafax"]
 [ext_resource type="Script" path="res://games/zombie-survivor/Player3D.gd" id="5_0gwfm"]
+[ext_resource type="Script" path="res://games/zombie-survivor/pistol.gd" id="7_3avhe"]
 [ext_resource type="PackedScene" uid="uid://bpvcd70bekmc5" path="res://games/zombie-survivor/wall_3d.tscn" id="7_eonb7"]
 [ext_resource type="Script" path="res://games/storage-game/Gravity3D.gd" id="7_oml85"]
 [ext_resource type="Script" path="res://games/zombie-survivor/Spawner3D.gd" id="7_x6rb5"]
 [ext_resource type="PackedScene" uid="uid://dn15p4yuum2ur" path="res://games/zombie-survivor/zombie_3d.tscn" id="8_swktu"]
 [ext_resource type="Script" path="res://games/zombie-survivor/DataGridMap.gd" id="9_36lir"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_7dpxi"]
+size = Vector3(7.65234, 6.00446, 6.23047)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cb3pj"]
+size = Vector3(8.82837, 6.00446, 7.77246)
+
 [sub_resource type="NavigationMesh" id="NavigationMesh_478ky"]
-vertices = PackedVector3Array(-39.25, 0.5, -39.25, -39.25, 0.5, 39.25, 39.25, 0.5, 39.25, 39.25, 0.5, -39.25)
+vertices = PackedVector3Array(-55.3301, 0.5, -55.2266, -55.3301, 0.5, 55.2734, 55.4199, 0.5, 55.2734, 55.4199, 0.5, -55.2266)
 polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 sample_partition_type = 2
 agent_radius = 0.6
@@ -25,10 +34,39 @@ uv1_scale = Vector3(10, 10, 10)
 [sub_resource type="BoxMesh" id="BoxMesh_85amy"]
 size = Vector3(0.5, 0.2, 0.5)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_wv1ea"]
+size = Vector3(2.3916, 1.8252, 2.03735)
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_84qxp"]
 
 [node name="ZombieSurvivor3D" type="Node3D"]
 script = ExtResource("1_fcavv")
+
+[node name="House" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.028, 0)
+use_collision = true
+size = Vector3(7.37988, 3.84644, 6.03223)
+
+[node name="Hurtbox" type="Area3D" parent="House"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.528, 0)
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("2_0kt1g")
+health = 100
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Hurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.50223, 0)
+shape = SubResource("BoxShape3D_7dpxi")
+
+[node name="Interactable" type="Area3D" parent="House"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.528, 0)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("3_yafax")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="House/Interactable"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.50223, 0)
+shape = SubResource("BoxShape3D_cb3pj")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_478ky")
@@ -37,16 +75,18 @@ navigation_mesh = SubResource("NavigationMesh_478ky")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
 material_override = SubResource("StandardMaterial3D_autu0")
 use_collision = true
-size = Vector3(80, 1, 80)
+size = Vector3(112.16, 1, 111.953)
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 14.0397, 8.30158)
+transform = Transform3D(1, 0, 0, 0, 0.314241, 0.949343, 0, -0.949343, 0.314241, 0, 25.6725, 9.98033)
 
-[node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("grid")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.3684, 0)
+[node name="Player3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("grid", "gun")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.92273, 2.3684, 3.70387)
+collision_layer = 2
 script = ExtResource("5_0gwfm")
 grid = NodePath("../GridMap")
 wall_scene = ExtResource("7_eonb7")
+gun = NodePath("Pivot/GunHand/Pistol")
 
 [node name="Pivot" type="Node3D" parent="Player3D"]
 
@@ -59,11 +99,37 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.307, -0.348)
 mesh = SubResource("BoxMesh_85amy")
 skeleton = NodePath("../..")
 
+[node name="HandInteract" type="Area3D" parent="Player3D/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.156024, -0.71849)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D/Pivot/HandInteract"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.129011)
+shape = SubResource("BoxShape3D_wv1ea")
+
+[node name="GunHand" type="Node3D" parent="Player3D/Pivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.156024, -0.71849)
+
+[node name="Pistol" type="RayCast3D" parent="Player3D/Pivot/GunHand" node_paths=PackedStringArray("firerate_timer")]
+target_position = Vector3(0, 0, -20)
+collision_mask = 128
+collide_with_areas = true
+script = ExtResource("7_3avhe")
+firerate_timer = NodePath("FireRate")
+
+[node name="FireRate" type="Timer" parent="Player3D/Pivot/GunHand/Pistol"]
+wait_time = 0.3
+one_shot = true
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player3D"]
 shape = SubResource("CapsuleShape3D_84qxp")
 
 [node name="Gravity3D" type="Node" parent="Player3D"]
 script = ExtResource("7_oml85")
+
+[node name="SpawnTimer" type="Timer" parent="Player3D"]
+one_shot = true
 
 [node name="GridMap" type="GridMap" parent="." node_paths=PackedStringArray("root")]
 script = ExtResource("9_36lir")

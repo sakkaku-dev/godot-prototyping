@@ -1,10 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://c6gv0l16uuuh5"]
+[gd_scene load_steps=13 format=3 uid="uid://c6gv0l16uuuh5"]
 
 [ext_resource type="Script" path="res://games/explosive-delivery/Truck.gd" id="1_b2xkh"]
 [ext_resource type="Script" path="res://util/ThirdPersonCamera.gd" id="2_3ctgt"]
 [ext_resource type="PackedScene" uid="uid://dyx7xwme3bqvm" path="res://games/explosive-delivery/truck.tscn" id="3_vx8mf"]
 [ext_resource type="PackedScene" uid="uid://c7cxao3qk8qco" path="res://games/explosive-delivery/smoke.tscn" id="4_cv6mt"]
 [ext_resource type="MeshLibrary" uid="uid://ch0kn3ytb5lue" path="res://games/explosive-delivery/roads.tres" id="5_5tibw"]
+[ext_resource type="SphereMesh" uid="uid://dy0wbqfsq1j4h" path="res://games/explosive-delivery/smoke.tres" id="5_5v0p1"]
+[ext_resource type="Material" uid="uid://ccodx2meqnuoy" path="res://games/explosive-delivery/smoke_process.tres" id="5_xiba5"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_t54n7"]
 bounce = 0.1
@@ -51,6 +53,8 @@ update_scale = false
 [node name="Smoke" parent="Truck/Mesh" instance=ExtResource("4_cv6mt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.514671, -0.0912794, 0.593077)
 emitting = false
+process_material = ExtResource("5_xiba5")
+draw_pass_1 = ExtResource("5_5v0p1")
 
 [node name="Smoke2" parent="Truck/Mesh" instance=ExtResource("4_cv6mt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.744937, -0.0912794, 0.593077)

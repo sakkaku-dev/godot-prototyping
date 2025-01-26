@@ -7,30 +7,22 @@ var shop_open := false:
 		_update_moveable_objects()
 		
 		if shop_open:
-			navigation_region_3d.bake_navigation_mesh()
+			#navigation_region_3d.bake_navigation_mesh()
 			
-			print("Opening Shop")
 			customer_spawner.start_timer()
 			shop_open_timer.start()
-			
-			shop_ui_tween = _create_tw(shop_ui_tween)
-			shop_ui_tween.tween_property(shop_open_time, "position", Vector2.ZERO, 0.5).from(shop_open_time.size * Vector2.UP)
-			shop_open_time.show()
+			shop_time_effect.do_show()
+			ready_effect.do_hide()
 		else:
 			print("Closing Shop")
+			shop_time_effect.do_hide()
+			ready_effect.do_show()
+			player_spawner.shop_closed()
 			
-			shop_ui_tween = _create_tw(shop_ui_tween)
-			shop_ui_tween.tween_property(shop_open_time, "position", shop_open_time.size * Vector2.UP, 0.5)
-			shop_open_time.hide()
-			reset_ready_state()
+			#if was_open:
+				#shop.open_shop()
+				#was_open = false
 
-var ready_players := {}
-var money := 0:
-	set(v):
-		money = v
-		money_label.text = "%s" % money
-
-@export var cashier: Cashier
 @export var shop_open_time: Control
 @export var money_label: Label
 
@@ -38,6 +30,9 @@ var money := 0:
 @onready var shop_open_timer: Timer = $ShopOpenTimer
 @onready var navigation_region_3d: NavigationRegion3D = $NavigationRegion3D
 @onready var grid_map: ShopGridMap = $NavigationRegion3D/GridMap
+@onready var player_spawner: PlayerSpawner = $PlayerSpawner
+@onready var ready_effect: SlideEffect = $ReadyEffect
+@onready var shop_time_effect: SlideEffect = $ShopTimeEffect
 
 func _create_tw(prev_tw: Tween):
 	if prev_tw and prev_tw.is_running():
@@ -53,40 +48,21 @@ func _ready() -> void:
 		"move_down": [KEY_S, InputMapper.joy_stick_y(1)],
 		"interact": [KEY_E, InputMapper.joy_btn(JOY_BUTTON_A)],
 		"action": [KEY_SPACE, InputMapper.joy_btn(JOY_BUTTON_X)],
-		"sprint": [KEY_SHIFT, InputMapper.joy_btn(JOY_BUTTON_B)],
+		"dash": [KEY_SHIFT, InputMapper.joy_btn(JOY_BUTTON_B)],
 		"accept": [KEY_CTRL, InputMapper.joy_btn(JOY_BUTTON_Y)],
 	})
 	
 	shop_open = false
-	money = 0
-	
 	shop_open_timer.timeout.connect(func():
 		customer_spawner.stop_timer()
 		_check_all_customers_left()
-		print("Closing hours")
 	)
 	customer_spawner.customer_left.connect(func(c):
 		if customer_spawner.is_stopped():
 			_check_all_customers_left(c)
 	)
-	cashier.money_received.connect(func(m): money += m)
 	grid_map.object_placed.connect(func(): _update_moveable_objects())
-	
-	for player in get_tree().get_nodes_in_group("player"):
-		ready_players[player] = false
-		player.accepted.connect(func():
-			ready_players[player] = not ready_players[player]
-			print("Ready players: %s" % ready_players.values())
-			if is_everyone_ready():
-				start_game()
-		)
-
-func is_everyone_ready():
-	return ready_players.values().filter(func(x): return not x).is_empty()
-
-func reset_ready_state():
-	for x in ready_players:
-		ready_players[x] = false
+	player_spawner.all_players_ready.connect(func(): start_game())
 
 func start_game():
 	shop_open = true

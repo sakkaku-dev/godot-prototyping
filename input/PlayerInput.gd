@@ -46,10 +46,16 @@ func get_vector(left: String, right: String, up: String, down: String):
 	)
 
 func is_player_event(event: InputEvent) -> bool:
-	return joypad == _is_joypad_event(event) and device_id == event.device
+	return joypad == is_joypad_event(event) and device_id == event.device
 
+func get_id():
+	return "%s-%s" % [device_id, joypad]
 
-func _is_joypad_event(event: InputEvent) -> bool:
+func set_for_event(event: InputEvent):
+	joypad = is_joypad_event(event)
+	device_id = event.device
+
+static func is_joypad_event(event: InputEvent) -> bool:
 	return event is InputEventJoypadButton or event is InputEventJoypadMotion
 
 

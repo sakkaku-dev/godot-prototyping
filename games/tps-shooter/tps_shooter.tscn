@@ -1,0 +1,94 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce8w3ctpwjgc6"]
+
+[ext_resource type="Script" path="res://games/tps-shooter/player_input.gd" id="1_258ko"]
+[ext_resource type="PackedScene" uid="uid://dgct4fiqg465b" path="res://assets/models/base.glb" id="2_a4430"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lfwqv"]
+
+[node name="TPSShooter" type="Node3D"]
+
+[node name="PlayerInput" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_lfwqv")
+script = ExtResource("1_258ko")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+
+[node name="base" parent="CharacterBody3D" instance=ExtResource("2_a4430")]
+
+[node name="Skeleton3D" parent="CharacterBody3D/base/XBot" index="0"]
+bones/0/position = Vector3(0.613782, 2.8804, -101.68)
+bones/0/rotation = Quaternion(-0.703449, 0.0328034, -0.0911122, 0.704118)
+bones/1/rotation = Quaternion(-0.0575443, -0.00946098, 0.0294113, 0.997865)
+bones/2/rotation = Quaternion(0.0143016, -0.0208135, 0.00407674, 0.999673)
+bones/3/rotation = Quaternion(-0.0126691, -0.0200602, 1.23727e-05, 0.999718)
+bones/4/rotation = Quaternion(-0.0292946, -0.00921077, -0.00947641, 0.999483)
+bones/5/rotation = Quaternion(-0.0118595, -0.0336116, -0.000990746, 0.999364)
+bones/7/rotation = Quaternion(-0.531978, 0.525637, -0.529576, -0.400318)
+bones/8/position = Vector3(2.64176e-07, 10.8382, 6.6221e-06)
+bones/8/rotation = Quaternion(0.548677, -0.193656, 0.0533605, 0.811544)
+bones/9/rotation = Quaternion(1.12691e-07, -1.36641e-07, -0.279969, 0.960009)
+bones/10/rotation = Quaternion(0.0504625, -0.222127, -0.0634646, 0.971641)
+bones/11/rotation = Quaternion(0.123753, -0.0716033, -0.152871, 0.977849)
+bones/12/rotation = Quaternion(-0.0937709, -0.081707, 0.0727738, 0.989563)
+bones/13/rotation = Quaternion(0.0330411, 0.0861493, -0.114203, 0.989164)
+bones/15/rotation = Quaternion(0.0938145, 0.00744115, -0.00790542, 0.995531)
+bones/16/position = Vector3(-3.67901e-06, 3.7, -9.47239e-08)
+bones/16/rotation = Quaternion(0.231022, 0.00150067, 0.0303468, 0.972474)
+bones/17/rotation = Quaternion(0.151561, 0.00221526, 0.00478618, 0.988434)
+bones/19/rotation = Quaternion(0.199317, 0.00690858, 0.0702841, 0.977387)
+bones/20/position = Vector3(4.9682e-08, 3.70002, -9.39575e-07)
+bones/20/rotation = Quaternion(0.325131, 0.00295708, 0.0402055, 0.944809)
+bones/21/position = Vector3(9.83748e-07, 2.94999, -3.22116e-06)
+bones/21/rotation = Quaternion(0.267639, 0.000195181, 0.0274653, 0.963128)
+bones/22/position = Vector3(-9.03575e-07, 2.94662, -8.50085e-06)
+bones/23/position = Vector3(-1.86514, 9.1036, 0.0430738)
+bones/23/rotation = Quaternion(0.348439, 0.0161275, 0.0748232, 0.934201)
+bones/24/rotation = Quaternion(0.206017, -0.00146633, 0.023224, 0.978272)
+bones/25/rotation = Quaternion(0.175501, 0.00142524, 0.00149254, 0.984477)
+bones/26/position = Vector3(5.67871e-07, 2.63881, -5.04511e-07)
+bones/27/rotation = Quaternion(0.381275, 0.0146065, 0.0915309, 0.919803)
+bones/28/rotation = Quaternion(0.41458, 0.00325931, 0.0409916, 0.909083)
+bones/29/rotation = Quaternion(0.368648, 0.0112643, 0.0194402, 0.929298)
+bones/31/rotation = Quaternion(0.6031, 0.516667, -0.393015, 0.463535)
+bones/32/rotation = Quaternion(0.600102, 0.0480898, 0.0435929, 0.797286)
+bones/33/position = Vector3(9.10114e-07, 27.8415, -9.82027e-07)
+bones/33/rotation = Quaternion(4.86276e-07, -1.93964e-07, 0.311548, 0.95023)
+bones/34/rotation = Quaternion(-0.0160738, 0.161764, 0.178542, 0.970411)
+bones/35/position = Vector3(-2.68173, 2.46615, 1.57619)
+bones/35/rotation = Quaternion(0.112279, 0.219462, 0.134814, 0.959716)
+bones/36/position = Vector3(9.50515e-06, 4.18709, 7.11352e-08)
+bones/36/rotation = Quaternion(0.0333022, -0.188645, -0.0897007, 0.977373)
+bones/37/rotation = Quaternion(0.0424082, 0.0994552, 0.0451945, 0.99311)
+bones/38/position = Vector3(-3.02748e-06, 2.58058, -9.27399e-06)
+bones/39/rotation = Quaternion(-0.0348546, 0.00386442, -0.0304699, 0.99892)
+bones/40/position = Vector3(-5.8757e-06, 3.69999, -4.23701e-06)
+bones/40/rotation = Quaternion(0.146142, -0.000837411, -0.0215153, 0.989029)
+bones/41/position = Vector3(-7.5301e-06, 2.85, -2.0998e-06)
+bones/41/rotation = Quaternion(0.0335986, -0.000231837, -0.00161702, 0.999434)
+bones/42/position = Vector3(3.03869e-06, 2.77484, -2.71712e-06)
+bones/43/position = Vector3(-3.6802e-05, 9.53341, -4.8157e-05)
+bones/43/rotation = Quaternion(0.142719, -0.00432379, -0.0665846, 0.987512)
+bones/44/rotation = Quaternion(0.234055, -0.00183838, -0.0304364, 0.971745)
+bones/45/rotation = Quaternion(0.139002, 0.00011001, -0.016267, 0.990158)
+bones/47/position = Vector3(1.86508, 9.10453, 0.0430124)
+bones/47/rotation = Quaternion(0.294465, -0.0133496, -0.0689445, 0.953079)
+bones/48/rotation = Quaternion(0.149212, 0.00103417, -0.0178125, 0.988644)
+bones/49/rotation = Quaternion(0.109568, 0.00143183, -0.0107967, 0.99392)
+bones/50/position = Vector3(-2.29107e-05, 2.64432, 1.83015e-05)
+bones/51/position = Vector3(3.80627, 8.0778, 0.486866)
+bones/51/rotation = Quaternion(0.264916, -0.00147968, -0.119734, 0.956808)
+bones/52/position = Vector3(-9.32541e-07, 3.59998, 1.16296e-06)
+bones/52/rotation = Quaternion(0.251061, -0.00181582, -0.0239124, 0.967674)
+bones/53/position = Vector3(-6.61044e-06, 2.10002, -3.02214e-06)
+bones/53/rotation = Quaternion(0.0586384, -0.000135057, -0.0134358, 0.998189)
+bones/54/position = Vector3(-1.15941e-06, 2.12553, -2.94165e-06)
+bones/55/rotation = Quaternion(-0.105054, 0.0929734, 0.985889, -0.0913379)
+bones/56/rotation = Quaternion(-0.188137, -0.0136393, -0.0149433, 0.981934)
+bones/57/rotation = Quaternion(0.516559, 0.0253603, -0.0550865, 0.854102)
+bones/58/rotation = Quaternion(0.357941, -1.61442e-08, -7.8893e-08, 0.933744)
+bones/60/rotation = Quaternion(-0.00259743, 0.204885, 0.978313, -0.0303207)
+bones/61/rotation = Quaternion(-0.562044, 0.0147536, 0.0612626, 0.824703)
+bones/62/rotation = Quaternion(0.448021, -0.00705791, -0.0110896, 0.893926)
+bones/63/rotation = Quaternion(0.348095, 1.93239e-08, -1.24759e-07, 0.937459)
+
+[editable path="CharacterBody3D/base"]

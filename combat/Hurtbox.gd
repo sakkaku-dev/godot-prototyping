@@ -20,7 +20,7 @@ signal max_health_changed(max)
 		if health <= 0:
 			died.emit()
 
-func damage(dmg: int, target: Node2D):
+func damage(dmg: int, target: Node2D = null):
 	self.health -= dmg
 	hit.emit()
 	hit_by.emit(target)

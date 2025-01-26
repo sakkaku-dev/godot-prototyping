@@ -11,11 +11,11 @@ func _ready():
 		"move_left": KEY_A,
 		"move_right": KEY_D,
 
-		"attack": KEY_SPACE,
+		"attack": MOUSE_BUTTON_LEFT,
 		"item_wall": KEY_1,
 	})
 	
 	spawn_timer.timeout.connect(func():
 		var node = spawner_3d.spawn()
-		node.target = player_3d
+		#node.target = player_3d
 	)
