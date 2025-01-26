@@ -5,12 +5,13 @@ signal all_players_ready()
 
 @export var player: PackedScene
 @export var grid: ShopGridMap
-@export var ready_container: ReadyContainer
+@export var splitscreen: SplitscreenContainer
 
 @export var colors: Array[Color] = []
 
 var ready_players := {}
 var started := false
+var players = []
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not started:
@@ -29,7 +30,8 @@ func _create_player(event: InputEvent):
 	player_node.grid = grid
 	player_node.color = colors[get_child_count()] if get_child_count() < colors.size() else Color.WHITE
 	player_node.position = position
-	grid.root.add_child(player_node)
+	splitscreen.add_player(player_node, players.size())
+	players.append(player_node)
 	
 	ready_players[player_id] = false
 	
@@ -37,10 +39,10 @@ func _create_player(event: InputEvent):
 		if started: return
 		
 		ready_players[player_id] = not ready_players[player_id]
-		ready_container.set_ready(player_id, ready_players[player_id])
+		#ready_container.set_ready(player_id, ready_players[player_id])
 		
 		if is_everyone_ready():
-			all_players_ready.emit() #grid.start_game.emit() # Signals in here don't work?
+			all_players_ready.emit()
 			started = true
 			reset_ready_state()
 	)
@@ -74,5 +76,5 @@ func reset_ready_state():
 		ready_players[x] = false
 
 func shop_closed():
-	ready_container.reset()
+	#ready_container.reset()
 	started = false

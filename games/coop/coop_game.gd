@@ -7,31 +7,20 @@ var shop_open := false:
 		_update_moveable_objects()
 		
 		if shop_open:
-			#navigation_region_3d.bake_navigation_mesh()
-			
 			customer_spawner.start_timer()
 			shop_open_timer.start()
 			shop_time_effect.do_show()
-			ready_effect.do_hide()
 		else:
-			print("Closing Shop")
 			shop_time_effect.do_hide()
-			ready_effect.do_show()
 			player_spawner.shop_closed()
-			
-			#if was_open:
-				#shop.open_shop()
-				#was_open = false
 
 @export var shop_open_time: Control
-@export var money_label: Label
 
 @onready var customer_spawner: CustomerSpawner = $CustomerSpawner
 @onready var shop_open_timer: Timer = $ShopOpenTimer
 @onready var navigation_region_3d: NavigationRegion3D = $NavigationRegion3D
 @onready var grid_map: ShopGridMap = $NavigationRegion3D/GridMap
 @onready var player_spawner: PlayerSpawner = $PlayerSpawner
-@onready var ready_effect: SlideEffect = $ReadyEffect
 @onready var shop_time_effect: SlideEffect = $ShopTimeEffect
 
 func _create_tw(prev_tw: Tween):

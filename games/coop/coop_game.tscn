@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cw0gbib56g3he" path="res://games/coop/top_down_player_3d.tscn" id="3_5awe5"]
 [ext_resource type="PackedScene" uid="uid://c0bc23gx30dqg" path="res://games/coop/customer.tscn" id="3_dqsu2"]
 [ext_resource type="Script" path="res://games/coop/ShopGridMap.gd" id="5_gi45j"]
+[ext_resource type="Script" path="res://games/coop/splitscreen_container.gd" id="5_pn8aj"]
 [ext_resource type="MeshLibrary" uid="uid://bscn1xuxq0ddk" path="res://assets/Prototype Textures/prototypes.tres" id="7_7j5lw"]
 [ext_resource type="PackedScene" uid="uid://bqqnmayb2s48f" path="res://games/coop/prep_area.tscn" id="8_p0drr"]
 [ext_resource type="Script" path="res://games/coop/customer_spawner.gd" id="10_m4myw"]
@@ -13,7 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://ctoanxjg4nxn3" path="res://games/coop/action_icon.tscn" id="13_g4xs1"]
 [ext_resource type="Script" path="res://games/coop/chargeable.gd" id="14_ulyhj"]
 [ext_resource type="Theme" uid="uid://dsxq24xebl0ij" path="res://games/coop/coop_theme.tres" id="15_5s8e5"]
-[ext_resource type="Script" path="res://games/coop/ready_container.gd" id="15_pdgbm"]
 [ext_resource type="Script" path="res://games/coop/time_slider.gd" id="15_qjup0"]
 [ext_resource type="Script" path="res://games/coop/slide_effect.gd" id="16_h6a84"]
 
@@ -26,50 +26,98 @@ polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Arr
 [sub_resource type="BoxShape3D" id="BoxShape3D_jbe45"]
 size = Vector3(0.89209, 1.61829, 1.28418)
 
-[node name="CoopGame" type="Node3D" node_paths=PackedStringArray("shop_open_time")]
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("15_5s8e5")
+
+[node name="ShopOpenTime" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 31.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 15
+
+[node name="HSlider" type="HSlider" parent="Control/ShopOpenTime" node_paths=PackedStringArray("timer")]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+step = 0.1
+script = ExtResource("15_qjup0")
+timer = NodePath("../../SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/ShopOpenTimer")
+
+[node name="SplitscreenContainer" type="VBoxContainer" parent="Control" node_paths=PackedStringArray("main_viewport", "horizontal_container", "viewport_containers")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_pn8aj")
+main_viewport = NodePath("HBoxContainer/SubViewportContainer/SubViewport")
+horizontal_container = NodePath("HBoxContainer2")
+viewport_containers = [NodePath("HBoxContainer/SubViewportContainer"), NodePath("HBoxContainer/SubViewportContainer2"), NodePath("HBoxContainer2/SubViewportContainer"), NodePath("HBoxContainer2/SubViewportContainer2")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/SplitscreenContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/SplitscreenContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+
+[node name="CoopGame" type="Node3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport" node_paths=PackedStringArray("shop_open_time")]
 script = ExtResource("1_t8gqi")
-shop_open_time = NodePath("CanvasLayer/Control/ShopOpenTime")
+shop_open_time = NodePath("../../../../../ShopOpenTime")
 
-[node name="ShopTimeEffect" type="Node" parent="." node_paths=PackedStringArray("control")]
+[node name="ShopTimeEffect" type="Node" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame" node_paths=PackedStringArray("control")]
 script = ExtResource("16_h6a84")
-control = NodePath("../CanvasLayer/Control/ShopOpenTime")
+control = NodePath("../../../../../../ShopOpenTime")
 
-[node name="ReadyEffect" type="Node" parent="." node_paths=PackedStringArray("control")]
-script = ExtResource("16_h6a84")
-control = NodePath("../CanvasLayer/Control/ReadyContainer")
-
-[node name="CustomerSpawner" type="Node3D" parent="."]
+[node name="CustomerSpawner" type="Node3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.7798, 9.53674e-07, 8.30989)
 script = ExtResource("10_m4myw")
 scene = ExtResource("3_dqsu2")
 
-[node name="RandomTimer" type="Timer" parent="CustomerSpawner"]
+[node name="RandomTimer" type="Timer" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/CustomerSpawner"]
 script = ExtResource("11_wfe60")
 min_time = 1.0
 max_time = 3.0
 
-[node name="LeavePosition" type="Marker3D" parent="CustomerSpawner"]
+[node name="LeavePosition" type="Marker3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/CustomerSpawner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6093, 0, -4.5672)
 
-[node name="PlayerSpawner" type="Marker3D" parent="." node_paths=PackedStringArray("grid", "ready_container")]
+[node name="PlayerSpawner" type="Marker3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame" node_paths=PackedStringArray("grid", "splitscreen")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.97042)
 script = ExtResource("2_2l0l7")
 player = ExtResource("3_5awe5")
 grid = NodePath("../NavigationRegion3D/GridMap")
-ready_container = NodePath("../CanvasLayer/Control/ReadyContainer")
+splitscreen = NodePath("../../../../..")
 
-[node name="ShopOpenTimer" type="Timer" parent="."]
+[node name="ShopOpenTimer" type="Timer" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame"]
 wait_time = 10.0
 one_shot = true
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame"]
 transform = Transform3D(-0.930083, -0.321953, -0.176896, -0.065209, -0.329201, 0.942006, -0.361516, 0.887678, 0.28519, 0, 1.83953, 0)
 shadow_enabled = true
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame"]
 navigation_mesh = SubResource("NavigationMesh_47riw")
 
-[node name="GridMap" type="GridMap" parent="NavigationRegion3D" node_paths=PackedStringArray("root")]
+[node name="GridMap" type="GridMap" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D" node_paths=PackedStringArray("root")]
 mesh_library = ExtResource("7_7j5lw")
 cell_size = Vector3(1, 0.5, 1)
 cell_center_y = false
@@ -80,96 +128,61 @@ script = ExtResource("5_gi45j")
 root = NodePath("..")
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
-[node name="PrepArea" parent="NavigationRegion3D" instance=ExtResource("8_p0drr")]
+[node name="PrepArea" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D" instance=ExtResource("8_p0drr")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.70588, 6.03473)
 visible = false
 
-[node name="Counter" type="Area3D" parent="NavigationRegion3D" groups=["cashier"]]
+[node name="Counter" type="Area3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D" groups=["cashier"]]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.56339, 1.26037, 2.52219)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("12_b7ujl")
 
-[node name="ActionIcon" parent="NavigationRegion3D/Counter" node_paths=PackedStringArray("chargeable") instance=ExtResource("13_g4xs1")]
+[node name="ActionIcon" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D/Counter" node_paths=PackedStringArray("chargeable") instance=ExtResource("13_g4xs1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 chargeable = NodePath("../Chargeable")
 
-[node name="Chargeable" type="Node" parent="NavigationRegion3D/Counter"]
+[node name="Chargeable" type="Node" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D/Counter"]
 script = ExtResource("14_ulyhj")
 activate_on_charged = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Counter"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D/Counter"]
 shape = SubResource("BoxShape3D_pu51o")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D/Counter/CollisionShape3D"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D/Counter/CollisionShape3D"]
 size = Vector3(0.5, 0.5, 0.5)
 
-[node name="CustomerArea" type="Area3D" parent="NavigationRegion3D/Counter"]
+[node name="CustomerArea" type="Area3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D/Counter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.89701, -0.522405, 0)
 collision_layer = 0
 collision_mask = 32
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Counter/CustomerArea"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D/Counter/CustomerArea"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.280854, 0.309143, 0)
 shape = SubResource("BoxShape3D_jbe45")
 
-[node name="ActiveArea" type="Marker3D" parent="NavigationRegion3D/Counter"]
+[node name="ActiveArea" type="Marker3D" parent="Control/SplitscreenContainer/HBoxContainer/SubViewportContainer/SubViewport/CoopGame/NavigationRegion3D/Counter"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.01154, -0.742809, 0)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
-
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("15_5s8e5")
-
-[node name="ShopOpenTime" type="MarginContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 31.0
-grow_horizontal = 2
-theme_override_constants/margin_top = 15
-
-[node name="HSlider" type="HSlider" parent="CanvasLayer/Control/ShopOpenTime" node_paths=PackedStringArray("timer")]
-custom_minimum_size = Vector2(300, 0)
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/SplitscreenContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-step = 0.1
-script = ExtResource("15_qjup0")
-timer = NodePath("../../../../ShopOpenTimer")
+size_flags_horizontal = 3
+stretch = true
 
-[node name="ReadyContainer" type="MarginContainer" parent="CanvasLayer/Control" node_paths=PackedStringArray("player_container")]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 31.0
-grow_horizontal = 2
-theme_override_constants/margin_top = 15
-script = ExtResource("15_pdgbm")
-player_container = NodePath("VBoxContainer/HBoxContainer")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control/ReadyContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/SplitscreenContainer"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 10
+size_flags_vertical = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/ReadyContainer/VBoxContainer"]
-custom_minimum_size = Vector2(32, 32)
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control/SplitscreenContainer/HBoxContainer2"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-theme_override_constants/separation = 20
+size_flags_horizontal = 3
+stretch = true
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/Control/ReadyContainer/VBoxContainer"]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="Control/SplitscreenContainer/HBoxContainer2"]
+visible = false
 layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/Control/ReadyContainer/VBoxContainer/HBoxContainer2"]
-custom_minimum_size = Vector2(32, 32)
-layout_mode = 2
-expand_mode = 3
-stretch_mode = 5
+size_flags_horizontal = 3
+stretch = true
